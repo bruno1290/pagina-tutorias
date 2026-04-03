@@ -76,68 +76,7 @@
         }
         .top-nav-btn:hover{background:rgba(255,255,255,.16);color:var(--white);transform:translateY(-1px);}
         .top-nav-btn.active{background:var(--white);color:var(--navy);box-shadow:0 4px 14px rgba(10,22,48,.18);}
-        .easter-egg{
-            position:absolute;left:248px;top:11px;width:42px;height:42px;z-index:230;
-            cursor:pointer;border:none;background:transparent;padding:0;
-            filter:drop-shadow(0 5px 8px rgba(8,22,43,.28));
-        }
-        .easter-egg:focus-visible{outline:2px solid rgba(255,255,255,.92);outline-offset:4px;border-radius:999px;}
-        .easter-egg .runner{position:relative;width:42px;height:42px;}
-        .runner .head{
-            position:absolute;left:12px;top:3px;width:11px;height:11px;border-radius:50%;
-            background:#ffd5bf;
-        }
-        .runner .face{
-            position:absolute;left:20px;top:8px;width:7px;height:5px;border-radius:50%;
-            border-top:2px solid #f3b08c;border-right:2px solid #f3b08c;transform:rotate(18deg);
-        }
-        .runner .hair{
-            position:absolute;left:10px;top:1px;width:12px;height:8px;border-radius:7px 7px 3px 4px;background:#3c2b24;
-        }
-        .runner .torso{
-            position:absolute;left:10px;top:14px;width:15px;height:12px;border-radius:6px 7px 6px 6px;background:#2f7be8;
-        }
-        .runner .arm{
-            position:absolute;left:21px;top:16px;width:10px;height:4px;border-radius:6px;background:#ffd5bf;
-            transform-origin:left center;transform:rotate(-12deg);
-        }
-        .runner .cone{
-            position:absolute;left:28px;top:11px;width:0;height:0;transform:rotate(22deg);
-            border-left:4px solid transparent;border-right:4px solid transparent;border-top:10px solid #d7a15f;
-        }
-        .runner .scoop{
-            position:absolute;left:24px;top:7px;width:10px;height:10px;border-radius:50%;background:#ff7ab6;
-        }
-        .runner .leg-back,.runner .leg-front{
-            position:absolute;left:12px;top:24px;width:4px;height:13px;border-radius:4px;background:#4e6ca8;transform-origin:top center;
-        }
-        .runner .leg-front{left:19px;transform:rotate(18deg);}
-        .runner .leg-back{transform:rotate(-12deg);}
-        .runner .shoe-back,.runner .shoe-front{
-            position:absolute;top:35px;width:8px;height:4px;border-radius:5px;background:#ffffff;
-        }
-        .runner .shoe-back{left:9px;}
-        .runner .shoe-front{left:18px;}
-        .easter-egg.running{pointer-events:none;animation:eggRun 2.8s ease-in-out forwards;}
-        .easter-egg.running .leg-front{animation:legFront .26s linear infinite;}
-        .easter-egg.running .leg-back{animation:legBack .26s linear infinite;}
-        .easter-egg.running .arm{animation:armSwing .26s linear infinite;}
-        .easter-egg.running .cone,.easter-egg.running .scoop{animation:coneBob .26s linear infinite;}
-        @keyframes eggRun{
-            0%{transform:translateX(0) translateY(0) scale(1);}
-            12%{transform:translateX(calc(var(--run-distance) * .12)) translateY(-2px) rotate(-4deg);}
-            24%{transform:translateX(calc(var(--run-distance) * .24)) translateY(1px) rotate(3deg);}
-            36%{transform:translateX(calc(var(--run-distance) * .36)) translateY(-2px) rotate(-3deg);}
-            48%{transform:translateX(calc(var(--run-distance) * .48)) translateY(1px) rotate(3deg);}
-            60%{transform:translateX(calc(var(--run-distance) * .60)) translateY(-2px) rotate(-3deg);}
-            72%{transform:translateX(calc(var(--run-distance) * .72)) translateY(1px) rotate(2deg);}
-            84%{transform:translateX(calc(var(--run-distance) * .84)) translateY(-2px) rotate(-2deg);}
-            100%{transform:translateX(var(--run-distance)) translateY(0) scale(1);}
-        }
-        @keyframes legFront{0%{transform:rotate(18deg);}50%{transform:rotate(-18deg);}100%{transform:rotate(18deg);}}
-        @keyframes legBack{0%{transform:rotate(-16deg);}50%{transform:rotate(18deg);}100%{transform:rotate(-16deg);}}
-        @keyframes armSwing{0%{transform:rotate(-12deg);}50%{transform:rotate(18deg);}100%{transform:rotate(-12deg);}}
-        @keyframes coneBob{0%{transform:rotate(18deg);}50%{transform:rotate(28deg) translateY(-1px);}100%{transform:rotate(18deg);}}
+
         /* ─── LAYOUT ──────────────────────────────────────────── */
         .layout{padding-top:var(--header-h);min-height:100vh;}
 
@@ -563,7 +502,7 @@
             .h-tutorias{height:34px;max-width:120px;}
             .h-brand{display:none;}
             .top-nav{display:none;}
-            .easter-egg{display:none;}
+
             .welcome-hero{grid-template-columns:1fr;}
             .welcome-intro{padding:26px 22px;}
             .welcome-intro h2{font-size:42px;}
@@ -616,21 +555,7 @@
                 <span class="main">La Obra Tutorías</span>
             </div>
         </div>
-        <button type="button" class="easter-egg" id="easter-egg" aria-label="Easter egg: personita con helado">
-            <div class="runner" aria-hidden="true">
-                <div class="hair"></div>
-                <div class="head"></div>
-                <div class="face"></div>
-                <div class="torso"></div>
-                <div class="arm"></div>
-                <div class="cone"></div>
-                <div class="scoop"></div>
-                <div class="leg-back"></div>
-                <div class="leg-front"></div>
-                <div class="shoe-back"></div>
-                <div class="shoe-front"></div>
-            </div>
-        </button>
+
         <nav class="top-nav" aria-label="Secciones principales">
             <button class="top-nav-btn" id="nav-about" onclick="showAbout()">¿Quiénes somos?</button>
             <button class="top-nav-btn active" id="nav-classes" onclick="showClasses()">Clases</button>
@@ -919,7 +844,7 @@ let currentModuleTab = 'pres';
 function init() {
     buildPrevGrid();
     bindModuleTabs();
-    initEasterEgg();
+
 }
 
 function getCat(id){ return CATEGORIES.find(c=>c.id===id); }
@@ -1195,48 +1120,7 @@ function openOfficialSite() {
     window.open('https://www.laobrauc.com/', '_blank');
 }
 
-function initEasterEgg() {
-    const egg = document.getElementById('easter-egg');
-    const header = document.querySelector('header');
-    const brand = document.querySelector('.brand-lockup');
-    const about = document.getElementById('nav-about');
-    if (!egg || !header || !brand || !about) return;
 
-    const placeEgg = () => {
-        if (window.innerWidth <= 860) return;
-        const headerRect = header.getBoundingClientRect();
-        const brandRect = brand.getBoundingClientRect();
-        const start = Math.round(brandRect.right - headerRect.left + 8);
-        egg.style.left = `${start}px`;
-        egg.style.transform = 'translateX(0)';
-    };
-
-    placeEgg();
-    window.addEventListener('resize', placeEgg);
-
-    egg.addEventListener('click', () => {
-        if (egg.classList.contains('running') || window.innerWidth <= 860) return;
-        const headerRect = header.getBoundingClientRect();
-        const brandRect = brand.getBoundingClientRect();
-        const aboutRect = about.getBoundingClientRect();
-        const start = Math.round(brandRect.right - headerRect.left + 8);
-        const target = Math.round(aboutRect.left - headerRect.left - egg.offsetWidth + 10);
-        const distance = Math.max(36, target - start);
-
-        egg.style.left = `${start}px`;
-        egg.style.setProperty('--run-distance', `${distance}px`);
-        egg.classList.remove('running');
-        void egg.offsetWidth;
-        egg.classList.add('running');
-    });
-
-    egg.addEventListener('animationend', (evt) => {
-        if (evt.animationName !== 'eggRun') return;
-        egg.classList.remove('running');
-        egg.style.removeProperty('--run-distance');
-        placeEgg();
-    });
-}
 
 // ══════════════════════════════════════════════════════════════════════
 //  TICKET DE SALIDA
