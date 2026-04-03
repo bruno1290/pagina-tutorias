@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Fracciones III - Suma, Resta y MCM</title>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+    :root {--base: #1C4A82; --bg: #f5f6f8; --tx: #333;}
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family: 'Nunito', sans-serif; background: var(--bg); overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center;}
+    .dk {position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex;}
+    
+    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 40px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1;}
+    .sl.on {opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10;}
+    .sl.pv {opacity: 0; transform: translateX(-50px) scale(.95);}
+    .sl.nx {opacity: 0; transform: translateX(50px) scale(.95);}
+    
+    .head-title {background: var(--base); color: white; padding: 10px 40px; font-size: 32px; font-weight: 900; margin-bottom: 40px; display: inline-block; border-radius: 12px;}
+    .sub-text {font-size: 24px; font-weight: 600; margin-bottom: 30px; text-align: center; color: var(--tx);}
+    .frac-box {border: 3px dashed var(--base); border-radius: 20px; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px 30px; font-size: 60px; font-weight: 900; line-height: 1; margin: 0 20px; background: white;}
+    .frac-box div.line {height: 4px; width: 100%; background: #333; margin: 5px 0; border-radius: 2px;}
+    
+    /* Navigation */
+    .pb {position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100;}
+    .nv {position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: white; border-top: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; z-index: 100;}
+    .nb {background: #eee; color: var(--base); border: none; padding: 10px 20px; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer; transition: all .2s;}
+    .nb:hover {background: #ddd;}
+    .nb:disabled {opacity: 0.3; cursor: not-allowed;}
+    .sc {color: #888; font-size: 16px; font-weight: 900;}
+    
+    /* Steps Engine */
+    .stp {opacity: 0; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none; position: relative;}
+    .stp.shwn {opacity: 1; transform: translateY(0); pointer-events: auto;}
+    
+    /* Components */
+    .pnl {background: #fff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 2px solid #eaeaea; width: 100%; margin-bottom: 20px;}
+    .pnl-border {background: #fff; padding: 30px; border-radius: 20px; border: 4px solid var(--base); width: 100%; margin-bottom: 20px;}
+    .hl {color: var(--base); font-weight: 900;}
+    </style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
+    <div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 style="font-size: 70px; color: var(--base); margin-bottom: 20px; text-align:center;">¡Fracciones 3!</h1>
+            <p class="sub-text">Cero a Experto: Sumas y Restas 🏆</p>
+            <p style="font-size:100px; margin-top:30px; animation: bounce 2s infinite;">🏆</p>
+            <style>@keyframes bounce { 0%, 100%{transform:translateY(0);} 50%{transform:translateY(-20px);} }</style>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">Suma de igual Denominador</div>
+        <div class="pnl-border" style="flex-direction:column; width:100%;">
+            <p style="font-size:28px; font-weight:800; margin-bottom:20px; color:var(--base);">Sumemos: <b>1/4</b> + <b>2/4</b></p>
+            
+            <div class="stp" style="display:flex; justify-content:center; align-items:center; gap:30px; margin:20px 0;">
+                <div style="text-align:center;">
+                    <div class="frac-box" style="margin-bottom:10px;"><div>1</div><div class="line"></div><div>4</div></div>
+                </div>
+                <div style="font-size:60px; font-weight:800; color:#555;">+</div>
+                <div style="text-align:center;">
+                    <div class="frac-box" style="margin-bottom:10px;"><div>2</div><div class="line"></div><div>4</div></div>
+                </div>
+                <div style="font-size:60px; font-weight:800; color:#555;">=</div>
+                <div class="stp" style="text-align:center;">
+                    <div class="frac-box" style="margin-bottom:10px; border-color:#047857; color:#047857;"><div>3</div><div class="line" style="background:#047857;"></div><div>4</div></div>
+                </div>
+            </div>
+
+            <div class="stp" style="display:flex; align-items:center; gap:40px; margin-top:20px;">
+                <svg width="240" height="240" viewBox="0 0 240 240"><circle cx="120" cy="120" r="115" fill="none" stroke="#555" stroke-width="3"/><path d="M120 120 L120 5 A115 115 0 0 1 235 120 Z" fill="#9DDEFF" stroke="#555" stroke-width="2"/><path d="M120 120 L235 120 A115 115 0 0 1 120 235 Z" fill="#FF9D9D" stroke="#555" stroke-width="2"/><path d="M120 120 L120 235 A115 115 0 0 1 5 120 Z" fill="#FF9D9D" stroke="#555" stroke-width="2"/><path d="M120 120 L5 120 A115 115 0 0 1 120 5 Z" fill="#fff" stroke="#555" stroke-width="2"/></svg>
+                <div style="background:#eaf1f8; padding:20px; border-radius:15px; border-left:8px solid #047857; font-size:22px;">
+                    ¡Al tener el mismo tamaño de corte abajo (denominador), sólo sumamos los números de arriba y el corte se mantiene igual!
+                </div>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">Practica Sumas y Restas</div>
+        <p class="sub-text" style="color:var(--base);">Suma: 2/6 + 3/6</p>
+        <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; gap:40px; width:100%;">
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                 <div class="frac-box" style="font-size:40px; margin-bottom:10px;"><div>2</div><div class="line"></div><div>6</div></div>
+            </div>
+            <div style="font-size:60px; font-weight:900; color:#888;">+</div>
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                 <div class="frac-box" style="font-size:40px; margin-bottom:10px;"><div>3</div><div class="line"></div><div>6</div></div>
+            </div>
+            <div class="stp" style="font-size:60px; font-weight:900; color:#888;">=</div>
+            <div class="stp" style="display:flex; flex-direction:column; align-items:center;">
+                <div class="frac-box" style="font-size:60px; border-color:#047857; color:#047857; padding:20px 40px; background:#eaf1f8;">
+                    <div>5</div><div class="line" style="background:#047857;"></div><div>6</div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Practica Sumas y Restas</div>
+        <p class="sub-text" style="color:var(--base);">Suma: 3/8 + 4/8</p>
+        <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; gap:40px; width:100%;">
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                 <div class="frac-box" style="font-size:40px; margin-bottom:10px;"><div>3</div><div class="line"></div><div>8</div></div>
+            </div>
+            <div style="font-size:60px; font-weight:900; color:#888;">+</div>
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                 <div class="frac-box" style="font-size:40px; margin-bottom:10px;"><div>4</div><div class="line"></div><div>8</div></div>
+            </div>
+            <div class="stp" style="font-size:60px; font-weight:900; color:#888;">=</div>
+            <div class="stp" style="display:flex; flex-direction:column; align-items:center;">
+                <div class="frac-box" style="font-size:60px; border-color:#047857; color:#047857; padding:20px 40px; background:#eaf1f8;">
+                    <div>7</div><div class="line" style="background:#047857;"></div><div>8</div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Practica Sumas y Restas</div>
+        <p class="sub-text" style="color:var(--base);">Suma: 1/5 + 2/5</p>
+        <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; gap:40px; width:100%;">
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                 <div class="frac-box" style="font-size:40px; margin-bottom:10px;"><div>1</div><div class="line"></div><div>5</div></div>
+            </div>
+            <div style="font-size:60px; font-weight:900; color:#888;">+</div>
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                 <div class="frac-box" style="font-size:40px; margin-bottom:10px;"><div>2</div><div class="line"></div><div>5</div></div>
+            </div>
+            <div class="stp" style="font-size:60px; font-weight:900; color:#888;">=</div>
+            <div class="stp" style="display:flex; flex-direction:column; align-items:center;">
+                <div class="frac-box" style="font-size:60px; border-color:#047857; color:#047857; padding:20px 40px; background:#eaf1f8;">
+                    <div>3</div><div class="line" style="background:#047857;"></div><div>5</div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Practica Sumas y Restas</div>
+        <p class="sub-text" style="color:var(--base);">Suma: 2/7 + 4/7</p>
+        <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; gap:40px; width:100%;">
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                 <div class="frac-box" style="font-size:40px; margin-bottom:10px;"><div>2</div><div class="line"></div><div>7</div></div>
+            </div>
+            <div style="font-size:60px; font-weight:900; color:#888;">+</div>
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                 <div class="frac-box" style="font-size:40px; margin-bottom:10px;"><div>4</div><div class="line"></div><div>7</div></div>
+            </div>
+            <div class="stp" style="font-size:60px; font-weight:900; color:#888;">=</div>
+            <div class="stp" style="display:flex; flex-direction:column; align-items:center;">
+                <div class="frac-box" style="font-size:60px; border-color:#047857; color:#047857; padding:20px 40px; background:#eaf1f8;">
+                    <div>6</div><div class="line" style="background:#047857;"></div><div>7</div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Practica Sumas y Restas</div>
+        <p class="sub-text" style="color:var(--base);">Resta: 5/6 - 2/6</p>
+        <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; gap:40px; width:100%;">
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                 <div class="frac-box" style="font-size:40px; margin-bottom:10px;"><div>5</div><div class="line"></div><div>6</div></div>
+            </div>
+            <div style="font-size:60px; font-weight:900; color:#888;">-</div>
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                 <div class="frac-box" style="font-size:40px; margin-bottom:10px;"><div>2</div><div class="line"></div><div>6</div></div>
+            </div>
+            <div class="stp" style="font-size:60px; font-weight:900; color:#888;">=</div>
+            <div class="stp" style="display:flex; flex-direction:column; align-items:center;">
+                <div class="frac-box" style="font-size:60px; border-color:#047857; color:#047857; padding:20px 40px; background:#eaf1f8;">
+                    <div>3</div><div class="line" style="background:#047857;"></div><div>6</div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Practica Sumas y Restas</div>
+        <p class="sub-text" style="color:var(--base);">Resta: 7/8 - 3/8</p>
+        <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; gap:40px; width:100%;">
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                 <div class="frac-box" style="font-size:40px; margin-bottom:10px;"><div>7</div><div class="line"></div><div>8</div></div>
+            </div>
+            <div style="font-size:60px; font-weight:900; color:#888;">-</div>
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                 <div class="frac-box" style="font-size:40px; margin-bottom:10px;"><div>3</div><div class="line"></div><div>8</div></div>
+            </div>
+            <div class="stp" style="font-size:60px; font-weight:900; color:#888;">=</div>
+            <div class="stp" style="display:flex; flex-direction:column; align-items:center;">
+                <div class="frac-box" style="font-size:60px; border-color:#047857; color:#047857; padding:20px 40px; background:#eaf1f8;">
+                    <div>4</div><div class="line" style="background:#047857;"></div><div>8</div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Practica Sumas y Restas</div>
+        <p class="sub-text" style="color:var(--base);">Resta: 4/5 - 1/5</p>
+        <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; gap:40px; width:100%;">
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                 <div class="frac-box" style="font-size:40px; margin-bottom:10px;"><div>4</div><div class="line"></div><div>5</div></div>
+            </div>
+            <div style="font-size:60px; font-weight:900; color:#888;">-</div>
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                 <div class="frac-box" style="font-size:40px; margin-bottom:10px;"><div>1</div><div class="line"></div><div>5</div></div>
+            </div>
+            <div class="stp" style="font-size:60px; font-weight:900; color:#888;">=</div>
+            <div class="stp" style="display:flex; flex-direction:column; align-items:center;">
+                <div class="frac-box" style="font-size:60px; border-color:#047857; color:#047857; padding:20px 40px; background:#eaf1f8;">
+                    <div>3</div><div class="line" style="background:#047857;"></div><div>5</div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Practica Sumas y Restas</div>
+        <p class="sub-text" style="color:var(--base);">Resta: 9/10 - 4/10</p>
+        <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; gap:40px; width:100%;">
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                 <div class="frac-box" style="font-size:40px; margin-bottom:10px;"><div>9</div><div class="line"></div><div>10</div></div>
+            </div>
+            <div style="font-size:60px; font-weight:900; color:#888;">-</div>
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                 <div class="frac-box" style="font-size:40px; margin-bottom:10px;"><div>4</div><div class="line"></div><div>10</div></div>
+            </div>
+            <div class="stp" style="font-size:60px; font-weight:900; color:#888;">=</div>
+            <div class="stp" style="display:flex; flex-direction:column; align-items:center;">
+                <div class="frac-box" style="font-size:60px; border-color:#047857; color:#047857; padding:20px 40px; background:#eaf1f8;">
+                    <div>5</div><div class="line" style="background:#047857;"></div><div>10</div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Analizando Situaciones 🧐</div>
+        <div class="pnl-border" style="text-align:center; padding:50px;">
+            <p style="font-size:32px; font-weight:800; margin-bottom:20px; color:var(--base);">Racionando el Agua 💧</p>
+            <p style="font-size:26px; line-height:1.6; margin-bottom:30px;">Tenías una botella completa de agua que medía <b>5/5</b> de litro. Bebiste <b>2/5</b> en el recreo. ¿Qué fracción de agua queda en tu botella?</p>
+            
+            <div class="stp" style="background:#eaf1f8; border-radius: 15px; padding:25px; text-align:left; border-left: 8px solid var(--base);">
+                <p style="font-size:22px; color:#555; font-weight:800; margin-bottom:10px;">Desarrollo:</p>
+                <div style="font-size:24px;">Es una resta con denominador "5". <br> A 5 le quitas 2 = 3.<br><span style='font-size:36px; color:var(--base); font-weight:900;'>3/5 de litro</span> quedan en la botella.</div>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">Analizando Situaciones 🧐</div>
+        <div class="pnl-border" style="text-align:center; padding:50px;">
+            <p style="font-size:32px; font-weight:800; margin-bottom:20px; color:var(--base);">La huerta compartida 🥕</p>
+            <p style="font-size:26px; line-height:1.6; margin-bottom:30px;">Plantaste tomates en <b>3/7</b> del jardín y zanahorias en <b>2/7</b> del jardín. ¿Qué fracción total del jardín usaste?</p>
+            
+            <div class="stp" style="background:#eaf1f8; border-radius: 15px; padding:25px; text-align:left; border-left: 8px solid var(--base);">
+                <p style="font-size:22px; color:#555; font-weight:800; margin-bottom:10px;">Desarrollo:</p>
+                <div style="font-size:24px;">Es una suma directa (mismo denominador "7").<br> 3 + 2 = 5.<br>Ocupaste <span style='font-size:36px; color:var(--base); font-weight:900;'>5/7</span> del jardín.</div>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title" style="background:#F57F17;">¡Problema! ¿Denominadores Distintos?</div>
+        <div class="pnl-border" style="border-color: #FBC02D; text-align:center; font-size:26px;">
+            <p>¿Qué pasa si queremos <b>Sumar</b>:  <b>2/3</b> y <b>3/4</b>?</p>
+            <div class="stp" style="margin-top:20px; font-weight:800; color:#b91c1c;">¡No tienen el mismo denominador! Unos son pedazos de tres, y otros de cuatro.</div>
+            <div class="stp" style="margin-top:20px; font-size:80px; animation:shake 1s infinite alternate;">😖</div>
+            <div class="stp" style="margin-top:20px; font-weight:800; font-size:24px; color:var(--base);">
+                Para poder operarlas, tenemos que hacer que tengan el mismo denominador inferior.<br><br>
+                Para lograr eso, buscamos un aliado llamado: <br><span style="font-size:40px; color:#F57C00; font-weight:900;">Mínimo Común Múltiplo (MCM)</span>.
+            </div>
+        </div>
+        <style>@keyframes shake { 0%{transform:translateX(-10px);} 100%{transform:translateX(10px);} }</style>
+    </div><div class="sl">
+        <div class="head-title">¿Qué es el MCM?</div>
+        <div class="pnl-border" style="flex-direction:column; text-align:center;">
+            <p style="font-size:24px; margin-top:5px; color:var(--base); font-weight:900;">Es buscar el número <b>más pequeño</b> que aparezca repetido en las tablas de multiplicar de los dos denominadores.</p>
+            
+            <div class="stp" style="background:#f5f6f8; padding:20px; border-radius:20px; width:100%; margin-top:20px;">
+                <b style="font-size:24px; color:#555;">Miremos 2/3 y 3/4. Vamos a las tablas del 3 y del 4.</b>
+                <div style="font-size:26px; margin-top:20px; display:inline-block; font-family:monospace; text-align:left;">
+                    <b>Tabla del 3:</b> 3 - 6 - 9 - <span class="stp hl" style="background:#FFDEE9; padding:5px; border-radius:8px;">12</span> - 15 - 18...
+
+                    <br><br>
+                    <b>Tabla del 4:</b> 4 - 8 - <span class="stp hl" style="background:#FFDEE9; padding:5px; border-radius:8px;">12</span> - 16 - 20...
+                </div>
+            </div>
+            
+            <div class="stp" style="margin-top:20px; font-size:30px; font-weight:900; color:var(--base);">
+                Tienen como primer MÍNIMO REPETIDO el número 12. ¡Ese es su MCM!
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">¡A Practicar MCM!</div>
+        <p class="sub-text" style="font-size:28px; color:var(--base);">Encuentra el MCM de 2 y 5</p>
+        <div class="pnl-border" style="font-size:26px; text-align:center;">
+            Calculemos revisando las tablas de multiplicar del <b>2</b> y <b>5</b>.
+            
+            <div class="stp" style="margin-top:20px; display:flex; flex-direction:column; gap:15px; font-size:30px;">
+                <div style="background:#f8f9fa; padding:15px; border-radius:10px;">
+                    <b>Tabla del 2:</b> <span class="stp">2, 4, 6, 8, <span class='hl'>10</span>...</span>
+                </div>
+                <div style="background:#f8f9fa; padding:15px; border-radius:10px;">
+                    <b>Tabla del 5:</b> <span class="stp">5, <span class='hl'>10</span>, 15...</span>
+                </div>
+            </div>
+            
+            <div class="stp" style="margin-top:40px; font-size:46px; font-weight:900; color:#047857; background:#E8F5E9; padding:20px; border-radius:20px;">
+                ¡El MCM es 10! ✅
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">¡A Practicar MCM!</div>
+        <p class="sub-text" style="font-size:28px; color:var(--base);">Encuentra el MCM de 4 y 5</p>
+        <div class="pnl-border" style="font-size:26px; text-align:center;">
+            Calculemos revisando las tablas de multiplicar del <b>4</b> y <b>5</b>.
+            
+            <div class="stp" style="margin-top:20px; display:flex; flex-direction:column; gap:15px; font-size:30px;">
+                <div style="background:#f8f9fa; padding:15px; border-radius:10px;">
+                    <b>Tabla del 4:</b> <span class="stp">4, 8, 12, 16, <span class='hl'>20</span>...</span>
+                </div>
+                <div style="background:#f8f9fa; padding:15px; border-radius:10px;">
+                    <b>Tabla del 5:</b> <span class="stp">5, 10, 15, <span class='hl'>20</span>...</span>
+                </div>
+            </div>
+            
+            <div class="stp" style="margin-top:40px; font-size:46px; font-weight:900; color:#047857; background:#E8F5E9; padding:20px; border-radius:20px;">
+                ¡El MCM es 20! ✅
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">¡A Practicar MCM!</div>
+        <p class="sub-text" style="font-size:28px; color:var(--base);">Encuentra el MCM de 3 y 6</p>
+        <div class="pnl-border" style="font-size:26px; text-align:center;">
+            Calculemos revisando las tablas de multiplicar del <b>3</b> y <b>6</b>.
+            
+            <div class="stp" style="margin-top:20px; display:flex; flex-direction:column; gap:15px; font-size:30px;">
+                <div style="background:#f8f9fa; padding:15px; border-radius:10px;">
+                    <b>Tabla del 3:</b> <span class="stp">3, <span class='hl'>6</span>, 9...</span>
+                </div>
+                <div style="background:#f8f9fa; padding:15px; border-radius:10px;">
+                    <b>Tabla del 6:</b> <span class="stp"><span class='hl'>6</span>, 12...</span>
+                </div>
+            </div>
+            
+            <div class="stp" style="margin-top:40px; font-size:46px; font-weight:900; color:#047857; background:#E8F5E9; padding:20px; border-radius:20px;">
+                ¡El MCM es 6! ✅
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">¡A Practicar MCM!</div>
+        <p class="sub-text" style="font-size:28px; color:var(--base);">Encuentra el MCM de 2 y 3</p>
+        <div class="pnl-border" style="font-size:26px; text-align:center;">
+            Calculemos revisando las tablas de multiplicar del <b>2</b> y <b>3</b>.
+            
+            <div class="stp" style="margin-top:20px; display:flex; flex-direction:column; gap:15px; font-size:30px;">
+                <div style="background:#f8f9fa; padding:15px; border-radius:10px;">
+                    <b>Tabla del 2:</b> <span class="stp">2, 4, <span class='hl'>6</span>...</span>
+                </div>
+                <div style="background:#f8f9fa; padding:15px; border-radius:10px;">
+                    <b>Tabla del 3:</b> <span class="stp">3, <span class='hl'>6</span>...</span>
+                </div>
+            </div>
+            
+            <div class="stp" style="margin-top:40px; font-size:46px; font-weight:900; color:#047857; background:#E8F5E9; padding:20px; border-radius:20px;">
+                ¡El MCM es 6! ✅
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">¡A Practicar MCM!</div>
+        <p class="sub-text" style="font-size:28px; color:var(--base);">Encuentra el MCM de 3 y 5</p>
+        <div class="pnl-border" style="font-size:26px; text-align:center;">
+            Calculemos revisando las tablas de multiplicar del <b>3</b> y <b>5</b>.
+            
+            <div class="stp" style="margin-top:20px; display:flex; flex-direction:column; gap:15px; font-size:30px;">
+                <div style="background:#f8f9fa; padding:15px; border-radius:10px;">
+                    <b>Tabla del 3:</b> <span class="stp">3, 6, 9, 12, <span class='hl'>15</span>...</span>
+                </div>
+                <div style="background:#f8f9fa; padding:15px; border-radius:10px;">
+                    <b>Tabla del 5:</b> <span class="stp">5, 10, <span class='hl'>15</span>...</span>
+                </div>
+            </div>
+            
+            <div class="stp" style="margin-top:40px; font-size:46px; font-weight:900; color:#047857; background:#E8F5E9; padding:20px; border-radius:20px;">
+                ¡El MCM es 15! ✅
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">¡A Practicar MCM!</div>
+        <p class="sub-text" style="font-size:28px; color:var(--base);">Encuentra el MCM de 2 y 4</p>
+        <div class="pnl-border" style="font-size:26px; text-align:center;">
+            Calculemos revisando las tablas de multiplicar del <b>2</b> y <b>4</b>.
+            
+            <div class="stp" style="margin-top:20px; display:flex; flex-direction:column; gap:15px; font-size:30px;">
+                <div style="background:#f8f9fa; padding:15px; border-radius:10px;">
+                    <b>Tabla del 2:</b> <span class="stp">2, <span class='hl'>4</span>, 6...</span>
+                </div>
+                <div style="background:#f8f9fa; padding:15px; border-radius:10px;">
+                    <b>Tabla del 4:</b> <span class="stp"><span class='hl'>4</span>, 8, 12...</span>
+                </div>
+            </div>
+            
+            <div class="stp" style="margin-top:40px; font-size:46px; font-weight:900; color:#047857; background:#E8F5E9; padding:20px; border-radius:20px;">
+                ¡El MCM es 4! ✅
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">¡A Practicar MCM!</div>
+        <p class="sub-text" style="font-size:28px; color:var(--base);">Encuentra el MCM de 6 y 8</p>
+        <div class="pnl-border" style="font-size:26px; text-align:center;">
+            Calculemos revisando las tablas de multiplicar del <b>6</b> y <b>8</b>.
+            
+            <div class="stp" style="margin-top:20px; display:flex; flex-direction:column; gap:15px; font-size:30px;">
+                <div style="background:#f8f9fa; padding:15px; border-radius:10px;">
+                    <b>Tabla del 6:</b> <span class="stp">6, 12, 18, <span class='hl'>24</span>...</span>
+                </div>
+                <div style="background:#f8f9fa; padding:15px; border-radius:10px;">
+                    <b>Tabla del 8:</b> <span class="stp">8, 16, <span class='hl'>24</span>...</span>
+                </div>
+            </div>
+            
+            <div class="stp" style="margin-top:40px; font-size:46px; font-weight:900; color:#047857; background:#E8F5E9; padding:20px; border-radius:20px;">
+                ¡El MCM es 24! ✅
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Paso Final: Amplificar con el MCM</div>
+        <div class="pnl-border" style="width:100%;">
+            <p style="font-size:28px; font-weight:800; text-align:center; margin-bottom:20px; color:var(--base);">Cómo operar: <b>2/3 + 3/4</b></p>
+            
+            <div class="stp" style="background:#f5f6f8; padding:15px 30px; border-radius:15px; font-size:24px;">
+                <b>Paso 1:</b> Sabemos que el MCM de 3 y 4 es <b style="font-size:30px; color:var(--base);">12</b>.
+            </div>
+            
+            <div class="stp" style="margin-top:15px; background:#f5f6f8; padding:15px 30px; border-radius:15px; font-size:24px;">
+                <b>Paso 2:</b> Amplificar (multiplicar arriba y abajo) para que el denominador quede en 12:<br><br>
+                El 3 para llegar a 12 se multiplica por 4: &nbsp; <b>2/3 <span style="color:var(--base);">(x4)</span> = 8/12</b><br>
+                El 4 para llegar a 12 se multiplica por 3: &nbsp; <b>3/4 <span style="color:var(--base);">(x3)</span> = 9/12</b>
+            </div>
+            
+            <div class="stp" style="margin-top:15px; background:#E8F5E9; padding:15px 30px; border-radius:15px; font-size:28px; text-align:center;">
+                <b style="color:#2E7D32;">Paso 3: ¡Ya tienen denominadores iguales!</b><br>
+                Reemplazamos: <b style="font-size:36px;">8/12 + 9/12 = 17/12</b><br>
+                ¡Listo!
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">Suma y Resta Avanzada</div>
+        <div class="pnl-border" style="padding:40px; width:100%;">
+            <p style="font-size:32px; font-weight:900; text-align:center; margin-bottom:30px; color:var(--base);">Suma: 1/2 + 1/3</p>
+            
+            <div class="stp" style="font-size:26px; border-bottom:2px dashed #ccc; padding-bottom:15px;">
+                <b>1.</b> MCM entre 2 y 3 = <b>6</b>
+            </div>
+            <div class="stp" style="font-size:26px; border-bottom:2px dashed #ccc; padding:15px 0;">
+                <b>2.</b> Amplificar:<br>1/2 (x3) = 3/6<br>1/3 (x2) = 2/6
+            </div>
+            <div class="stp" style="font-size:36px; padding-top:15px; text-align:center;">
+                <b>3.</b> ¡Resultado!<br>3/6 + 2/6 = <b style='color:#047857'>5/6</b>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Suma y Resta Avanzada</div>
+        <div class="pnl-border" style="padding:40px; width:100%;">
+            <p style="font-size:32px; font-weight:900; text-align:center; margin-bottom:30px; color:var(--base);">Resta: 3/4 - 1/2</p>
+            
+            <div class="stp" style="font-size:26px; border-bottom:2px dashed #ccc; padding-bottom:15px;">
+                <b>1.</b> MCM entre 4 y 2 = <b>4</b>
+            </div>
+            <div class="stp" style="font-size:26px; border-bottom:2px dashed #ccc; padding:15px 0;">
+                <b>2.</b> Amplificar:<br>3/4 se queda en 3/4 (ya es 4).<br>1/2 (x2) = 2/4
+            </div>
+            <div class="stp" style="font-size:36px; padding-top:15px; text-align:center;">
+                <b>3.</b> ¡Resultado!<br>3/4 - 2/4 = <b style='color:#047857'>1/4</b>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Suma y Resta Avanzada</div>
+        <div class="pnl-border" style="padding:40px; width:100%;">
+            <p style="font-size:32px; font-weight:900; text-align:center; margin-bottom:30px; color:var(--base);">Suma: 2/5 + 1/2</p>
+            
+            <div class="stp" style="font-size:26px; border-bottom:2px dashed #ccc; padding-bottom:15px;">
+                <b>1.</b> MCM entre 5 y 2 = <b>10</b>
+            </div>
+            <div class="stp" style="font-size:26px; border-bottom:2px dashed #ccc; padding:15px 0;">
+                <b>2.</b> Amplificar:<br>2/5 (x2) = 4/10<br>1/2 (x5) = 5/10
+            </div>
+            <div class="stp" style="font-size:36px; padding-top:15px; text-align:center;">
+                <b>3.</b> ¡Resultado!<br>4/10 + 5/10 = <b style='color:#047857'>9/10</b>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Suma y Resta Avanzada</div>
+        <div class="pnl-border" style="padding:40px; width:100%;">
+            <p style="font-size:32px; font-weight:900; text-align:center; margin-bottom:30px; color:var(--base);">Resta: 2/3 - 1/6</p>
+            
+            <div class="stp" style="font-size:26px; border-bottom:2px dashed #ccc; padding-bottom:15px;">
+                <b>1.</b> MCM entre 3 y 6 = <b>6</b>
+            </div>
+            <div class="stp" style="font-size:26px; border-bottom:2px dashed #ccc; padding:15px 0;">
+                <b>2.</b> Amplificar:<br>2/3 (x2) = 4/6.<br>1/6 se queda igual.
+            </div>
+            <div class="stp" style="font-size:36px; padding-top:15px; text-align:center;">
+                <b>3.</b> ¡Resultado!<br>4/6 - 1/6 = <b style='color:#047857'>3/6</b>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Resolviendo la realidad 💡</div>
+        <div class="pnl-border" style="padding:40px; display:flex; gap:40px; align-items:center; width:100%;">
+            <div style="font-size:120px;">🎨</div>
+            <div style="flex:1;">
+                <h2 style="font-size:32px; color:var(--base); margin-bottom:15px;">Muro a medias</h2>
+                <p style="font-size:26px;">Pintaste <b>1/2</b> del muro y tu hermana pintó <b>1/4</b>. ¿Cuánto muro pintaron en total?</p>
+                
+                <div class="stp" style="margin-top:20px; background:#f5f6f8; padding:20px; border-radius:20px; border-left: 10px solid var(--base);">
+                    <p style="font-size:22px; font-weight:800; color:#555;">La respuesta guiada:</p>
+                    <div style="font-size:26px; font-weight:900; margin-top:10px;">MCM es 4.<br>Amplificas tu 1/2 multiplicando por 2 = 2/4.<br>2/4 + 1/4 = <span style='font-size:46px; color:var(--base);'>3/4</span>.</div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Resolviendo la realidad 💡</div>
+        <div class="pnl-border" style="padding:40px; display:flex; gap:40px; align-items:center; width:100%;">
+            <div style="font-size:120px;">🍰</div>
+            <div style="flex:1;">
+                <h2 style="font-size:32px; color:var(--base); margin-bottom:15px;">El pastel de zanahoria</h2>
+                <p style="font-size:26px;">Quedaba <b>3/4</b> del pastel. Un amigo con hambre se comió <b>1/2</b> del pastel completo. ¿Cuánto pastel queda ahora?</p>
+                
+                <div class="stp" style="margin-top:20px; background:#f5f6f8; padding:20px; border-radius:20px; border-left: 10px solid var(--base);">
+                    <p style="font-size:22px; font-weight:800; color:#555;">La respuesta guiada:</p>
+                    <div style="font-size:26px; font-weight:900; margin-top:10px;">MCM es 4.<br>El medio que se comió equivale a 2/4.<br>3/4 menos 2/4 = <span style='font-size:46px; color:var(--base);'>1/4</span>.</div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Resolviendo la realidad 💡</div>
+        <div class="pnl-border" style="padding:40px; display:flex; gap:40px; align-items:center; width:100%;">
+            <div style="font-size:120px;">🏃🏽‍♂️</div>
+            <div style="flex:1;">
+                <h2 style="font-size:32px; color:var(--base); margin-bottom:15px;">Ejercicio matutino</h2>
+                <p style="font-size:26px;">Corriste <b>2/3</b> de kilómetro y luego caminaste <b>1/6</b> de kilómetro más. ¿Cuántos kilómetros avanzaste?</p>
+                
+                <div class="stp" style="margin-top:20px; background:#f5f6f8; padding:20px; border-radius:20px; border-left: 10px solid var(--base);">
+                    <p style="font-size:22px; font-weight:800; color:#555;">La respuesta guiada:</p>
+                    <div style="font-size:26px; font-weight:900; margin-top:10px;">MCM de 3 y 6 es 6.<br>2/3 por (x2) = 4/6.<br>4/6 + 1/6 = <span style='font-size:46px; color:var(--base);'>5/6</span>.</div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Resolviendo la realidad 💡</div>
+        <div class="pnl-border" style="padding:40px; display:flex; gap:40px; align-items:center; width:100%;">
+            <div style="font-size:120px;">🪨</div>
+            <div style="flex:1;">
+                <h2 style="font-size:32px; color:var(--base); margin-bottom:15px;">Colección de rocas</h2>
+                <p style="font-size:26px;">Tú ocupaste <b>1/5</b> de la caja con rocas y tu primo ocupó <b>1/2</b>. ¿Cuánto de la caja está llena por ambos?</p>
+                
+                <div class="stp" style="margin-top:20px; background:#f5f6f8; padding:20px; border-radius:20px; border-left: 10px solid var(--base);">
+                    <p style="font-size:22px; font-weight:800; color:#555;">La respuesta guiada:</p>
+                    <div style="font-size:26px; font-weight:900; margin-top:10px;">MCM entre 5 y 2 es 10.<br>Tú tienes 2/10 y tu primo 5/10.<br>En total ocuparon <span style='font-size:46px; color:var(--base);'>7/10</span>.</div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">📋 Resumen Definitivo</div>
+        <div style="display:flex; flex-direction:column; gap:20px; width:100%;">
+            <div class="stp pnl-border" style="padding:15px; font-size:22px;"><b style="font-size:36px">➕</b> <b>Igual Denominador:</b> Para sumar/restar, mantenemos el número inferior y operamos sólo lo de arriba.</div>
+            <div class="stp pnl-border" style="padding:15px; font-size:22px;"><b style="font-size:36px">❌</b> <b>Distinto Denominador:</b> No se pueden combinar si están cortadas distinto. Hay que transformar usando tablitas.</div>
+            <div class="stp pnl-border" style="padding:15px; font-size:22px;"><b style="font-size:36px">✨</b> <b>El MCM Mágico:</b> Buscamos el mínimo común múltiplo para saber a qué corte debemos igualarlas usando amplificación.</div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title" style="background: #047857;">🏆 CURSO COMPLETADO</div>
+        <div style="font-size:32px; font-weight:800; text-align:center; margin-top:20px; line-height:1.5;">
+            Has dominado las divisiones de la realidad.<br>Sabes qué son, sabes ordenarlas y ¡sabes sumarlas y restarlas usando MCM!<br>
+            <b style="font-size:40px; color:#2E7D32;">¡Felicitaciones gigantes! Eres un genio de las fracciones.</b>
+        </div>
+        <div style="font-size:100px; margin-top:40px; animation: bounce 2s infinite;">😎🎉🌠</div>
+        <style>@keyframes bounce { 0%, 100%{transform:translateY(0);} 50%{transform:translateY(-20px);} }</style>
+    </div>
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div class="sc" id="sc">1 / 32</div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>
+    const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+    function ui() {
+        S.forEach((s,i)=>{
+            s.classList.remove('on','pv','nx');
+            if(i===c) s.classList.add('on');
+            else if(i<c) s.classList.add('pv');
+            else s.classList.add('nx');
+        });
+        document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+        document.getElementById('sc').textContent=`${c+1} / ${T}`;
+        document.getElementById('pv').disabled=c===0;
+        document.getElementById('nx').disabled=c===T-1;
+    }
+    function go(d) {
+        if(d>0) {
+            const hid = S[c].querySelectorAll('.stp:not(.shwn)');
+            if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+        } else {
+            const shw = S[c].querySelectorAll('.stp.shwn');
+            if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+        }
+        const n=c+d; if(n>=0 && n<T) { c=n; ui(); }
+    }
+    document.addEventListener('keydown', e => {
+        if(e.key==='ArrowRight' || e.key===' ') go(1);
+        if(e.key==='ArrowLeft') go(-1);
+    });
+    ui();
+    </script>
+</body>
+</html>

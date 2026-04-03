@@ -76,6 +76,68 @@
         }
         .top-nav-btn:hover{background:rgba(255,255,255,.16);color:var(--white);transform:translateY(-1px);}
         .top-nav-btn.active{background:var(--white);color:var(--navy);box-shadow:0 4px 14px rgba(10,22,48,.18);}
+        .easter-egg{
+            position:absolute;left:248px;top:11px;width:42px;height:42px;z-index:230;
+            cursor:pointer;border:none;background:transparent;padding:0;
+            filter:drop-shadow(0 5px 8px rgba(8,22,43,.28));
+        }
+        .easter-egg:focus-visible{outline:2px solid rgba(255,255,255,.92);outline-offset:4px;border-radius:999px;}
+        .easter-egg .runner{position:relative;width:42px;height:42px;}
+        .runner .head{
+            position:absolute;left:12px;top:3px;width:11px;height:11px;border-radius:50%;
+            background:#ffd5bf;
+        }
+        .runner .face{
+            position:absolute;left:20px;top:8px;width:7px;height:5px;border-radius:50%;
+            border-top:2px solid #f3b08c;border-right:2px solid #f3b08c;transform:rotate(18deg);
+        }
+        .runner .hair{
+            position:absolute;left:10px;top:1px;width:12px;height:8px;border-radius:7px 7px 3px 4px;background:#3c2b24;
+        }
+        .runner .torso{
+            position:absolute;left:10px;top:14px;width:15px;height:12px;border-radius:6px 7px 6px 6px;background:#2f7be8;
+        }
+        .runner .arm{
+            position:absolute;left:21px;top:16px;width:10px;height:4px;border-radius:6px;background:#ffd5bf;
+            transform-origin:left center;transform:rotate(-12deg);
+        }
+        .runner .cone{
+            position:absolute;left:28px;top:11px;width:0;height:0;transform:rotate(22deg);
+            border-left:4px solid transparent;border-right:4px solid transparent;border-top:10px solid #d7a15f;
+        }
+        .runner .scoop{
+            position:absolute;left:24px;top:7px;width:10px;height:10px;border-radius:50%;background:#ff7ab6;
+        }
+        .runner .leg-back,.runner .leg-front{
+            position:absolute;left:12px;top:24px;width:4px;height:13px;border-radius:4px;background:#4e6ca8;transform-origin:top center;
+        }
+        .runner .leg-front{left:19px;transform:rotate(18deg);}
+        .runner .leg-back{transform:rotate(-12deg);}
+        .runner .shoe-back,.runner .shoe-front{
+            position:absolute;top:35px;width:8px;height:4px;border-radius:5px;background:#ffffff;
+        }
+        .runner .shoe-back{left:9px;}
+        .runner .shoe-front{left:18px;}
+        .easter-egg.running{pointer-events:none;animation:eggRun 2.8s ease-in-out forwards;}
+        .easter-egg.running .leg-front{animation:legFront .26s linear infinite;}
+        .easter-egg.running .leg-back{animation:legBack .26s linear infinite;}
+        .easter-egg.running .arm{animation:armSwing .26s linear infinite;}
+        .easter-egg.running .cone,.easter-egg.running .scoop{animation:coneBob .26s linear infinite;}
+        @keyframes eggRun{
+            0%{transform:translateX(0) translateY(0) scale(1);}
+            12%{transform:translateX(calc(var(--run-distance) * .12)) translateY(-2px) rotate(-4deg);}
+            24%{transform:translateX(calc(var(--run-distance) * .24)) translateY(1px) rotate(3deg);}
+            36%{transform:translateX(calc(var(--run-distance) * .36)) translateY(-2px) rotate(-3deg);}
+            48%{transform:translateX(calc(var(--run-distance) * .48)) translateY(1px) rotate(3deg);}
+            60%{transform:translateX(calc(var(--run-distance) * .60)) translateY(-2px) rotate(-3deg);}
+            72%{transform:translateX(calc(var(--run-distance) * .72)) translateY(1px) rotate(2deg);}
+            84%{transform:translateX(calc(var(--run-distance) * .84)) translateY(-2px) rotate(-2deg);}
+            100%{transform:translateX(var(--run-distance)) translateY(0) scale(1);}
+        }
+        @keyframes legFront{0%{transform:rotate(18deg);}50%{transform:rotate(-18deg);}100%{transform:rotate(18deg);}}
+        @keyframes legBack{0%{transform:rotate(-16deg);}50%{transform:rotate(18deg);}100%{transform:rotate(-16deg);}}
+        @keyframes armSwing{0%{transform:rotate(-12deg);}50%{transform:rotate(18deg);}100%{transform:rotate(-12deg);}}
+        @keyframes coneBob{0%{transform:rotate(18deg);}50%{transform:rotate(28deg) translateY(-1px);}100%{transform:rotate(18deg);}}
         /* ─── LAYOUT ──────────────────────────────────────────── */
         .layout{padding-top:var(--header-h);min-height:100vh;}
 
@@ -491,18 +553,6 @@
         @keyframes fall{0%{transform:translateY(-100px) rotate(0);opacity:1;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
         .sp{position:fixed;pointer-events:none;animation:spop 1s ease-out forwards;font-size:24px;z-index:9999;}
         @keyframes spop{0%{transform:scale(0);opacity:1;}60%{transform:scale(1.6);opacity:1;}100%{transform:scale(0) translateY(-50px);opacity:0;}}
-7%  {transform:translateX(9vw)    translateY(-7px) rotate(-14deg);}
-            14% {transform:translateX(18vw)   translateY(0px)  rotate(14deg);}
-            21% {transform:translateX(28vw)   translateY(-7px) rotate(-14deg);}
-            28% {transform:translateX(38vw)   translateY(0px)  rotate(14deg);}
-            35% {transform:translateX(48vw)   translateY(-7px) rotate(-14deg);}
-            42% {transform:translateX(58vw)   translateY(0px)  rotate(14deg);}
-            49% {transform:translateX(68vw)   translateY(-7px) rotate(-14deg);}
-            56% {transform:translateX(78vw)   translateY(0px)  rotate(14deg);}
-            63% {transform:translateX(88vw)   translateY(-7px) rotate(-10deg);}
-            75% {transform:translateX(100vw)  translateY(0px)  rotate(5deg);   opacity:1;}
-            100%{transform:translateX(120vw)  translateY(-4px) rotate(0deg);   opacity:0;}
-        }
 
         /* ─── RESPONSIVE ──────────────────────────────────────── */
         @media(max-width:860px){
@@ -513,6 +563,7 @@
             .h-tutorias{height:34px;max-width:120px;}
             .h-brand{display:none;}
             .top-nav{display:none;}
+            .easter-egg{display:none;}
             .welcome-hero{grid-template-columns:1fr;}
             .welcome-intro{padding:26px 22px;}
             .welcome-intro h2{font-size:42px;}
@@ -564,7 +615,22 @@
             <div class="h-brand">
                 <span class="main">La Obra Tutorías</span>
             </div>
-</div>
+        </div>
+        <button type="button" class="easter-egg" id="easter-egg" aria-label="Easter egg: personita con helado">
+            <div class="runner" aria-hidden="true">
+                <div class="hair"></div>
+                <div class="head"></div>
+                <div class="face"></div>
+                <div class="torso"></div>
+                <div class="arm"></div>
+                <div class="cone"></div>
+                <div class="scoop"></div>
+                <div class="leg-back"></div>
+                <div class="leg-front"></div>
+                <div class="shoe-back"></div>
+                <div class="shoe-front"></div>
+            </div>
+        </button>
         <nav class="top-nav" aria-label="Secciones principales">
             <button class="top-nav-btn" id="nav-about" onclick="showAbout()">¿Quiénes somos?</button>
             <button class="top-nav-btn active" id="nav-classes" onclick="showClasses()">Clases</button>
@@ -689,217 +755,61 @@ const CATEGORIES = [
 ];
 
 const MODULES = [
-    // ── NÚMEROS Y OPERACIONES ─────────────────────────────────────────
+    // ── MULTIPLICACIÓN ────────────────────────────────────────────────
     {
-        id:1, cat:'num', title:'Descomposición', dur:'45 min',
-        objectives:['Comprender el valor posicional de cada cifra','Descomponer números hasta 10.000','Representar números en distintas formas'],
-        // 👇 Pega aquí el link de Google Drive / Slides de tu PPT (ver guía al final)
-        slideUrl:'https://drive.google.com/file/d/1ZanX8bEtvlxU2-jFrmHRFuqcBcfOZbCR/preview',
-        activities:[
-            {
-                type:'fill', title:'📝 Descompón los números',
-                desc:'Escribe cuántas unidades, decenas o centenas hay',
-                items:[
-                    {sentence:'3.456 tiene ___ centenas', answer:'4'},
-                    {sentence:'7.820 tiene ___ decenas',  answer:'2'},
-                    {sentence:'5.003 tiene ___ unidades', answer:'3'},
-                ]
-            }
-        ],
+        id:1, cat:'mul', title:'Multiplicación 1', dur:'45 min',
+        objectives:['Consolidar tablas del 2 y 5','Comprender la suma iterada','Aplicar la propiedad conmutativa'],
+        htmlSlide:'clases/multiplicacion/multiplicaciones_1.html',
+        activities:[],
         ticket:{
-            title:'Ticket de salida – Descomposición',
-            questions:[
-                {emoji:'🔢',q:'¿Qué número tiene 2 centenas, 3 decenas y 4 unidades?',opts:['234','324','243','432'],ok:0,exp:'2 centenas, 3 decenas y 4 unidades forman 234 ✓'},
-                {emoji:'🔢',q:'¿Cuál es el valor posicional del 6 en 4.623?',opts:['Unidades','Decenas','Centenas','Miles'],ok:2,exp:'El 6 está en la posición de centenas → valor 600 ✓'},
-                {emoji:'🧩',q:'¿Cómo se descompone 2.345?',opts:['2.000+3+4+5','2.000+300+40+5','200+300+40+5','2.000+300+45'],ok:1,exp:'2.000 + 300 + 40 + 5 = 2.345 ✓'},
-                {emoji:'🔍',q:'El número 1.070 tiene...',opts:['1 mil, 7 decenas','1 mil, 70 centenas','1 mil, 7 centenas','1 mil, 70 decenas'],ok:3,exp:'1.070 = 1.000 + 70 → 1 mil y 7 decenas ✓'},
-            ]
-        }
-    },
-    {
-        id:2, cat:'num', title:'Suma', dur:'45 min',
-        objectives:['Repasar el algoritmo de la suma','Practicar suma con y sin llevada','Resolver problemas de contexto'],
-        slideUrl:'https://drive.google.com/file/d/1xJThrRlzlIHAb8IqHrBmrHm83L_-sD_T/preview',
-        activities:[
-            {
-                type:'fill', title:'📝 Completa las sumas',
-                desc:'Escribe el número que falta para completar la operación',
-                items:[
-                    {sentence:'347 + ___ = 500',  answer:'153'},
-                    {sentence:'___ + 128 = 400',  answer:'272'},
-                    {sentence:'1.250 + ___ = 2.000', answer:'750'},
-                ]
-            }
-        ],
-        ticket:{
-            title:'Ticket de salida – Suma',
-            questions:[
-                {emoji:'➕',q:'¿Cuánto es 20 + 5?',opts:['15','25','30','35'],ok:1,exp:'20 + 5 = 25 ✓'},
-                {emoji:'➕',q:'¿Cuánto es 478 + 345?',opts:['813','823','923','733'],ok:0,exp:'478 + 345 = 823 ✓'},
-                {emoji:'🏪',q:'Una tienda vendió 256 el lunes y 389 el martes. ¿Cuánto vendió en total?',opts:['545','645','655','735'],ok:1,exp:'256 + 389 = 645 ✓'},
-                {emoji:'🔢',q:'¿Cuánto es 1.347 + 658?',opts:['1.905','2.005','2.105','1.995'],ok:1,exp:'1.347 + 658 = 2.005 ✓'},
-            ]
-        }
-    },
-    {
-        id:3, cat:'num', title:'Resta', dur:'45 min',
-        objectives:['Repasar el algoritmo de la resta','Practicar resta con reagrupación','Plantear y resolver situaciones de resta'],
-        slideUrl:'https://drive.google.com/file/d/18bU84c11BbEOrk3TaF8t-0cNCQK7GqE-/preview',
-        activities:[
-            {
-                type:'fill', title:'📝 Completa las restas',
-                desc:'Encuentra el número que falta',
-                items:[
-                    {sentence:'800 - ___ = 347',    answer:'453'},
-                    {sentence:'___ - 256 = 144',    answer:'400'},
-                    {sentence:'2.000 - ___ = 1.345', answer:'655'},
-                ]
-            }
-        ],
-        ticket:{
-            title:'Ticket de salida – Resta',
-            questions:[
-                {emoji:'➖',q:'¿Cuánto es 10 − 3?',opts:['6','7','8','9'],ok:1,exp:'10 − 3 = 7 ✓'},
-                {emoji:'➖',q:'¿Cuánto es 803 − 467?',opts:['336','346','246','436'],ok:0,exp:'803 − 467 = 336 ✓'},
-                {emoji:'🍎',q:'Había 500 manzanas. Se vendieron 237. ¿Cuántas quedan?',opts:['273','263','363','253'],ok:1,exp:'500 − 237 = 263 ✓'},
-                {emoji:'🔢',q:'¿Cuánto es 2.000 − 849?',opts:['1.051','1.151','1.161','951'],ok:1,exp:'2.000 − 849 = 1.151 ✓'},
-            ]
-        }
-    },
-    {
-        id:4, cat:'num', title:'Ejercicios: Suma y Resta', dur:'45 min',
-        objectives:['Aplicar suma y resta en problemas mixtos','Desarrollar agilidad de cálculo','Verificar resultados'],
-        slideUrl:'https://drive.google.com/file/d/1_JVU_r3tvn_WhHPMIQicwb63h0w81O2r/preview',
-        activities:[
-            {
-                type:'match', title:'🔗 Une la operación con su resultado',
-                desc:'Haz clic en la operación y luego en el resultado correcto',
-                left:['347 + 258','900 − 456','1.200 + 350','2.000 − 875'],
-                right:['605','444','1.550','1.125'],
-            }
-        ],
-        ticket:{
-            title:'Ticket de salida – Ejercicios',
-            questions:[
-                {emoji:'🧮',q:'¿Cuánto es 100 + 20 − 10?',opts:['100','110','120','130'],ok:1,exp:'100 + 20 − 10 = 110 ✓'},
-                {emoji:'🔢',q:'385 + 467 − 200 = ?',opts:['652','752','642','562'],ok:0,exp:'385 + 467 = 852 → 852 − 200 = 652 ✓'},
-                {emoji:'🛒',q:'Compré en $850 y pagué con $1.000. ¿Cuánto me devolvieron?',opts:['250','160','150','200'],ok:2,exp:'1.000 − 850 = 150 ✓'},
-                {emoji:'🏆',q:'¿Cuánto es 1.500 + 750 − 300?',opts:['1.850','1.950','2.050','2.250'],ok:1,exp:'1.500 + 750 = 2.250 → 2.250 − 300 = 1.950 ✓'},
-            ]
-        }
-    },
-    {
-        id:5, cat:'num', title:'Redondeo y Estimación', dur:'45 min',
-        objectives:['Redondear a la decena y centena más cercana','Usar la estimación para resolver problemas','Comparar resultados exactos y estimados'],
-        slideUrl:'https://drive.google.com/file/d/1w5E7giv_NDxbuOAdB9Sc747Y5C-3zG8W/preview',
-        activities:[
-            {
-                type:'fill', title:'📝 Redondea a la centena más cercana',
-                desc:'Escribe el número redondeado a la centena más cercana',
-                items:[
-                    {sentence:'347 redondeado es ___',  answer:'300'},
-                    {sentence:'650 redondeado es ___',  answer:'700'},
-                    {sentence:'1.480 redondeado es ___', answer:'1.500'},
-                ]
-            }
-        ],
-        ticket:{
-            title:'Ticket de salida – Redondeo',
-            questions:[
-                {emoji:'🎯',q:'¿A qué decena se redondea 24?',opts:['20','30','24','40'],ok:0,exp:'24 está más cerca de 20 ✓'},
-                {emoji:'🔵',q:'¿A qué decena más cercana se redondea 73?',opts:['60','70','80','100'],ok:1,exp:'73 está más cerca de 70 que de 80 ✓'},
-                {emoji:'🟡',q:'¿A qué centena más cercana se redondea 450?',opts:['400','500','450','600'],ok:1,exp:'450 se redondea hacia arriba → 500 ✓'},
-                {emoji:'🧮',q:'Estima: 398 + 203 ≈',opts:['500','600','700','400'],ok:1,exp:'398 ≈ 400 y 203 ≈ 200 → 400 + 200 = 600 ✓'},
-            ]
-        }
-    },
-
-    // ── MULTIPLICACIÓN Y DIVISIÓN ─────────────────────────────────────
-    {
-        id:6, cat:'mul', title:'Multiplicación', dur:'45 min',
-        objectives:['Consolidar tablas de multiplicar del 1 al 9','Aplicar el algoritmo de multiplicación','Resolver problemas con multiplicación'],
-        slideUrl:'https://drive.google.com/file/d/1NQSrZhdS0_3igYShUbFVhFBzrqmABnQd/preview',
-        activities:[
-            {
-                type:'match', title:'⚡ Une la multiplicación con su resultado',
-                desc:'Relaciona cada operación con la respuesta correcta',
-                left:['7 × 8','9 × 6','8 × 8','7 × 9'],
-                right:['56','54','64','63'],
-            }
-        ],
-        ticket:{
-            title:'Ticket de salida – Multiplicación',
+            title:'Ticket de salida – Multiplicación 1',
             questions:[
                 {emoji:'✖️',q:'¿Cuánto es 5 × 2?',opts:['7','10','12','15'],ok:1,exp:'5 × 2 = 10 ✓'},
-                {emoji:'✖️',q:'¿Cuánto es 8 × 9?',opts:['72','63','81','64'],ok:0,exp:'8 × 9 = 72 ✓'},
-                {emoji:'🎒',q:'Hay 7 cajas con 24 lápices cada una. ¿Cuántos lápices hay?',opts:['148','168','158','128'],ok:1,exp:'7 × 24 = 168 lápices ✓'},
-                {emoji:'🔢',q:'¿Cuánto es 35 × 6?',opts:['180','200','210','190'],ok:2,exp:'35 × 6 = 210 ✓'},
+                {emoji:'✖️',q:'¿Cuánto es 2 × 8?',opts:['10','14','16','18'],ok:2,exp:'2 × 8 = 16 ✓'},
+                {emoji:'🍎',q:'3 grupos de 5 manzanas son...',opts:['8','15','12','10'],ok:1,exp:'3 × 5 = 15 ✓'},
+                {emoji:'🔢',q:'Si 5 × 4 = 20, ¿cuánto es 4 × 5?',opts:['15','20','25','30'],ok:1,exp:'Propiedad conmutativa: el orden no altera el producto ✓'},
             ]
         }
     },
     {
-        id:7, cat:'mul', title:'División', dur:'45 min',
-        objectives:['Comprender la división como reparto igualitario','Practicar divisiones exactas e inexactas','Identificar dividendo, divisor, cociente y resto'],
-        slideUrl:'https://drive.google.com/file/d/1p4l8UgtsrKrkfwnK7D_J6oPSLYYy8j2k/preview',
-        activities:[
-            {
-                type:'fill', title:'📝 Completa las divisiones',
-                desc:'Encuentra el cociente de cada división',
-                items:[
-                    {sentence:'72 ÷ 8 = ___',  answer:'9'},
-                    {sentence:'63 ÷ ___ = 9',  answer:'7'},
-                    {sentence:'___ ÷ 6 = 8',   answer:'48'},
-                ]
-            }
-        ],
+        id:2, cat:'mul', title:'Multiplicación 2', dur:'45 min',
+        objectives:['Tablas del 3 al 9 con lógica','Maestros de los atajos mentales','Resolver problemas aplicados'],
+        htmlSlide:'clases/multiplicacion/multiplicaciones_2.html',
+        activities:[],
         ticket:{
-            title:'Ticket de salida – División',
+            title:'Ticket de salida – Multiplicación 2',
             questions:[
-                {emoji:'➗',q:'¿Cuánto es 12 ÷ 3?',opts:['3','4','5','6'],ok:1,exp:'12 ÷ 3 = 4 ✓'},
-                {emoji:'÷',q:'¿Cuánto es 81 ÷ 9?',opts:['7','8','10','9'],ok:3,exp:'81 ÷ 9 = 9 ✓'},
-                {emoji:'🍰',q:'48 galletas para 6 niños. ¿Cuántas le tocan a cada uno?',opts:['9','7','8','6'],ok:2,exp:'48 ÷ 6 = 8 galletas ✓'},
-                {emoji:'🚌',q:'42 alumnos en buses de 7 asientos. ¿Cuántos buses se necesitan?',opts:['4','5','7','6'],ok:3,exp:'42 ÷ 7 = 6 buses ✓'},
+                {emoji:'✖️',q:'¿Cuánto es 3 × 4?',opts:['7','12','10','14'],ok:1,exp:'3 × 4 = 12 ✓'},
+                {emoji:'✖️',q:'¿Cuánto es 7 × 8?',opts:['54','56','49','64'],ok:1,exp:'7 × 8 = 56 ✓'},
+                {emoji:'🔢',q:'¿Cuánto es 9 × 6?',opts:['45','54','63','56'],ok:1,exp:'9 × 6 = 54 ✓'},
+                {emoji:'🎯',q:'¿Cuánto es 4 × 8?',opts:['28','30','32','36'],ok:2,exp:'4 × 8 = 32 ✓'},
             ]
         }
     },
     {
-        id:8, cat:'mul', title:'Ejercicios: Multiplicación y División', dur:'45 min',
-        objectives:['Resolver problemas que combinan multiplicación y división','Identificar cuándo usar cada operación','Verificar resultados'],
-        slideUrl:'https://drive.google.com/file/d/1hWbtAw9JcFQsfHRwyr8ohA94rBKgXmv-/preview',
-        activities:[
-            {
-                type:'match', title:'🔗 Une la operación con su resultado',
-                desc:'Relaciona cada operación con la respuesta correcta',
-                left:['56 ÷ 7','8 × 9','45 ÷ 5','6 × 12'],
-                right:['8','72','9','72'],
-            }
-        ],
+        id:3, cat:'mul', title:'Multiplicación 3', dur:'60 min',
+        objectives:['Algoritmo vertical paso a paso','Multiplicaciones con reserva','Práctica maestra de multiplicaciones'],
+        htmlSlide:'clases/multiplicacion/multiplicaciones_3.html',
+        activities:[],
         ticket:{
-            title:'Ticket de salida – Ejercicios',
+            title:'Ticket de salida – Multiplicación 3',
             questions:[
-                {emoji:'🧠',q:'Si 4 × 3 = 12, entonces 12 ÷ 4 = ...',opts:['2','3','4','6'],ok:1,exp:'Si 4 × 3 = 12, entonces 12 ÷ 4 = 3 ✓'},
-                {emoji:'🔢',q:'Si 7 × ? = 63, ¿qué número es el ?',opts:['7','8','9','6'],ok:2,exp:'63 ÷ 7 = 9 ✓'},
-                {emoji:'📦',q:'Hay 96 naranjas en cajas de 8. ¿Cuántas cajas hay?',opts:['10','11','13','12'],ok:3,exp:'96 ÷ 8 = 12 cajas ✓'},
-                {emoji:'🎪',q:'En 5 semanas con 7 días cada una, ¿cuántos días son?',opts:['30','35','40','45'],ok:1,exp:'5 × 7 = 35 días ✓'},
+                {emoji:'📝',q:'¿Cuánto es 124 × 2?',opts:['248','244','228','250'],ok:0,exp:'124 × 2 = 248 ✓'},
+                {emoji:'✏️',q:'¿Cuánto es 35 × 3?',opts:['95','105','115','100'],ok:1,exp:'35 × 3 = 105 ✓'},
+                {emoji:'🔢',q:'¿Cómo se descompone 42 × 5?',opts:['40×5 + 2','40×5 + 2×5','4×5 + 2×5','40 + 2 × 5'],ok:1,exp:'42 × 5 = (40 + 2) × 5 = 40×5 + 2×5 ✓'},
+                {emoji:'🏆',q:'¿Cuánto es 213 × 3?',opts:['633','639','629','613'],ok:1,exp:'213 × 3 = 639 ✓'},
             ]
         }
     },
 
-    // ── FRACCIONES Y DECIMALES ────────────────────────────────────────
+    // ── FRACCIONES ──────────────────────────────────────────────────
     {
-        id:9, cat:'frac', title:'Fracciones I', dur:'45 min',
-        objectives:['Identificar numerador y denominador','Representar fracciones en diagramas','Comparar fracciones con igual denominador'],
-        slideUrl:'https://drive.google.com/file/d/1VPFYAiOiYleSSXSS4--TZTCMvf8dXelt/preview',
-        activities:[
-            {
-                type:'match', title:'🔗 Une la fracción con su nombre',
-                desc:'Relaciona la fracción con su nombre correcto',
-                left:['1/2','1/4','3/4','2/3'],
-                right:['Un medio','Un cuarto','Tres cuartos','Dos tercios'],
-            }
-        ],
+        id:4, cat:'frac', title:'Fracciones 1', dur:'45 min',
+        objectives:['Entender partes de un entero','Identificar numerador y denominador','Representar gráficamente'],
+        htmlSlide:'clases/fracciones/09-fracciones-1.html',
+        activities:[],
         ticket:{
-            title:'Ticket de salida – Fracciones I',
+            title:'Ticket de salida – Fracciones 1',
             questions:[
                 {emoji:'🍰',q:'¿Cuál fracción representa una mitad?',opts:['1/2','1/3','2/3','3/4'],ok:0,exp:'Una mitad se escribe 1/2 ✓'},
                 {emoji:'🍕',q:'Una pizza se divide en 8 partes. Ana come 3. ¿Qué fracción comió?',opts:['3/5','8/3','3/8','5/8'],ok:2,exp:'3 de 8 partes = 3/8 ✓'},
@@ -909,237 +819,36 @@ const MODULES = [
         }
     },
     {
-        id:10, cat:'frac', title:'Fracciones II', dur:'45 min',
-        objectives:['Identificar fracciones equivalentes','Simplificar fracciones sencillas','Sumar fracciones con igual denominador'],
-        slideUrl:'https://drive.google.com/file/d/1iMSSoXQyOryAyOcpNYhrRHjdzUVxo4kk/preview',
-        activities:[
-            {
-                type:'fill', title:'📝 Completa las fracciones equivalentes',
-                desc:'Encuentra el número que hace las fracciones equivalentes',
-                items:[
-                    {sentence:'1/2 = ___/4',   answer:'2'},
-                    {sentence:'2/3 = ___/9',   answer:'6'},
-                    {sentence:'3/4 = ___/8',   answer:'6'},
-                ]
-            }
-        ],
+        id:5, cat:'frac', title:'Fracciones 2', dur:'45 min',
+        objectives:['Descubrir equivalencias visuales','Amplificar y Simplificar','Ubicar en la recta numérica'],
+        htmlSlide:'clases/fracciones/10-fracciones-2.html',
+        activities:[],
         ticket:{
-            title:'Ticket de salida – Fracciones II',
+            title:'Ticket de salida – Fracciones 2',
             questions:[
                 {emoji:'🟰',q:'¿Cuál es igual a 2/4?',opts:['1/2','1/3','3/4','2/3'],ok:0,exp:'2/4 es equivalente a 1/2 ✓'},
                 {emoji:'🟰',q:'¿Cuál es equivalente a 1/2?',opts:['2/6','2/4','3/8','1/4'],ok:1,exp:'1/2 = 2/4 (se multiplica numerador y denominador por 2) ✓'},
-                {emoji:'➕',q:'¿Cuánto es 2/7 + 3/7?',opts:['5/14','5/7','6/7','1/7'],ok:1,exp:'2/7 + 3/7 = 5/7 (mismo denominador, se suman numeradores) ✓'},
-                {emoji:'🍫',q:'María comió 1/4 de una barra de chocolate y luego 2/4 más. ¿Cuánto comió en total?',opts:['3/8','2/4','3/4','1/2'],ok:2,exp:'1/4 + 2/4 = 3/4 ✓'},
+                {emoji:'➕',q:'¿Cuánto es 2/7 + 3/7?',opts:['5/14','5/7','6/7','1/7'],ok:1,exp:'2/7 + 3/7 = 5/7 ✓'},
+                {emoji:'🍫',q:'Comes 1/4 de chocolate y luego 2/4 más. ¿Cuánto comiste?',opts:['3/8','2/4','3/4','1/2'],ok:2,exp:'1/4 + 2/4 = 3/4 ✓'},
             ]
         }
     },
     {
-        id:11, cat:'frac', title:'Decimales', dur:'45 min',
-        objectives:['Comprender décimas y centésimas','Leer y escribir números decimales','Comparar y ordenar decimales'],
-        slideUrl:'https://drive.google.com/file/d/1ZJf8HTV2yuGRJ_3Jt5UubQQJ4HWCZguw/preview',
-        activities:[
-            {
-                type:'match', title:'🔗 Une el decimal con su equivalente en fracción',
-                desc:'Relaciona cada decimal con la fracción que le corresponde',
-                left:['0,5','0,25','0,1','0,75'],
-                right:['1/2','1/4','1/10','3/4'],
-            }
-        ],
-        ticket:{
-            title:'Ticket de salida – Decimales',
-            questions:[
-                {emoji:'🔢',q:'¿Cuál número es decimal?',opts:['5','12','0,5','100'],ok:2,exp:'0,5 es un número decimal ✓'},
-                {emoji:'🔟',q:'¿Qué número está entre 2,3 y 2,5?',opts:['2,6','2,4','2,2','3,4'],ok:1,exp:'2,4 está entre 2,3 y 2,5 ✓'},
-                {emoji:'💰',q:'¿Cuánto es $1,50 + $0,75?',opts:['$1,25','$2,25','$2,15','$2,50'],ok:1,exp:'1,50 + 0,75 = 2,25 ✓'},
-                {emoji:'📏',q:'Ordena de menor a mayor: 1,7 – 1,07 – 1,70 – 0,17',opts:['0,17 – 1,07 – 1,7 – 1,70','1,07 – 0,17 – 1,7 – 1,70','0,17 – 1,07 – 1,70 – 1,7','0,17 – 1,7 – 1,07 – 1,70'],ok:0,exp:'0,17 < 1,07 < 1,7 = 1,70 ✓'},
-            ]
-        }
-    },
-    {
-        id:12, cat:'frac', title:'Ejercicios: Fracciones y Decimales', dur:'45 min',
-        objectives:['Convertir entre fracciones y decimales','Resolver problemas combinados','Aplicar en contextos reales'],
-        slideUrl:'https://drive.google.com/file/d/1egxT819wDjGYUtCr_t-amXkBhxHQIQZf/preview',
-        activities:[
-            {
-                type:'fill', title:'📝 Convierte fracción a decimal',
-                desc:'Escribe el decimal equivalente a cada fracción',
-                items:[
-                    {sentence:'1/2 = ___',   answer:'0,5'},
-                    {sentence:'1/4 = ___',   answer:'0,25'},
-                    {sentence:'3/10 = ___',  answer:'0,3'},
-                ]
-            }
-        ],
-        ticket:{
-            title:'Ticket de salida – Ejercicios',
-            questions:[
-                {emoji:'🔄',q:'¿Cuál decimal es igual a 1/2?',opts:['0,2','0,5','0,8','1,2'],ok:1,exp:'1/2 equivale a 0,5 ✓'},
-                {emoji:'🔄',q:'¿Cuál es el decimal equivalente a 3/4?',opts:['0,50','0,30','0,75','0,34'],ok:2,exp:'3/4 = 0,75 ✓'},
-                {emoji:'💧',q:'Una botella tiene 1,5 litros. Se bebe 0,75 litros. ¿Cuánto queda?',opts:['0,85','0,65','0,75','0,50'],ok:2,exp:'1,5 − 0,75 = 0,75 litros ✓'},
-                {emoji:'🏃',q:'Un corredor hace 2/5 de la pista (2.000 m). ¿Cuántos metros corrió?',opts:['600','800','400','1.000'],ok:1,exp:'2/5 × 2.000 = 800 metros ✓'},
-            ]
-        }
-    },
-
-    // ── GEOMETRÍA Y MEDICIÓN ──────────────────────────────────────────
-    {
-        id:13, cat:'geo', title:'Geometría', dur:'45 min',
-        objectives:['Identificar figuras geométricas planas','Reconocer ángulos rectos, agudos y obtusos','Clasificar triángulos y cuadriláteros'],
-        slideUrl:'https://drive.google.com/file/d/1H0XLjwTlvsMypCg_3s2JT-1GcIeh86SN/preview',
-        activities:[
-            {
-                type:'match', title:'🔗 Une la figura con su descripción',
-                desc:'Relaciona cada figura con su característica principal',
-                left:['Triángulo equilátero','Cuadrado','Rectángulo','Círculo'],
-                right:['3 lados iguales','4 lados iguales','2 pares de lados iguales','Sin lados rectos'],
-            }
-        ],
-        ticket:{
-            title:'Ticket de salida – Geometría',
-            questions:[
-                {emoji:'🔷',q:'¿Cuántos lados tiene un cuadrado?',opts:['3','4','5','6'],ok:1,exp:'Un cuadrado tiene 4 lados ✓'},
-                {emoji:'📐',q:'¿Cuántos ángulos rectos tiene un cuadrado?',opts:['2','3','4','0'],ok:2,exp:'Un cuadrado tiene 4 ángulos rectos (90°) ✓'},
-                {emoji:'🔺',q:'Un triángulo con todos sus lados iguales se llama...',opts:['Escaleno','Isósceles','Equilátero','Rectángulo'],ok:2,exp:'Triángulo equilátero = todos los lados iguales ✓'},
-                {emoji:'📏',q:'¿Cuántos lados tiene un hexágono?',opts:['5','7','8','6'],ok:3,exp:'Hexa = 6 → un hexágono tiene 6 lados ✓'},
-            ]
-        }
-    },
-    {
-        id:14, cat:'geo', title:'Geometría: Ejercicios', dur:'45 min',
-        objectives:['Calcular el perímetro de figuras planas','Estimar y calcular áreas con cuadrículas','Resolver problemas geométricos'],
-        slideUrl:'https://drive.google.com/file/d/1SS5xwSAilJFOj6nHLJhsTUiaDXAiQ8bU/preview',
-        activities:[
-            {
-                type:'fill', title:'📝 Calcula el perímetro',
-                desc:'Escribe el perímetro de cada figura',
-                items:[
-                    {sentence:'Cuadrado de lado 5 cm → P = ___ cm',  answer:'20'},
-                    {sentence:'Rectángulo 8×4 cm → P = ___ cm',      answer:'24'},
-                    {sentence:'Triángulo equilátero lado 6 cm → P = ___ cm', answer:'18'},
-                ]
-            }
-        ],
-        ticket:{
-            title:'Ticket de salida – Geometría ejercicios',
-            questions:[
-                {emoji:'📐',q:'¿Cuál es el perímetro de un cuadrado de lado 5 cm?',opts:['10 cm','15 cm','20 cm','25 cm'],ok:2,exp:'4 × 5 = 20 cm ✓'},
-                {emoji:'📐',q:'¿Cuál es el perímetro de un cuadrado con lado 7 cm?',opts:['21 cm','14 cm','49 cm','28 cm'],ok:3,exp:'P = 4 × 7 = 28 cm ✓'},
-                {emoji:'🏡',q:'Un jardín rectangular mide 12 m × 8 m. ¿Cuántos metros de reja necesita?',opts:['96 m','40 m','20 m','48 m'],ok:1,exp:'P = 2×(12+8) = 2×20 = 40 m ✓'},
-                {emoji:'📦',q:'Un cuadrado tiene perímetro de 36 cm. ¿Cuánto mide su lado?',opts:['6 cm','8 cm','9 cm','12 cm'],ok:2,exp:'36 ÷ 4 = 9 cm ✓'},
-            ]
-        }
-    },
-    {
-        id:15, cat:'geo', title:'Ejercicios de Geometría', dur:'45 min',
-        objectives:['Aplicar los conceptos de geometría en situaciones variadas','Calcular perímetros y clasificar figuras','Resolver ejercicios mixtos de repaso'],
-        slideUrl:'https://drive.google.com/file/d/1s7I5JAAguP34uPIAgLaZ04AH4wTBpcWS/preview',
-        activities:[
-            {
-                type:'match', title:'🔗 Une la figura con su perímetro',
-                desc:'Calcula el perímetro de cada figura y une con el resultado correcto',
-                left:['Cuadrado lado 5','Rectángulo 6×4','Triángulo equilátero lado 7','Hexágono regular lado 3'],
-                right:['20 cm','20 cm','21 cm','18 cm'],
-            }
-        ],
-        ticket:{
-            title:'Ticket de salida – Ejercicios de Geometría',
-            questions:[
-                {emoji:'📏',q:'¿Cuánto mide el perímetro de un triángulo con lados 3, 3 y 3 cm?',opts:['6 cm','9 cm','12 cm','15 cm'],ok:1,exp:'3 + 3 + 3 = 9 cm ✓'},
-                {emoji:'📐',q:'Un rectángulo mide 9 cm × 5 cm. ¿Cuál es su perímetro?',opts:['45 cm','28 cm','14 cm','18 cm'],ok:1,exp:'P = 2×(9+5) = 2×14 = 28 cm ✓'},
-                {emoji:'🔺',q:'Un triángulo tiene lados de 5, 7 y 8 cm. ¿Cuánto mide su perímetro?',opts:['40 cm','56 cm','20 cm','15 cm'],ok:2,exp:'5 + 7 + 8 = 20 cm ✓'},
-                {emoji:'🔷',q:'¿Cuántos lados tiene un octágono?',opts:['6','7','9','8'],ok:3,exp:'Octa = 8 → un octágono tiene 8 lados ✓'},
-            ]
-        }
-    },
-    {
-        id:16, cat:'geo', title:'Medición de Tiempo', dur:'45 min',
-        objectives:['Leer y escribir la hora en reloj analógico y digital','Calcular duraciones y diferencias de tiempo','Convertir entre horas, minutos y segundos'],
-        slideUrl:'https://drive.google.com/file/d/1tA3N__mK-HaBGdqZ_Wg_sUMNZSHvjaAq/preview',
-        activities:[
-            {
-                type:'fill', title:'📝 Convierte las unidades de tiempo',
-                desc:'Completa la conversión correcta',
-                items:[
-                    {sentence:'2 horas = ___ minutos',    answer:'120'},
-                    {sentence:'3 minutos = ___ segundos', answer:'180'},
-                    {sentence:'1,5 horas = ___ minutos',  answer:'90'},
-                ]
-            }
-        ],
-        ticket:{
-            title:'Ticket de salida – Medición de Tiempo',
-            questions:[
-                {emoji:'⏱️',q:'¿Cuántos minutos tiene 1 hora?',opts:['30','45','60','90'],ok:2,exp:'1 hora tiene 60 minutos ✓'},
-                {emoji:'⏰',q:'La clase empezó a las 10:15 y duró 45 minutos. ¿A qué hora terminó?',opts:['11:00','11:15','10:45','11:10'],ok:0,exp:'10:15 + 45 min = 11:00 ✓'},
-                {emoji:'📅',q:'¿Cuántos minutos hay en 2 horas y media?',opts:['120','150','130','180'],ok:1,exp:'2 h = 120 min + 30 min = 150 min ✓'},
-                {emoji:'🎂',q:'Juan nació en julio. ¿En qué mes cumple años 6 meses después?',opts:['Diciembre','Enero','Noviembre','Febrero'],ok:1,exp:'Julio + 6 meses = Enero del año siguiente ✓'},
-            ]
-        }
-    },
-    {
-        id:17, cat:'geo', title:'Medición de Longitudes', dur:'45 min',
-        objectives:['Identificar y usar unidades de longitud (mm, cm, m, km)','Convertir entre unidades de longitud','Medir objetos con regla y cinta métrica'],
-        slideUrl:'https://drive.google.com/file/d/14WPLAoC_3uNFH5ibU4sl-ZY2cpGti1GN/preview',
-        activities:[
-            {
-                type:'match', title:'🔗 Une el objeto con la unidad adecuada',
-                desc:'¿Qué unidad usarías para medir cada cosa?',
-                left:['Distancia Santiago–Valparaíso','Largo de un lápiz','Grosor de una moneda','Alto de una silla'],
-                right:['Kilómetros','Centímetros','Milímetros','Metros'],
-            }
-        ],
-        ticket:{
-            title:'Ticket de salida – Medición de Longitudes',
-            questions:[
-                {emoji:'📏',q:'¿Qué unidad sirve para medir un lápiz?',opts:['Kilómetros','Centímetros','Horas','Litros'],ok:1,exp:'Un lápiz se mide normalmente en centímetros ✓'},
-                {emoji:'📏',q:'¿Cuántos centímetros hay en 2 metros?',opts:['20 cm','200 cm','2.000 cm','20.000 cm'],ok:1,exp:'1 m = 100 cm → 2 m = 200 cm ✓'},
-                {emoji:'🏃',q:'Una piscina mide 25 m. ¿Cuántos metros nada Pedro si hace 4 largos?',opts:['75 m','100 m','50 m','125 m'],ok:1,exp:'4 × 25 m = 100 m ✓'},
-                {emoji:'🗺️',q:'¿Cuántos metros hay en 3 km?',opts:['300 m','3.000 m','30.000 m','30 m'],ok:1,exp:'1 km = 1.000 m → 3 km = 3.000 m ✓'},
-            ]
-        }
-    },
-    {
-        id:18, cat:'geo', title:'Ejercicios de Medición', dur:'45 min',
-        objectives:['Aplicar mediciones en problemas reales','Combinar tiempo, longitud y perímetro','Desarrollar sentido de la medida'],
-        slideUrl:'https://drive.google.com/file/d/1AHmaqLkr9G6Hy-uyl_Dm1yft8dGfZEUs/preview',
-        activities:[
-            {
-                type:'fill', title:'📝 Problemas de medición',
-                desc:'Resuelve y escribe el resultado con su unidad',
-                items:[
-                    {sentence:'5 km + 3.000 m = ___ km',   answer:'8'},
-                    {sentence:'3 horas + 90 min = ___ horas', answer:'4.5'},
-                    {sentence:'4 m − 150 cm = ___ cm',     answer:'250'},
-                ]
-            }
-        ],
-        ticket:{
-            title:'Ticket de salida – Ejercicios de Medición',
-            questions:[
-                {emoji:'📐',q:'¿Cuántos metros son 1 km?',opts:['10','100','1.000','10.000'],ok:2,exp:'1 km equivale a 1.000 metros ✓'},
-                {emoji:'🚶',q:'Camino 1,5 km en la mañana y 800 m en la tarde. ¿Cuántos metros caminé en total?',opts:['2.000 m','2.300 m','1.300 m','2.800 m'],ok:1,exp:'1.500 m + 800 m = 2.300 m ✓'},
-                {emoji:'⏱️',q:'Una película dura 1 h 45 min. Comienza a las 19:00. ¿A qué hora termina?',opts:['20:30','21:00','20:45','20:15'],ok:2,exp:'19:00 + 1h45min = 20:45 ✓'},
-                {emoji:'📐',q:'Un sendero tiene 3 tramos de 750 m cada uno. ¿Cuántos km mide en total?',opts:['2,25 km','3 km','2,5 km','2,75 km'],ok:0,exp:'3 × 750 m = 2.250 m = 2,25 km ✓'},
-            ]
-        }
-    },    {
-        id:19, cat:'extra', title:'Sesiones de Mentoreo Extra', dur:'Variable',
-        objectives:['Material complementario para sesiones de refuerzo','Ejercicios adicionales para estudiantes avanzados','Actividades de repaso general'],
-        slideUrl:'https://drive.google.com/file/d/1b1W11MCFVOLkIo5GwJptZ_zr3hzKCsH2/preview',
+        id:6, cat:'frac', title:'Fracciones 3', dur:'45 min',
+        objectives:['Sumar y restar con distinto denominador','Dominar el MCM mágicamente','Problemas de la vida real'],
+        htmlSlide:'clases/fracciones/11-ejercicios-fracciones.html',
         activities:[],
         ticket:{
-            title:'Repaso General',
+            title:'Ticket de salida – Fracciones 3',
             questions:[
-                {emoji:'⭐',q:'¿Cuánto es 10 + 10?',opts:['15','20','25','30'],ok:1,exp:'10 + 10 = 20 ✓'},
-                {emoji:'🔢',q:'¿Cuánto es 345 + 678?',opts:['1.023','1.013','1.033','913'],ok:0,exp:'345 + 678 = 1.023 ✓'},
-                {emoji:'✖️',q:'¿Cuánto es 8 × 7?',opts:['54','63','56','49'],ok:2,exp:'8 × 7 = 56 ✓'},
-                {emoji:'🍕',q:'¿Cuánto es 3/4 + 1/4?',opts:['4/8','2/4','4/4','3/8'],ok:2,exp:'3/4 + 1/4 = 4/4 = 1 entero ✓'},
+                {emoji:'🔢',q:'¿Cuál es el MCM de 2 y 3?',opts:['4','5','6','8'],ok:2,exp:'Tabla del 2: 2,4,6... Tabla del 3: 3,6... El primero es 6 ✓'},
+                {emoji:'➕',q:'¿Cuánto es 1/2 + 1/4?',opts:['2/6','3/4','2/4','1/4'],ok:1,exp:'1/2 es 2/4, más 1/4 = 3/4 ✓'},
+                {emoji:'➖',q:'¿Cuánto es 3/4 - 1/2?',opts:['1/4','2/4','2/8','1/2'],ok:0,exp:'3/4 - 2/4 = 1/4 ✓'},
+                {emoji:'🎯',q:'¿Cual es el MCM de 4 y 5?',opts:['9','20','15','10'],ok:1,exp:'4 × 5 = 20 es su MCM ✓'},
             ]
         }
-    },
-
+    }
 ];
-
 const DIAGNOSTIC_SECTIONS = [
     {
         id:'num',
@@ -1210,6 +919,7 @@ let currentModuleTab = 'pres';
 function init() {
     buildPrevGrid();
     bindModuleTabs();
+    initEasterEgg();
 }
 
 function getCat(id){ return CATEGORIES.find(c=>c.id===id); }
@@ -1408,13 +1118,16 @@ function getEmbedUrl(url) {
 
 function renderPres() {
     const c = document.getElementById('panel-pres');
-    const embedUrl = getEmbedUrl(current?.slideUrl);
+    // Prefer interactive HTML slide if available
+    const htmlSrc = current?.htmlSlide || null;
+    const embedUrl = htmlSrc || getEmbedUrl(current?.slideUrl);
     if (embedUrl) {
+        const isHtml = !!htmlSrc;
         c.innerHTML = `
             <div class="pres-wrapper">
                 <div class="pres-toolbar">
                     <div class="pres-toolbar-left">
-                        <span class="toolbar-label">📊 ${current.title}</span>
+                        <span class="toolbar-label">${isHtml ? '🎯' : '📊'} ${current.title}${isHtml ? ' · Interactiva' : ''}</span>
                     </div>
                     <div style="display:flex;gap:8px">
                         <button class="tool-btn" onclick="openInNewTab('${embedUrl}')">
@@ -1480,6 +1193,49 @@ function openInNewTab(url) {
 
 function openOfficialSite() {
     window.open('https://www.laobrauc.com/', '_blank');
+}
+
+function initEasterEgg() {
+    const egg = document.getElementById('easter-egg');
+    const header = document.querySelector('header');
+    const brand = document.querySelector('.brand-lockup');
+    const about = document.getElementById('nav-about');
+    if (!egg || !header || !brand || !about) return;
+
+    const placeEgg = () => {
+        if (window.innerWidth <= 860) return;
+        const headerRect = header.getBoundingClientRect();
+        const brandRect = brand.getBoundingClientRect();
+        const start = Math.round(brandRect.right - headerRect.left + 8);
+        egg.style.left = `${start}px`;
+        egg.style.transform = 'translateX(0)';
+    };
+
+    placeEgg();
+    window.addEventListener('resize', placeEgg);
+
+    egg.addEventListener('click', () => {
+        if (egg.classList.contains('running') || window.innerWidth <= 860) return;
+        const headerRect = header.getBoundingClientRect();
+        const brandRect = brand.getBoundingClientRect();
+        const aboutRect = about.getBoundingClientRect();
+        const start = Math.round(brandRect.right - headerRect.left + 8);
+        const target = Math.round(aboutRect.left - headerRect.left - egg.offsetWidth + 10);
+        const distance = Math.max(36, target - start);
+
+        egg.style.left = `${start}px`;
+        egg.style.setProperty('--run-distance', `${distance}px`);
+        egg.classList.remove('running');
+        void egg.offsetWidth;
+        egg.classList.add('running');
+    });
+
+    egg.addEventListener('animationend', (evt) => {
+        if (evt.animationName !== 'eggRun') return;
+        egg.classList.remove('running');
+        egg.style.removeProperty('--run-distance');
+        placeEgg();
+    });
 }
 
 // ══════════════════════════════════════════════════════════════════════
