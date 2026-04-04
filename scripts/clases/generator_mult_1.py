@@ -1,0 +1,526 @@
+def generate_html():
+    css = """
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+    :root {
+        --base: #1C4A82;   /* Azul Marino Principal */
+        --bg: #f5f6f8;     /* Fondo sutil */
+        --tx: #333;        /* Texto */
+    }
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family: 'Nunito', sans-serif; background: var(--bg); overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; color: var(--tx);}
+    .dk {position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex;}
+    
+    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 40px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1;}
+    .sl.on {opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10;}
+    .sl.pv {opacity: 0; transform: translateX(-50px) scale(.95);}
+    .sl.nx {opacity: 0; transform: translateX(50px) scale(.95);}
+    
+    .head-title {background: var(--base); color: white; padding: 10px 40px; font-size: 32px; font-weight: 900; margin-bottom: 30px; display: inline-block; border-radius: 12px;}
+    .sub-text {font-size: 26px; font-weight: 600; margin-bottom: 25px; text-align: center;}
+    
+    /* Navigation */
+    .pb {position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100;}
+    .nv {position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: white; border-top: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; z-index: 100;}
+    .nb {background: #eee; color: var(--base); border: none; padding: 10px 20px; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer; transition: all .2s;}
+    .nb:hover {background: #ddd;}
+    .nb:disabled {opacity: 0.3; cursor: not-allowed;}
+    .sc {color: #888; font-size: 16px; font-weight: 900;}
+    
+    /* Steps Engine */
+    .stp {opacity: 0; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;}
+    .stp.shwn {opacity: 1; transform: translateY(0); pointer-events: auto;}
+    
+    /* Components */
+    .pnl {background: #fff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 3px solid #eaeaea; width: 100%; margin-bottom: 20px;}
+    .pnl-border {background: #fff; border: 4px solid var(--base); border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center;}
+    .hl {color: var(--base); font-weight: 900;}
+    
+    .btn {background: var(--base); color: white; border: none; padding: 14px 28px; border-radius: 12px; font-size: 20px; font-weight: 900; cursor: pointer; transition: transform .2s;}
+    .btn:hover {transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3);}
+    
+    .math-eq {font-size: 48px; font-weight: 900; color: var(--base); background: #fff; padding: 10px 30px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); border: 3px dashed #bbdefb; margin: 15px;}
+    .group-box {background: #fff; border: 4px solid #FF9D9D; border-radius: 20px; padding: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 40px; flex-wrap:wrap;}
+    """
+    
+    js = """
+    const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+    function ui() {
+        S.forEach((s,i)=>{
+            s.classList.remove('on','pv','nx');
+            if(i===c) s.classList.add('on');
+            else if(i<c) s.classList.add('pv');
+            else s.classList.add('nx');
+        });
+        document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+        document.getElementById('sc').textContent=`${c+1} / ${T}`;
+        document.getElementById('pv').disabled=c===0;
+        document.getElementById('nx').disabled=c===T-1;
+    }
+    function go(d) {
+        if(d>0) {
+            const hid = S[c].querySelectorAll('.stp:not(.shwn)');
+            if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+        } else {
+            const shw = S[c].querySelectorAll('.stp.shwn');
+            if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+        }
+        const n=c+d; if(n>=0 && n<T) { c=n; ui(); }
+    }
+    document.addEventListener('keydown', e => {
+        if(e.key==='ArrowRight' || e.key===' ') go(1);
+        if(e.key==='ArrowLeft') go(-1);
+    });
+    ui();
+    
+    function chkAns(btn, correct) {
+        let p = btn.parentElement;
+        let msg = btn.closest('.sl').querySelector('.msg-area');
+        for (let b of p.children) b.style.transform = 'scale(1)';
+        if (correct) {
+            btn.style.background = '#047857';
+            btn.style.transform = 'scale(1.1)';
+            msg.innerHTML = '¡Excelente! ✅ ¡Lo lograste!';
+            msg.style.color = '#047857';
+        } else {
+            btn.style.background = '#b91c1c';
+            let frases = ["¡Sigue intentándolo! 💪", "Observa bien los grupos 🧐", "¡Casi! Intentemos de nuevo 🚀"];
+            msg.innerHTML = frases[Math.floor(Math.random()*frases.length)];
+            msg.style.color = '#b91c1c';
+        }
+    }
+    """
+    
+    slides = []
+    def slide(html): slides.append(f'<div class="sl">{html}</div>')
+    
+    # helper UI
+    def emoji_groups(num_groups, items_per, emoji, border_color="#FF9D9D"):
+        s = f'<div style="display:flex; justify-content:center; gap:20px; margin: 20px 0; flex-wrap:wrap;">'
+        for _ in range(num_groups):
+            s += f'<div class="group-box" style="border-color:{border_color}; width: {items_per * 30 + 60}px;">'
+            for _ in range(items_per):
+                s += f'<div>{emoji}</div>'
+            s += '</div>'
+        s += '</div>'
+        return s
+
+    def svg_array(rows, cols, color="#9de3bd"):
+        w = cols * 60 + 20
+        h = rows * 60 + 20
+        s = f'<svg width="{w}" height="{h}" viewBox="0 0 {w} {h}">'
+        for r in range(rows):
+            for c in range(cols):
+                s += f'<circle cx="{c*60 + 40}" cy="{r*60 + 40}" r="22" fill="{color}" stroke="#555" stroke-width="3"/>'
+        s += '</svg>'
+        return s
+
+    # 1. INTRO
+    slide(f"""
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 style="font-size: 70px; color: var(--base); margin-bottom: 20px; text-align:center;">¡Multiplicaciones 1!</h1>
+            <p class="sub-text">Construyendo las Bases Sólidas 🏗️</p>
+            <p style="font-size:100px; margin-top:30px; animation: bounce 2s infinite;">🎒</p>
+            <style>@keyframes bounce {{ 0%, 100%{{transform:translateY(0);}} 50%{{transform:translateY(-20px);}} }}</style>
+        </div>
+    """)
+    
+    # --- SECCIÓN 1: SUMA ITERADA Y CONCEPTO ---
+    slide(f"""
+        <div class="head-title">Un pequeño problema</div>
+        <p class="sub-text">Imagina que organizamos una fiesta y compramos estas cajas de regalos.</p>
+        {emoji_groups(4, 2, "🎁", "#9DDEFF")}
+        <div class="stp pnl" style="text-align:center; margin-top:20px;">
+            <h2 style="font-size:28px;">¿Cuántos regalos hay en total?</h2>
+            <div class="stp math-eq" style="background:#fefedc; margin-top:15px; border-color:#FFE082;">
+                2 + 2 + 2 + 2 = 8
+            </div>
+            <div class="stp" style="font-size:24px; color:#c2185b; font-weight:800; margin-top:10px;">
+                ¡Sumamos el número 2, cuatro veces!
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title">Suma Iterada</div>
+        <p class="sub-text">Cuando sumamos <b>el mismo número</b> muchas veces, se llama "Suma Iterada".</p>
+        
+        {emoji_groups(3, 4, "🍏", "#9DE3BD")}
+        
+        <div class="stp" style="display:flex; justify-content:center; gap:30px; align-items:center; width:100%;">
+            <div class="math-eq stp" style="border-color:#9DE3BD;">
+                4 + 4 + 4 = 12
+            </div>
+            <div class="stp" style="font-size:30px; font-weight:800;">
+                ➔
+            </div>
+            <div class="pnl-border stp" style="padding:15px; font-size:28px;">
+                Sumamos el <b class="hl">4</b><br>
+                <b class="hl">3</b> veces.
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title">¡Llega el símbolo X!</div>
+        <p class="sub-text">Escribir <span style="background:#FF9D9D; padding:5px 15px; border-radius:10px;">5 + 5 + 5 + 5 + 5 + 5</span> es muy largo.<br>Para hacerlo rápido, usamos la Multiplicación.</p>
+        
+        <div class="stp" style="display:flex; flex-direction:column; align-items:center; width:100%; margin-top:20px;">
+            <div style="font-size:200px; font-weight:900; color:var(--base); line-height: 1;">✕</div>
+            <div class="stp" style="font-size:36px; font-weight:900; background:#FFE082; padding:15px 40px; border-radius:30px; transform:translateY(-30px); border:4px solid #FBC02D; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+                Significa "VECES"
+            </div>
+        </div>
+        
+        <div class="stp" style="font-size:26px; font-weight:800; text-align:center; margin-top:20px;">
+            Entonces, decir <b style="color:#d63384;">6 veces 5</b> ...<br>
+            ¡Es lo mismo que decir <b style="color:var(--base); font-size:34px;">6 x 5</b>!
+        </div>
+    """)
+    
+    slide(f"""
+        <div class="head-title">De la suma a la multiplicación</div>
+        <p class="sub-text">Veamos la transformación en acción:</p>
+        {emoji_groups(5, 3, "⭐️", "#FFE082")}
+        
+        <div style="display:flex; flex-direction:column; gap:20px; align-items:center; width:100%;">
+            <div class="stp math-eq" style="background:#FFF9C4; border-color:#FBC02D;">Suma: 3 + 3 + 3 + 3 + 3 = 15</div>
+            <div class="stp" style="font-size:30px; font-weight:900;">¿Cuántas veces vemos el 3? ➔ <span class="stp hl" style="font-size:40px;">¡5 veces!</span></div>
+            <div class="stp math-eq" style="border-color:var(--base); background:#e3f2fd; font-size:56px;">Multiplicación: 5 x 3 = 15</div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title">Partes de la multiplicación</div>
+        <div style="display:flex; justify-content:center; align-items:center; width:100%; height:100%; padding-bottom:50px;">
+            <div class="pnl-border" style="position:relative; width:80%; padding:60px 40px; background:#f9fbff;">
+                <div style="display:flex; gap:20px; align-items:center; font-size:70px; font-weight:900; color:var(--base);">
+                    <div>5</div>
+                    <div style="color:#c2185b;">x</div>
+                    <div>3</div>
+                    <div style="color:#555;">=</div>
+                    <div style="color:#047857;">15</div>
+                </div>
+                
+                <div class="stp" style="position:absolute; top: -20px; left: 10%; background:#9DDEFF; padding:10px 20px; border-radius:15px; border:3px solid #0288D1; font-size:24px; font-weight:800;">
+                    Factor 1<br><span style="font-size:18px;">(Cuántos grupos hay)</span>
+                </div>
+                
+                <div class="stp" style="position:absolute; bottom: -20px; left: 35%; background:#FF9D9D; padding:10px 20px; border-radius:15px; border:3px solid #d32f2f; font-size:24px; font-weight:800;">
+                    Factor 2<br><span style="font-size:18px;">(Cuántos hay en cada grupo)</span>
+                </div>
+                
+                <div class="stp" style="position:absolute; top: 20px; right: -20px; background:#9DE3BD; padding:15px 30px; border-radius:15px; border:3px solid #047857; font-size:30px; font-weight:900;">
+                    PRODUCTO<br><span style="font-size:18px;">(El Total)</span>
+                </div>
+            </div>
+        </div>
+    """)
+
+    # ABRE TU CUADERNO (Suma iterada a multi)
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Observa la imagen y escribe la <b class="hl">Suma</b> y la <b class="hl">Multiplicación</b>.</p>
+        
+        {emoji_groups(4, 5, "🏀", "#FF9D9D")}
+        
+        <div style="display:flex; gap:40px; justify-content:center; width:100%; margin-top:20px;">
+            <div class="pnl stp" style="border-width:4px; max-width:400px; text-align:center;">
+                <h3 style="color:#c2185b; margin-bottom:15px; font-size:26px;">Suma Iterada</h3>
+                <div class="stp math-eq" style="font-size:36px; padding:10px;">5+5+5+5=20</div>
+            </div>
+            
+            <div class="pnl stp" style="border-width:4px; max-width:400px; text-align:center;">
+                <h3 style="color:var(--base); margin-bottom:15px; font-size:26px;">Multiplicación</h3>
+                <div class="stp math-eq" style="font-size:46px; padding:10px; background:#e3f2fd;">4 x 5 = 20</div>
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Observa la imagen y escribe la <b class="hl">Suma</b> y la <b class="hl">Multiplicación</b>.</p>
+        
+        {emoji_groups(6, 2, "🍩", "#9DDEFF")}
+        
+        <div style="display:flex; gap:40px; justify-content:center; width:100%; margin-top:20px;">
+            <div class="pnl stp" style="border-width:4px; max-width:400px; text-align:center;">
+                <h3 style="color:#c2185b; margin-bottom:15px; font-size:26px;">Suma Iterada</h3>
+                <div class="stp math-eq" style="font-size:30px; padding:10px;">2+2+2+2+2+2=12</div>
+            </div>
+            
+            <div class="pnl stp" style="border-width:4px; max-width:400px; text-align:center;">
+                <h3 style="color:var(--base); margin-bottom:15px; font-size:26px;">Multiplicación</h3>
+                <div class="stp math-eq" style="font-size:46px; padding:10px; background:#e3f2fd;">6 x 2 = 12</div>
+            </div>
+        </div>
+    """)
+
+    # --- SECCIÓN 2: PROPIEDAD CONMUTATIVA ---
+    slide(f"""
+        <div class="head-title">Un Secreto Matemático</div>
+        <p class="sub-text">¿Qué pasará si cambiamos el orden de los factores?</p>
+        
+        <div style="display:flex; justify-content:center; align-items:center; gap:60px; margin-top:20px;">
+            <div class="stp" style="text-align:center;">
+                {svg_array(3, 4, "#9DDEFF")}
+                <div class="math-eq" style="margin-top:10px; font-size:36px;">3 filas x 4</br> = 12</div>
+            </div>
+            
+            <div class="stp" style="font-size:60px; font-weight:900; color:var(--base);">vs</div>
+            
+            <div class="stp" style="text-align:center;">
+                {svg_array(4, 3, "#FF9D9D")}
+                <div class="math-eq" style="margin-top:10px; font-size:36px;">4 filas x 3</br> = 12</div>
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title">Propiedad Conmutativa</div>
+        <div class="pnl-border" style="background: linear-gradient(135deg, #FFDEE9 0%, #B5FFFC 100%);">
+            <h2 style="font-size:40px; margin-bottom:20px;">¡El orden de los factores NO altera el producto!</h2>
+            
+            <div class="stp" style="display:flex; justify-content:center; align-items:center; gap:20px; font-size:60px; font-weight:900;">
+                <div style="background:#fff; padding:15px 30px; border-radius:20px; color:#c2185b;">5 x 3</div>
+                <div>=</div>
+                <div style="background:#fff; padding:15px 30px; border-radius:20px; color:var(--base);">3 x 5</div>
+            </div>
+            
+            <div class="stp" style="margin-top:30px; font-size:28px; background:#fff; padding:15px; border-radius:15px; text-align:center; font-weight:800;">
+                Es como dar vuelta un rectángulo, ¡sigue teniendo los mismos puntos totales (15)!<br>
+                💡 Aprenderte el <b class="hl">5x3</b> es aprenderte mágicamente el <b class="hl">3x5</b>.
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Escribe las dos multiplicaciones (invertidas) que representa este dibujo.</p>
+        
+        <div style="display:flex; justify-content:center; margin-bottom:30px;">
+            {svg_array(2, 6, "#FFE082")}
+        </div>
+        
+        <div class="stp" style="display:flex; justify-content:center; gap:40px;">
+            <div class="math-eq" style="font-size:48px;">2 x 6 = 12</div>
+            <div class="math-eq" style="font-size:48px;">6 x 2 = 12</div>
+        </div>
+        <div class="stp" style="text-align:center; font-size:30px; font-weight:900; color:#047857; margin-top:20px;">✅ ¡Ambas son correctas!</div>
+    """)
+
+    # --- SECCIÓN 3: TABLA DEL 2 ---
+    slide(f"""
+        <div class="head-title" style="background:#c2185b;">La Tabla del 2</div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+            <p class="sub-text">Multiplicar por 2 es como tener un <b style="color:#c2185b;">Espejo Mágico</b>.</p>
+            <p style="font-size:120px;">🪞</p>
+            <div class="stp pnl-border" style="margin-top:20px; font-size:32px; font-weight:900;">
+                ¡Multiplicar por 2 es calcular el DOBLE!
+            </div>
+            <div class="stp" style="margin-top:20px; font-size:28px; font-weight:800; background:#fefedc; padding:20px; border-radius:20px;">
+                2 x 3 = El doble de 3 = 6<br>
+                2 x 5 = El doble de 5 = 10
+            </div>
+        </div>
+    """)
+
+    def slide_doble(n, emoji):
+        return f"""
+        <div class="head-title" style="background:#c2185b;">El Doble ({n})</div>
+        <div style="display:flex; justify-content:center; align-items:center; gap:60px; margin-top:30px;">
+            <div class="pnl" style="text-align:center; width:300px; border-color:#FF9D9D;">
+                <div style="font-size:30px; font-weight:900; margin-bottom:15px;">Original</div>
+                <div style="font-size:50px;">{''.join([emoji]*n)}</div>
+                <div style="font-size:30px; font-weight:900; margin-top:15px;">{n}</div>
+            </div>
+            <div class="stp" style="font-size:60px; font-weight:900; color:#c2185b;">x 2</div>
+            <div class="stp pnl" style="text-align:center; width:300px; border-color:#c2185b; background:#fff0f5;">
+                <div style="font-size:30px; font-weight:900; margin-bottom:15px;">El Doble</div>
+                <div style="font-size:50px;">{' '.join([emoji]*n)}</div>
+                <div style="font-size:50px; margin-top:10px;">{' '.join([emoji]*n)}</div>
+                <div class="stp math-eq" style="border-color:#c2185b; margin-top:15px; color:#c2185b; font-size:38px;">2 x {n} = {n*2}</div>
+            </div>
+        </div>
+        """
+    
+    slide(slide_doble(4, "🎈"))
+    slide(slide_doble(7, "🧩"))
+
+    # Abre tu cuaderno: Tabla del 2
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Calcula mentalmente usando la estrategia "El Doble".</p>
+        
+        <div style="display:flex; flex-direction:column; gap:20px; align-items:center; width:100%;">
+            <div class="stp math-eq" style="width:600px; display:flex; justify-content:space-between; padding:20px 40px;">
+                <span>2 x 6 =</span> <span class="stp hl">12</span>
+            </div>
+            <div class="stp math-eq" style="width:600px; display:flex; justify-content:space-between; padding:20px 40px;">
+                <span>2 x 8 =</span> <span class="stp hl">16</span>
+            </div>
+            <div class="stp math-eq" style="width:600px; display:flex; justify-content:space-between; padding:20px 40px;">
+                <span>2 x 10 =</span> <span class="stp hl">20</span>
+            </div>
+        </div>
+    """)
+
+    # --- SECCIÓN 4: TABLA DEL 5 ---
+    slide(f"""
+        <div class="head-title" style="background:#047857;">La Tabla del 5</div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+            <p class="sub-text">La tabla del 5 es rítmica... como dar grandes saltos.</p>
+            <div style="font-size:120px; display:flex; gap:30px; margin:20px 0;">🖐️ 🖐️ 🖐️</div>
+            <div class="stp pnl-border" style="font-size:32px; font-weight:900; background:#e8f5e9;">
+                Cada mano tiene 5 dedos. Contar manos es multiplicar por 5.
+            </div>
+            <div class="stp" style="margin-top:20px; font-size:36px; font-weight:900; color:#047857; letter-spacing: 5px;">
+                5 - 10 - 15 - 20 - 25 - 30
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title" style="background:#047857;">El Secreto del 5</div>
+        <div class="pnl" style="border: 5px solid #9DE3BD; text-align:center;">
+            <h2 style="font-size:36px; margin-bottom:20px;">💡 Un súper consejo:</h2>
+            <div class="stp" style="font-size:28px; font-weight:800; line-height:1.6;">
+                ¡Todos los resultados de la tabla del 5 terminan en <b style="color:#d32f2f; font-size:40px;">0</b> o en <b style="color:#d32f2f; font-size:40px;">5</b>!
+            </div>
+            <div class="stp" style="margin-top:30px; display:flex; justify-content:center; gap:40px; font-size:30px; font-weight:900;">
+                <div style="background:#fff; border:3px solid #ddd; padding:15px; border-radius:15px;">5 x 1 = 5</div>
+                <div style="background:#fff; border:3px solid #ddd; padding:15px; border-radius:15px;">5 x 2 = 10</div>
+                <div style="background:#fff; border:3px solid #ddd; padding:15px; border-radius:15px;">5 x 3 = 15</div>
+                <div style="background:#fff; border:3px solid #ddd; padding:15px; border-radius:15px;">5 x 4 = 20</div>
+            </div>
+        </div>
+    """)
+
+    # Practica tabla 5 iterada
+    slide(f"""
+        <div class="head-title" style="background:#047857;">Práctica: Tabla del 5</div>
+        <p class="sub-text">¿Cuántos dedos hay en 4 manos?</p>
+        
+        <div style="display:flex; justify-content:center; gap:20px; margin:30px 0; font-size:100px;">
+            🖐️ 🖐️ 🖐️ 🖐️
+        </div>
+        
+        <div class="stp math-eq" style="font-size:48px;">
+            4 x 5 = <span class="stp" style="color:#047857;">20</span>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Calcula contando de 5 en 5.</p>
+        
+        <div style="display:flex; flex-direction:column; gap:20px; align-items:center; width:100%;">
+            <div class="stp math-eq" style="width:600px; display:flex; justify-content:space-between; padding:20px 40px; border-color:#9DE3BD;">
+                <span>5 x 6 =</span> <span class="stp" style="color:#047857;">30</span>
+            </div>
+            <div class="stp math-eq" style="width:600px; display:flex; justify-content:space-between; padding:20px 40px; border-color:#9DE3BD;">
+                <span>5 x 8 =</span> <span class="stp" style="color:#047857;">40</span>
+            </div>
+        </div>
+        <div class="stp" style="font-weight:800; font-size:24px; color:#c2185b; margin-top:20px;">
+            (Recuerda la regla de terminar en 0 o 5)
+        </div>
+    """)
+
+    # --- SECCIÓN FINAL: QUIZ INTERACTIVO Y PROBLEMAS ---
+    
+    # Quiz Multiples Options
+    quizzes = [
+        ("¿Cuál es la forma correcta de escribir esta multiplicación?<br><br><b>4 + 4 + 4 + 4 + 4 = 20</b>", ["5 x 4 = 20", "4 x 4 = 20", "6 x 4 = 20"], "5 x 4 = 20"),
+        ("Elige la opción correcta usando la propiedad conmutativa:", ["2 x 5 = 5 x 2", "5 x 2 = 5 + 2", "5 x 3 = 10"], "2 x 5 = 5 x 2"),
+        ("¿Qué número es el doble de 8?", ["18", "16", "14"], "16"),
+        ("Si cuento de 5 en 5... ¿Cuánto es 5 x 7?", ["30", "45", "35"], "35")
+    ]
+
+    for q_idx, q in enumerate(quizzes):
+        question, options, correct_ans = q
+        btns = ""
+        for opt in options:
+            is_corr = 'true' if opt == correct_ans else 'false'
+            btns += f"<button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, {is_corr})'>{opt}</button>"
+            
+        slide(f"""
+        <div class="head-title">Desafío Relámpago ⚡ ({q_idx+1}/{len(quizzes)})</div>
+        <div class="pnl-border" style="width:100%; border-color:#d63384;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:40px;">{question}</p>
+            <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; width:100%;">
+                {btns}
+            </div>
+            <div class="msg-area" style="font-size:26px; font-weight:900; height:40px; margin-top:40px; text-align:center;"></div>
+        </div>
+        """)
+
+    # Problemas Situacionales
+    problemas = [
+        ("Cajas de Juguetes", "Pedro compró <b>5 cajas</b> de autitos. Si en cada caja vienen <b>4 autitos</b>, ¿Cuántos tiene en total?", "5 cajas x 4 autitos = <br><span style='font-size:46px; color:var(--base);'>20 autitos</span>", "🚗", "#E3F2FD", "#1976D2"),
+        ("Bolsas de Dulces", "Tu amiga trajo <b>2 bolsas</b> para el recreo. Cada una tiene <b>9 dulces</b>. ¿Cuántos dulces son en total?", "El doble de 9 = <br><span style='font-size:46px; color:var(--base);'>18 dulces</span>", "🍬", "#FCE4EC", "#C2185B")
+    ]
+    
+    for tit, prob, ans, emoji, bg, border in problemas:
+        slide(f"""
+        <div class="head-title">Resolución de Problemas 🧠</div>
+        <div style="background:{bg}; border: 5px solid {border}; border-radius: 40px; padding:40px; display:flex; gap:40px; align-items:center; width:100%;">
+            <div style="font-size:120px; animation: bounce 3s infinite;">{emoji}</div>
+            <div style="flex:1;">
+                <h2 style="font-size:32px; color:{border}; margin-bottom:15px;">{tit}</h2>
+                <p style="font-size:26px; font-weight:600; line-height:1.4;">{prob}</p>
+                
+                <div class="stp" style="margin-top:20px; background:#fff; padding:20px; border-radius:20px; border-left: 10px solid {border}; box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
+                    <p style="font-size:22px; font-weight:800; color:#555;">La respuesta es:</p>
+                    <div style="font-size:32px; font-weight:900; margin-top:10px;">{ans}</div>
+                </div>
+            </div>
+        </div>
+        """)
+
+    # Cierre
+    slide(f"""
+        <div class="head-title" style="background: var(--base);">📋 Qué aprendimos hoy</div>
+        <div style="display:flex; flex-direction:column; gap:20px; width:100%;">
+            <div class="stp pnl" style="padding:15px; font-size:22px;"><b style="font-size:30px">✖️</b> El signo X significa <b>VECES</b>.</div>
+            <div class="stp pnl" style="padding:15px; font-size:22px;"><b style="font-size:30px">🔄</b> <b>Propiedad Conmutativa:</b> El orden de los números NO cambia el resultado final (2x3 es lo mismo que 3x2).</div>
+            <div class="stp pnl" style="padding:15px; font-size:22px;"><b style="font-size:30px">🪞</b> <b>Tabla del 2:</b> Es encontrar "El Doble".</div>
+            <div class="stp pnl" style="padding:15px; font-size:22px;"><b style="font-size:30px">🖐️</b> <b>Tabla del 5:</b> Es contar de cinco en cinco. ¡Ojo! Termina siempre en 0 o 5.</div>
+        </div>
+    """)
+    
+    slide(f"""
+        <div class="head-title" style="background: #047857;">🏆 ¡Misión Cumplida!</div>
+        <div style="font-size:36px; font-weight:800; text-align:center; margin-top:30px; line-height:1.5;">
+            ¡Excelente trabajo!<br>Ya dominas las bases de la multiplicación.
+        </div>
+        <div style="font-size:120px; margin-top:50px; animation: bounce 2s infinite;">🏅</div>
+    """)
+
+    html = f"""<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Multiplicación 1 - Interactivo</title>
+    <style>{css}</style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
+        {"".join(slides)}
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div class="sc" id="sc">1 / {len(slides)}</div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>{js}</script>
+</body>
+</html>
+"""
+    output_path = '/Users/brunonattino/Desktop/PAGINA TUTORIAS/SLIDES/multiplicaciones HTMLS/multiplicaciones_1.html'
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+    print(f"Módulo 1 generado: {len(slides)} slides.")
+
+if __name__ == '__main__':
+    generate_html()

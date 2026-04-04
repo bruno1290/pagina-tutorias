@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>División 2</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root {
+    --base: #1C4A82;
+    --bg: #f5f6f8;
+    --tx: #333;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--tx);
+}
+.dk { position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex; }
+.sl {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 36px 40px 82px;
+    opacity: 0;
+    transform: scale(.96);
+    transition: opacity .4s, transform .4s;
+    pointer-events: none;
+    z-index: 1;
+}
+.sl.on { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
+.sl.pv { opacity: 0; transform: translateX(-50px) scale(.95); }
+.sl.nx { opacity: 0; transform: translateX(50px) scale(.95); }
+.head-title {
+    background: var(--base);
+    color: white;
+    padding: 10px 40px;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    display: inline-block;
+    border-radius: 12px;
+    text-align: center;
+}
+.sub-text {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+    line-height: 1.4;
+}
+.pb { position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100; }
+.nv {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 100;
+}
+.nb {
+    background: #eee;
+    color: var(--base);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all .2s;
+}
+.nb:hover { background: #ddd; }
+.nb:disabled { opacity: 0.3; cursor: not-allowed; }
+.sc { color: #888; font-size: 16px; font-weight: 900; }
+.stp {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+.stp.shwn { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.pnl {
+    background: #fff;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 3px solid #eaeaea;
+    width: 100%;
+}
+.pnl-border {
+    background: #fff;
+    border: 4px solid var(--base);
+    border-radius: 20px;
+    padding: 24px;
+    width: 100%;
+}
+.hl { color: var(--base); font-weight: 900; }
+.btn {
+    background: var(--base);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .2s;
+    font-family: 'Nunito', sans-serif;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3); }
+.math-eq {
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--base);
+    background: #fff;
+    padding: 12px 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border: 3px dashed #bbdefb;
+    margin: 12px;
+    text-align: center;
+}
+.chip-row, .card-row, .base-row, .quiz-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.mini-chip {
+    background: #eef5ff;
+    border: 2px solid #b6d4f3;
+    border-radius: 999px;
+    padding: 12px 18px;
+    font-size: 20px;
+    font-weight: 800;
+}
+.idea-card {
+    flex: 1 1 220px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+    border-radius: 18px;
+    padding: 18px;
+    border: 3px solid #d7e7f7;
+    min-height: 220px;
+}
+.idea-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    margin-bottom: 10px;
+}
+.idea-card p {
+    font-size: 21px;
+    line-height: 1.45;
+}
+.base-card {
+    flex: 1 1 320px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 18px;
+    border: 4px solid #d9e7f6;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+}
+.base-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    text-align: center;
+    margin-bottom: 14px;
+}
+.place-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+.place-box {
+    background: #f8fbff;
+    border: 2px dashed #c6d9ef;
+    border-radius: 16px;
+    padding: 12px;
+    min-height: 184px;
+}
+.place-title {
+    text-align: center;
+    font-size: 19px;
+    font-weight: 900;
+    color: #315c8d;
+    margin-bottom: 10px;
+}
+.block-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 88px;
+}
+.unit {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: var(--fill, #9DDEFF);
+    border: 2px solid rgba(0,0,0,0.18);
+}
+.rod {
+    width: 30px;
+    height: 108px;
+    border-radius: 8px;
+    background: var(--fill, #9DE3BD);
+    border: 2px solid rgba(0,0,0,0.18);
+}
+.flat {
+    width: 94px;
+    height: 94px;
+    border-radius: 12px;
+    background:
+        linear-gradient(rgba(255,255,255,0.42), rgba(255,255,255,0.42)),
+        repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(0,0,0,0.08) 18px, rgba(0,0,0,0.08) 20px),
+        repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(0,0,0,0.08) 18px, rgba(0,0,0,0.08) 20px),
+        var(--fill, #FFE082);
+    border: 2px solid rgba(0,0,0,0.18);
+}
+.number-tag {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 900;
+}
+.two-col {
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 18px;
+    width: 100%;
+    align-items: stretch;
+}
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.step-box {
+    background: #f7fbff;
+    border-left: 8px solid var(--base);
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+.column-wrap {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 18px;
+    width: 100%;
+    align-items: start;
+}
+.alg-board {
+    background: #fff;
+    border: 4px solid var(--base);
+    border-radius: 20px;
+    padding: 22px 26px;
+}
+.alg-grid {
+    display: grid;
+    grid-template-columns: 68px repeat(3, 76px);
+    grid-auto-rows: 58px;
+    align-items: center;
+    justify-items: center;
+    margin: 0 auto;
+    width: max-content;
+}
+.alg-grid.long {
+    grid-template-columns: 68px repeat(3, 76px);
+}
+.alg-label {
+    font-size: 20px;
+    font-weight: 900;
+    color: #57779d;
+}
+.alg-digit {
+    width: 60px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #f7fbff;
+    font-size: 34px;
+    font-weight: 900;
+    color: #173b67;
+    border: 2px solid #d4e5f8;
+}
+.alg-digit.dim { color: #b6c6d8; }
+.alg-digit.reserve {
+    height: 38px;
+    background: #fff7df;
+    border-color: #f0cf67;
+    color: #9f6200;
+    font-size: 24px;
+}
+.alg-line {
+    grid-column: 2 / span 3;
+    width: 100%;
+    height: 4px;
+    background: #395f90;
+    border-radius: 999px;
+}
+.alg-sign {
+    font-size: 30px;
+    font-weight: 900;
+    color: #c94d2a;
+}
+.side-panel {
+    background: linear-gradient(180deg, #fefefe 0%, #f4f9ff 100%);
+    border: 3px solid #d5e4f5;
+    border-radius: 18px;
+    padding: 18px;
+    min-height: 290px;
+}
+.side-panel h3 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 12px;
+}
+.side-panel p {
+    font-size: 20px;
+    line-height: 1.45;
+}
+.story-card {
+    width: 100%;
+    border-radius: 28px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: center;
+}
+.story-emoji {
+    font-size: 114px;
+    text-align: center;
+    animation: bob 2.8s infinite;
+}
+.story-card h2 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+.story-card p {
+    font-size: 24px;
+    line-height: 1.45;
+}
+.summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+.summary-item {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 18px;
+    border: 3px solid #dbe7f4;
+    font-size: 23px;
+    line-height: 1.45;
+}
+.count-board {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.count-card {
+    flex: 1 1 260px;
+    background: linear-gradient(180deg, #ffffff 0%, #f6fbff 100%);
+    border-radius: 22px;
+    padding: 20px;
+    border: 4px solid #d6e8f8;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+    text-align: center;
+}
+.count-card h3 {
+    font-size: 28px;
+    margin-bottom: 12px;
+    color: var(--base);
+}
+.emoji-pack {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    min-height: 86px;
+    margin-bottom: 12px;
+}
+.fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+.fact-box {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 18px;
+    padding: 16px;
+    border: 3px solid #d8e7f6;
+    min-height: 170px;
+}
+.fact-box h4 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 10px;
+    text-align: center;
+}
+.fact-box p {
+    font-size: 21px;
+    line-height: 1.45;
+    text-align: center;
+}
+.msg-area {
+    font-size: 24px;
+    font-weight: 900;
+    height: 40px;
+    text-align: center;
+    margin-top: 20px;
+}
+.hero-title {
+    font-size: 68px;
+    color: var(--base);
+    margin-bottom: 18px;
+    text-align: center;
+    line-height: 1;
+}
+.hero-sub {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    max-width: 720px;
+}
+.hero-emoji {
+    font-size: 108px;
+    margin-top: 28px;
+    animation: bounce 2s infinite;
+}
+.formula-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.label-pill {
+    background: #eef5ff;
+    border: 2px solid #c5dcf5;
+    border-radius: 14px;
+    padding: 10px 16px;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--base);
+}
+.warn-card {
+    background: #fff8e5;
+    border: 4px solid #f0ca59;
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 22px;
+    line-height: 1.45;
+    width: 100%;
+}
+.decomp-flow {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+}
+.decomp-box {
+    background: #fff;
+    border: 3px solid #d4e6f7;
+    border-radius: 18px;
+    padding: 14px 18px;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--base);
+}
+.arrow {
+    font-size: 34px;
+    font-weight: 900;
+    color: #4d6d94;
+}
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+</style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
+        <div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 class="hero-title">¡División 2!</h1>
+            <p class="hero-sub">División exacta e inexacta, resto y primeros cuocientes de dos dígitos.</p>
+            <div class="hero-emoji">🧺</div>
+        </div>
+        </div><div class="sl">
+            <div class="head-title">Recordemos la división exacta</div>
+            <p class="sub-text">Una división es exacta cuando <b class="hl">no sobra nada</b>.</p>
+            <div class="count-board">
+            <div class="count-card stp" style="border-color:#FFE082; max-width:220px;">
+                <h3>Grupo 1</h3>
+                <div class="emoji-pack"><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span></div>
+                <div class="mini-chip">4 en cada grupo</div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#FFE082; max-width:220px;">
+                <h3>Grupo 2</h3>
+                <div class="emoji-pack"><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span></div>
+                <div class="mini-chip">4 en cada grupo</div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#FFE082; max-width:220px;">
+                <h3>Grupo 3</h3>
+                <div class="emoji-pack"><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span></div>
+                <div class="mini-chip">4 en cada grupo</div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#FFE082; max-width:220px;">
+                <h3>Grupo 4</h3>
+                <div class="emoji-pack"><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span></div>
+                <div class="mini-chip">4 en cada grupo</div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#FFE082; max-width:220px;">
+                <h3>Grupo 5</h3>
+                <div class="emoji-pack"><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span></div>
+                <div class="mini-chip">4 en cada grupo</div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#FFE082; max-width:220px;">
+                <h3>Grupo 6</h3>
+                <div class="emoji-pack"><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span><span style="font-size:48px; line-height:1;">🍪</span></div>
+                <div class="mini-chip">4 en cada grupo</div>
+            </div>
+            </div>
+            <div class="stp math-eq">24 ÷ 6 = 4</div>
+            </div><div class="sl">
+            <div class="head-title">¿Qué pasa si sobran objetos?</div>
+            <p class="sub-text">Cuando no todo se puede repartir, aparece el <b class="hl">resto</b>.</p>
+            <div class="count-board">
+            <div class="count-card stp" style="border-color:#9DE3BD; max-width:210px;">
+                <h3>Grupo 1</h3>
+                <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🍎</span><span style="font-size:46px; line-height:1;">🍎</span><span style="font-size:46px; line-height:1;">🍎</span></div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#9DE3BD; max-width:210px;">
+                <h3>Grupo 2</h3>
+                <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🍎</span><span style="font-size:46px; line-height:1;">🍎</span><span style="font-size:46px; line-height:1;">🍎</span></div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#9DE3BD; max-width:210px;">
+                <h3>Grupo 3</h3>
+                <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🍎</span><span style="font-size:46px; line-height:1;">🍎</span><span style="font-size:46px; line-height:1;">🍎</span></div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#9DE3BD; max-width:210px;">
+                <h3>Grupo 4</h3>
+                <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🍎</span><span style="font-size:46px; line-height:1;">🍎</span><span style="font-size:46px; line-height:1;">🍎</span></div>
+            </div>
+            
+        <div class="count-card stp" style="border-color:#E1BEE7; max-width:240px; background:linear-gradient(180deg,#faf4ff 0%,#ffffff 100%);">
+            <h3>Sobran</h3>
+            <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🍎</span><span style="font-size:46px; line-height:1;">🍎</span></div>
+            <div class="mini-chip">Resto = 2</div>
+        </div>
+        </div>
+            <div class="stp math-eq">14 ÷ 3 = 4 y sobra 2</div>
+            </div><div class="sl">
+        <div class="head-title">Reglas del resto</div>
+        <p class="sub-text">Para que la división tenga sentido, estas reglas deben cumplirse.</p>
+        <div class="fact-grid">
+            <div class="fact-box" style="border-color:#FFE082;">
+                <h4>Resto menor</h4>
+                <p>El resto siempre debe ser <b>menor</b> que el divisor.</p>
+            </div>
+            
+            <div class="fact-box" style="border-color:#9DE3BD;">
+                <h4>Reparto máximo</h4>
+                <p>El cociente muestra cuánto sí alcanzó a repartirse.</p>
+            </div>
+            
+            <div class="fact-box" style="border-color:#E1BEE7;">
+                <h4>Comprobación</h4>
+                <p>Divisor × cociente + resto = dividendo.</p>
+            </div>
+            </div>
+        </div><div class="sl">
+            <div class="head-title">Comprobamos una división con resto</div>
+            <div class="pnl-border">
+                <div class="math-eq">17 ÷ 5 = 3 y sobra 2</div>
+                <div class="stp decomp-flow">
+                    <div class="decomp-box">5 × 3 = 15</div>
+                    <div class="arrow">→</div>
+                    <div class="decomp-box">15 + 2 = 17</div>
+                </div>
+                <div class="stp mini-chip">Si la cuenta vuelve al dividendo, la división está bien revisada.</div>
+            </div>
+            </div><div class="sl">
+        <div class="head-title">Divisiones con resto</div>
+        <p class="sub-text">Lee el reparto y reconoce el resto.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFB74D; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🍊</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">14 ÷ 3</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFB74D; margin:0;">= 4 r 2</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🍬</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">17 ÷ 5</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 3 r 2</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🧁</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">22 ÷ 4</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 5 r 2</div>
+            </div>
+            </div>
+        </div><div class="sl">
+            <div class="head-title">Cuocientes de 2 dígitos</div>
+            <p class="sub-text">A veces la respuesta de la división tiene <b class="hl">dos cifras</b>.</p>
+            <div class="pnl-border">
+                <div class="math-eq">48 ÷ 3 = 16</div>
+                <div class="stp fact-grid">
+                    <div class="fact-box" style="border-color:#FFE082;"><h4>3 × 10</h4><p>Sabemos que 3 × 10 = 30.</p></div>
+                    <div class="fact-box" style="border-color:#9DE3BD;"><h4>Faltan 18</h4><p>Para llegar a 48 faltan 18.</p></div>
+                    <div class="fact-box" style="border-color:#E1BEE7;"><h4>3 × 6</h4><p>3 × 6 = 18, entonces 10 + 6 = 16.</p></div>
+                </div>
+            </div>
+            </div><div class="sl">
+        <div class="head-title">Primera división con cuociente de 2 dígitos</div>
+        <p class="sub-text">Pensamos cuántas veces cabe el divisor en el dividendo.</p>
+        
+    <div class="column-wrap">
+        <div class="alg-board">
+            <div class="alg-grid long">
+                <div class="alg-label"></div><div class="alg-digit dim"></div><div class="alg-digit">1</div><div class="alg-digit">6</div><div class="alg-label">÷</div><div class="alg-digit dim"></div><div class="alg-digit">4</div><div class="alg-digit">8</div><div class="alg-label">3</div><div class="alg-digit dim"></div><div class="alg-digit dim"></div><div class="alg-digit dim"></div>
+                <div class="alg-line"></div>
+            </div>
+        </div>
+        <div class="side-panel">
+            <h3>Cómo pensar</h3>
+            <p class="stp" style="margin-bottom:12px;">3 cabe en 4 decenas al menos <b>1 decena</b> de veces.</p><p class="stp" style="margin-bottom:12px;">Después reviso cuánto falta para llegar a 48.</p><p class="stp" style="margin-bottom:12px;">Como 3 × 16 = 48, el cociente es <b>16</b>.</p>
+        </div>
+    </div>
+    </div><div class="sl">
+        <div class="head-title">Cuocientes de 2 dígitos sin resto</div>
+        <p class="sub-text">Primero practiquemos casos exactos.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🚗</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">48 ÷ 3</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFE082; margin:0;">= 16</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">📚</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">72 ÷ 4</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 18</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">⚽</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">84 ÷ 6</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 14</div>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Resuelve: <b class="hl">96 ÷ 8</b>.</p>
+        
+        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">Pienso: 8 × 10 = 80</div><div class="stp decomp-box">Faltan 16</div><div class="stp decomp-box">8 × 2 = 16</div><div class="stp decomp-box">Resultado: 12</div></div>
+        </div><div class="sl">
+            <div class="head-title">Otra división exacta</div>
+            <p class="sub-text">Mira cómo aparece un cuociente de dos dígitos en una división exacta.</p>
+            <div class="pnl-border">
+                <div class="math-eq">75 ÷ 5 = 15</div>
+                <div class="stp decomp-flow">
+                    <div class="decomp-box">5 × 10 = 50</div>
+                    <div class="arrow">→</div>
+                    <div class="decomp-box">Faltan 25</div>
+                    <div class="arrow">→</div>
+                    <div class="decomp-box">5 × 5 = 25</div>
+                    <div class="arrow">→</div>
+                    <div class="decomp-box">10 + 5 = 15</div>
+                </div>
+            </div>
+            </div><div class="sl">
+        <div class="head-title">Más exactas con dos cifras</div>
+        <p class="sub-text">Sigue practicando divisiones exactas.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFB74D; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🧩</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">75 ÷ 5</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFB74D; margin:0;">= 15</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🎨</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">63 ÷ 3</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 21</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🌈</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">88 ÷ 4</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 22</div>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title">Desafío exacto</div>
+        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">¿Cuál es el resultado de <b>72 ÷ 4</b>?</p>
+            <div class="quiz-row"><button class="btn" onclick="chkAns(this, false, &quot;Porque 4 \u00d7 18 = 72.&quot;)">16</button><button class="btn" onclick="chkAns(this, true, &quot;Porque 4 \u00d7 18 = 72.&quot;)">18</button><button class="btn" onclick="chkAns(this, false, &quot;Porque 4 \u00d7 18 = 72.&quot;)">19</button></div>
+            <div class="msg-area"></div>
+        </div>
+        </div><div class="sl">
+            <div class="head-title">Cuocientes de 2 dígitos con resto</div>
+            <p class="sub-text">Ahora la división no termina exacta y aparece un resto.</p>
+            <div class="pnl-border">
+                <div class="math-eq">58 ÷ 4 = 14 y sobra 2</div>
+                <div class="stp decomp-flow">
+                    <div class="decomp-box">4 × 10 = 40</div>
+                    <div class="arrow">→</div>
+                    <div class="decomp-box">Faltan 18</div>
+                    <div class="arrow">→</div>
+                    <div class="decomp-box">4 × 4 = 16</div>
+                    <div class="arrow">→</div>
+                    <div class="decomp-box">Sobran 2</div>
+                </div>
+            </div>
+            </div><div class="sl">
+            <div class="head-title">Comprobamos otra vez</div>
+            <div class="pnl-border">
+                <div class="math-eq">58 ÷ 4 = 14 r 2</div>
+                <div class="stp math-eq" style="font-size:46px;">4 × 14 + 2 = 58</div>
+                <div class="stp mini-chip">Multiplico el divisor por el cociente y luego sumo el resto.</div>
+            </div>
+            </div><div class="sl">
+        <div class="head-title">Divisiones con cuociente de 2 dígitos y resto</div>
+        <p class="sub-text">Ahora ya aparecen dos cifras y sobra algo.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🍪</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">58 ÷ 4</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFE082; margin:0;">= 14 r 2</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">📦</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">67 ÷ 5</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 13 r 2</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🚲</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">95 ÷ 6</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 15 r 5</div>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Abre tu cuaderno: <b class="hl">73 ÷ 6</b>.</p>
+        
+        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">6 × 10 = 60</div><div class="stp decomp-box">Faltan 13</div><div class="stp decomp-box">6 × 2 = 12</div><div class="stp decomp-box">Resultado: 12 y sobra 1</div></div>
+        </div><div class="sl">
+            <div class="head-title">Visualizamos 73 ÷ 6</div>
+            <p class="sub-text">Se forman grupos completos y luego miramos qué sobra.</p>
+            <div class="count-board">
+            <div class="count-card stp" style="border-color:#FFB74D; max-width:210px;">
+                <h3>Grupo 1</h3>
+                <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span></div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#FFB74D; max-width:210px;">
+                <h3>Grupo 2</h3>
+                <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span></div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#FFB74D; max-width:210px;">
+                <h3>Grupo 3</h3>
+                <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span></div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#FFB74D; max-width:210px;">
+                <h3>Grupo 4</h3>
+                <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span></div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#FFB74D; max-width:210px;">
+                <h3>Grupo 5</h3>
+                <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span></div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#FFB74D; max-width:210px;">
+                <h3>Grupo 6</h3>
+                <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span></div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#FFB74D; max-width:210px;">
+                <h3>Grupo 7</h3>
+                <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span></div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#FFB74D; max-width:210px;">
+                <h3>Grupo 8</h3>
+                <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span></div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#FFB74D; max-width:210px;">
+                <h3>Grupo 9</h3>
+                <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span></div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#FFB74D; max-width:210px;">
+                <h3>Grupo 10</h3>
+                <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span></div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#FFB74D; max-width:210px;">
+                <h3>Grupo 11</h3>
+                <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span></div>
+            </div>
+            
+            <div class="count-card stp" style="border-color:#FFB74D; max-width:210px;">
+                <h3>Grupo 12</h3>
+                <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span><span style="font-size:46px; line-height:1;">🟣</span></div>
+            </div>
+            
+        <div class="count-card stp" style="border-color:#E1BEE7; max-width:240px; background:linear-gradient(180deg,#faf4ff 0%,#ffffff 100%);">
+            <h3>Sobran</h3>
+            <div class="emoji-pack"><span style="font-size:46px; line-height:1;">🟣</span></div>
+            <div class="mini-chip">Resto = 1</div>
+        </div>
+        </div>
+            <div class="stp math-eq">73 ÷ 6 = 12 y sobra 1</div>
+            </div><div class="sl">
+        <div class="head-title">Práctica mezclada</div>
+        <p class="sub-text">Decide si la división es exacta o inexacta.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFB74D; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">⭐</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">64 ÷ 8</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFB74D; margin:0;">= 8</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🍎</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">70 ÷ 6</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 11 r 4</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🎈</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">81 ÷ 7</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 11 r 4</div>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title">Cómo leer una división inexacta</div>
+        <p class="sub-text">No solo decimos el cociente: también nombramos el resto.</p>
+        <div class="fact-grid">
+            <div class="fact-box" style="border-color:#FFE082;">
+                <h4>Ejemplo</h4>
+                <p>67 ÷ 5 = <b>13 y sobra 2</b>.</p>
+            </div>
+            
+            <div class="fact-box" style="border-color:#9DE3BD;">
+                <h4>No sirve decir solo 13</h4>
+                <p>Porque todavía quedaron <b>2</b> sin repartir.</p>
+            </div>
+            
+            <div class="fact-box" style="border-color:#E1BEE7;">
+                <h4>Comprobación</h4>
+                <p>5 × 13 + 2 = 67.</p>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title">Más cuocientes de 2 dígitos</div>
+        <p class="sub-text">Sigue practicando divisiones exactas e inexactas.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🧁</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">84 ÷ 4</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFE082; margin:0;">= 21</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🎒</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">66 ÷ 5</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 13 r 1</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🚀</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">91 ÷ 7</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 13</div>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Abre tu cuaderno: <b class="hl">84 ÷ 4</b>.</p>
+        
+        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">4 × 20 = 80</div><div class="stp decomp-box">Faltan 4</div><div class="stp decomp-box">4 × 1 = 4</div><div class="stp decomp-box">Resultado: 21</div></div>
+        </div><div class="sl">
+        <div class="head-title">Desafío con resto</div>
+        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">En <b>58 ÷ 4 = 14 r 2</b>, el resto es...</p>
+            <div class="quiz-row"><button class="btn" onclick="chkAns(this, true, &quot;El resto es 2.&quot;)">2</button><button class="btn" onclick="chkAns(this, false, &quot;El resto es 2.&quot;)">4</button><button class="btn" onclick="chkAns(this, false, &quot;El resto es 2.&quot;)">14</button></div>
+            <div class="msg-area"></div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#E3F2FD; border:5px solid #1565C0;">
+            <div class="story-emoji">⚽</div>
+            <div>
+                <h2 style="color:#1565C0;">Equipos de fútbol</h2>
+                <p>Hay <b>48 niños</b> y se forman <b>3 equipos iguales</b>. ¿Cuántos niños van en cada equipo?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #1565C0; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">48 ÷ 3 = 16<br><span style='color:var(--base);'>Van 16 niños por equipo.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#FFF3E0; border:5px solid #EF6C00;">
+            <div class="story-emoji">🍬</div>
+            <div>
+                <h2 style="color:#EF6C00;">Bolsitas de dulces</h2>
+                <p>Hay <b>58 dulces</b> y se reparten en <b>4 bolsitas</b> iguales. ¿Cuántos van en cada bolsita y cuántos sobran?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #EF6C00; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">58 ÷ 4 = 14 y sobran 2<br><span style='color:var(--base);'>Cada bolsita tiene 14 y sobran 2.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#E8F5E9; border:5px solid #2E7D32;">
+            <div class="story-emoji">📘</div>
+            <div>
+                <h2 style="color:#2E7D32;">Cajas de cuadernos</h2>
+                <p>Una librería reparte <b>75 cuadernos</b> en <b>5 cajas</b> iguales. ¿Cuántos cuadernos van en cada caja?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #2E7D32; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">75 ÷ 5 = 15<br><span style='color:var(--base);'>Van 15 cuadernos por caja.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#F3E5F5; border:5px solid #8E44AD;">
+            <div class="story-emoji">🟣</div>
+            <div>
+                <h2 style="color:#8E44AD;">Pulseras con cuentas</h2>
+                <p>Hay <b>66 cuentas</b> y se hacen pulseras de <b>5 cuentas</b>. ¿Cuántas pulseras completas salen y cuántas cuentas sobran?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #8E44AD; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">66 ÷ 5 = 13 y sobra 1<br><span style='color:var(--base);'>Salen 13 pulseras y sobra 1 cuenta.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#F3E5F5; border:5px solid #8E44AD;">
+            <div class="story-emoji">🚌</div>
+            <div>
+                <h2 style="color:#8E44AD;">Asientos del bus</h2>
+                <p>Hay <b>73 pasajeros</b> y se sientan en filas de <b>6</b>. ¿Cuántas filas completas se llenan y cuántas personas quedan sin fila completa?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #8E44AD; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">73 ÷ 6 = 12 y sobra 1<br><span style='color:var(--base);'>Se llenan 12 filas y sobra 1 pasajero.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Resumen</div>
+        <div class="summary-list"><div class="stp summary-item"><b>División exacta</b>: no sobra nada.</div><div class="stp summary-item"><b>División inexacta</b>: aparece un resto.</div><div class="stp summary-item"><b>Cuocientes de 2 dígitos</b>: la respuesta puede tener dos cifras.</div><div class="stp summary-item"><b>Comprobación</b>: divisor × cociente + resto = dividendo.</div></div>
+        </div><div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:38px; font-weight:800; line-height:1.45; max-width:780px;">Ya puedes reconocer restos y resolver divisiones con cuocientes de dos dígitos.</p>
+            <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">🚀</div>
+        </div>
+        </div>
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div class="sc" id="sc">1 / 30</div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>
+const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+function ui() {
+    S.forEach((s,i)=>{
+        s.classList.remove('on','pv','nx');
+        if(i===c) s.classList.add('on');
+        else if(i<c) s.classList.add('pv');
+        else s.classList.add('nx');
+    });
+    document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+    document.getElementById('sc').textContent=`${c+1} / ${T}`;
+    document.getElementById('pv').disabled=c===0;
+    document.getElementById('nx').disabled=c===T-1;
+}
+function go(d) {
+    if(d>0) {
+        const hid = S[c].querySelectorAll('.stp:not(.shwn)');
+        if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+    } else {
+        const shw = S[c].querySelectorAll('.stp.shwn');
+        if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+    }
+    const n=c+d;
+    if(n>=0 && n<T) { c=n; ui(); }
+}
+document.addEventListener('keydown', e => {
+    if(e.key==='ArrowRight' || e.key===' ') go(1);
+    if(e.key==='ArrowLeft') go(-1);
+});
+function chkAns(btn, correct, exp) {
+    const wrap = btn.closest('.sl');
+    const buttons = btn.parentElement.querySelectorAll('.btn');
+    const msg = wrap.querySelector('.msg-area');
+    buttons.forEach(b => {
+        b.disabled = false;
+        b.style.background = 'var(--base)';
+        b.style.transform = 'scale(1)';
+    });
+    if (correct) {
+        btn.style.background = '#047857';
+        btn.style.transform = 'scale(1.06)';
+        msg.textContent = `¡Muy bien! ${exp}`;
+        msg.style.color = '#047857';
+    } else {
+        btn.style.background = '#b91c1c';
+        msg.textContent = 'Revisa las unidades primero y vuelve a intentarlo.';
+        msg.style.color = '#b91c1c';
+    }
+}
+ui();
+</script>
+</body>
+</html>

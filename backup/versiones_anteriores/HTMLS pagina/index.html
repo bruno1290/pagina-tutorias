@@ -1,0 +1,2049 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorías · La Obra UC</title>
+    <style>
+        @font-face {
+            font-family: 'Buckwheat TC';
+            src: url('assets/fonts/Buckwheat%20TC%20Rg.otf') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --font-main:  'Buckwheat TC', 'Barlow Condensed', 'Nunito', sans-serif;
+            --navy:       #1A3F6E;   /* La Obra UC primary blue */
+            --navy-mid:   #1C4A82;   /* Sidebar / lighter blue */
+            --navy-dark:  #0F2B50;   /* Deep dark for depth */
+            --teal:       #3498DB;   /* Interactive accent blue */
+            --teal-dark:  #2478BE;
+            --blue-grey:  #5580A8;
+            --blue-light: #A8C8E8;
+            --bg:         #EEF3FA;
+            --white:      #FFFFFF;
+            --text:       #17334F;
+            --text-light: #6B85A3;
+            --success:    #06D6A0;
+            --error:      #EF476F;
+            --warning:    #FFD166;
+            --header-h:   66px;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:var(--font-main);background:var(--bg);color:var(--text);min-height:100vh;}
+        button{
+            appearance:none;-webkit-appearance:none;border:none;background:none;
+            font:inherit;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+        }
+
+        /* ─── HEADER ─────────────────────────────────────────── */
+        header{
+            position:fixed;top:0;left:0;right:0;height:var(--header-h);
+            background:#1A3F6E;display:flex;align-items:center;
+            justify-content:space-between;padding:0 22px 0 18px;
+            z-index:200;box-shadow:0 3px 20px rgba(10,22,48,.5);overflow:hidden;
+        }
+        .h-left{display:flex;align-items:center;gap:14px;width:100%;min-width:0;}
+        .brand-lockup{display:flex;align-items:center;gap:14px;}
+        .h-logo{
+            width:64px;height:64px;
+            display:flex;align-items:center;justify-content:center;
+            cursor:pointer;flex-shrink:0;
+            filter:drop-shadow(0 6px 18px rgba(7,17,38,.22));
+        }
+        .h-logo img,
+        .h-logo svg{width:64px;height:64px;display:block;object-fit:contain;}
+        .h-tutorias{
+            height:44px;width:auto;display:block;object-fit:contain;flex-shrink:0;
+            filter:drop-shadow(0 6px 18px rgba(7,17,38,.22));
+        }
+        .h-brand{display:flex;flex-direction:column;justify-content:center;}
+        .h-brand .main{font-family:var(--font-main);font-weight:900;font-size:16px;letter-spacing:2.8px;color:var(--white);display:block;text-transform:uppercase;}
+        .top-nav{
+            display:flex;align-items:center;gap:8px;margin-left:auto;min-width:0;flex-wrap:nowrap;
+            overflow-x:auto;overflow-y:hidden;white-space:nowrap;padding-bottom:2px;
+            scrollbar-width:none;
+        }
+        .top-nav::-webkit-scrollbar{display:none;}
+        .top-nav-btn{
+            border:none;background:rgba(255,255,255,.08);color:rgba(255,255,255,.82);
+            padding:12px 16px;border-radius:999px;cursor:pointer;font-family:var(--font-main);
+            font-size:13px;font-weight:800;letter-spacing:.2px;transition:all .18s ease;
+            min-height:44px;display:inline-flex;align-items:center;justify-content:center;
+            box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+        }
+        .top-nav-btn:hover{background:rgba(255,255,255,.16);color:var(--white);transform:translateY(-1px);}
+        .top-nav-btn.active{background:var(--white);color:var(--navy);box-shadow:0 4px 14px rgba(10,22,48,.18);}
+        .easter-egg{
+            position:absolute;left:248px;top:11px;width:42px;height:42px;z-index:230;
+            cursor:pointer;border:none;background:transparent;padding:0;
+            filter:drop-shadow(0 5px 8px rgba(8,22,43,.28));
+        }
+        .easter-egg:focus-visible{outline:2px solid rgba(255,255,255,.92);outline-offset:4px;border-radius:999px;}
+        .easter-egg .runner{position:relative;width:42px;height:42px;}
+        .runner .head{
+            position:absolute;left:12px;top:3px;width:11px;height:11px;border-radius:50%;
+            background:#ffd5bf;
+        }
+        .runner .face{
+            position:absolute;left:20px;top:8px;width:7px;height:5px;border-radius:50%;
+            border-top:2px solid #f3b08c;border-right:2px solid #f3b08c;transform:rotate(18deg);
+        }
+        .runner .hair{
+            position:absolute;left:10px;top:1px;width:12px;height:8px;border-radius:7px 7px 3px 4px;background:#3c2b24;
+        }
+        .runner .torso{
+            position:absolute;left:10px;top:14px;width:15px;height:12px;border-radius:6px 7px 6px 6px;background:#2f7be8;
+        }
+        .runner .arm{
+            position:absolute;left:21px;top:16px;width:10px;height:4px;border-radius:6px;background:#ffd5bf;
+            transform-origin:left center;transform:rotate(-12deg);
+        }
+        .runner .cone{
+            position:absolute;left:28px;top:11px;width:0;height:0;transform:rotate(22deg);
+            border-left:4px solid transparent;border-right:4px solid transparent;border-top:10px solid #d7a15f;
+        }
+        .runner .scoop{
+            position:absolute;left:24px;top:7px;width:10px;height:10px;border-radius:50%;background:#ff7ab6;
+        }
+        .runner .leg-back,.runner .leg-front{
+            position:absolute;left:12px;top:24px;width:4px;height:13px;border-radius:4px;background:#4e6ca8;transform-origin:top center;
+        }
+        .runner .leg-front{left:19px;transform:rotate(18deg);}
+        .runner .leg-back{transform:rotate(-12deg);}
+        .runner .shoe-back,.runner .shoe-front{
+            position:absolute;top:35px;width:8px;height:4px;border-radius:5px;background:#ffffff;
+        }
+        .runner .shoe-back{left:9px;}
+        .runner .shoe-front{left:18px;}
+        .easter-egg.running{pointer-events:none;animation:eggRun 2.8s ease-in-out forwards;}
+        .easter-egg.running .leg-front{animation:legFront .26s linear infinite;}
+        .easter-egg.running .leg-back{animation:legBack .26s linear infinite;}
+        .easter-egg.running .arm{animation:armSwing .26s linear infinite;}
+        .easter-egg.running .cone,.easter-egg.running .scoop{animation:coneBob .26s linear infinite;}
+        @keyframes eggRun{
+            0%{transform:translateX(0) translateY(0) scale(1);}
+            12%{transform:translateX(calc(var(--run-distance) * .12)) translateY(-2px) rotate(-4deg);}
+            24%{transform:translateX(calc(var(--run-distance) * .24)) translateY(1px) rotate(3deg);}
+            36%{transform:translateX(calc(var(--run-distance) * .36)) translateY(-2px) rotate(-3deg);}
+            48%{transform:translateX(calc(var(--run-distance) * .48)) translateY(1px) rotate(3deg);}
+            60%{transform:translateX(calc(var(--run-distance) * .60)) translateY(-2px) rotate(-3deg);}
+            72%{transform:translateX(calc(var(--run-distance) * .72)) translateY(1px) rotate(2deg);}
+            84%{transform:translateX(calc(var(--run-distance) * .84)) translateY(-2px) rotate(-2deg);}
+            100%{transform:translateX(var(--run-distance)) translateY(0) scale(1);}
+        }
+        @keyframes legFront{0%{transform:rotate(18deg);}50%{transform:rotate(-18deg);}100%{transform:rotate(18deg);}}
+        @keyframes legBack{0%{transform:rotate(-16deg);}50%{transform:rotate(18deg);}100%{transform:rotate(-16deg);}}
+        @keyframes armSwing{0%{transform:rotate(-12deg);}50%{transform:rotate(18deg);}100%{transform:rotate(-12deg);}}
+        @keyframes coneBob{0%{transform:rotate(18deg);}50%{transform:rotate(28deg) translateY(-1px);}100%{transform:rotate(18deg);}}
+        /* ─── LAYOUT ──────────────────────────────────────────── */
+        .layout{padding-top:var(--header-h);min-height:100vh;}
+
+        /* ─── MAIN ────────────────────────────────────────────── */
+        .main{padding:34px 32px 52px;min-height:calc(100vh - var(--header-h));max-width:1460px;margin:0 auto;}
+
+        /* ─── WELCOME ─────────────────────────────────────────── */
+        .welcome{
+            display:flex;flex-direction:column;align-items:center;
+            justify-content:flex-start;min-height:72vh;text-align:center;padding:34px 20px 48px;
+        }
+        .welcome-hero{
+            width:100%;max-width:1280px;margin:0 auto 12px;
+            display:block;
+        }
+        .welcome-intro{
+            position:relative;overflow:hidden;border-radius:30px;padding:28px 30px;
+            background:linear-gradient(135deg,#15365f 0%,#1a3f6e 58%,#4a94c6 100%);
+            color:var(--white);box-shadow:0 18px 44px rgba(15,43,80,.18);text-align:left;
+            width:100%;max-width:none;
+        }
+        .welcome-intro::before{
+            content:"";position:absolute;right:-60px;top:-50px;width:220px;height:220px;border-radius:50%;
+            background:rgba(255,255,255,.08);
+        }
+        .welcome-kicker{
+            display:inline-flex;align-items:center;gap:8px;
+            background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);
+            border-radius:999px;padding:8px 12px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+            margin-bottom:16px;
+        }
+        .welcome-intro h2{font-family:var(--font-main);font-size:58px;line-height:.98;margin-bottom:10px;max-width:520px;color:#FFFFFF !important;}
+        .welcome-intro p{font-size:17px;line-height:1.65;color:rgba(255,255,255,.9);max-width:520px;}
+        .welcome h2{font-family:var(--font-main);font-size:54px;font-weight:900;color:var(--navy);margin-bottom:10px;letter-spacing:1px;}
+        .welcome > p{font-size:17px;color:var(--text-light);max-width:780px;line-height:1.7;margin-bottom:20px;}
+        .mod-preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px;width:100%;max-width:1240px;}
+        .prev-card{
+            position:relative;overflow:hidden;
+            background:var(--card-bg, linear-gradient(180deg,#ffffff 0%,#f6faff 100%));
+            border-radius:24px;padding:22px 22px 20px;min-height:240px;
+            box-shadow:
+                0 22px 34px rgba(12,33,61,.18),
+                0 10px 16px rgba(12,33,61,.12),
+                inset 0 1px 0 rgba(255,255,255,.22),
+                inset 0 -10px 18px rgba(10,29,54,.08);
+            cursor:pointer;
+            transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, filter .18s ease;
+            text-align:left;border:2px solid transparent;display:flex;flex-direction:column;justify-content:space-between;
+            width:100%;
+        }
+        .prev-card::before{
+            content:"";position:absolute;inset:0 auto auto 0;width:100%;height:100%;
+            background:linear-gradient(180deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.05) 34%,rgba(255,255,255,0) 64%);
+            pointer-events:none;
+        }
+        .prev-card::after{
+            content:"";position:absolute;inset:auto -36px -58px auto;width:220px;height:220px;border-radius:50%;
+            background:radial-gradient(circle,rgba(255,255,255,.22) 0%,rgba(255,255,255,.08) 36%,rgba(255,255,255,0) 70%);
+            filter:blur(2px);pointer-events:none;
+        }
+        .prev-card:hover{
+            border-color:rgba(255,255,255,.58);
+            box-shadow:
+                0 28px 42px rgba(12,33,61,.22),
+                0 14px 24px rgba(12,33,61,.16),
+                inset 0 1px 0 rgba(255,255,255,.28),
+                inset 0 -12px 24px rgba(10,29,54,.10);
+            filter:saturate(1.05) brightness(1.03);
+        }
+        .prev-card:active{
+            transform:translateY(2px) scale(.992);
+            box-shadow:
+                0 10px 18px rgba(12,33,61,.18),
+                0 4px 8px rgba(12,33,61,.12),
+                inset 0 3px 8px rgba(10,29,54,.14),
+                inset 0 1px 0 rgba(255,255,255,.16);
+        }
+        .prev-card:focus-visible{
+            outline:3px solid rgba(255,255,255,.9);outline-offset:3px;
+            box-shadow:
+                0 28px 42px rgba(12,33,61,.22),
+                0 14px 24px rgba(12,33,61,.16),
+                inset 0 1px 0 rgba(255,255,255,.28),
+                inset 0 -12px 24px rgba(10,29,54,.10);
+        }
+        .prev-card-top,.prev-card-bottom{position:relative;z-index:1;}
+        .prev-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:24px;}
+        .pc-badge{
+            display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;
+            background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.26);
+            font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.95);
+            backdrop-filter:blur(10px);
+        }
+        .pc-icon{
+            position:absolute;right:-4px;bottom:-16px;z-index:0;
+            font-size:170px;line-height:1;font-weight:900;color:rgba(255,255,255,.24);
+            text-shadow:0 12px 24px rgba(11,28,49,.16);
+            pointer-events:none;user-select:none;
+        }
+        .pc-module{
+            display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:900;letter-spacing:1px;
+            text-transform:uppercase;color:rgba(255,255,255,.92);margin-bottom:10px;
+        }
+        .about-view{display:none;}
+        .about-shell{max-width:980px;margin:0 auto;}
+        .about-hero{
+            background:linear-gradient(135deg,#14345f 0%,#1a3f6e 55%,#3a76a8 100%);
+            border-radius:28px;color:var(--white);padding:34px 34px 30px;box-shadow:0 16px 40px rgba(15,43,80,.2);
+            position:relative;overflow:hidden;margin-bottom:24px;
+        }
+        .about-hero::before{
+            content:"";position:absolute;right:-60px;top:-50px;width:220px;height:220px;border-radius:50%;
+            background:rgba(255,255,255,.08);
+        }
+        .about-kicker{
+            display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);
+            padding:8px 12px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+            margin-bottom:16px;
+        }
+        .about-hero h2{font-family:var(--font-main);font-size:54px;line-height:1;margin-bottom:14px;max-width:520px;}
+        .about-hero p{max-width:560px;font-size:17px;line-height:1.7;color:rgba(255,255,255,.9);}
+        .about-grid{display:grid;grid-template-columns:1.3fr .9fr;gap:20px;align-items:start;}
+        .about-hero-layout{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;}
+        .about-hero-copy{position:relative;z-index:1;}
+        .about-hero-photo{
+            position:relative;z-index:1;display:flex;justify-content:flex-end;
+        }
+        .about-hero-photo img{
+            width:100%;max-width:320px;border-radius:24px;border:4px solid rgba(255,255,255,.16);
+            box-shadow:0 18px 34px rgba(8,22,43,.22);object-fit:cover;
+        }
+        .about-card{
+            background:var(--white);border-radius:22px;padding:28px 28px 24px;box-shadow:0 10px 28px rgba(19,51,79,.08);
+        }
+        .about-card h3{font-family:var(--font-main);font-size:32px;color:var(--navy);margin-bottom:14px;}
+        .about-copy p{font-size:16px;line-height:1.8;color:var(--text);margin-bottom:16px;}
+        .about-copy p:last-child{margin-bottom:0;}
+        .about-side{display:flex;flex-direction:column;gap:18px;}
+        .impact-list{display:flex;flex-direction:column;gap:12px;}
+        .impact-item{
+            background:linear-gradient(180deg,#f8fbff,#edf3fb);border:1px solid #dbe6f4;border-radius:16px;padding:16px 18px;
+        }
+        .impact-item strong{display:block;font-size:14px;color:var(--navy);margin-bottom:5px;}
+        .impact-item span{display:block;font-size:13px;line-height:1.6;color:var(--text-light);}
+        .about-quote{
+            background:linear-gradient(135deg,#fef7df,#fffaf0);border:1.5px solid #f3d777;border-radius:18px;padding:20px 22px;
+        }
+        .about-quote p{font-size:15px;line-height:1.7;color:var(--navy-dark);font-weight:700;}
+        .prev-card .pc-num{
+            width:30px;height:30px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
+            background:rgba(255,255,255,.2);font-family:var(--font-main);font-size:16px;font-weight:900;color:#fff;
+        }
+        .prev-card .pc-name{font-family:var(--font-main);font-size:30px;font-weight:900;color:#fff;line-height:1.02;margin-bottom:10px;max-width:260px;text-shadow:0 2px 10px rgba(15,43,80,.14);}
+        .prev-card .pc-desc{font-size:14px;color:rgba(255,255,255,.92);line-height:1.65;max-width:290px;}
+        .prev-card .pc-done{
+            display:inline-flex;align-items:center;gap:7px;font-size:12px;color:#fff;font-weight:800;margin-top:16px;
+            background:rgba(6,214,160,.24);padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.16);
+        }
+
+        /* ─── MODULE HEADER ───────────────────────────────────── */
+        .mod-header{
+            background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-mid) 100%);
+            border-radius:16px;padding:24px 28px;margin-bottom:20px;
+            color:var(--white);position:relative;z-index:1;
+            box-shadow:0 18px 40px rgba(15,43,80,.16);
+        }
+        .mod-cat-tag{
+            display:inline-flex;align-items:center;gap:6px;
+            background:rgba(255,255,255,.12);border-radius:20px;
+            padding:4px 12px;font-size:11px;font-weight:700;
+            letter-spacing:1.2px;text-transform:uppercase;color:var(--blue-light);margin-bottom:10px;
+        }
+        .mod-cat-tag .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+        .mod-header h1{font-family:var(--font-main);font-size:34px;font-weight:700;letter-spacing:.4px;line-height:1.1;margin-bottom:6px;}
+        .mod-meta{display:flex;gap:18px;margin-top:10px;flex-wrap:wrap;}
+        .meta-item{display:flex;align-items:center;gap:5px;font-size:13px;color:var(--blue-light);font-weight:600;}
+        .obj-list{list-style:none;margin-top:12px;}
+        .obj-list li{font-size:13px;color:var(--blue-light);padding:2px 0;display:flex;align-items:flex-start;gap:7px;line-height:1.4;}
+        .obj-list li::before{content:"→";color:var(--teal);font-weight:700;flex-shrink:0;margin-top:1px;}
+        #mod-view{max-width:1240px;margin:0 auto;}
+        .module-surface{
+            background:linear-gradient(180deg,#f7fbff,#eef4fb);border:1px solid #dde8f5;
+            border-radius:26px;padding:20px 20px 24px;box-shadow:0 12px 32px rgba(19,51,79,.07);
+        }
+
+        /* ─── TABS ────────────────────────────────────────────── */
+        .tabs{
+            display:flex;gap:4px;margin-bottom:18px;background:rgba(255,255,255,.86);padding:6px;border-radius:16px;
+            box-shadow:0 10px 24px rgba(18,48,76,.08);width:fit-content;position:sticky;top:82px;z-index:50;
+            backdrop-filter:blur(14px);border:1px solid rgba(221,232,245,.92);
+        }
+        .tab-btn{padding:12px 18px;border:none;background:none;border-radius:8px;cursor:pointer;font-family:var(--font-main);font-size:13px;font-weight:700;color:var(--text-light);transition:all .18s;display:flex;align-items:center;gap:5px;position:relative;z-index:6;pointer-events:auto;min-height:44px;}
+        .tab-btn:hover{background:var(--bg);color:var(--text);}
+        .tab-btn.active{background:var(--navy);color:var(--white);box-shadow:0 2px 8px rgba(26,63,110,.25);}
+        .tab-panel{display:none;position:relative;z-index:1;}
+        .tab-panel.active{display:block;}
+
+        /* ─── PRESENTATION PANEL ──────────────────────────────── */
+        .pres-wrapper{background:var(--white);border-radius:22px;overflow:hidden;box-shadow:0 16px 34px rgba(19,51,79,.10);border:1px solid #e3edf8;}
+        .pres-toolbar{
+            display:flex;align-items:center;justify-content:space-between;
+            padding:14px 18px;border-bottom:1px solid #eef0f4;background:linear-gradient(180deg,#ffffff,#f8fbff);
+        }
+        .pres-toolbar-left{display:flex;align-items:center;gap:8px;}
+        .toolbar-label{font-size:12px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;}
+        .tool-btn{
+            display:flex;align-items:center;gap:5px;padding:10px 14px;
+            border:1.5px solid var(--blue-light);border-radius:8px;background:none;
+            cursor:pointer;font-family:var(--font-main);font-size:12px;font-weight:700;
+            color:var(--blue-grey);transition:all .18s;min-height:44px;
+        }
+        .tool-btn:hover{border-color:var(--navy);color:var(--navy);background:rgba(26,63,110,.06);}
+        .tool-btn.primary{background:var(--navy);color:var(--white);border-color:var(--navy);}
+        .tool-btn.primary:hover{background:var(--navy-dark);border-color:var(--navy-dark);}
+        #pres-frame-wrap{position:relative;}
+        #pres-iframe{width:100%;height:min(72vh,860px);min-height:560px;border:none;display:block;background:#f4f7fb;}
+
+        /* Fullscreen styles */
+        #pres-frame-wrap:-webkit-full-screen{background:#000;display:flex;align-items:center;justify-content:center;}
+        #pres-frame-wrap:-webkit-full-screen #pres-iframe{width:100vw;height:100vh;}
+        #pres-frame-wrap:fullscreen{background:#000;display:flex;align-items:center;justify-content:center;}
+        #pres-frame-wrap:fullscreen #pres-iframe{width:100vw;height:100vh;}
+
+        .no-slide{
+            min-height:340px;display:flex;flex-direction:column;align-items:center;
+            justify-content:center;gap:10px;padding:40px;text-align:center;color:var(--text-light);
+        }
+        .no-slide .ns-icon{font-size:52px;margin-bottom:6px;}
+        .no-slide h3{font-family:var(--font-main);font-size:24px;color:var(--navy);margin-bottom:6px;}
+        .no-slide p{font-size:14px;line-height:1.6;max-width:480px;}
+
+        /* ─── HOW-TO BOX ──────────────────────────────────────── */
+        .howto{
+            margin-top:16px;background:linear-gradient(135deg,#e8f0fb,#dce8f8);
+            border:1px solid var(--blue-light);border-radius:14px;padding:20px 22px;
+        }
+        .howto h4{font-family:var(--font-main);font-size:18px;color:var(--navy-mid);margin-bottom:12px;}
+        .howto-steps{display:flex;flex-direction:column;gap:8px;}
+        .howto-step{display:flex;gap:10px;align-items:flex-start;}
+        .step-num{width:22px;height:22px;border-radius:50%;background:var(--teal);color:var(--white);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+        .howto-step p{font-size:13px;color:var(--text);line-height:1.5;}
+        .howto-step code{background:rgba(19,59,96,.1);color:var(--navy-mid);padding:1px 6px;border-radius:4px;font-size:12px;}
+
+        /* ─── ACTIVITIES ──────────────────────────────────────── */
+        .act-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+        .act-card{background:var(--white);border-radius:14px;padding:22px;box-shadow:0 2px 10px rgba(0,0,0,.06);border-top:4px solid var(--teal);}
+        .act-card.fill-type {border-top-color:#FFD166;}
+        .act-card.match-type{border-top-color:#7C83FD;}
+        .act-title{font-family:var(--font-main);font-size:19px;font-weight:700;margin-bottom:5px;color:var(--navy);}
+        .act-desc{font-size:13px;color:var(--text-light);margin-bottom:14px;}
+
+        /* Fill-blank */
+        .fib-row{margin-bottom:12px;}
+        .fib-sentence{font-size:17px;line-height:2.3;color:var(--text);font-weight:700;}
+        .fib-input{border:2px solid var(--blue-light);border-radius:8px;padding:3px 9px;font-family:var(--font-main);font-size:15px;font-weight:700;width:100px;text-align:center;outline:none;transition:border-color .18s;}
+        .fib-input:focus{border-color:var(--navy);}
+        .fib-input.ok{border-color:var(--success);background:rgba(6,214,160,.1);color:#047857;}
+        .fib-input.bad{border-color:var(--error);background:rgba(239,71,111,.08);color:#be123c;}
+        .check-btn{margin-top:10px;padding:12px 18px;background:var(--navy);color:var(--white);border:none;border-radius:9px;font-family:var(--font-main);font-size:13px;font-weight:700;cursor:pointer;transition:all .18s;min-height:44px;}
+        .check-btn:hover{background:var(--navy-dark);}
+        .fib-result{margin-top:8px;font-weight:700;font-size:13px;display:none;}
+
+        /* Match */
+        .match-cols{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+        .m-item{padding:9px 12px;border-radius:9px;background:var(--bg);font-size:13px;font-weight:700;cursor:pointer;transition:all .18s;border:2px solid transparent;text-align:center;}
+        .m-item:hover{border-color:var(--blue-light);background:var(--white);}
+        .m-item.sel{border-color:var(--navy);background:rgba(26,63,110,.1);}
+        .m-item.matched{border-color:var(--success);background:rgba(6,214,160,.14);color:#047857;pointer-events:none;}
+        .m-item.flash{border-color:var(--error);background:rgba(239,71,111,.08);}
+
+        /* ─── TICKET DE SALIDA ────────────────────────────────── */
+        .ticket-wrap{max-width:760px;margin:0 auto;}
+        .ticket-header{
+            background:linear-gradient(135deg,#fff9e6,#fffbf0);
+            border:1.5px solid #ffd166;border-radius:14px;
+            padding:18px 22px;margin-bottom:20px;
+            display:flex;align-items:center;gap:14px;
+        }
+        .ticket-icon{font-size:36px;}
+        .ticket-header h3{font-family:var(--font-main);font-size:22px;color:var(--navy);margin-bottom:2px;}
+        .ticket-header p{font-size:13px;color:var(--text-light);}
+
+        /* Quiz cards */
+        .q-wrap{display:flex;flex-direction:column;gap:0;}
+        .q-progress{width:100%;height:7px;background:var(--blue-light);border-radius:10px;overflow:hidden;margin-bottom:18px;}
+        .q-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--teal));border-radius:10px;transition:width .4s ease;}
+        .q-card{background:var(--white);border-radius:22px;padding:30px;box-shadow:0 16px 34px rgba(19,51,79,.10);margin-bottom:16px;border:1px solid #e3edf8;}
+        .q-emoji{font-size:42px;margin-bottom:10px;display:block;}
+        .q-text{font-size:19px;font-weight:700;color:var(--navy);margin-bottom:20px;line-height:1.4;}
+        .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+        .opt{padding:16px 14px;border:2px solid var(--blue-light);border-radius:12px;background:var(--bg);font-family:var(--font-main);font-size:15px;font-weight:700;cursor:pointer;transition:all .18s;text-align:left;color:var(--text);min-height:52px;}
+        .opt:hover:not(:disabled){border-color:var(--navy);background:rgba(26,63,110,.06);}
+        .opt.ok{border-color:var(--success);background:rgba(6,214,160,.14);color:#047857;}
+        .opt.bad{border-color:var(--error);background:rgba(239,71,111,.08);color:#be123c;}
+        .opt:disabled{cursor:not-allowed;}
+        .q-feedback{text-align:center;font-size:16px;font-weight:800;padding:10px;border-radius:10px;margin-top:14px;display:none;}
+        .q-feedback.show{display:block;}
+        .q-feedback.ok{background:rgba(6,214,160,.14);color:#047857;}
+        .q-feedback.bad{background:rgba(239,71,111,.08);color:#be123c;}
+        .next-btn{margin-top:12px;width:100%;padding:14px;background:var(--navy);color:var(--white);border:none;border-radius:12px;font-family:var(--font-main);font-size:15px;font-weight:800;cursor:pointer;transition:all .18s;display:none;min-height:48px;}
+        .next-btn.show{display:block;}
+        .next-btn:hover{background:var(--navy-mid);}
+
+        /* Results */
+        .results{text-align:center;padding:48px 30px;background:var(--white);border-radius:22px;box-shadow:0 16px 34px rgba(19,51,79,.10);border:1px solid #e3edf8;}
+        .r-emoji{font-size:68px;margin-bottom:14px;}
+        .r-title{font-family:var(--font-main);font-size:40px;color:var(--navy);margin-bottom:6px;}
+        .r-score{font-size:66px;font-weight:900;color:var(--teal);line-height:1;margin:14px 0;}
+        .r-score span{font-size:26px;color:var(--text-light);}
+        .r-msg{font-size:17px;color:var(--text-light);margin-bottom:24px;}
+        .retry-btn{padding:12px 28px;background:var(--teal);color:var(--white);border:none;border-radius:12px;font-family:var(--font-main);font-size:15px;font-weight:800;cursor:pointer;transition:all .18s;min-height:48px;}
+        .retry-btn:hover{background:var(--teal-dark);}
+
+        /* ─── RECURSOS DE APOYO ─────────────────────────────── */
+        /* ─── EVALUACIÓN DIAGNÓSTICA ────────────────────────── */
+        .diagnostic-view{display:none;}
+        .diag-shell{max-width:1100px;margin:0 auto;}
+        .diag-hero{
+            background:linear-gradient(135deg,#15375f 0%,#1a3f6e 54%,#4f95c5 100%);
+            color:var(--white);border-radius:28px;padding:34px;box-shadow:0 16px 42px rgba(15,43,80,.18);margin-bottom:22px;position:relative;overflow:hidden;
+        }
+        .diag-hero::after{
+            content:"";position:absolute;right:-40px;bottom:-70px;width:220px;height:220px;border-radius:50%;
+            background:rgba(255,255,255,.08);
+        }
+        .diag-hero h2{font-family:var(--font-main);font-size:52px;line-height:1;margin-bottom:12px;max-width:620px;}
+        .diag-hero p{max-width:620px;font-size:16px;line-height:1.8;color:rgba(255,255,255,.88);}
+        .diag-kicker{
+            display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
+            background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);
+            font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;
+        }
+        .diag-panel{
+            background:var(--white);border-radius:24px;padding:28px;box-shadow:0 10px 32px rgba(19,51,79,.08);
+        }
+        .diag-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:18px;}
+        .diag-list{display:grid;gap:12px;}
+        .diag-mini{
+            background:linear-gradient(180deg,#f8fbff,#eef4fb);border:1px solid #dbe7f4;border-radius:16px;padding:16px 18px;
+        }
+        .diag-mini strong{display:block;font-size:15px;color:var(--navy);margin-bottom:4px;}
+        .diag-mini span{font-size:13px;line-height:1.6;color:var(--text-light);}
+        .diag-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;}
+        .diag-progress-row{
+            display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:14px;flex-wrap:wrap;
+        }
+        .diag-tag{
+            display:inline-flex;align-items:center;gap:8px;background:rgba(26,63,110,.08);
+            border-radius:999px;padding:7px 12px;font-size:12px;font-weight:800;color:var(--navy);
+        }
+        .diag-count{font-size:13px;color:var(--text-light);font-weight:700;}
+        .diag-question{background:linear-gradient(180deg,#ffffff,#f9fbff);border:1px solid #e4edf8;border-radius:20px;padding:26px;}
+        .diag-question h3{font-family:var(--font-main);font-size:30px;color:var(--navy);margin-bottom:8px;}
+        .diag-question p{font-size:15px;line-height:1.7;color:var(--text-light);margin-bottom:18px;}
+        .diag-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+        .diag-feedback{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:14px;font-weight:800;display:none;}
+        .diag-feedback.show{display:block;}
+        .diag-feedback.ok{background:rgba(6,214,160,.14);color:#047857;}
+        .diag-feedback.bad{background:rgba(239,71,111,.08);color:#be123c;}
+        .diag-next{margin-top:14px;display:none;}
+        .diag-next.show{display:inline-flex;}
+        .diag-results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:24px 0 0;}
+        .diag-score-card{
+            background:linear-gradient(180deg,#f8fbff,#edf4fb);border:1px solid #dbe6f3;border-radius:18px;padding:18px;
+        }
+        .diag-score-card h4{font-family:var(--font-main);font-size:24px;color:var(--navy);margin-bottom:4px;}
+        .diag-score-card p{font-size:13px;color:var(--text-light);margin-bottom:12px;}
+        .diag-score{font-size:40px;font-weight:900;color:var(--teal);line-height:1;}
+        .diag-score span{font-size:18px;color:var(--text-light);}
+        .diag-chart-wrap{
+            display:grid;grid-template-columns:minmax(540px,1.4fr) minmax(280px,.8fr);gap:28px;align-items:center;
+            background:linear-gradient(180deg,#ffffff,#f8fbff);border:1px solid #e4edf8;border-radius:28px;padding:30px;margin-bottom:22px;
+        }
+        .diag-canvas-box{
+            display:flex;align-items:center;justify-content:center;min-height:520px;
+            background:radial-gradient(circle at center,#ffffff 0%,#f0f6fd 74%,#e6eef8 100%);
+            border-radius:24px;
+        }
+        #diag-chart{width:520px;height:520px;max-width:100%;}
+        .diag-legend{display:grid;gap:12px;}
+        .diag-legend-item{
+            display:flex;align-items:flex-start;gap:10px;background:#f5f9fe;border:1px solid #e0ebf7;border-radius:14px;padding:12px 14px;
+        }
+        .diag-swatch{width:14px;height:14px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+        .diag-legend strong{display:block;font-size:14px;color:var(--navy);margin-bottom:2px;}
+        .diag-legend span{font-size:13px;color:var(--text-light);line-height:1.5;}
+        .diag-chart-title{font-family:var(--font-main);font-size:34px;color:var(--navy);margin-bottom:8px;}
+        .diag-chart-sub{font-size:15px;line-height:1.7;color:var(--text-light);margin-bottom:18px;}
+        .diag-empty-chart{
+            text-align:center;padding:28px;border-radius:18px;background:linear-gradient(180deg,#f7fdfb,#eefaf5);border:1px solid #d6f2e6;
+        }
+        .diag-empty-chart h4{font-family:var(--font-main);font-size:28px;color:#047857;margin-bottom:6px;}
+        .diag-empty-chart p{font-size:14px;color:#3f6c5d;line-height:1.6;}
+
+        /* ─── EMPTY STATE ─────────────────────────────────────── */
+        .empty{text-align:center;padding:60px 30px;color:var(--text-light);}
+        .empty .ei{font-size:52px;margin-bottom:12px;}
+        .empty h3{font-family:var(--font-main);font-size:26px;color:var(--navy);margin-bottom:6px;}
+        .empty p{font-size:14px;max-width:340px;margin:0 auto;line-height:1.6;}
+
+        /* ─── FOOTER BANNER ─────────────────────────────────── */
+        .footer-banner{
+            margin:26px auto 0;max-width:1280px;
+            background:linear-gradient(135deg,#15365f 0%,#1a3f6e 58%,#4a94c6 100%);
+            color:var(--white);border-radius:24px;padding:18px 24px;
+            box-shadow:0 16px 36px rgba(15,43,80,.16);text-align:center;
+        }
+        .footer-banner p{font-size:16px;line-height:1.7;color:rgba(255,255,255,.94);}
+
+        /* ─── CONFETTI / STARS ────────────────────────────────── */
+        #fx{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;}
+        .cp{position:absolute;border-radius:2px;animation:fall linear forwards;}
+        @keyframes fall{0%{transform:translateY(-100px) rotate(0);opacity:1;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+        .sp{position:fixed;pointer-events:none;animation:spop 1s ease-out forwards;font-size:24px;z-index:9999;}
+        @keyframes spop{0%{transform:scale(0);opacity:1;}60%{transform:scale(1.6);opacity:1;}100%{transform:scale(0) translateY(-50px);opacity:0;}}
+
+        /* ─── RESPONSIVE ──────────────────────────────────────── */
+        @media(max-width:860px){
+            .main{padding:16px 14px 32px;}
+            .brand-lockup{gap:10px;}
+            .h-logo{width:52px;height:52px;}
+            .h-logo img,.h-logo svg{width:52px;height:52px;}
+            .h-tutorias{height:34px;max-width:120px;}
+            .h-brand{display:none;}
+            .top-nav{display:none;}
+            .easter-egg{display:none;}
+            .welcome-hero{grid-template-columns:1fr;}
+            .welcome-intro{padding:26px 22px;}
+            .welcome-intro h2{font-size:42px;}
+            .opts{grid-template-columns:1fr;}
+            .tabs{flex-wrap:wrap;top:74px;}
+            .pres-toolbar{flex-direction:column;align-items:flex-start;gap:8px;}
+            #pres-iframe{height:340px;}
+            .about-hero{padding:26px 22px;}
+            .about-hero h2{font-size:40px;}
+            .about-hero-layout{grid-template-columns:1fr;}
+            .about-hero-photo{justify-content:flex-start;}
+            .about-grid{grid-template-columns:1fr;}
+            .diag-hero{padding:26px 22px;}
+            .diag-hero h2{font-size:40px;}
+            .diag-grid,.diag-chart-wrap,.diag-options{grid-template-columns:1fr;}
+            .module-surface{padding:14px;}
+        }
+    </style>
+</head>
+<body>
+<div id="fx"></div>
+
+<!-- ══════════════════ HEADER ══════════════════ -->
+<header>
+    <div class="h-left">
+        <div class="brand-lockup">
+            <div class="h-logo">
+                <img
+                    src="assets/Logo.png"
+                    alt="Logo La Obra UC"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" style="display:none">
+                    <polyline points="9,52 50,12 91,52 91,73"
+                        stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                    <polyline points="9,52 9,90 68,90"
+                        stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                    <text x="19" y="70" fill="white" font-weight="800" font-size="18"
+                        font-family="'Barlow Condensed',sans-serif" letter-spacing="1">LA</text>
+                    <text x="14" y="87" fill="white" font-weight="800" font-size="18"
+                        font-family="'Barlow Condensed',sans-serif" letter-spacing="0.5">OBRA</text>
+                </svg>
+            </div>
+            <img
+                class="h-tutorias"
+                src="assets/Captura de pantalla 2026-03-26 a la(s) 11.43.07 a.m..png"
+                alt="Tutorías"
+            >
+            <div class="h-brand">
+                <span class="main">La Obra Tutorías</span>
+            </div>
+        </div>
+        <button type="button" class="easter-egg" id="easter-egg" aria-label="Easter egg: personita con helado">
+            <div class="runner" aria-hidden="true">
+                <div class="hair"></div>
+                <div class="head"></div>
+                <div class="face"></div>
+                <div class="torso"></div>
+                <div class="arm"></div>
+                <div class="cone"></div>
+                <div class="scoop"></div>
+                <div class="leg-back"></div>
+                <div class="leg-front"></div>
+                <div class="shoe-back"></div>
+                <div class="shoe-front"></div>
+            </div>
+        </button>
+        <nav class="top-nav" aria-label="Secciones principales">
+            <button class="top-nav-btn" id="nav-about" onclick="showAbout()">¿Quiénes somos?</button>
+            <button class="top-nav-btn active" id="nav-classes" onclick="showClasses()">Clases</button>
+            <button class="top-nav-btn" id="nav-diagnostic" onclick="showDiagnostic()">Evaluación diagnóstica</button>
+            <button class="top-nav-btn" type="button" onclick="openOfficialSite()">Página oficial</button>
+        </nav>
+    </div>
+</header>
+
+<!-- ══════════════════ LAYOUT ══════════════════ -->
+<div class="layout">
+    <main class="main" id="main">
+
+        <section id="about-view" class="about-view">
+            <div class="about-shell">
+                <div class="about-hero">
+                    <div class="about-hero-layout">
+                        <div class="about-hero-copy">
+                            <div class="about-kicker">Tutorías</div>
+                            <h2>Educación con vínculo, continuidad y sentido.</h2>
+                            <p>Trabajamos durante todo el año para acompañar a estudiantes de 4° básico de la Escuela Casa Azul, fortaleciendo sus aprendizajes y construyendo confianza a través de tutorías y encuentros significativos.</p>
+                        </div>
+                        <div class="about-hero-photo">
+                            <img src="assets/WhatsApp%20Image%202026-03-15%20at%2012.55.25.jpeg" alt="Tutorías La Obra UC">
+                        </div>
+                    </div>
+                </div>
+                <div class="about-grid">
+                    <article class="about-card about-copy">
+                        <h3>¿Qué hacemos?</h3>
+                        <p>Tutorías nace para enfrentar la crisis educacional que afecta a miles de niños y niñas en Chile. Nuestro foco está puesto en los estudiantes de 4° básico de la Escuela Casa Azul, con quienes trabajamos durante todo el año para fortalecer sus aprendizajes y brindarles nuevas oportunidades.</p>
+                        <p>A través de tutorías online semanales, acompañamos su proceso educativo con cercanía y compromiso. Además, realizamos salidas presenciales como el Día de Huerto, donde compartimos con los estudiantes en un espacio significativo para conocernos mejor y construir confianza.</p>
+                        <p>Creemos en una educación transformadora y afectiva, donde el vínculo humano es tan importante como los contenidos. Nuestro trabajo no solo busca mejorar resultados académicos, sino también sembrar esperanza y motivación en cada niño y niña que acompaña Tutorías.</p>
+                    </article>
+                    <aside class="about-side">
+                        <div class="about-card">
+                            <h3>Nuestro enfoque</h3>
+                            <div class="impact-list">
+                                <div class="impact-item">
+                                    <strong>Tutorías online semanales</strong>
+                                    <span>Acompañamiento constante para reforzar contenidos y hábitos de aprendizaje.</span>
+                                </div>
+                                <div class="impact-item">
+                                    <strong>Encuentros presenciales</strong>
+                                    <span>Instancias como el Día de Huerto para conocernos mejor y fortalecer vínculos.</span>
+                                </div>
+                                <div class="impact-item">
+                                    <strong>Aprendizaje con sentido</strong>
+                                    <span>Buscamos mejorar resultados académicos y también la confianza de cada estudiante.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-quote">
+                            <p>Creemos en una educación transformadora y afectiva, donde el vínculo humano es tan importante como los contenidos.</p>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <section id="diagnostic-view" class="diagnostic-view">
+            <div class="diag-shell" id="diag-shell"></div>
+        </section>
+
+        <!-- Welcome -->
+        <div id="home" class="welcome">
+            <div class="welcome-hero">
+                <div class="welcome-intro">
+                    <div class="welcome-kicker">Tutorías La Obra UC</div>
+                    <h2>Bienvenido/a a las tutorías con La Obra!</h2>
+                    <p>Con qué clase nos divertiremos hoy?</p>
+                </div>
+            </div>
+            <p>Selecciona un módulo para comenzar la clase.</p>
+            <div class="mod-preview-grid" id="prev-grid"></div>
+        </div>
+
+        <!-- Module content -->
+        <div id="mod-view" style="display:none">
+
+            <div class="mod-header">
+                <div class="mod-cat-tag"><span class="dot" id="mh-dot"></span><span id="mh-cat"></span></div>
+                <h1 id="mh-title">Título</h1>
+                <div class="mod-meta">
+                    <div class="meta-item">📚 <span id="mh-num">Módulo 1</span></div>
+                    <div class="meta-item">👦 4to Básico</div>
+                    <div class="meta-item">⏱️ <span id="mh-dur">45 min</span></div>
+                </div>
+                <ul class="obj-list" id="mh-objs"></ul>
+            </div>
+
+            <div class="module-surface">
+                <div class="tabs">
+                    <button type="button" class="tab-btn active" data-tab="pres">📊 Presentación</button>
+                    <button type="button" class="tab-btn" data-tab="ticket">🎟️ Ticket de Salida</button>
+                </div>
+
+                <div class="tab-panel active" id="panel-pres"></div>
+                <div class="tab-panel"        id="panel-ticket"></div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<div class="footer-banner">
+    <p>Pagina creada con mucho amor ❤️, por jefes 2026, Antonia Loehnert y Bruno Nattino</p>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════════════
+//  📋 MÓDULOS — edita aquí para agregar contenido a cada módulo
+//  Lee la GUÍA AL FINAL del archivo para instrucciones detalladas.
+// ══════════════════════════════════════════════════════════════════════
+
+const CATEGORIES = [
+    { id:'num',  name:'Números y Operaciones',    color:'#50AD9F' },
+    { id:'mul',  name:'Multiplicación y División', color:'#7C83FD' },
+    { id:'frac', name:'Fracciones y Decimales',   color:'#FF6B9D' },
+    { id:'geo',  name:'Geometría y Medición',     color:'#FFD166' },
+    { id:'extra', name:'Material Extra',              color:'#A0C4FF' },
+];
+
+const MODULES = [
+    // ── NÚMEROS Y OPERACIONES ─────────────────────────────────────────
+    {
+        id:1, cat:'num', title:'Descomposición', dur:'45 min',
+        objectives:['Comprender el valor posicional de cada cifra','Descomponer números hasta 10.000','Representar números en distintas formas'],
+        // 👇 Pega aquí el link de Google Drive / Slides de tu PPT (ver guía al final)
+        slideUrl:'https://drive.google.com/file/d/1ZanX8bEtvlxU2-jFrmHRFuqcBcfOZbCR/preview',
+        activities:[
+            {
+                type:'fill', title:'📝 Descompón los números',
+                desc:'Escribe cuántas unidades, decenas o centenas hay',
+                items:[
+                    {sentence:'3.456 tiene ___ centenas', answer:'4'},
+                    {sentence:'7.820 tiene ___ decenas',  answer:'2'},
+                    {sentence:'5.003 tiene ___ unidades', answer:'3'},
+                ]
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Descomposición',
+            questions:[
+                {emoji:'🔢',q:'¿Qué número tiene 2 centenas, 3 decenas y 4 unidades?',opts:['234','324','243','432'],ok:0,exp:'2 centenas, 3 decenas y 4 unidades forman 234 ✓'},
+                {emoji:'🔢',q:'¿Cuál es el valor posicional del 6 en 4.623?',opts:['Unidades','Decenas','Centenas','Miles'],ok:2,exp:'El 6 está en la posición de centenas → valor 600 ✓'},
+                {emoji:'🧩',q:'¿Cómo se descompone 2.345?',opts:['2.000+3+4+5','2.000+300+40+5','200+300+40+5','2.000+300+45'],ok:1,exp:'2.000 + 300 + 40 + 5 = 2.345 ✓'},
+                {emoji:'🔍',q:'El número 1.070 tiene...',opts:['1 mil, 7 decenas','1 mil, 70 centenas','1 mil, 7 centenas','1 mil, 70 decenas'],ok:3,exp:'1.070 = 1.000 + 70 → 1 mil y 7 decenas ✓'},
+            ]
+        }
+    },
+    {
+        id:2, cat:'num', title:'Suma', dur:'45 min',
+        objectives:['Repasar el algoritmo de la suma','Practicar suma con y sin llevada','Resolver problemas de contexto'],
+        slideUrl:'https://drive.google.com/file/d/1xJThrRlzlIHAb8IqHrBmrHm83L_-sD_T/preview',
+        activities:[
+            {
+                type:'fill', title:'📝 Completa las sumas',
+                desc:'Escribe el número que falta para completar la operación',
+                items:[
+                    {sentence:'347 + ___ = 500',  answer:'153'},
+                    {sentence:'___ + 128 = 400',  answer:'272'},
+                    {sentence:'1.250 + ___ = 2.000', answer:'750'},
+                ]
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Suma',
+            questions:[
+                {emoji:'➕',q:'¿Cuánto es 20 + 5?',opts:['15','25','30','35'],ok:1,exp:'20 + 5 = 25 ✓'},
+                {emoji:'➕',q:'¿Cuánto es 478 + 345?',opts:['813','823','923','733'],ok:0,exp:'478 + 345 = 823 ✓'},
+                {emoji:'🏪',q:'Una tienda vendió 256 el lunes y 389 el martes. ¿Cuánto vendió en total?',opts:['545','645','655','735'],ok:1,exp:'256 + 389 = 645 ✓'},
+                {emoji:'🔢',q:'¿Cuánto es 1.347 + 658?',opts:['1.905','2.005','2.105','1.995'],ok:1,exp:'1.347 + 658 = 2.005 ✓'},
+            ]
+        }
+    },
+    {
+        id:3, cat:'num', title:'Resta', dur:'45 min',
+        objectives:['Repasar el algoritmo de la resta','Practicar resta con reagrupación','Plantear y resolver situaciones de resta'],
+        slideUrl:'https://drive.google.com/file/d/18bU84c11BbEOrk3TaF8t-0cNCQK7GqE-/preview',
+        activities:[
+            {
+                type:'fill', title:'📝 Completa las restas',
+                desc:'Encuentra el número que falta',
+                items:[
+                    {sentence:'800 - ___ = 347',    answer:'453'},
+                    {sentence:'___ - 256 = 144',    answer:'400'},
+                    {sentence:'2.000 - ___ = 1.345', answer:'655'},
+                ]
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Resta',
+            questions:[
+                {emoji:'➖',q:'¿Cuánto es 10 − 3?',opts:['6','7','8','9'],ok:1,exp:'10 − 3 = 7 ✓'},
+                {emoji:'➖',q:'¿Cuánto es 803 − 467?',opts:['336','346','246','436'],ok:0,exp:'803 − 467 = 336 ✓'},
+                {emoji:'🍎',q:'Había 500 manzanas. Se vendieron 237. ¿Cuántas quedan?',opts:['273','263','363','253'],ok:1,exp:'500 − 237 = 263 ✓'},
+                {emoji:'🔢',q:'¿Cuánto es 2.000 − 849?',opts:['1.051','1.151','1.161','951'],ok:1,exp:'2.000 − 849 = 1.151 ✓'},
+            ]
+        }
+    },
+    {
+        id:4, cat:'num', title:'Ejercicios: Suma y Resta', dur:'45 min',
+        objectives:['Aplicar suma y resta en problemas mixtos','Desarrollar agilidad de cálculo','Verificar resultados'],
+        slideUrl:'https://drive.google.com/file/d/1_JVU_r3tvn_WhHPMIQicwb63h0w81O2r/preview',
+        activities:[
+            {
+                type:'match', title:'🔗 Une la operación con su resultado',
+                desc:'Haz clic en la operación y luego en el resultado correcto',
+                left:['347 + 258','900 − 456','1.200 + 350','2.000 − 875'],
+                right:['605','444','1.550','1.125'],
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Ejercicios',
+            questions:[
+                {emoji:'🧮',q:'¿Cuánto es 100 + 20 − 10?',opts:['100','110','120','130'],ok:1,exp:'100 + 20 − 10 = 110 ✓'},
+                {emoji:'🔢',q:'385 + 467 − 200 = ?',opts:['652','752','642','562'],ok:0,exp:'385 + 467 = 852 → 852 − 200 = 652 ✓'},
+                {emoji:'🛒',q:'Compré en $850 y pagué con $1.000. ¿Cuánto me devolvieron?',opts:['250','160','150','200'],ok:2,exp:'1.000 − 850 = 150 ✓'},
+                {emoji:'🏆',q:'¿Cuánto es 1.500 + 750 − 300?',opts:['1.850','1.950','2.050','2.250'],ok:1,exp:'1.500 + 750 = 2.250 → 2.250 − 300 = 1.950 ✓'},
+            ]
+        }
+    },
+    {
+        id:5, cat:'num', title:'Redondeo y Estimación', dur:'45 min',
+        objectives:['Redondear a la decena y centena más cercana','Usar la estimación para resolver problemas','Comparar resultados exactos y estimados'],
+        slideUrl:'https://drive.google.com/file/d/1w5E7giv_NDxbuOAdB9Sc747Y5C-3zG8W/preview',
+        activities:[
+            {
+                type:'fill', title:'📝 Redondea a la centena más cercana',
+                desc:'Escribe el número redondeado a la centena más cercana',
+                items:[
+                    {sentence:'347 redondeado es ___',  answer:'300'},
+                    {sentence:'650 redondeado es ___',  answer:'700'},
+                    {sentence:'1.480 redondeado es ___', answer:'1.500'},
+                ]
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Redondeo',
+            questions:[
+                {emoji:'🎯',q:'¿A qué decena se redondea 24?',opts:['20','30','24','40'],ok:0,exp:'24 está más cerca de 20 ✓'},
+                {emoji:'🔵',q:'¿A qué decena más cercana se redondea 73?',opts:['60','70','80','100'],ok:1,exp:'73 está más cerca de 70 que de 80 ✓'},
+                {emoji:'🟡',q:'¿A qué centena más cercana se redondea 450?',opts:['400','500','450','600'],ok:1,exp:'450 se redondea hacia arriba → 500 ✓'},
+                {emoji:'🧮',q:'Estima: 398 + 203 ≈',opts:['500','600','700','400'],ok:1,exp:'398 ≈ 400 y 203 ≈ 200 → 400 + 200 = 600 ✓'},
+            ]
+        }
+    },
+
+    // ── MULTIPLICACIÓN Y DIVISIÓN ─────────────────────────────────────
+    {
+        id:6, cat:'mul', title:'Multiplicación', dur:'45 min',
+        objectives:['Consolidar tablas de multiplicar del 1 al 9','Aplicar el algoritmo de multiplicación','Resolver problemas con multiplicación'],
+        slideUrl:'https://drive.google.com/file/d/1NQSrZhdS0_3igYShUbFVhFBzrqmABnQd/preview',
+        activities:[
+            {
+                type:'match', title:'⚡ Une la multiplicación con su resultado',
+                desc:'Relaciona cada operación con la respuesta correcta',
+                left:['7 × 8','9 × 6','8 × 8','7 × 9'],
+                right:['56','54','64','63'],
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Multiplicación',
+            questions:[
+                {emoji:'✖️',q:'¿Cuánto es 5 × 2?',opts:['7','10','12','15'],ok:1,exp:'5 × 2 = 10 ✓'},
+                {emoji:'✖️',q:'¿Cuánto es 8 × 9?',opts:['72','63','81','64'],ok:0,exp:'8 × 9 = 72 ✓'},
+                {emoji:'🎒',q:'Hay 7 cajas con 24 lápices cada una. ¿Cuántos lápices hay?',opts:['148','168','158','128'],ok:1,exp:'7 × 24 = 168 lápices ✓'},
+                {emoji:'🔢',q:'¿Cuánto es 35 × 6?',opts:['180','200','210','190'],ok:2,exp:'35 × 6 = 210 ✓'},
+            ]
+        }
+    },
+    {
+        id:7, cat:'mul', title:'División', dur:'45 min',
+        objectives:['Comprender la división como reparto igualitario','Practicar divisiones exactas e inexactas','Identificar dividendo, divisor, cociente y resto'],
+        slideUrl:'https://drive.google.com/file/d/1p4l8UgtsrKrkfwnK7D_J6oPSLYYy8j2k/preview',
+        activities:[
+            {
+                type:'fill', title:'📝 Completa las divisiones',
+                desc:'Encuentra el cociente de cada división',
+                items:[
+                    {sentence:'72 ÷ 8 = ___',  answer:'9'},
+                    {sentence:'63 ÷ ___ = 9',  answer:'7'},
+                    {sentence:'___ ÷ 6 = 8',   answer:'48'},
+                ]
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – División',
+            questions:[
+                {emoji:'➗',q:'¿Cuánto es 12 ÷ 3?',opts:['3','4','5','6'],ok:1,exp:'12 ÷ 3 = 4 ✓'},
+                {emoji:'÷',q:'¿Cuánto es 81 ÷ 9?',opts:['7','8','10','9'],ok:3,exp:'81 ÷ 9 = 9 ✓'},
+                {emoji:'🍰',q:'48 galletas para 6 niños. ¿Cuántas le tocan a cada uno?',opts:['9','7','8','6'],ok:2,exp:'48 ÷ 6 = 8 galletas ✓'},
+                {emoji:'🚌',q:'42 alumnos en buses de 7 asientos. ¿Cuántos buses se necesitan?',opts:['4','5','7','6'],ok:3,exp:'42 ÷ 7 = 6 buses ✓'},
+            ]
+        }
+    },
+    {
+        id:8, cat:'mul', title:'Ejercicios: Multiplicación y División', dur:'45 min',
+        objectives:['Resolver problemas que combinan multiplicación y división','Identificar cuándo usar cada operación','Verificar resultados'],
+        slideUrl:'https://drive.google.com/file/d/1hWbtAw9JcFQsfHRwyr8ohA94rBKgXmv-/preview',
+        activities:[
+            {
+                type:'match', title:'🔗 Une la operación con su resultado',
+                desc:'Relaciona cada operación con la respuesta correcta',
+                left:['56 ÷ 7','8 × 9','45 ÷ 5','6 × 12'],
+                right:['8','72','9','72'],
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Ejercicios',
+            questions:[
+                {emoji:'🧠',q:'Si 4 × 3 = 12, entonces 12 ÷ 4 = ...',opts:['2','3','4','6'],ok:1,exp:'Si 4 × 3 = 12, entonces 12 ÷ 4 = 3 ✓'},
+                {emoji:'🔢',q:'Si 7 × ? = 63, ¿qué número es el ?',opts:['7','8','9','6'],ok:2,exp:'63 ÷ 7 = 9 ✓'},
+                {emoji:'📦',q:'Hay 96 naranjas en cajas de 8. ¿Cuántas cajas hay?',opts:['10','11','13','12'],ok:3,exp:'96 ÷ 8 = 12 cajas ✓'},
+                {emoji:'🎪',q:'En 5 semanas con 7 días cada una, ¿cuántos días son?',opts:['30','35','40','45'],ok:1,exp:'5 × 7 = 35 días ✓'},
+            ]
+        }
+    },
+
+    // ── FRACCIONES Y DECIMALES ────────────────────────────────────────
+    {
+        id:9, cat:'frac', title:'Fracciones I', dur:'45 min',
+        objectives:['Identificar numerador y denominador','Representar fracciones en diagramas','Comparar fracciones con igual denominador'],
+        slideUrl:'https://drive.google.com/file/d/1VPFYAiOiYleSSXSS4--TZTCMvf8dXelt/preview',
+        activities:[
+            {
+                type:'match', title:'🔗 Une la fracción con su nombre',
+                desc:'Relaciona la fracción con su nombre correcto',
+                left:['1/2','1/4','3/4','2/3'],
+                right:['Un medio','Un cuarto','Tres cuartos','Dos tercios'],
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Fracciones I',
+            questions:[
+                {emoji:'🍰',q:'¿Cuál fracción representa una mitad?',opts:['1/2','1/3','2/3','3/4'],ok:0,exp:'Una mitad se escribe 1/2 ✓'},
+                {emoji:'🍕',q:'Una pizza se divide en 8 partes. Ana come 3. ¿Qué fracción comió?',opts:['3/5','8/3','3/8','5/8'],ok:2,exp:'3 de 8 partes = 3/8 ✓'},
+                {emoji:'🔢',q:'En la fracción 5/7, ¿cuál es el denominador?',opts:['5','7','2','57'],ok:1,exp:'El denominador es el número de abajo = 7 ✓'},
+                {emoji:'📊',q:'¿Cuál fracción es mayor: 3/8 o 5/8?',opts:['3/8','5/8','Son iguales','No se puede saber'],ok:1,exp:'Con mismo denominador, mayor numerador = mayor fracción → 5/8 ✓'},
+            ]
+        }
+    },
+    {
+        id:10, cat:'frac', title:'Fracciones II', dur:'45 min',
+        objectives:['Identificar fracciones equivalentes','Simplificar fracciones sencillas','Sumar fracciones con igual denominador'],
+        slideUrl:'https://drive.google.com/file/d/1iMSSoXQyOryAyOcpNYhrRHjdzUVxo4kk/preview',
+        activities:[
+            {
+                type:'fill', title:'📝 Completa las fracciones equivalentes',
+                desc:'Encuentra el número que hace las fracciones equivalentes',
+                items:[
+                    {sentence:'1/2 = ___/4',   answer:'2'},
+                    {sentence:'2/3 = ___/9',   answer:'6'},
+                    {sentence:'3/4 = ___/8',   answer:'6'},
+                ]
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Fracciones II',
+            questions:[
+                {emoji:'🟰',q:'¿Cuál es igual a 2/4?',opts:['1/2','1/3','3/4','2/3'],ok:0,exp:'2/4 es equivalente a 1/2 ✓'},
+                {emoji:'🟰',q:'¿Cuál es equivalente a 1/2?',opts:['2/6','2/4','3/8','1/4'],ok:1,exp:'1/2 = 2/4 (se multiplica numerador y denominador por 2) ✓'},
+                {emoji:'➕',q:'¿Cuánto es 2/7 + 3/7?',opts:['5/14','5/7','6/7','1/7'],ok:1,exp:'2/7 + 3/7 = 5/7 (mismo denominador, se suman numeradores) ✓'},
+                {emoji:'🍫',q:'María comió 1/4 de una barra de chocolate y luego 2/4 más. ¿Cuánto comió en total?',opts:['3/8','2/4','3/4','1/2'],ok:2,exp:'1/4 + 2/4 = 3/4 ✓'},
+            ]
+        }
+    },
+    {
+        id:11, cat:'frac', title:'Decimales', dur:'45 min',
+        objectives:['Comprender décimas y centésimas','Leer y escribir números decimales','Comparar y ordenar decimales'],
+        slideUrl:'https://drive.google.com/file/d/1ZJf8HTV2yuGRJ_3Jt5UubQQJ4HWCZguw/preview',
+        activities:[
+            {
+                type:'match', title:'🔗 Une el decimal con su equivalente en fracción',
+                desc:'Relaciona cada decimal con la fracción que le corresponde',
+                left:['0,5','0,25','0,1','0,75'],
+                right:['1/2','1/4','1/10','3/4'],
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Decimales',
+            questions:[
+                {emoji:'🔢',q:'¿Cuál número es decimal?',opts:['5','12','0,5','100'],ok:2,exp:'0,5 es un número decimal ✓'},
+                {emoji:'🔟',q:'¿Qué número está entre 2,3 y 2,5?',opts:['2,6','2,4','2,2','3,4'],ok:1,exp:'2,4 está entre 2,3 y 2,5 ✓'},
+                {emoji:'💰',q:'¿Cuánto es $1,50 + $0,75?',opts:['$1,25','$2,25','$2,15','$2,50'],ok:1,exp:'1,50 + 0,75 = 2,25 ✓'},
+                {emoji:'📏',q:'Ordena de menor a mayor: 1,7 – 1,07 – 1,70 – 0,17',opts:['0,17 – 1,07 – 1,7 – 1,70','1,07 – 0,17 – 1,7 – 1,70','0,17 – 1,07 – 1,70 – 1,7','0,17 – 1,7 – 1,07 – 1,70'],ok:0,exp:'0,17 < 1,07 < 1,7 = 1,70 ✓'},
+            ]
+        }
+    },
+    {
+        id:12, cat:'frac', title:'Ejercicios: Fracciones y Decimales', dur:'45 min',
+        objectives:['Convertir entre fracciones y decimales','Resolver problemas combinados','Aplicar en contextos reales'],
+        slideUrl:'https://drive.google.com/file/d/1egxT819wDjGYUtCr_t-amXkBhxHQIQZf/preview',
+        activities:[
+            {
+                type:'fill', title:'📝 Convierte fracción a decimal',
+                desc:'Escribe el decimal equivalente a cada fracción',
+                items:[
+                    {sentence:'1/2 = ___',   answer:'0,5'},
+                    {sentence:'1/4 = ___',   answer:'0,25'},
+                    {sentence:'3/10 = ___',  answer:'0,3'},
+                ]
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Ejercicios',
+            questions:[
+                {emoji:'🔄',q:'¿Cuál decimal es igual a 1/2?',opts:['0,2','0,5','0,8','1,2'],ok:1,exp:'1/2 equivale a 0,5 ✓'},
+                {emoji:'🔄',q:'¿Cuál es el decimal equivalente a 3/4?',opts:['0,50','0,30','0,75','0,34'],ok:2,exp:'3/4 = 0,75 ✓'},
+                {emoji:'💧',q:'Una botella tiene 1,5 litros. Se bebe 0,75 litros. ¿Cuánto queda?',opts:['0,85','0,65','0,75','0,50'],ok:2,exp:'1,5 − 0,75 = 0,75 litros ✓'},
+                {emoji:'🏃',q:'Un corredor hace 2/5 de la pista (2.000 m). ¿Cuántos metros corrió?',opts:['600','800','400','1.000'],ok:1,exp:'2/5 × 2.000 = 800 metros ✓'},
+            ]
+        }
+    },
+
+    // ── GEOMETRÍA Y MEDICIÓN ──────────────────────────────────────────
+    {
+        id:13, cat:'geo', title:'Geometría', dur:'45 min',
+        objectives:['Identificar figuras geométricas planas','Reconocer ángulos rectos, agudos y obtusos','Clasificar triángulos y cuadriláteros'],
+        slideUrl:'https://drive.google.com/file/d/1H0XLjwTlvsMypCg_3s2JT-1GcIeh86SN/preview',
+        activities:[
+            {
+                type:'match', title:'🔗 Une la figura con su descripción',
+                desc:'Relaciona cada figura con su característica principal',
+                left:['Triángulo equilátero','Cuadrado','Rectángulo','Círculo'],
+                right:['3 lados iguales','4 lados iguales','2 pares de lados iguales','Sin lados rectos'],
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Geometría',
+            questions:[
+                {emoji:'🔷',q:'¿Cuántos lados tiene un cuadrado?',opts:['3','4','5','6'],ok:1,exp:'Un cuadrado tiene 4 lados ✓'},
+                {emoji:'📐',q:'¿Cuántos ángulos rectos tiene un cuadrado?',opts:['2','3','4','0'],ok:2,exp:'Un cuadrado tiene 4 ángulos rectos (90°) ✓'},
+                {emoji:'🔺',q:'Un triángulo con todos sus lados iguales se llama...',opts:['Escaleno','Isósceles','Equilátero','Rectángulo'],ok:2,exp:'Triángulo equilátero = todos los lados iguales ✓'},
+                {emoji:'📏',q:'¿Cuántos lados tiene un hexágono?',opts:['5','7','8','6'],ok:3,exp:'Hexa = 6 → un hexágono tiene 6 lados ✓'},
+            ]
+        }
+    },
+    {
+        id:14, cat:'geo', title:'Geometría: Ejercicios', dur:'45 min',
+        objectives:['Calcular el perímetro de figuras planas','Estimar y calcular áreas con cuadrículas','Resolver problemas geométricos'],
+        slideUrl:'https://drive.google.com/file/d/1SS5xwSAilJFOj6nHLJhsTUiaDXAiQ8bU/preview',
+        activities:[
+            {
+                type:'fill', title:'📝 Calcula el perímetro',
+                desc:'Escribe el perímetro de cada figura',
+                items:[
+                    {sentence:'Cuadrado de lado 5 cm → P = ___ cm',  answer:'20'},
+                    {sentence:'Rectángulo 8×4 cm → P = ___ cm',      answer:'24'},
+                    {sentence:'Triángulo equilátero lado 6 cm → P = ___ cm', answer:'18'},
+                ]
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Geometría ejercicios',
+            questions:[
+                {emoji:'📐',q:'¿Cuál es el perímetro de un cuadrado de lado 5 cm?',opts:['10 cm','15 cm','20 cm','25 cm'],ok:2,exp:'4 × 5 = 20 cm ✓'},
+                {emoji:'📐',q:'¿Cuál es el perímetro de un cuadrado con lado 7 cm?',opts:['21 cm','14 cm','49 cm','28 cm'],ok:3,exp:'P = 4 × 7 = 28 cm ✓'},
+                {emoji:'🏡',q:'Un jardín rectangular mide 12 m × 8 m. ¿Cuántos metros de reja necesita?',opts:['96 m','40 m','20 m','48 m'],ok:1,exp:'P = 2×(12+8) = 2×20 = 40 m ✓'},
+                {emoji:'📦',q:'Un cuadrado tiene perímetro de 36 cm. ¿Cuánto mide su lado?',opts:['6 cm','8 cm','9 cm','12 cm'],ok:2,exp:'36 ÷ 4 = 9 cm ✓'},
+            ]
+        }
+    },
+    {
+        id:15, cat:'geo', title:'Ejercicios de Geometría', dur:'45 min',
+        objectives:['Aplicar los conceptos de geometría en situaciones variadas','Calcular perímetros y clasificar figuras','Resolver ejercicios mixtos de repaso'],
+        slideUrl:'https://drive.google.com/file/d/1s7I5JAAguP34uPIAgLaZ04AH4wTBpcWS/preview',
+        activities:[
+            {
+                type:'match', title:'🔗 Une la figura con su perímetro',
+                desc:'Calcula el perímetro de cada figura y une con el resultado correcto',
+                left:['Cuadrado lado 5','Rectángulo 6×4','Triángulo equilátero lado 7','Hexágono regular lado 3'],
+                right:['20 cm','20 cm','21 cm','18 cm'],
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Ejercicios de Geometría',
+            questions:[
+                {emoji:'📏',q:'¿Cuánto mide el perímetro de un triángulo con lados 3, 3 y 3 cm?',opts:['6 cm','9 cm','12 cm','15 cm'],ok:1,exp:'3 + 3 + 3 = 9 cm ✓'},
+                {emoji:'📐',q:'Un rectángulo mide 9 cm × 5 cm. ¿Cuál es su perímetro?',opts:['45 cm','28 cm','14 cm','18 cm'],ok:1,exp:'P = 2×(9+5) = 2×14 = 28 cm ✓'},
+                {emoji:'🔺',q:'Un triángulo tiene lados de 5, 7 y 8 cm. ¿Cuánto mide su perímetro?',opts:['40 cm','56 cm','20 cm','15 cm'],ok:2,exp:'5 + 7 + 8 = 20 cm ✓'},
+                {emoji:'🔷',q:'¿Cuántos lados tiene un octágono?',opts:['6','7','9','8'],ok:3,exp:'Octa = 8 → un octágono tiene 8 lados ✓'},
+            ]
+        }
+    },
+    {
+        id:16, cat:'geo', title:'Medición de Tiempo', dur:'45 min',
+        objectives:['Leer y escribir la hora en reloj analógico y digital','Calcular duraciones y diferencias de tiempo','Convertir entre horas, minutos y segundos'],
+        slideUrl:'https://drive.google.com/file/d/1tA3N__mK-HaBGdqZ_Wg_sUMNZSHvjaAq/preview',
+        activities:[
+            {
+                type:'fill', title:'📝 Convierte las unidades de tiempo',
+                desc:'Completa la conversión correcta',
+                items:[
+                    {sentence:'2 horas = ___ minutos',    answer:'120'},
+                    {sentence:'3 minutos = ___ segundos', answer:'180'},
+                    {sentence:'1,5 horas = ___ minutos',  answer:'90'},
+                ]
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Medición de Tiempo',
+            questions:[
+                {emoji:'⏱️',q:'¿Cuántos minutos tiene 1 hora?',opts:['30','45','60','90'],ok:2,exp:'1 hora tiene 60 minutos ✓'},
+                {emoji:'⏰',q:'La clase empezó a las 10:15 y duró 45 minutos. ¿A qué hora terminó?',opts:['11:00','11:15','10:45','11:10'],ok:0,exp:'10:15 + 45 min = 11:00 ✓'},
+                {emoji:'📅',q:'¿Cuántos minutos hay en 2 horas y media?',opts:['120','150','130','180'],ok:1,exp:'2 h = 120 min + 30 min = 150 min ✓'},
+                {emoji:'🎂',q:'Juan nació en julio. ¿En qué mes cumple años 6 meses después?',opts:['Diciembre','Enero','Noviembre','Febrero'],ok:1,exp:'Julio + 6 meses = Enero del año siguiente ✓'},
+            ]
+        }
+    },
+    {
+        id:17, cat:'geo', title:'Medición de Longitudes', dur:'45 min',
+        objectives:['Identificar y usar unidades de longitud (mm, cm, m, km)','Convertir entre unidades de longitud','Medir objetos con regla y cinta métrica'],
+        slideUrl:'https://drive.google.com/file/d/14WPLAoC_3uNFH5ibU4sl-ZY2cpGti1GN/preview',
+        activities:[
+            {
+                type:'match', title:'🔗 Une el objeto con la unidad adecuada',
+                desc:'¿Qué unidad usarías para medir cada cosa?',
+                left:['Distancia Santiago–Valparaíso','Largo de un lápiz','Grosor de una moneda','Alto de una silla'],
+                right:['Kilómetros','Centímetros','Milímetros','Metros'],
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Medición de Longitudes',
+            questions:[
+                {emoji:'📏',q:'¿Qué unidad sirve para medir un lápiz?',opts:['Kilómetros','Centímetros','Horas','Litros'],ok:1,exp:'Un lápiz se mide normalmente en centímetros ✓'},
+                {emoji:'📏',q:'¿Cuántos centímetros hay en 2 metros?',opts:['20 cm','200 cm','2.000 cm','20.000 cm'],ok:1,exp:'1 m = 100 cm → 2 m = 200 cm ✓'},
+                {emoji:'🏃',q:'Una piscina mide 25 m. ¿Cuántos metros nada Pedro si hace 4 largos?',opts:['75 m','100 m','50 m','125 m'],ok:1,exp:'4 × 25 m = 100 m ✓'},
+                {emoji:'🗺️',q:'¿Cuántos metros hay en 3 km?',opts:['300 m','3.000 m','30.000 m','30 m'],ok:1,exp:'1 km = 1.000 m → 3 km = 3.000 m ✓'},
+            ]
+        }
+    },
+    {
+        id:18, cat:'geo', title:'Ejercicios de Medición', dur:'45 min',
+        objectives:['Aplicar mediciones en problemas reales','Combinar tiempo, longitud y perímetro','Desarrollar sentido de la medida'],
+        slideUrl:'https://drive.google.com/file/d/1AHmaqLkr9G6Hy-uyl_Dm1yft8dGfZEUs/preview',
+        activities:[
+            {
+                type:'fill', title:'📝 Problemas de medición',
+                desc:'Resuelve y escribe el resultado con su unidad',
+                items:[
+                    {sentence:'5 km + 3.000 m = ___ km',   answer:'8'},
+                    {sentence:'3 horas + 90 min = ___ horas', answer:'4.5'},
+                    {sentence:'4 m − 150 cm = ___ cm',     answer:'250'},
+                ]
+            }
+        ],
+        ticket:{
+            title:'Ticket de salida – Ejercicios de Medición',
+            questions:[
+                {emoji:'📐',q:'¿Cuántos metros son 1 km?',opts:['10','100','1.000','10.000'],ok:2,exp:'1 km equivale a 1.000 metros ✓'},
+                {emoji:'🚶',q:'Camino 1,5 km en la mañana y 800 m en la tarde. ¿Cuántos metros caminé en total?',opts:['2.000 m','2.300 m','1.300 m','2.800 m'],ok:1,exp:'1.500 m + 800 m = 2.300 m ✓'},
+                {emoji:'⏱️',q:'Una película dura 1 h 45 min. Comienza a las 19:00. ¿A qué hora termina?',opts:['20:30','21:00','20:45','20:15'],ok:2,exp:'19:00 + 1h45min = 20:45 ✓'},
+                {emoji:'📐',q:'Un sendero tiene 3 tramos de 750 m cada uno. ¿Cuántos km mide en total?',opts:['2,25 km','3 km','2,5 km','2,75 km'],ok:0,exp:'3 × 750 m = 2.250 m = 2,25 km ✓'},
+            ]
+        }
+    },    {
+        id:19, cat:'extra', title:'Sesiones de Mentoreo Extra', dur:'Variable',
+        objectives:['Material complementario para sesiones de refuerzo','Ejercicios adicionales para estudiantes avanzados','Actividades de repaso general'],
+        slideUrl:'https://drive.google.com/file/d/1b1W11MCFVOLkIo5GwJptZ_zr3hzKCsH2/preview',
+        activities:[],
+        ticket:{
+            title:'Repaso General',
+            questions:[
+                {emoji:'⭐',q:'¿Cuánto es 10 + 10?',opts:['15','20','25','30'],ok:1,exp:'10 + 10 = 20 ✓'},
+                {emoji:'🔢',q:'¿Cuánto es 345 + 678?',opts:['1.023','1.013','1.033','913'],ok:0,exp:'345 + 678 = 1.023 ✓'},
+                {emoji:'✖️',q:'¿Cuánto es 8 × 7?',opts:['54','63','56','49'],ok:2,exp:'8 × 7 = 56 ✓'},
+                {emoji:'🍕',q:'¿Cuánto es 3/4 + 1/4?',opts:['4/8','2/4','4/4','3/8'],ok:2,exp:'3/4 + 1/4 = 4/4 = 1 entero ✓'},
+            ]
+        }
+    },
+
+];
+
+const DIAGNOSTIC_SECTIONS = [
+    {
+        id:'num',
+        name:'Números y Operaciones',
+        color:'#50AD9F',
+        questions:[
+            {topic:'Valor posicional', q:'En el número 5.482, el 4 vale...', opts:['4 unidades','40 unidades','400 unidades','4.000 unidades'], ok:2, exp:'El 4 está en la posición de centenas, por eso vale 400.'},
+            {topic:'Suma', q:'¿Cuánto es 368 + 257?', opts:['615','625','635','725'], ok:1, exp:'368 + 257 = 625.'},
+            {topic:'Resta', q:'¿Cuánto es 900 - 458?', opts:['442','452','462','542'], ok:0, exp:'900 - 458 = 442.'},
+            {topic:'Redondeo y estimación', q:'¿A qué centena se redondea 1.349?', opts:['1.200','1.300','1.400','1.500'], ok:1, exp:'1.349 está más cerca de 1.300 que de 1.400.'},
+        ]
+    },
+    {
+        id:'mul',
+        name:'Multiplicación y División',
+        color:'#7C83FD',
+        questions:[
+            {topic:'Tablas de multiplicar', q:'¿Cuánto es 7 × 8?', opts:['54','56','63','64'], ok:1, exp:'7 × 8 = 56.'},
+            {topic:'Multiplicación por dos cifras', q:'¿Cuánto es 24 × 3?', opts:['62','68','72','84'], ok:2, exp:'24 × 3 = 72.'},
+            {topic:'División exacta', q:'¿Cuánto es 72 ÷ 9?', opts:['6','7','8','9'], ok:2, exp:'72 ÷ 9 = 8.'},
+            {topic:'Problemas de reparto', q:'Si 48 lápices se reparten en 6 cajas iguales, ¿cuántos van en cada caja?', opts:['6','7','8','9'], ok:2, exp:'48 ÷ 6 = 8 lápices por caja.'},
+        ]
+    },
+    {
+        id:'frac',
+        name:'Fracciones y Decimales',
+        color:'#FF6B9D',
+        questions:[
+            {topic:'Lectura de fracciones', q:'Si una torta se divide en 8 partes y se comen 3, la fracción comida es...', opts:['3/8','8/3','5/8','3/5'], ok:0, exp:'Se comen 3 de 8 partes: 3/8.'},
+            {topic:'Fracciones equivalentes', q:'¿Cuál es equivalente a 1/2?', opts:['2/3','2/4','3/5','1/3'], ok:1, exp:'1/2 equivale a 2/4.'},
+            {topic:'Suma de fracciones', q:'¿Cuánto es 2/7 + 3/7?', opts:['5/7','5/14','6/7','1/7'], ok:0, exp:'Con igual denominador, se suman numeradores: 5/7.'},
+            {topic:'Decimales', q:'¿Qué decimal representa tres cuartos?', opts:['0,25','0,3','0,5','0,75'], ok:3, exp:'3/4 equivale a 0,75.'},
+        ]
+    },
+    {
+        id:'geo',
+        name:'Geometría y Medición',
+        color:'#FFD166',
+        questions:[
+            {topic:'Figuras geométricas', q:'¿Cuántos lados tiene un hexágono?', opts:['5','6','7','8'], ok:1, exp:'Un hexágono tiene 6 lados.'},
+            {topic:'Perímetro', q:'¿Cuál es el perímetro de un cuadrado de lado 6 cm?', opts:['12 cm','18 cm','24 cm','36 cm'], ok:2, exp:'Perímetro = 4 × 6 = 24 cm.'},
+            {topic:'Tiempo', q:'Si una clase empieza a las 14:20 y dura 40 minutos, termina a las...', opts:['14:50','15:00','15:10','15:20'], ok:1, exp:'14:20 + 40 minutos = 15:00.'},
+            {topic:'Longitud', q:'¿Cuántos centímetros hay en 3 metros?', opts:['30','300','3.000','300.000'], ok:1, exp:'1 metro = 100 cm, entonces 3 metros = 300 cm.'},
+        ]
+    }
+];
+
+const DIAGNOSTIC_CHART_COLORS = ['#50AD9F','#7C83FD','#FF6B9D','#FFD166','#3498DB','#EF476F','#06D6A0','#0F2B50'];
+
+// ══════════════════════════════════════════════════════════════════════
+//  ESTADO DE LA APP
+// ══════════════════════════════════════════════════════════════════════
+let current   = null;
+let qIdx      = 0;
+let qAns      = [];
+let matchSt   = {};
+let done      = new Set(JSON.parse(localStorage.getItem('tutorias-done') || '[]'));
+let currentSection = 'classes';
+let diagSectionIdx = 0;
+let diagQuestionIdx = 0;
+let diagResponses = [];
+let diagnosticStarted = false;
+let currentModuleTab = 'pres';
+
+// ══════════════════════════════════════════════════════════════════════
+//  INICIO
+// ══════════════════════════════════════════════════════════════════════
+function init() {
+    buildPrevGrid();
+    bindModuleTabs();
+    initEasterEgg();
+}
+
+function getCat(id){ return CATEGORIES.find(c=>c.id===id); }
+
+function getModuleSymbol(module) {
+    const t = `${module.title} ${module.objectives.join(' ')}`.toLowerCase();
+    if (t.includes('descomposición')) return '🔢';
+    if (t.includes('suma')) return '➕';
+    if (t.includes('resta')) return '➖';
+    if (t.includes('redondeo') || t.includes('estimación')) return '🎯';
+    if (t.includes('multiplicación')) return '✖️';
+    if (t.includes('división')) return '➗';
+    if (t.includes('fracciones')) return '¼';
+    if (t.includes('decimales')) return '0,5';
+    if (t.includes('geometría')) return '📐';
+    if (t.includes('tiempo')) return '⏰';
+    if (t.includes('longitudes')) return '📏';
+    if (t.includes('medición')) return '🧭';
+    return module.cat === 'extra' ? '✨' : '📘';
+}
+
+function getModuleAccent(module, cat) {
+    const palette = {
+        num:`linear-gradient(135deg, #2f8f82 0%, ${cat.color} 52%, #78d6c7 100%)`,
+        mul:`linear-gradient(135deg, #555ddd 0%, ${cat.color} 52%, #a6abff 100%)`,
+        frac:`linear-gradient(135deg, #f14f88 0%, ${cat.color} 54%, #ff9fbc 100%)`,
+        geo:`linear-gradient(135deg, #d6a42f 0%, ${cat.color} 48%, #ffe49a 100%)`,
+        extra:`linear-gradient(135deg, #6c9bd5 0%, ${cat.color} 52%, #c6dbff 100%)`,
+    };
+    return palette[module.cat] || `linear-gradient(135deg, ${cat.color} 0%, #eef3fa 100%)`;
+}
+
+function getModulePreviewText(module) {
+    const textByTitle = [
+        ['descomposición','Valor posicional, lectura numérica y representación de cantidades.'],
+        ['suma','Práctica de adición con estrategias y algoritmos claros.'],
+        ['resta','Sustracción con sentido, cálculo y resolución de situaciones.'],
+        ['redondeo','Aproximación, estimación y cálculo mental aplicado.'],
+        ['multiplicación','Tablas, grupos iguales y producto en contexto.'],
+        ['división','Reparto equitativo, cociente y razonamiento multiplicativo.'],
+        ['fracciones','Partes de un todo, equivalencias y comparación visual.'],
+        ['decimales','Lectura, escritura y uso de décimas y centésimas.'],
+        ['geometría','Figuras, lados, ángulos y propiedades del espacio.'],
+        ['tiempo','Horas, duraciones y lectura de reloj.'],
+        ['longitudes','Unidades, conversiones y medición concreta.'],
+        ['medición','Aplicación integrada de medidas en problemas reales.'],
+        ['mentoreo','Material extra para repaso, refuerzo y extensión.'],
+    ];
+    const title = module.title.toLowerCase();
+    const matched = textByTitle.find(([key]) => title.includes(key));
+    return matched ? matched[1] : module.objectives[0];
+}
+
+function buildPrevGrid() {
+    document.getElementById('prev-grid').innerHTML = MODULES.map(m => {
+        const cat = getCat(m.cat);
+        const symbol = getModuleSymbol(m);
+        const preview = getModulePreviewText(m);
+        const accent = getModuleAccent(m, cat);
+        return `<button type="button" class="prev-card" style="--card-bg:${accent};" onclick="loadMod(${m.id})" aria-label="Abrir módulo ${m.id}: ${m.title}">
+            <div class="pc-icon">${symbol}</div>
+            <div class="prev-card-top">
+                <div class="pc-badge">${cat.name}</div>
+            </div>
+            <div class="prev-card-bottom">
+                <div class="pc-module"><span class="pc-num">${m.id}</span> Módulo</div>
+                <div class="pc-name">${m.title}</div>
+                <div class="pc-desc">${preview}</div>
+                ${done.has(m.id) ? '<div class="pc-done">✓ Módulo completado</div>' : ''}
+            </div>
+        </button>`;
+    }).join('');
+}
+
+function setTopNav(section) {
+    currentSection = section;
+    document.getElementById('nav-about')?.classList.toggle('active', section === 'about');
+    document.getElementById('nav-classes')?.classList.toggle('active', section === 'classes');
+    document.getElementById('nav-diagnostic')?.classList.toggle('active', section === 'diagnostic');
+}
+
+function showAbout() {
+    setTopNav('about');
+    document.getElementById('about-view').style.display = 'block';
+    document.getElementById('diagnostic-view').style.display = 'none';
+    document.getElementById('home').style.display = 'none';
+    document.getElementById('mod-view').style.display = 'none';
+}
+
+function showClasses() {
+    setTopNav('classes');
+    document.getElementById('about-view').style.display = 'none';
+    document.getElementById('diagnostic-view').style.display = 'none';
+    document.getElementById('home').style.display = 'flex';
+    document.getElementById('mod-view').style.display = 'none';
+    buildPrevGrid();
+}
+
+function showDiagnostic() {
+    setTopNav('diagnostic');
+    document.getElementById('about-view').style.display = 'none';
+    document.getElementById('home').style.display = 'none';
+    document.getElementById('mod-view').style.display = 'none';
+    document.getElementById('diagnostic-view').style.display = 'block';
+    renderDiagnosticLanding();
+}
+
+// ══════════════════════════════════════════════════════════════════════
+//  CARGAR MÓDULO
+// ══════════════════════════════════════════════════════════════════════
+function loadMod(id) {
+    current = MODULES.find(m => m.id === id);
+    if (!current) return;
+    currentModuleTab = 'pres';
+
+    setTopNav('classes');
+    document.getElementById('about-view').style.display = 'none';
+    document.getElementById('diagnostic-view').style.display = 'none';
+    document.getElementById('home').style.display    = 'none';
+    document.getElementById('mod-view').style.display = 'block';
+
+    const cat = getCat(current.cat);
+    document.getElementById('mh-dot').style.background = cat.color;
+    document.getElementById('mh-cat').textContent    = cat.name;
+    document.getElementById('mh-title').textContent  = current.title;
+    document.getElementById('mh-num').textContent    = `Módulo ${current.id}`;
+    document.getElementById('mh-dur').textContent    = current.dur;
+    document.getElementById('mh-objs').innerHTML     = current.objectives.map(o=>`<li>${o}</li>`).join('');
+
+    setModuleTab('pres');
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══════════════════════════════════════════════════════════════════════
+//  TABS
+// ══════════════════════════════════════════════════════════════════════
+function goTab(name, btn) {
+    setModuleTab(name, btn);
+}
+
+function setModuleTab(name, btn) {
+    currentModuleTab = name;
+    const tabs = document.querySelectorAll('.tab-btn[data-tab]');
+    const panels = document.querySelectorAll('.tab-panel');
+    tabs.forEach(tab => tab.classList.toggle('active', tab.dataset.tab === name));
+    if (btn) btn.classList.add('active');
+    panels.forEach(panel => panel.classList.toggle('active', panel.id === `panel-${name}`));
+    const panel = document.getElementById(`panel-${name}`);
+    if (!panel) return;
+    try {
+        if (name==='pres') renderPres();
+        if (name==='ticket') initTicket();
+    } catch (err) {
+        console.error(err);
+        if (name === 'ticket') {
+            panel.innerHTML = `
+                <div class="empty">
+                    <div class="ei">🎟️</div>
+                    <h3>No se pudo abrir el ticket</h3>
+                    <p>Hubo un problema al cargar esta sección. Vuelve a intentar el ticket o revisa el módulo.</p>
+                </div>`;
+        }
+    }
+}
+
+function bindModuleTabs() {
+    const tabsWrap = document.querySelector('.tabs');
+    if (!tabsWrap || tabsWrap.dataset.bound === 'true') return;
+    tabsWrap.dataset.bound = 'true';
+    tabsWrap.addEventListener('click', (evt) => {
+        const btn = evt.target.closest('.tab-btn[data-tab]');
+        if (!btn) return;
+        evt.preventDefault();
+        evt.stopPropagation();
+        const tabName = btn.dataset.tab;
+        if (!tabName) return;
+        setModuleTab(tabName, btn);
+    });
+}
+
+// ══════════════════════════════════════════════════════════════════════
+//  PRESENTACIÓN
+// ══════════════════════════════════════════════════════════════════════
+function getEmbedUrl(url) {
+    if (!url) return null;
+    if (!url.startsWith('http')) return url; // local file
+    // Google Drive file
+    const drM = url.match(/drive\.google\.com\/file\/d\/([^\/\?]+)/);
+    if (drM) return `https://drive.google.com/file/d/${drM[1]}/preview`;
+    // Google Slides presentation
+    const gsM = url.match(/docs\.google\.com\/presentation\/d\/([^\/\?]+)/);
+    if (gsM) return `https://docs.google.com/presentation/d/${gsM[1]}/embed?start=false&loop=false&delayms=5000`;
+    // Already a valid embed or other URL
+    return url;
+}
+
+function renderPres() {
+    const c = document.getElementById('panel-pres');
+    const embedUrl = getEmbedUrl(current?.slideUrl);
+    if (embedUrl) {
+        c.innerHTML = `
+            <div class="pres-wrapper">
+                <div class="pres-toolbar">
+                    <div class="pres-toolbar-left">
+                        <span class="toolbar-label">📊 ${current.title}</span>
+                    </div>
+                    <div style="display:flex;gap:8px">
+                        <button class="tool-btn" onclick="openInNewTab('${embedUrl}')">
+                            🔗 Abrir en pestaña
+                        </button>
+                        <button class="tool-btn primary" onclick="goFullscreen()">
+                            ⛶ Pantalla completa
+                        </button>
+                    </div>
+                </div>
+                <div id="pres-frame-wrap">
+                    <iframe id="pres-iframe" src="${embedUrl}"
+                        allow="autoplay; fullscreen" allowfullscreen></iframe>
+                </div>
+            </div>`;
+    } else {
+        c.innerHTML = `
+            <div class="pres-wrapper">
+                <div class="no-slide">
+                    <div class="ns-icon">📂</div>
+                    <h3>Presentación no cargada</h3>
+                    <p>El tutor debe agregar el link del PPT para este módulo.<br>Sigue la guía de abajo para cargarlo.</p>
+                </div>
+            </div>
+            <div class="howto">
+                <h4>📋 ¿Cómo agrego mi PPT aquí?</h4>
+                <div class="howto-steps">
+                    <div class="howto-step">
+                        <div class="step-num">1</div>
+                        <p>Sube tu archivo <strong>PPT o PDF</strong> a <strong>Google Drive</strong> (drive.google.com)</p>
+                    </div>
+                    <div class="howto-step">
+                        <div class="step-num">2</div>
+                        <p>Clic derecho sobre el archivo → <strong>"Compartir"</strong> → cambia a <strong>"Cualquier persona con el enlace puede ver"</strong></p>
+                    </div>
+                    <div class="howto-step">
+                        <div class="step-num">3</div>
+                        <p>Copia el link de compartir (el que te aparece). No tienes que hacer nada especial, cualquier link de Drive funciona automáticamente.</p>
+                    </div>
+                    <div class="howto-step">
+                        <div class="step-num">4</div>
+                        <p>En el archivo <code>index.html</code>, busca el módulo ${current.id} en el arreglo <code>MODULES</code> y reemplaza <code>slideUrl:''</code> por <code>slideUrl:'https://drive.google.com/...'</code></p>
+                    </div>
+                    <div class="howto-step">
+                        <div class="step-num">5</div>
+                        <p>Guarda el archivo y vuelve a subirlo a Netlify. ¡Listo! La presentación aparecerá aquí automáticamente.</p>
+                    </div>
+                </div>
+            </div>`;
+    }
+}
+
+function goFullscreen() {
+    const wrap = document.getElementById('pres-frame-wrap');
+    if (!wrap) return;
+    const req = wrap.requestFullscreen || wrap.webkitRequestFullscreen || wrap.mozRequestFullScreen;
+    if (req) req.call(wrap);
+}
+
+function openInNewTab(url) {
+    window.open(url, '_blank');
+}
+
+function openOfficialSite() {
+    window.open('https://www.laobrauc.com/', '_blank');
+}
+
+function initEasterEgg() {
+    const egg = document.getElementById('easter-egg');
+    const header = document.querySelector('header');
+    const brand = document.querySelector('.brand-lockup');
+    const about = document.getElementById('nav-about');
+    if (!egg || !header || !brand || !about) return;
+
+    const placeEgg = () => {
+        if (window.innerWidth <= 860) return;
+        const headerRect = header.getBoundingClientRect();
+        const brandRect = brand.getBoundingClientRect();
+        const start = Math.round(brandRect.right - headerRect.left + 8);
+        egg.style.left = `${start}px`;
+        egg.style.transform = 'translateX(0)';
+    };
+
+    placeEgg();
+    window.addEventListener('resize', placeEgg);
+
+    egg.addEventListener('click', () => {
+        if (egg.classList.contains('running') || window.innerWidth <= 860) return;
+        const headerRect = header.getBoundingClientRect();
+        const brandRect = brand.getBoundingClientRect();
+        const aboutRect = about.getBoundingClientRect();
+        const start = Math.round(brandRect.right - headerRect.left + 8);
+        const target = Math.round(aboutRect.left - headerRect.left - egg.offsetWidth + 10);
+        const distance = Math.max(36, target - start);
+
+        egg.style.left = `${start}px`;
+        egg.style.setProperty('--run-distance', `${distance}px`);
+        egg.classList.remove('running');
+        void egg.offsetWidth;
+        egg.classList.add('running');
+    });
+
+    egg.addEventListener('animationend', (evt) => {
+        if (evt.animationName !== 'eggRun') return;
+        egg.classList.remove('running');
+        egg.style.removeProperty('--run-distance');
+        placeEgg();
+    });
+}
+
+// ══════════════════════════════════════════════════════════════════════
+//  TICKET DE SALIDA
+// ══════════════════════════════════════════════════════════════════════
+function initTicket() {
+    const c = document.getElementById('panel-ticket');
+    if (!c || !current) return;
+    if (!current?.ticket) {
+        c.innerHTML=`
+            <div class="empty"><div class="ei">🎟️</div><h3>Sin ticket de salida</h3><p>Este módulo aún no tiene preguntas configuradas, pero el PPT/PDF del módulo sigue disponible desde aquí.</p></div>`;
+        return;
+    }
+    qIdx=0; qAns=[];
+    renderTicketQ();
+}
+
+function renderTicketQ() {
+    const tkt = current.ticket;
+    const c   = document.getElementById('panel-ticket');
+    if (qIdx >= tkt.questions.length) { showTicketResults(); return; }
+    const q   = tkt.questions[qIdx];
+    const pct = (qIdx/tkt.questions.length)*100;
+
+    c.innerHTML = `
+        <div class="ticket-wrap">
+            <div class="ticket-header">
+                <div class="ticket-icon">🎟️</div>
+                <div>
+                    <h3>${tkt.title}</h3>
+                    <p>Pregunta ${qIdx+1} de ${tkt.questions.length} · Demuestra lo que aprendiste</p>
+                </div>
+            </div>
+            <div class="q-progress"><div class="q-fill" style="width:${pct}%"></div></div>
+            <div class="q-card">
+                <span class="q-emoji">${q.emoji}</span>
+                <div class="q-text">${q.q}</div>
+                <div class="opts">
+                    ${q.opts.map((o,i)=>`<button class="opt" id="o${i}" onclick="pickQ(${i})">${o}</button>`).join('')}
+                </div>
+                <div class="q-feedback" id="qfb"></div>
+                <button class="next-btn" id="qnxt" onclick="nextTicketQ()">
+                    ${qIdx<tkt.questions.length-1 ? 'Siguiente →' : '¡Ver resultado! 🎉'}
+                </button>
+            </div>
+        </div>`;
+}
+
+function pickQ(i) {
+    const panel = document.getElementById('panel-ticket');
+    if (!panel || !current?.ticket?.questions?.[qIdx]) return;
+    const q = current.ticket.questions[qIdx];
+    const buttons = panel.querySelectorAll('.opt');
+    buttons.forEach(b=>b.disabled=true);
+    buttons.forEach((b,j)=>{
+        if (j===q.ok) b.classList.add('ok');
+        if (j===i && i!==q.ok) b.classList.add('bad');
+    });
+    const ok = i===q.ok;
+    const fb = document.getElementById('qfb');
+    if (!fb) return;
+    fb.className=`q-feedback show ${ok?'ok':'bad'}`;
+    fb.textContent = ok ? `✅ ${q.exp}` : `❌ ${q.exp}`;
+    if (ok) spawnConfetti(6);
+    document.getElementById('qnxt')?.classList.add('show');
+    qAns.push(ok);
+}
+
+function nextTicketQ() { qIdx++; renderTicketQ(); }
+
+function showTicketResults() {
+    const total  = current.ticket.questions.length;
+    const correct= qAns.filter(Boolean).length;
+    const pct    = Math.round(correct/total*100);
+    const [emoji,msg] = pct>=90?['🏆','¡Excelente! ¡Dominaste el módulo!']:
+                        pct>=70?['⭐','¡Muy bien! Casi perfecto.']:
+                        pct>=50?['👏','¡Buen trabajo! Sigue practicando.']:
+                               ['📚','¡Repasemos juntos el módulo!'];
+    document.getElementById('panel-ticket').innerHTML=`
+        <div class="ticket-wrap">
+            <div class="results">
+                <div class="r-emoji">${emoji}</div>
+                <div class="r-title">Ticket completado</div>
+                <div class="r-score">${correct}<span>/${total}</span></div>
+                <div class="r-msg">${msg}</div>
+                <button class="retry-btn" onclick="initTicket()">🔄 Repetir</button>
+            </div>
+        </div>`;
+    if (pct>=70) {
+        spawnConfetti(32);
+        done.add(current.id);
+        localStorage.setItem('tutorias-done',JSON.stringify([...done]));
+        buildPrevGrid();
+    }
+}
+
+// ══════════════════════════════════════════════════════════════════════
+//  EVALUACIÓN DIAGNÓSTICA
+// ══════════════════════════════════════════════════════════════════════
+function renderDiagnosticLanding() {
+    const shell = document.getElementById('diag-shell');
+    if (!diagnosticStarted) {
+        shell.innerHTML = `
+            <div class="diag-hero">
+                <div class="diag-kicker">Diagnóstico inicial</div>
+                <h2>Evalúa rápidamente qué temas necesitan más refuerzo.</h2>
+                <p>La evaluación incluye 4 preguntas por materia: Números y Operaciones, Multiplicación y División, Fracciones y Decimales, y Geometría y Medición. Al final verás puntaje por sección y un gráfico de torta con las áreas más débiles.</p>
+            </div>
+            <div class="diag-panel">
+                <div class="diag-grid">
+                    <div>
+                        <h3 style="font-family:var(--font-main);font-size:34px;color:var(--navy);margin-bottom:10px;">Cobertura por materia</h3>
+                        <div class="diag-list">
+                            ${DIAGNOSTIC_SECTIONS.map(section => `
+                                <div class="diag-mini">
+                                    <strong>${section.name}</strong>
+                                    <span>4 preguntas enfocadas en ${section.questions.map(q => q.topic).join(', ')}.</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="diag-mini" style="height:100%;">
+                        <strong>Qué entrega esta vista</strong>
+                        <span>Puntaje por sección, porcentaje global y visualización inmediata de los temas donde conviene reforzar primero.</span>
+                        <div class="diag-cta">
+                            <button class="tool-btn primary" onclick="startDiagnostic()">▶ Iniciar evaluación</button>
+                            <button class="tool-btn" onclick="showClasses()">← Volver a clases</button>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        return;
+    }
+
+    renderDiagnosticQuestion();
+}
+
+function startDiagnostic() {
+    diagnosticStarted = true;
+    diagSectionIdx = 0;
+    diagQuestionIdx = 0;
+    diagResponses = [];
+    renderDiagnosticQuestion();
+}
+
+function renderDiagnosticQuestion() {
+    const shell = document.getElementById('diag-shell');
+    const section = DIAGNOSTIC_SECTIONS[diagSectionIdx];
+    if (!section) {
+        renderDiagnosticResults();
+        return;
+    }
+
+    const question = section.questions[diagQuestionIdx];
+    const overallIndex = diagSectionIdx * 4 + diagQuestionIdx + 1;
+    const totalQuestions = DIAGNOSTIC_SECTIONS.length * 4;
+    const sectionPct = (diagQuestionIdx / section.questions.length) * 100;
+
+    shell.innerHTML = `
+        <div class="diag-hero">
+            <div class="diag-kicker">Evaluación diagnóstica</div>
+            <h2>${section.name}</h2>
+            <p>Pregunta ${diagQuestionIdx + 1} de ${section.questions.length} en esta sección. Avance total: ${overallIndex} de ${totalQuestions} preguntas.</p>
+        </div>
+        <div class="diag-panel">
+            <div class="diag-progress-row">
+                <div class="diag-tag">Tema actual: ${question.topic}</div>
+                <div class="diag-count">Sección ${diagSectionIdx + 1} de ${DIAGNOSTIC_SECTIONS.length}</div>
+            </div>
+            <div class="q-progress"><div class="q-fill" style="width:${sectionPct}%"></div></div>
+            <div class="diag-question">
+                <h3>${question.q}</h3>
+                <p>Selecciona la alternativa correcta para medir el nivel inicial en este contenido.</p>
+                <div class="diag-options">
+                    ${question.opts.map((opt, idx) => `<button class="opt" onclick="pickDiagnosticOption(${idx})">${opt}</button>`).join('')}
+                </div>
+                <div class="diag-feedback" id="diag-feedback"></div>
+                <button class="check-btn diag-next" id="diag-next" onclick="nextDiagnosticQuestion()">${diagQuestionIdx === section.questions.length - 1 && diagSectionIdx === DIAGNOSTIC_SECTIONS.length - 1 ? 'Ver resultados' : 'Siguiente pregunta'}</button>
+            </div>
+        </div>`;
+}
+
+function pickDiagnosticOption(optIdx) {
+    const section = DIAGNOSTIC_SECTIONS[diagSectionIdx];
+    const question = section.questions[diagQuestionIdx];
+    const isCorrect = optIdx === question.ok;
+    const buttons = document.querySelectorAll('#diagnostic-view .opt');
+
+    buttons.forEach((button, idx) => {
+        button.disabled = true;
+        if (idx === question.ok) button.classList.add('ok');
+        if (idx === optIdx && optIdx !== question.ok) button.classList.add('bad');
+    });
+
+    diagResponses.push({
+        sectionId: section.id,
+        sectionName: section.name,
+        topic: question.topic,
+        correct: isCorrect,
+    });
+
+    const feedback = document.getElementById('diag-feedback');
+    feedback.className = `diag-feedback show ${isCorrect ? 'ok' : 'bad'}`;
+    feedback.textContent = `${isCorrect ? '✅' : '❌'} ${question.exp}`;
+    document.getElementById('diag-next').classList.add('show');
+    if (isCorrect) spawnConfetti(5);
+}
+
+function nextDiagnosticQuestion() {
+    const section = DIAGNOSTIC_SECTIONS[diagSectionIdx];
+    diagQuestionIdx++;
+    if (diagQuestionIdx >= section.questions.length) {
+        diagSectionIdx++;
+        diagQuestionIdx = 0;
+    }
+    renderDiagnosticQuestion();
+}
+
+function getDiagnosticSummary() {
+    return DIAGNOSTIC_SECTIONS.map(section => {
+        const responses = diagResponses.filter(item => item.sectionId === section.id);
+        const correct = responses.filter(item => item.correct).length;
+        return { ...section, responses, correct, total: section.questions.length };
+    });
+}
+
+function renderDiagnosticResults() {
+    const shell = document.getElementById('diag-shell');
+    const summary = getDiagnosticSummary();
+    const totalCorrect = diagResponses.filter(item => item.correct).length;
+    const totalQuestions = DIAGNOSTIC_SECTIONS.length * 4;
+    const areaScores = summary.map(section => ({
+        id: section.id,
+        name: section.name,
+        color: section.color,
+        correct: section.correct,
+        total: section.total,
+        pct: Math.round((section.correct / section.total) * 100),
+    }));
+
+    shell.innerHTML = `
+        <div class="diag-hero">
+            <div class="diag-kicker">Resultados</div>
+            <h2>Panorama diagnóstico por materia</h2>
+            <p>Puntaje global: ${totalCorrect} de ${totalQuestions} respuestas correctas. El gráfico principal muestra el peso de aciertos por área y el porcentaje alcanzado en cada materia.</p>
+        </div>
+        <div class="diag-panel">
+            ${buildDiagnosticChartBlock(areaScores)}
+            <div class="diag-results-grid">
+                ${areaScores.map(section => `
+                    <div class="diag-score-card">
+                        <h4>${section.name}</h4>
+                        <p>Porcentaje de acierto en el área.</p>
+                        <div class="diag-score">${section.pct}<span>%</span></div>
+                    </div>
+                `).join('')}
+            </div>
+            <div class="diag-cta">
+                <button class="tool-btn primary" onclick="startDiagnostic()">↻ Repetir evaluación</button>
+                <button class="tool-btn" onclick="showClasses()">← Volver a clases</button>
+            </div>
+        </div>`;
+
+    drawDiagnosticPie(areaScores);
+}
+
+function buildDiagnosticChartBlock(areaScores) {
+    const totalCorrect = areaScores.reduce((sum, area) => sum + area.correct, 0);
+    if (!totalCorrect) {
+        return `
+            <div class="diag-empty-chart">
+                <h4>Sin aciertos aún</h4>
+                <p>No hubo respuestas correctas en esta ejecución, así que todavía no se puede distribuir el gráfico por área.</p>
+            </div>`;
+    }
+
+    return `
+        <div class="diag-chart-wrap">
+            <div class="diag-canvas-box">
+                <canvas id="diag-chart" width="520" height="520" aria-label="Gráfico de torta de aciertos por área"></canvas>
+            </div>
+            <div>
+                <div class="diag-chart-title">Acierto por área</div>
+                <div class="diag-chart-sub">Cada color representa una materia. El tamaño de cada porción es proporcional a la cantidad de respuestas correctas obtenidas en esa área.</div>
+                <div class="diag-legend">
+                ${areaScores.map(area => `
+                    <div class="diag-legend-item">
+                        <div class="diag-swatch" style="background:${area.color}"></div>
+                        <div>
+                            <strong>${area.name}</strong>
+                            <span>${area.correct} de ${area.total} correctas · ${area.pct}% de acierto.</span>
+                        </div>
+                    </div>
+                `).join('')}
+                </div>
+            </div>
+        </div>`;
+}
+
+function drawDiagnosticPie(areaScores) {
+    const canvas = document.getElementById('diag-chart');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const total = areaScores.reduce((sum, area) => sum + area.correct, 0);
+    if (!total) return;
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = 190;
+    let startAngle = -Math.PI / 2;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    areaScores.forEach(area => {
+        const slice = (area.correct / total) * Math.PI * 2;
+        const color = area.color;
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, radius, startAngle, startAngle + slice);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.lineWidth = 6;
+        ctx.strokeStyle = '#ffffff';
+        ctx.stroke();
+
+        if (slice > 0) {
+            const middle = startAngle + slice / 2;
+            const labelRadius = radius * 0.68;
+            const x = centerX + Math.cos(middle) * labelRadius;
+            const y = centerY + Math.sin(middle) * labelRadius;
+            ctx.fillStyle = '#0F2B50';
+            ctx.font = '700 22px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(`${area.pct}%`, x, y);
+        }
+
+        startAngle += slice;
+    });
+
+    ctx.beginPath();
+    ctx.fillStyle = '#ffffff';
+    ctx.arc(centerX, centerY, 78, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = '#e3ebf5';
+    ctx.stroke();
+
+    ctx.fillStyle = '#1A3F6E';
+    ctx.font = '700 24px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Acierto', centerX, centerY - 14);
+    ctx.font = '700 20px sans-serif';
+    ctx.fillStyle = '#6B85A3';
+    ctx.fillText('por área', centerX, centerY + 16);
+}
+
+// ══════════════════════════════════════════════════════════════════════
+//  ANIMACIONES
+// ══════════════════════════════════════════════════════════════════════
+function spawnConfetti(n) {
+    const box = document.getElementById('fx');
+    const cols=['#50AD9F','#FFD166','#EF476F','#7C83FD','#06D6A0','#0A1E30'];
+    for(let i=0;i<n;i++){
+        setTimeout(()=>{
+            const p=document.createElement('div');
+            p.className='cp';
+            const size=Math.random()*8+5;
+            p.style.cssText=`left:${Math.random()*100}vw;background:${cols[Math.floor(Math.random()*cols.length)]};animation-duration:${Math.random()*2+1.5}s;animation-delay:${Math.random()*0.3}s;width:${size}px;height:${size}px;border-radius:${Math.random()>.5?'50%':'3px'}`;
+            box.appendChild(p);
+            setTimeout(()=>p.remove(),3500);
+        },i*70);
+    }
+}
+
+function spawnStar(el) {
+    const r=el.getBoundingClientRect();
+    const s=document.createElement('div');
+    s.className='sp';
+    s.textContent=['⭐','🌟','✨'][Math.floor(Math.random()*3)];
+    s.style.cssText=`left:${r.left+r.width/2-12}px;top:${r.top-18}px`;
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),1000);
+}
+
+// ══════════════════════════════════════════════════════════════════════
+//  NAVEGACIÓN
+// ══════════════════════════════════════════════════════════════════════
+function goHome() {
+    showClasses();
+}
+
+init();
+</script>
+
+<!--
+════════════════════════════════════════════════════════════════
+  📖 GUÍA DEL ADMINISTRADOR (Bruno Nattino)
+════════════════════════════════════════════════════════════════
+
+  ✅ CÓMO AGREGAR TU PPT A UN MÓDULO (el paso más importante)
+  ────────────────────────────────────────────────────────────
+  OPCIÓN A — Google Drive (recomendado si tienes PPTs grandes):
+    1. Abre Google Drive (drive.google.com)
+    2. Sube tu archivo PPT o PDF
+    3. Clic derecho → Compartir → "Cualquier persona con el enlace"
+    4. Copia el link. Puede ser cualquier formato:
+         https://drive.google.com/file/d/XXXX/view
+         https://docs.google.com/presentation/d/XXXX/edit
+    5. En este archivo, busca el módulo correspondiente (ej. id:1)
+       y pega el link en:   slideUrl: 'TU-LINK-AQUÍ'
+    ✨ La plataforma convierte el link automáticamente, no necesitas
+       hacer nada especial con la URL.
+
+  OPCIÓN B — Archivos locales (PDFs en la misma carpeta):
+    1. Crea una carpeta llamada "slides" junto a este index.html
+    2. Guarda tus PPTs como PDF (PowerPoint → Archivo → Exportar → PDF)
+    3. Nómbralos así: 01-descomposicion.pdf, 02-suma.pdf, etc.
+    4. En el módulo pon:  slideUrl: 'slides/01-descomposicion.pdf'
+    5. Al subir a Netlify, arrastra la carpeta completa (incluyendo "slides/")
+
+  ✅ CÓMO USAR LA PLATAFORMA EN CLASE ONLINE
+  ──────────────────────────────────────────
+    1. El tutor abre la plataforma en su navegador
+    2. Selecciona el módulo del día
+    3. Clic en la pestaña "Presentación"
+    4. Clic en el botón "⛶ Pantalla completa" — la presentación
+       se muestra a pantalla completa en su monitor
+    5. El tutor comparte pantalla en Zoom/Meet → el niño ve el PPT
+    6. Al terminar la presentación, salen de pantalla completa (Esc)
+    7. Van al "Ticket de Salida" para cerrar la clase
+
+  ✅ CÓMO PUBLICAR EN INTERNET (Netlify — gratis)
+  ─────────────────────────────────────────────
+    1. Ve a netlify.com y crea cuenta gratis
+    2. Inicio → "Deploy manually" → arrastra esta carpeta
+    3. Obtienes URL como:  tutorias-laobra.netlify.app
+    4. Para actualizar después: vuelve a Netlify → arrastra la carpeta de nuevo
+
+  ✅ CÓMO EDITAR EL TICKET DE SALIDA DE UN MÓDULO
+  ─────────────────────────────────────────────
+  Cada pregunta sigue este formato en el arreglo "questions":
+  {
+      emoji: '🔢',          ← emoji decorativo
+      q: '¿Pregunta?',      ← texto de la pregunta
+      opts: ['A','B','C','D'], ← 4 opciones
+      ok: 0,                ← índice de la respuesta correcta (0=A,1=B,2=C,3=D)
+      exp: 'Explicación ✓'  ← texto que aparece al responder
+  }
+
+════════════════════════════════════════════════════════════════
+-->
+</body>
+</html>

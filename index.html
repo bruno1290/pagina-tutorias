@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,1041 +15,2484 @@
         }
 
         :root {
-            --font-main:  'Buckwheat TC', 'Barlow Condensed', 'Nunito', sans-serif;
-            --navy:       #1A3F6E;   /* La Obra UC primary blue */
-            --navy-mid:   #1C4A82;   /* Sidebar / lighter blue */
-            --navy-dark:  #0F2B50;   /* Deep dark for depth */
-            --teal:       #3498DB;   /* Interactive accent blue */
-            --teal-dark:  #2478BE;
-            --blue-grey:  #5580A8;
+            --font-main: 'Buckwheat TC', 'Barlow Condensed', 'Nunito', sans-serif;
+            --navy: #1A3F6E;
+            /* La Obra UC primary blue */
+            --navy-mid: #1C4A82;
+            /* Sidebar / lighter blue */
+            --navy-dark: #0F2B50;
+            /* Deep dark for depth */
+            --teal: #3498DB;
+            /* Interactive accent blue */
+            --teal-dark: #2478BE;
+            --blue-grey: #5580A8;
             --blue-light: #A8C8E8;
-            --bg:         #EEF3FA;
-            --white:      #FFFFFF;
-            --text:       #17334F;
+            --bg: #EEF3FA;
+            --white: #FFFFFF;
+            --text: #17334F;
             --text-light: #6B85A3;
-            --success:    #06D6A0;
-            --error:      #EF476F;
-            --warning:    #FFD166;
-            --header-h:   66px;
+            --success: #06D6A0;
+            --error: #EF476F;
+            --warning: #FFD166;
+            --header-h: 66px;
         }
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:var(--font-main);background:var(--bg);color:var(--text);min-height:100vh;}
-        button{
-            appearance:none;-webkit-appearance:none;border:none;background:none;
-            font:inherit;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        button {
+            appearance: none;
+            -webkit-appearance: none;
+            border: none;
+            background: none;
+            font: inherit;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* ─── HEADER ─────────────────────────────────────────── */
-        header{
-            position:fixed;top:0;left:0;right:0;height:var(--header-h);
-            background:#1A3F6E;display:flex;align-items:center;
-            justify-content:space-between;padding:0 22px 0 18px;
-            z-index:200;box-shadow:0 3px 20px rgba(10,22,48,.5);overflow:hidden;
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-h);
+            background: #1A3F6E;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 22px 0 18px;
+            z-index: 200;
+            box-shadow: 0 3px 20px rgba(10, 22, 48, .5);
+            overflow: hidden;
         }
-        .h-left{display:flex;align-items:center;gap:14px;width:100%;min-width:0;}
-        .brand-lockup{display:flex;align-items:center;gap:14px;}
-        .h-logo{
-            width:64px;height:64px;
-            display:flex;align-items:center;justify-content:center;
-            cursor:pointer;flex-shrink:0;
-            filter:drop-shadow(0 6px 18px rgba(7,17,38,.22));
+
+        .h-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            min-width: 0;
         }
+
+        .brand-lockup {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .h-logo {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            filter: drop-shadow(0 6px 18px rgba(7, 17, 38, .22));
+        }
+
         .h-logo img,
-        .h-logo svg{width:64px;height:64px;display:block;object-fit:contain;}
-        .h-tutorias{
-            height:44px;width:auto;display:block;object-fit:contain;flex-shrink:0;
-            filter:drop-shadow(0 6px 18px rgba(7,17,38,.22));
+        .h-logo svg {
+            width: 64px;
+            height: 64px;
+            display: block;
+            object-fit: contain;
         }
-        .h-brand{display:flex;flex-direction:column;justify-content:center;}
-        .h-brand .main{font-family:var(--font-main);font-weight:900;font-size:16px;letter-spacing:2.8px;color:var(--white);display:block;text-transform:uppercase;}
-        .top-nav{
-            display:flex;align-items:center;gap:8px;margin-left:auto;min-width:0;flex-wrap:nowrap;
-            overflow-x:auto;overflow-y:hidden;white-space:nowrap;padding-bottom:2px;
-            scrollbar-width:none;
+
+        .h-tutorias {
+            height: 44px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+            flex-shrink: 0;
+            filter: drop-shadow(0 6px 18px rgba(7, 17, 38, .22));
         }
-        .top-nav::-webkit-scrollbar{display:none;}
-        .top-nav-btn{
-            border:none;background:rgba(255,255,255,.08);color:rgba(255,255,255,.82);
-            padding:12px 16px;border-radius:999px;cursor:pointer;font-family:var(--font-main);
-            font-size:13px;font-weight:800;letter-spacing:.2px;transition:all .18s ease;
-            min-height:44px;display:inline-flex;align-items:center;justify-content:center;
-            box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+
+        .h-brand {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
-        .top-nav-btn:hover{background:rgba(255,255,255,.16);color:var(--white);transform:translateY(-1px);}
-        .top-nav-btn.active{background:var(--white);color:var(--navy);box-shadow:0 4px 14px rgba(10,22,48,.18);}
+
+        .h-brand .main {
+            font-family: var(--font-main);
+            font-weight: 900;
+            font-size: 16px;
+            letter-spacing: 2.8px;
+            color: var(--white);
+            display: block;
+            text-transform: uppercase;
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+            min-width: 0;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            padding-bottom: 2px;
+            scrollbar-width: none;
+        }
+
+        .top-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .top-nav-btn {
+            border: none;
+            background: rgba(255, 255, 255, .08);
+            color: rgba(255, 255, 255, .82);
+            padding: 12px 16px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-family: var(--font-main);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: .2px;
+            transition: all .18s ease;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
+        }
+
+        .top-nav-btn:hover {
+            background: rgba(255, 255, 255, .16);
+            color: var(--white);
+            transform: translateY(-1px);
+        }
+
+        .top-nav-btn.active {
+            background: var(--white);
+            color: var(--navy);
+            box-shadow: 0 4px 14px rgba(10, 22, 48, .18);
+        }
 
         /* ─── LAYOUT ──────────────────────────────────────────── */
-        .layout{padding-top:var(--header-h);min-height:100vh;}
+        .layout {
+            padding-top: var(--header-h);
+            min-height: 100vh;
+        }
 
         /* ─── MAIN ────────────────────────────────────────────── */
-        .main{padding:34px 32px 52px;min-height:calc(100vh - var(--header-h));max-width:1460px;margin:0 auto;}
+        .main {
+            padding: 34px 32px 52px;
+            min-height: calc(100vh - var(--header-h));
+            max-width: 1460px;
+            margin: 0 auto;
+        }
 
         /* ─── WELCOME ─────────────────────────────────────────── */
-        .welcome{
-            display:flex;flex-direction:column;align-items:center;
-            justify-content:flex-start;min-height:72vh;text-align:center;padding:34px 20px 48px;
-        }
-        .welcome-hero{
-            width:100%;max-width:1280px;margin:0 auto 12px;
-            display:block;
-        }
-        .welcome-intro{
-            position:relative;overflow:hidden;border-radius:30px;padding:28px 30px;
-            background:linear-gradient(135deg,#15365f 0%,#1a3f6e 58%,#4a94c6 100%);
-            color:var(--white);box-shadow:0 18px 44px rgba(15,43,80,.18);text-align:left;
-            width:100%;max-width:none;
-        }
-        .welcome-intro::before{
-            content:"";position:absolute;right:-60px;top:-50px;width:220px;height:220px;border-radius:50%;
-            background:rgba(255,255,255,.08);
-        }
-        .welcome-kicker{
-            display:inline-flex;align-items:center;gap:8px;
-            background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);
-            border-radius:999px;padding:8px 12px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
-            margin-bottom:16px;
-        }
-        .welcome-intro h2{font-family:var(--font-main);font-size:58px;line-height:.98;margin-bottom:10px;max-width:520px;color:#FFFFFF !important;}
-        .welcome-intro p{font-size:17px;line-height:1.65;color:rgba(255,255,255,.9);max-width:520px;}
-        .welcome h2{font-family:var(--font-main);font-size:54px;font-weight:900;color:var(--navy);margin-bottom:10px;letter-spacing:1px;}
-        .welcome > p{font-size:17px;color:var(--text-light);max-width:780px;line-height:1.7;margin-bottom:20px;}
-        .mod-preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px;width:100%;max-width:1240px;}
-        .prev-card{
-            position:relative;overflow:hidden;
-            background:var(--card-bg, linear-gradient(180deg,#ffffff 0%,#f6faff 100%));
-            border-radius:24px;padding:22px 22px 20px;min-height:240px;
-            box-shadow:
-                0 22px 34px rgba(12,33,61,.18),
-                0 10px 16px rgba(12,33,61,.12),
-                inset 0 1px 0 rgba(255,255,255,.22),
-                inset 0 -10px 18px rgba(10,29,54,.08);
-            cursor:pointer;
-            transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, filter .18s ease;
-            text-align:left;border:2px solid transparent;display:flex;flex-direction:column;justify-content:space-between;
-            width:100%;
-        }
-        .prev-card::before{
-            content:"";position:absolute;inset:0 auto auto 0;width:100%;height:100%;
-            background:linear-gradient(180deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.05) 34%,rgba(255,255,255,0) 64%);
-            pointer-events:none;
-        }
-        .prev-card::after{
-            content:"";position:absolute;inset:auto -36px -58px auto;width:220px;height:220px;border-radius:50%;
-            background:radial-gradient(circle,rgba(255,255,255,.22) 0%,rgba(255,255,255,.08) 36%,rgba(255,255,255,0) 70%);
-            filter:blur(2px);pointer-events:none;
-        }
-        .prev-card:hover{
-            border-color:rgba(255,255,255,.58);
-            box-shadow:
-                0 28px 42px rgba(12,33,61,.22),
-                0 14px 24px rgba(12,33,61,.16),
-                inset 0 1px 0 rgba(255,255,255,.28),
-                inset 0 -12px 24px rgba(10,29,54,.10);
-            filter:saturate(1.05) brightness(1.03);
-        }
-        .prev-card:active{
-            transform:translateY(2px) scale(.992);
-            box-shadow:
-                0 10px 18px rgba(12,33,61,.18),
-                0 4px 8px rgba(12,33,61,.12),
-                inset 0 3px 8px rgba(10,29,54,.14),
-                inset 0 1px 0 rgba(255,255,255,.16);
-        }
-        .prev-card:focus-visible{
-            outline:3px solid rgba(255,255,255,.9);outline-offset:3px;
-            box-shadow:
-                0 28px 42px rgba(12,33,61,.22),
-                0 14px 24px rgba(12,33,61,.16),
-                inset 0 1px 0 rgba(255,255,255,.28),
-                inset 0 -12px 24px rgba(10,29,54,.10);
-        }
-        .prev-card-top,.prev-card-bottom{position:relative;z-index:1;}
-        .prev-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:24px;}
-        .pc-badge{
-            display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;
-            background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.26);
-            font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.95);
-            backdrop-filter:blur(10px);
-        }
-        .pc-icon{
-            position:absolute;right:-4px;bottom:-16px;z-index:0;
-            font-size:170px;line-height:1;font-weight:900;color:rgba(255,255,255,.24);
-            text-shadow:0 12px 24px rgba(11,28,49,.16);
-            pointer-events:none;user-select:none;
-        }
-        .pc-module{
-            display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:900;letter-spacing:1px;
-            text-transform:uppercase;color:rgba(255,255,255,.92);margin-bottom:10px;
-        }
-        .about-view{display:none;}
-        .about-shell{max-width:980px;margin:0 auto;}
-        .about-hero{
-            background:linear-gradient(135deg,#14345f 0%,#1a3f6e 55%,#3a76a8 100%);
-            border-radius:28px;color:var(--white);padding:34px 34px 30px;box-shadow:0 16px 40px rgba(15,43,80,.2);
-            position:relative;overflow:hidden;margin-bottom:24px;
-        }
-        .about-hero::before{
-            content:"";position:absolute;right:-60px;top:-50px;width:220px;height:220px;border-radius:50%;
-            background:rgba(255,255,255,.08);
-        }
-        .about-kicker{
-            display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);
-            padding:8px 12px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
-            margin-bottom:16px;
-        }
-        .about-hero h2{font-family:var(--font-main);font-size:54px;line-height:1;margin-bottom:14px;max-width:520px;}
-        .about-hero p{max-width:560px;font-size:17px;line-height:1.7;color:rgba(255,255,255,.9);}
-        .about-grid{display:grid;grid-template-columns:1.3fr .9fr;gap:20px;align-items:start;}
-        .about-hero-layout{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;}
-        .about-hero-copy{position:relative;z-index:1;}
-        .about-hero-photo{
-            position:relative;z-index:1;display:flex;justify-content:flex-end;
-        }
-        .about-hero-photo img{
-            width:100%;max-width:320px;border-radius:24px;border:4px solid rgba(255,255,255,.16);
-            box-shadow:0 18px 34px rgba(8,22,43,.22);object-fit:cover;
-        }
-        .about-card{
-            background:var(--white);border-radius:22px;padding:28px 28px 24px;box-shadow:0 10px 28px rgba(19,51,79,.08);
-        }
-        .about-card h3{font-family:var(--font-main);font-size:32px;color:var(--navy);margin-bottom:14px;}
-        .about-copy p{font-size:16px;line-height:1.8;color:var(--text);margin-bottom:16px;}
-        .about-copy p:last-child{margin-bottom:0;}
-        .about-side{display:flex;flex-direction:column;gap:18px;}
-        .impact-list{display:flex;flex-direction:column;gap:12px;}
-        .impact-item{
-            background:linear-gradient(180deg,#f8fbff,#edf3fb);border:1px solid #dbe6f4;border-radius:16px;padding:16px 18px;
-        }
-        .impact-item strong{display:block;font-size:14px;color:var(--navy);margin-bottom:5px;}
-        .impact-item span{display:block;font-size:13px;line-height:1.6;color:var(--text-light);}
-        .about-quote{
-            background:linear-gradient(135deg,#fef7df,#fffaf0);border:1.5px solid #f3d777;border-radius:18px;padding:20px 22px;
-        }
-        .about-quote p{font-size:15px;line-height:1.7;color:var(--navy-dark);font-weight:700;}
-        .prev-card .pc-num{
-            width:30px;height:30px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
-            background:rgba(255,255,255,.2);font-family:var(--font-main);font-size:16px;font-weight:900;color:#fff;
-        }
-        .prev-card .pc-name{font-family:var(--font-main);font-size:30px;font-weight:900;color:#fff;line-height:1.02;margin-bottom:10px;max-width:260px;text-shadow:0 2px 10px rgba(15,43,80,.14);}
-        .prev-card .pc-desc{font-size:14px;color:rgba(255,255,255,.92);line-height:1.65;max-width:290px;}
-        .prev-card .pc-done{
-            display:inline-flex;align-items:center;gap:7px;font-size:12px;color:#fff;font-weight:800;margin-top:16px;
-            background:rgba(6,214,160,.24);padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.16);
+        .welcome {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 72vh;
+            text-align: center;
+            padding: 0 0 48px;
         }
 
+        .welcome-hero {
+            width: 100%;
+            margin: 0 0 40px;
+            display: block;
+        }
+
+        .welcome-intro {
+            position: relative;
+            overflow: hidden;
+            background: var(--navy);
+            color: var(--white);
+            width: 100%;
+            display: flex;
+            align-items: stretch;
+            min-height: 380px;
+        }
+
+        .welcome-intro::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(90deg, var(--navy) 30%, rgba(19, 52, 95, 0.65) 55%, rgba(19, 52, 95, 0.2) 75%, transparent 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .welcome-intro-text {
+            padding: 56px 40px 56px 50px;
+            position: relative;
+            z-index: 2;
+            max-width: 580px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .welcome-intro-text h2 {
+            font-family: var(--font-main);
+            font-weight: 800;
+            font-size: 44px;
+            line-height: 1.1;
+            margin-bottom: 14px;
+            color: var(--white) !important;
+        }
+
+        .welcome-intro-text p {
+            font-size: 19px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, .85);
+            font-weight: 400;
+        }
+
+        .welcome-intro-image {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 65%;
+            z-index: 0;
+        }
+
+        .welcome-intro-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+        }
+
+        .welcome-section-header {
+            text-align: left;
+            max-width: 1240px;
+            width: 100%;
+            margin-bottom: 28px;
+            padding: 0 24px;
+        }
+
+        .welcome-section-header h2 {
+            font-family: var(--font-main);
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+
+        .welcome-section-header p {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .welcome>p {
+            display: none;
+        }
+
+        .mod-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1240px;
+            padding: 0 24px;
+        }
+
+        /* ─── MODULE CARDS ────────────────────────────────────── */
+        .prev-card {
+            position: relative;
+            overflow: hidden;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 0;
+            min-height: 0;
+            box-shadow: 0 2px 8px rgba(12, 33, 61, .06), 0 1px 3px rgba(12, 33, 61, .04);
+            cursor: pointer;
+            transition: transform .22s cubic-bezier(.4, .2, .2, 1), box-shadow .22s ease;
+            text-align: left;
+            border: 1px solid rgba(200, 215, 235, 0.45);
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        }
+
+        .prev-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 32px rgba(12, 33, 61, .1), 0 6px 12px rgba(12, 33, 61, .06);
+            border-color: var(--card-accent, rgba(200, 215, 235, 0.7));
+        }
+
+        .prev-card:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(12, 33, 61, .08);
+        }
+
+        .prev-card:focus-visible {
+            outline: 3px solid var(--navy);
+            outline-offset: 2px;
+        }
+
+        .pc-accent-bar {
+            width: 6px;
+            flex-shrink: 0;
+            background: var(--card-accent);
+            border-radius: 16px 0 0 16px;
+        }
+
+        .pc-emoji-col {
+            width: 72px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .prev-card:hover .pc-emoji-col {
+            transform: scale(1.18);
+        }
+
+        .pc-text-col {
+            flex: 1;
+            padding: 20px 20px 20px 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .pc-name {
+            font-family: var(--font-main);
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1.2;
+        }
+
+        .pc-desc {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .pc-done {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: #1a8d6e;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .pc-arrow {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 18px;
+            opacity: 0;
+            transition: opacity .2s, transform .2s;
+        }
+
+        .prev-card:hover .pc-arrow {
+            opacity: .5;
+            transform: translateY(-50%) translateX(3px);
+        }
+
+        .about-view {
+            display: none;
+        }
+
+        .about-shell {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .about-hero {
+            background: linear-gradient(135deg, #14345f 0%, #1a3f6e 55%, #3a76a8 100%);
+            border-radius: 28px;
+            color: var(--white);
+            padding: 34px 34px 30px;
+            box-shadow: 0 16px 40px rgba(15, 43, 80, .2);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .about-hero::before {
+            content: "";
+            position: absolute;
+            right: -60px;
+            top: -50px;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .08);
+        }
+
+        .about-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, .12);
+            border: 1px solid rgba(255, 255, 255, .16);
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .about-hero h2 {
+            font-family: var(--font-main);
+            font-size: 54px;
+            line-height: 1;
+            margin-bottom: 14px;
+            max-width: 520px;
+        }
+
+        .about-hero p {
+            max-width: 560px;
+            font-size: 17px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, .9);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.3fr .9fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .about-hero-layout {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .about-hero-copy {
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-hero-photo {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .about-hero-photo img {
+            width: 100%;
+            max-width: 320px;
+            border-radius: 24px;
+            border: 4px solid rgba(255, 255, 255, .16);
+            box-shadow: 0 18px 34px rgba(8, 22, 43, .22);
+            object-fit: cover;
+        }
+
+        .about-card {
+            background: var(--white);
+            border-radius: 22px;
+            padding: 28px 28px 24px;
+            box-shadow: 0 10px 28px rgba(19, 51, 79, .08);
+        }
+
+        .about-card h3 {
+            font-family: var(--font-main);
+            font-size: 32px;
+            color: var(--navy);
+            margin-bottom: 14px;
+        }
+
+        .about-copy p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        .about-copy p:last-child {
+            margin-bottom: 0;
+        }
+
+        .about-side {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .impact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .impact-item {
+            background: linear-gradient(180deg, #f8fbff, #edf3fb);
+            border: 1px solid #dbe6f4;
+            border-radius: 16px;
+            padding: 16px 18px;
+        }
+
+        .impact-item strong {
+            display: block;
+            font-size: 14px;
+            color: var(--navy);
+            margin-bottom: 5px;
+        }
+
+        .impact-item span {
+            display: block;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-light);
+        }
+
+        .about-quote {
+            background: linear-gradient(135deg, #fef7df, #fffaf0);
+            border: 1.5px solid #f3d777;
+            border-radius: 18px;
+            padding: 20px 22px;
+        }
+
+        .about-quote p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--navy-dark);
+            font-weight: 700;
+        }
+
+        /* (card text styles moved to main .pc-name / .pc-desc above) */
+
         /* ─── MODULE HEADER ───────────────────────────────────── */
-        .mod-header{
-            background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-mid) 100%);
-            border-radius:16px;padding:24px 28px;margin-bottom:20px;
-            color:var(--white);position:relative;z-index:1;
-            box-shadow:0 18px 40px rgba(15,43,80,.16);
+        .mod-header {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-mid) 100%);
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin-bottom: 20px;
+            color: var(--white);
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 18px 40px rgba(15, 43, 80, .16);
         }
-        .mod-cat-tag{
-            display:inline-flex;align-items:center;gap:6px;
-            background:rgba(255,255,255,.12);border-radius:20px;
-            padding:4px 12px;font-size:11px;font-weight:700;
-            letter-spacing:1.2px;text-transform:uppercase;color:var(--blue-light);margin-bottom:10px;
+
+        .mod-cat-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, .12);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--blue-light);
+            margin-bottom: 10px;
         }
-        .mod-cat-tag .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-        .mod-header h1{font-family:var(--font-main);font-size:34px;font-weight:700;letter-spacing:.4px;line-height:1.1;margin-bottom:6px;}
-        .mod-meta{display:flex;gap:18px;margin-top:10px;flex-wrap:wrap;}
-        .meta-item{display:flex;align-items:center;gap:5px;font-size:13px;color:var(--blue-light);font-weight:600;}
-        .obj-list{list-style:none;margin-top:12px;}
-        .obj-list li{font-size:13px;color:var(--blue-light);padding:2px 0;display:flex;align-items:flex-start;gap:7px;line-height:1.4;}
-        .obj-list li::before{content:"→";color:var(--teal);font-weight:700;flex-shrink:0;margin-top:1px;}
-        #mod-view{max-width:1240px;margin:0 auto;}
-        .module-surface{
-            background:linear-gradient(180deg,#f7fbff,#eef4fb);border:1px solid #dde8f5;
-            border-radius:26px;padding:20px 20px 24px;box-shadow:0 12px 32px rgba(19,51,79,.07);
+
+        .mod-cat-tag .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .mod-header h1 {
+            font-family: var(--font-main);
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: .4px;
+            line-height: 1.1;
+            margin-bottom: 6px;
+        }
+
+        .mod-meta {
+            display: flex;
+            gap: 18px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            color: var(--blue-light);
+            font-weight: 600;
+        }
+
+        .obj-list {
+            list-style: none;
+            margin-top: 12px;
+        }
+
+        .obj-list li {
+            font-size: 13px;
+            color: var(--blue-light);
+            padding: 2px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 7px;
+            line-height: 1.4;
+        }
+
+        .obj-list li::before {
+            content: "→";
+            color: var(--teal);
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        #mod-view {
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .module-surface {
+            background: linear-gradient(180deg, #f7fbff, #eef4fb);
+            border: 1px solid #dde8f5;
+            border-radius: 26px;
+            padding: 20px 20px 24px;
+            box-shadow: 0 12px 32px rgba(19, 51, 79, .07);
         }
 
         /* ─── TABS ────────────────────────────────────────────── */
-        .tabs{
-            display:flex;gap:4px;margin-bottom:18px;background:rgba(255,255,255,.86);padding:6px;border-radius:16px;
-            box-shadow:0 10px 24px rgba(18,48,76,.08);width:fit-content;position:sticky;top:82px;z-index:50;
-            backdrop-filter:blur(14px);border:1px solid rgba(221,232,245,.92);
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 18px;
+            background: rgba(255, 255, 255, .86);
+            padding: 6px;
+            border-radius: 16px;
+            box-shadow: 0 10px 24px rgba(18, 48, 76, .08);
+            width: fit-content;
+            position: sticky;
+            top: 82px;
+            z-index: 50;
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(221, 232, 245, .92);
         }
-        .tab-btn{padding:12px 18px;border:none;background:none;border-radius:8px;cursor:pointer;font-family:var(--font-main);font-size:13px;font-weight:700;color:var(--text-light);transition:all .18s;display:flex;align-items:center;gap:5px;position:relative;z-index:6;pointer-events:auto;min-height:44px;}
-        .tab-btn:hover{background:var(--bg);color:var(--text);}
-        .tab-btn.active{background:var(--navy);color:var(--white);box-shadow:0 2px 8px rgba(26,63,110,.25);}
-        .tab-panel{display:none;position:relative;z-index:1;}
-        .tab-panel.active{display:block;}
+
+        .tab-btn {
+            padding: 12px 18px;
+            border: none;
+            background: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: var(--font-main);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-light);
+            transition: all .18s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            position: relative;
+            z-index: 6;
+            pointer-events: auto;
+            min-height: 44px;
+        }
+
+        .tab-btn:hover {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .tab-btn.active {
+            background: var(--navy);
+            color: var(--white);
+            box-shadow: 0 2px 8px rgba(26, 63, 110, .25);
+        }
+
+        .tab-panel {
+            display: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
 
         /* ─── PRESENTATION PANEL ──────────────────────────────── */
-        .pres-wrapper{background:var(--white);border-radius:22px;overflow:hidden;box-shadow:0 16px 34px rgba(19,51,79,.10);border:1px solid #e3edf8;}
-        .pres-toolbar{
-            display:flex;align-items:center;justify-content:space-between;
-            padding:14px 18px;border-bottom:1px solid #eef0f4;background:linear-gradient(180deg,#ffffff,#f8fbff);
+        .pres-wrapper {
+            background: var(--white);
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 16px 34px rgba(19, 51, 79, .10);
+            border: 1px solid #e3edf8;
         }
-        .pres-toolbar-left{display:flex;align-items:center;gap:8px;}
-        .toolbar-label{font-size:12px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;}
-        .tool-btn{
-            display:flex;align-items:center;gap:5px;padding:10px 14px;
-            border:1.5px solid var(--blue-light);border-radius:8px;background:none;
-            cursor:pointer;font-family:var(--font-main);font-size:12px;font-weight:700;
-            color:var(--blue-grey);transition:all .18s;min-height:44px;
+
+        .pres-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            border-bottom: 1px solid #eef0f4;
+            background: linear-gradient(180deg, #ffffff, #f8fbff);
         }
-        .tool-btn:hover{border-color:var(--navy);color:var(--navy);background:rgba(26,63,110,.06);}
-        .tool-btn.primary{background:var(--navy);color:var(--white);border-color:var(--navy);}
-        .tool-btn.primary:hover{background:var(--navy-dark);border-color:var(--navy-dark);}
-        #pres-frame-wrap{position:relative;}
-        #pres-iframe{width:100%;height:min(72vh,860px);min-height:560px;border:none;display:block;background:#f4f7fb;}
+
+        .pres-toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toolbar-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tool-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 10px 14px;
+            border: 1.5px solid var(--blue-light);
+            border-radius: 8px;
+            background: none;
+            cursor: pointer;
+            font-family: var(--font-main);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--blue-grey);
+            transition: all .18s;
+            min-height: 44px;
+        }
+
+        .tool-btn:hover {
+            border-color: var(--navy);
+            color: var(--navy);
+            background: rgba(26, 63, 110, .06);
+        }
+
+        .tool-btn.primary {
+            background: var(--navy);
+            color: var(--white);
+            border-color: var(--navy);
+        }
+
+        .tool-btn.primary:hover {
+            background: var(--navy-dark);
+            border-color: var(--navy-dark);
+        }
+
+        #pres-frame-wrap {
+            position: relative;
+        }
+
+        #pres-iframe {
+            width: 100%;
+            height: min(72vh, 860px);
+            min-height: 560px;
+            border: none;
+            display: block;
+            background: #f4f7fb;
+        }
 
         /* Fullscreen styles */
-        #pres-frame-wrap:-webkit-full-screen{background:#000;display:flex;align-items:center;justify-content:center;}
-        #pres-frame-wrap:-webkit-full-screen #pres-iframe{width:100vw;height:100vh;}
-        #pres-frame-wrap:fullscreen{background:#000;display:flex;align-items:center;justify-content:center;}
-        #pres-frame-wrap:fullscreen #pres-iframe{width:100vw;height:100vh;}
-
-        .no-slide{
-            min-height:340px;display:flex;flex-direction:column;align-items:center;
-            justify-content:center;gap:10px;padding:40px;text-align:center;color:var(--text-light);
+        #pres-frame-wrap:-webkit-full-screen {
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .no-slide .ns-icon{font-size:52px;margin-bottom:6px;}
-        .no-slide h3{font-family:var(--font-main);font-size:24px;color:var(--navy);margin-bottom:6px;}
-        .no-slide p{font-size:14px;line-height:1.6;max-width:480px;}
+
+        #pres-frame-wrap:-webkit-full-screen #pres-iframe {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #pres-frame-wrap:fullscreen {
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #pres-frame-wrap:fullscreen #pres-iframe {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .no-slide {
+            min-height: 340px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 40px;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .no-slide .ns-icon {
+            font-size: 52px;
+            margin-bottom: 6px;
+        }
+
+        .no-slide h3 {
+            font-family: var(--font-main);
+            font-size: 24px;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+
+        .no-slide p {
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 480px;
+        }
 
         /* ─── HOW-TO BOX ──────────────────────────────────────── */
-        .howto{
-            margin-top:16px;background:linear-gradient(135deg,#e8f0fb,#dce8f8);
-            border:1px solid var(--blue-light);border-radius:14px;padding:20px 22px;
+        .howto {
+            margin-top: 16px;
+            background: linear-gradient(135deg, #e8f0fb, #dce8f8);
+            border: 1px solid var(--blue-light);
+            border-radius: 14px;
+            padding: 20px 22px;
         }
-        .howto h4{font-family:var(--font-main);font-size:18px;color:var(--navy-mid);margin-bottom:12px;}
-        .howto-steps{display:flex;flex-direction:column;gap:8px;}
-        .howto-step{display:flex;gap:10px;align-items:flex-start;}
-        .step-num{width:22px;height:22px;border-radius:50%;background:var(--teal);color:var(--white);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
-        .howto-step p{font-size:13px;color:var(--text);line-height:1.5;}
-        .howto-step code{background:rgba(19,59,96,.1);color:var(--navy-mid);padding:1px 6px;border-radius:4px;font-size:12px;}
+
+        .howto h4 {
+            font-family: var(--font-main);
+            font-size: 18px;
+            color: var(--navy-mid);
+            margin-bottom: 12px;
+        }
+
+        .howto-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .howto-step {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .step-num {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--teal);
+            color: var(--white);
+            font-size: 11px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .howto-step p {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .howto-step code {
+            background: rgba(19, 59, 96, .1);
+            color: var(--navy-mid);
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
 
         /* ─── ACTIVITIES ──────────────────────────────────────── */
-        .act-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
-        .act-card{background:var(--white);border-radius:14px;padding:22px;box-shadow:0 2px 10px rgba(0,0,0,.06);border-top:4px solid var(--teal);}
-        .act-card.fill-type {border-top-color:#FFD166;}
-        .act-card.match-type{border-top-color:#7C83FD;}
-        .act-title{font-family:var(--font-main);font-size:19px;font-weight:700;margin-bottom:5px;color:var(--navy);}
-        .act-desc{font-size:13px;color:var(--text-light);margin-bottom:14px;}
+        .act-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .act-card {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
+            border-top: 4px solid var(--teal);
+        }
+
+        .act-card.fill-type {
+            border-top-color: #FFD166;
+        }
+
+        .act-card.match-type {
+            border-top-color: #7C83FD;
+        }
+
+        .act-title {
+            font-family: var(--font-main);
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--navy);
+        }
+
+        .act-desc {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 14px;
+        }
 
         /* Fill-blank */
-        .fib-row{margin-bottom:12px;}
-        .fib-sentence{font-size:17px;line-height:2.3;color:var(--text);font-weight:700;}
-        .fib-input{border:2px solid var(--blue-light);border-radius:8px;padding:3px 9px;font-family:var(--font-main);font-size:15px;font-weight:700;width:100px;text-align:center;outline:none;transition:border-color .18s;}
-        .fib-input:focus{border-color:var(--navy);}
-        .fib-input.ok{border-color:var(--success);background:rgba(6,214,160,.1);color:#047857;}
-        .fib-input.bad{border-color:var(--error);background:rgba(239,71,111,.08);color:#be123c;}
-        .check-btn{margin-top:10px;padding:12px 18px;background:var(--navy);color:var(--white);border:none;border-radius:9px;font-family:var(--font-main);font-size:13px;font-weight:700;cursor:pointer;transition:all .18s;min-height:44px;}
-        .check-btn:hover{background:var(--navy-dark);}
-        .fib-result{margin-top:8px;font-weight:700;font-size:13px;display:none;}
+        .fib-row {
+            margin-bottom: 12px;
+        }
+
+        .fib-sentence {
+            font-size: 17px;
+            line-height: 2.3;
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .fib-input {
+            border: 2px solid var(--blue-light);
+            border-radius: 8px;
+            padding: 3px 9px;
+            font-family: var(--font-main);
+            font-size: 15px;
+            font-weight: 700;
+            width: 100px;
+            text-align: center;
+            outline: none;
+            transition: border-color .18s;
+        }
+
+        .fib-input:focus {
+            border-color: var(--navy);
+        }
+
+        .fib-input.ok {
+            border-color: var(--success);
+            background: rgba(6, 214, 160, .1);
+            color: #047857;
+        }
+
+        .fib-input.bad {
+            border-color: var(--error);
+            background: rgba(239, 71, 111, .08);
+            color: #be123c;
+        }
+
+        .check-btn {
+            margin-top: 10px;
+            padding: 12px 18px;
+            background: var(--navy);
+            color: var(--white);
+            border: none;
+            border-radius: 9px;
+            font-family: var(--font-main);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .18s;
+            min-height: 44px;
+        }
+
+        .check-btn:hover {
+            background: var(--navy-dark);
+        }
+
+        .fib-result {
+            margin-top: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            display: none;
+        }
 
         /* Match */
-        .match-cols{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
-        .m-item{padding:9px 12px;border-radius:9px;background:var(--bg);font-size:13px;font-weight:700;cursor:pointer;transition:all .18s;border:2px solid transparent;text-align:center;}
-        .m-item:hover{border-color:var(--blue-light);background:var(--white);}
-        .m-item.sel{border-color:var(--navy);background:rgba(26,63,110,.1);}
-        .m-item.matched{border-color:var(--success);background:rgba(6,214,160,.14);color:#047857;pointer-events:none;}
-        .m-item.flash{border-color:var(--error);background:rgba(239,71,111,.08);}
+        .match-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        .m-item {
+            padding: 9px 12px;
+            border-radius: 9px;
+            background: var(--bg);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .18s;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+
+        .m-item:hover {
+            border-color: var(--blue-light);
+            background: var(--white);
+        }
+
+        .m-item.sel {
+            border-color: var(--navy);
+            background: rgba(26, 63, 110, .1);
+        }
+
+        .m-item.matched {
+            border-color: var(--success);
+            background: rgba(6, 214, 160, .14);
+            color: #047857;
+            pointer-events: none;
+        }
+
+        .m-item.flash {
+            border-color: var(--error);
+            background: rgba(239, 71, 111, .08);
+        }
 
         /* ─── TICKET DE SALIDA ────────────────────────────────── */
-        .ticket-wrap{max-width:760px;margin:0 auto;}
-        .ticket-header{
-            background:linear-gradient(135deg,#fff9e6,#fffbf0);
-            border:1.5px solid #ffd166;border-radius:14px;
-            padding:18px 22px;margin-bottom:20px;
-            display:flex;align-items:center;gap:14px;
+        .ticket-wrap {
+            max-width: 760px;
+            margin: 0 auto;
         }
-        .ticket-icon{font-size:36px;}
-        .ticket-header h3{font-family:var(--font-main);font-size:22px;color:var(--navy);margin-bottom:2px;}
-        .ticket-header p{font-size:13px;color:var(--text-light);}
+
+        .ticket-header {
+            background: linear-gradient(135deg, #fff9e6, #fffbf0);
+            border: 1.5px solid #ffd166;
+            border-radius: 14px;
+            padding: 18px 22px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .ticket-icon {
+            font-size: 36px;
+        }
+
+        .ticket-header h3 {
+            font-family: var(--font-main);
+            font-size: 22px;
+            color: var(--navy);
+            margin-bottom: 2px;
+        }
+
+        .ticket-header p {
+            font-size: 13px;
+            color: var(--text-light);
+        }
 
         /* Quiz cards */
-        .q-wrap{display:flex;flex-direction:column;gap:0;}
-        .q-progress{width:100%;height:7px;background:var(--blue-light);border-radius:10px;overflow:hidden;margin-bottom:18px;}
-        .q-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--teal));border-radius:10px;transition:width .4s ease;}
-        .q-card{background:var(--white);border-radius:22px;padding:30px;box-shadow:0 16px 34px rgba(19,51,79,.10);margin-bottom:16px;border:1px solid #e3edf8;}
-        .q-emoji{font-size:42px;margin-bottom:10px;display:block;}
-        .q-text{font-size:19px;font-weight:700;color:var(--navy);margin-bottom:20px;line-height:1.4;}
-        .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-        .opt{padding:16px 14px;border:2px solid var(--blue-light);border-radius:12px;background:var(--bg);font-family:var(--font-main);font-size:15px;font-weight:700;cursor:pointer;transition:all .18s;text-align:left;color:var(--text);min-height:52px;}
-        .opt:hover:not(:disabled){border-color:var(--navy);background:rgba(26,63,110,.06);}
-        .opt.ok{border-color:var(--success);background:rgba(6,214,160,.14);color:#047857;}
-        .opt.bad{border-color:var(--error);background:rgba(239,71,111,.08);color:#be123c;}
-        .opt:disabled{cursor:not-allowed;}
-        .q-feedback{text-align:center;font-size:16px;font-weight:800;padding:10px;border-radius:10px;margin-top:14px;display:none;}
-        .q-feedback.show{display:block;}
-        .q-feedback.ok{background:rgba(6,214,160,.14);color:#047857;}
-        .q-feedback.bad{background:rgba(239,71,111,.08);color:#be123c;}
-        .next-btn{margin-top:12px;width:100%;padding:14px;background:var(--navy);color:var(--white);border:none;border-radius:12px;font-family:var(--font-main);font-size:15px;font-weight:800;cursor:pointer;transition:all .18s;display:none;min-height:48px;}
-        .next-btn.show{display:block;}
-        .next-btn:hover{background:var(--navy-mid);}
+        .q-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .q-progress {
+            width: 100%;
+            height: 7px;
+            background: var(--blue-light);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+
+        .q-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--navy), var(--teal));
+            border-radius: 10px;
+            transition: width .4s ease;
+        }
+
+        .q-card {
+            background: var(--white);
+            border-radius: 22px;
+            padding: 30px;
+            box-shadow: 0 16px 34px rgba(19, 51, 79, .10);
+            margin-bottom: 16px;
+            border: 1px solid #e3edf8;
+        }
+
+        .q-emoji {
+            font-size: 42px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .q-text {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .opts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .opt {
+            padding: 16px 14px;
+            border: 2px solid var(--blue-light);
+            border-radius: 12px;
+            background: var(--bg);
+            font-family: var(--font-main);
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .18s;
+            text-align: left;
+            color: var(--text);
+            min-height: 52px;
+        }
+
+        .opt:hover:not(:disabled) {
+            border-color: var(--navy);
+            background: rgba(26, 63, 110, .06);
+        }
+
+        .opt.ok {
+            border-color: var(--success);
+            background: rgba(6, 214, 160, .14);
+            color: #047857;
+        }
+
+        .opt.bad {
+            border-color: var(--error);
+            background: rgba(239, 71, 111, .08);
+            color: #be123c;
+        }
+
+        .opt:disabled {
+            cursor: not-allowed;
+        }
+
+        .q-feedback {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 800;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 14px;
+            display: none;
+        }
+
+        .q-feedback.show {
+            display: block;
+        }
+
+        .q-feedback.ok {
+            background: rgba(6, 214, 160, .14);
+            color: #047857;
+        }
+
+        .q-feedback.bad {
+            background: rgba(239, 71, 111, .08);
+            color: #be123c;
+        }
+
+        .next-btn {
+            margin-top: 12px;
+            width: 100%;
+            padding: 14px;
+            background: var(--navy);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-family: var(--font-main);
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all .18s;
+            display: none;
+            min-height: 48px;
+        }
+
+        .next-btn.show {
+            display: block;
+        }
+
+        .next-btn:hover {
+            background: var(--navy-mid);
+        }
 
         /* Results */
-        .results{text-align:center;padding:48px 30px;background:var(--white);border-radius:22px;box-shadow:0 16px 34px rgba(19,51,79,.10);border:1px solid #e3edf8;}
-        .r-emoji{font-size:68px;margin-bottom:14px;}
-        .r-title{font-family:var(--font-main);font-size:40px;color:var(--navy);margin-bottom:6px;}
-        .r-score{font-size:66px;font-weight:900;color:var(--teal);line-height:1;margin:14px 0;}
-        .r-score span{font-size:26px;color:var(--text-light);}
-        .r-msg{font-size:17px;color:var(--text-light);margin-bottom:24px;}
-        .retry-btn{padding:12px 28px;background:var(--teal);color:var(--white);border:none;border-radius:12px;font-family:var(--font-main);font-size:15px;font-weight:800;cursor:pointer;transition:all .18s;min-height:48px;}
-        .retry-btn:hover{background:var(--teal-dark);}
+        .results {
+            text-align: center;
+            padding: 48px 30px;
+            background: var(--white);
+            border-radius: 22px;
+            box-shadow: 0 16px 34px rgba(19, 51, 79, .10);
+            border: 1px solid #e3edf8;
+        }
+
+        .r-emoji {
+            font-size: 68px;
+            margin-bottom: 14px;
+        }
+
+        .r-title {
+            font-family: var(--font-main);
+            font-size: 40px;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+
+        .r-score {
+            font-size: 66px;
+            font-weight: 900;
+            color: var(--teal);
+            line-height: 1;
+            margin: 14px 0;
+        }
+
+        .r-score span {
+            font-size: 26px;
+            color: var(--text-light);
+        }
+
+        .r-msg {
+            font-size: 17px;
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+
+        .retry-btn {
+            padding: 12px 28px;
+            background: var(--teal);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-family: var(--font-main);
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all .18s;
+            min-height: 48px;
+        }
+
+        .retry-btn:hover {
+            background: var(--teal-dark);
+        }
 
         /* ─── RECURSOS DE APOYO ─────────────────────────────── */
         /* ─── EVALUACIÓN DIAGNÓSTICA ────────────────────────── */
-        .diagnostic-view{display:none;}
-        .diag-shell{max-width:1100px;margin:0 auto;}
-        .diag-hero{
-            background:linear-gradient(135deg,#15375f 0%,#1a3f6e 54%,#4f95c5 100%);
-            color:var(--white);border-radius:28px;padding:34px;box-shadow:0 16px 42px rgba(15,43,80,.18);margin-bottom:22px;position:relative;overflow:hidden;
+        .diagnostic-view {
+            display: none;
         }
-        .diag-hero::after{
-            content:"";position:absolute;right:-40px;bottom:-70px;width:220px;height:220px;border-radius:50%;
-            background:rgba(255,255,255,.08);
+
+        .diag-shell {
+            max-width: 1100px;
+            margin: 0 auto;
         }
-        .diag-hero h2{font-family:var(--font-main);font-size:52px;line-height:1;margin-bottom:12px;max-width:620px;}
-        .diag-hero p{max-width:620px;font-size:16px;line-height:1.8;color:rgba(255,255,255,.88);}
-        .diag-kicker{
-            display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
-            background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);
-            font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;
+
+        .diag-hero {
+            background: linear-gradient(135deg, #15375f 0%, #1a3f6e 54%, #4f95c5 100%);
+            color: var(--white);
+            border-radius: 28px;
+            padding: 34px;
+            box-shadow: 0 16px 42px rgba(15, 43, 80, .18);
+            margin-bottom: 22px;
+            position: relative;
+            overflow: hidden;
         }
-        .diag-panel{
-            background:var(--white);border-radius:24px;padding:28px;box-shadow:0 10px 32px rgba(19,51,79,.08);
+
+        .diag-hero::after {
+            content: "";
+            position: absolute;
+            right: -40px;
+            bottom: -70px;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .08);
         }
-        .diag-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:18px;}
-        .diag-list{display:grid;gap:12px;}
-        .diag-mini{
-            background:linear-gradient(180deg,#f8fbff,#eef4fb);border:1px solid #dbe7f4;border-radius:16px;padding:16px 18px;
+
+        .diag-hero h2 {
+            font-family: var(--font-main);
+            font-size: 52px;
+            line-height: 1;
+            margin-bottom: 12px;
+            max-width: 620px;
         }
-        .diag-mini strong{display:block;font-size:15px;color:var(--navy);margin-bottom:4px;}
-        .diag-mini span{font-size:13px;line-height:1.6;color:var(--text-light);}
-        .diag-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;}
-        .diag-progress-row{
-            display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:14px;flex-wrap:wrap;
+
+        .diag-hero p {
+            max-width: 620px;
+            font-size: 16px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, .88);
         }
-        .diag-tag{
-            display:inline-flex;align-items:center;gap:8px;background:rgba(26,63,110,.08);
-            border-radius:999px;padding:7px 12px;font-size:12px;font-weight:800;color:var(--navy);
+
+        .diag-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .12);
+            border: 1px solid rgba(255, 255, 255, .16);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
         }
-        .diag-count{font-size:13px;color:var(--text-light);font-weight:700;}
-        .diag-question{background:linear-gradient(180deg,#ffffff,#f9fbff);border:1px solid #e4edf8;border-radius:20px;padding:26px;}
-        .diag-question h3{font-family:var(--font-main);font-size:30px;color:var(--navy);margin-bottom:8px;}
-        .diag-question p{font-size:15px;line-height:1.7;color:var(--text-light);margin-bottom:18px;}
-        .diag-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-        .diag-feedback{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:14px;font-weight:800;display:none;}
-        .diag-feedback.show{display:block;}
-        .diag-feedback.ok{background:rgba(6,214,160,.14);color:#047857;}
-        .diag-feedback.bad{background:rgba(239,71,111,.08);color:#be123c;}
-        .diag-next{margin-top:14px;display:none;}
-        .diag-next.show{display:inline-flex;}
-        .diag-results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:24px 0 0;}
-        .diag-score-card{
-            background:linear-gradient(180deg,#f8fbff,#edf4fb);border:1px solid #dbe6f3;border-radius:18px;padding:18px;
+
+        .diag-panel {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 10px 32px rgba(19, 51, 79, .08);
         }
-        .diag-score-card h4{font-family:var(--font-main);font-size:24px;color:var(--navy);margin-bottom:4px;}
-        .diag-score-card p{font-size:13px;color:var(--text-light);margin-bottom:12px;}
-        .diag-score{font-size:40px;font-weight:900;color:var(--teal);line-height:1;}
-        .diag-score span{font-size:18px;color:var(--text-light);}
-        .diag-chart-wrap{
-            display:grid;grid-template-columns:minmax(540px,1.4fr) minmax(280px,.8fr);gap:28px;align-items:center;
-            background:linear-gradient(180deg,#ffffff,#f8fbff);border:1px solid #e4edf8;border-radius:28px;padding:30px;margin-bottom:22px;
+
+        .diag-grid {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 18px;
+            margin-top: 18px;
         }
-        .diag-canvas-box{
-            display:flex;align-items:center;justify-content:center;min-height:520px;
-            background:radial-gradient(circle at center,#ffffff 0%,#f0f6fd 74%,#e6eef8 100%);
-            border-radius:24px;
+
+        .diag-list {
+            display: grid;
+            gap: 12px;
         }
-        #diag-chart{width:520px;height:520px;max-width:100%;}
-        .diag-legend{display:grid;gap:12px;}
-        .diag-legend-item{
-            display:flex;align-items:flex-start;gap:10px;background:#f5f9fe;border:1px solid #e0ebf7;border-radius:14px;padding:12px 14px;
+
+        .diag-mini {
+            background: linear-gradient(180deg, #f8fbff, #eef4fb);
+            border: 1px solid #dbe7f4;
+            border-radius: 16px;
+            padding: 16px 18px;
         }
-        .diag-swatch{width:14px;height:14px;border-radius:50%;flex-shrink:0;margin-top:3px;}
-        .diag-legend strong{display:block;font-size:14px;color:var(--navy);margin-bottom:2px;}
-        .diag-legend span{font-size:13px;color:var(--text-light);line-height:1.5;}
-        .diag-chart-title{font-family:var(--font-main);font-size:34px;color:var(--navy);margin-bottom:8px;}
-        .diag-chart-sub{font-size:15px;line-height:1.7;color:var(--text-light);margin-bottom:18px;}
-        .diag-empty-chart{
-            text-align:center;padding:28px;border-radius:18px;background:linear-gradient(180deg,#f7fdfb,#eefaf5);border:1px solid #d6f2e6;
+
+        .diag-mini strong {
+            display: block;
+            font-size: 15px;
+            color: var(--navy);
+            margin-bottom: 4px;
         }
-        .diag-empty-chart h4{font-family:var(--font-main);font-size:28px;color:#047857;margin-bottom:6px;}
-        .diag-empty-chart p{font-size:14px;color:#3f6c5d;line-height:1.6;}
+
+        .diag-mini span {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-light);
+        }
+
+        .diag-cta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 22px;
+        }
+
+        .diag-progress-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .diag-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(26, 63, 110, .08);
+            border-radius: 999px;
+            padding: 7px 12px;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--navy);
+        }
+
+        .diag-count {
+            font-size: 13px;
+            color: var(--text-light);
+            font-weight: 700;
+        }
+
+        .diag-question {
+            background: linear-gradient(180deg, #ffffff, #f9fbff);
+            border: 1px solid #e4edf8;
+            border-radius: 20px;
+            padding: 26px;
+        }
+
+        .diag-question h3 {
+            font-family: var(--font-main);
+            font-size: 30px;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .diag-question p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-light);
+            margin-bottom: 18px;
+        }
+
+        .diag-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .diag-feedback {
+            margin-top: 14px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 800;
+            display: none;
+        }
+
+        .diag-feedback.show {
+            display: block;
+        }
+
+        .diag-feedback.ok {
+            background: rgba(6, 214, 160, .14);
+            color: #047857;
+        }
+
+        .diag-feedback.bad {
+            background: rgba(239, 71, 111, .08);
+            color: #be123c;
+        }
+
+        .diag-next {
+            margin-top: 14px;
+            display: none;
+        }
+
+        .diag-next.show {
+            display: inline-flex;
+        }
+
+        .diag-results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 14px;
+            margin: 24px 0 0;
+        }
+
+        .diag-score-card {
+            background: linear-gradient(180deg, #f8fbff, #edf4fb);
+            border: 1px solid #dbe6f3;
+            border-radius: 18px;
+            padding: 18px;
+        }
+
+        .diag-score-card h4 {
+            font-family: var(--font-main);
+            font-size: 24px;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+
+        .diag-score-card p {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        .diag-score {
+            font-size: 40px;
+            font-weight: 900;
+            color: var(--teal);
+            line-height: 1;
+        }
+
+        .diag-score span {
+            font-size: 18px;
+            color: var(--text-light);
+        }
+
+        .diag-chart-wrap {
+            display: grid;
+            grid-template-columns: minmax(540px, 1.4fr) minmax(280px, .8fr);
+            gap: 28px;
+            align-items: center;
+            background: linear-gradient(180deg, #ffffff, #f8fbff);
+            border: 1px solid #e4edf8;
+            border-radius: 28px;
+            padding: 30px;
+            margin-bottom: 22px;
+        }
+
+        .diag-canvas-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 520px;
+            background: radial-gradient(circle at center, #ffffff 0%, #f0f6fd 74%, #e6eef8 100%);
+            border-radius: 24px;
+        }
+
+        #diag-chart {
+            width: 520px;
+            height: 520px;
+            max-width: 100%;
+        }
+
+        .diag-legend {
+            display: grid;
+            gap: 12px;
+        }
+
+        .diag-legend-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: #f5f9fe;
+            border: 1px solid #e0ebf7;
+            border-radius: 14px;
+            padding: 12px 14px;
+        }
+
+        .diag-swatch {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .diag-legend strong {
+            display: block;
+            font-size: 14px;
+            color: var(--navy);
+            margin-bottom: 2px;
+        }
+
+        .diag-legend span {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .diag-chart-title {
+            font-family: var(--font-main);
+            font-size: 34px;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .diag-chart-sub {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-light);
+            margin-bottom: 18px;
+        }
+
+        .diag-empty-chart {
+            text-align: center;
+            padding: 28px;
+            border-radius: 18px;
+            background: linear-gradient(180deg, #f7fdfb, #eefaf5);
+            border: 1px solid #d6f2e6;
+        }
+
+        .diag-empty-chart h4 {
+            font-family: var(--font-main);
+            font-size: 28px;
+            color: #047857;
+            margin-bottom: 6px;
+        }
+
+        .diag-empty-chart p {
+            font-size: 14px;
+            color: #3f6c5d;
+            line-height: 1.6;
+        }
 
         /* ─── EMPTY STATE ─────────────────────────────────────── */
-        .empty{text-align:center;padding:60px 30px;color:var(--text-light);}
-        .empty .ei{font-size:52px;margin-bottom:12px;}
-        .empty h3{font-family:var(--font-main);font-size:26px;color:var(--navy);margin-bottom:6px;}
-        .empty p{font-size:14px;max-width:340px;margin:0 auto;line-height:1.6;}
+        .empty {
+            text-align: center;
+            padding: 60px 30px;
+            color: var(--text-light);
+        }
+
+        .empty .ei {
+            font-size: 52px;
+            margin-bottom: 12px;
+        }
+
+        .empty h3 {
+            font-family: var(--font-main);
+            font-size: 26px;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+
+        .empty p {
+            font-size: 14px;
+            max-width: 340px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
 
         /* ─── FOOTER BANNER ─────────────────────────────────── */
-        .footer-banner{
-            margin:26px auto 0;max-width:1280px;
-            background:linear-gradient(135deg,#15365f 0%,#1a3f6e 58%,#4a94c6 100%);
-            color:var(--white);border-radius:24px;padding:18px 24px;
-            box-shadow:0 16px 36px rgba(15,43,80,.16);text-align:center;
+        .footer-banner {
+            margin: 0;
+            width: 100%;
+            max-width: none;
+            height: var(--header-h);
+            background: #1A3F6E;
+            color: var(--white);
+            border-radius: 0;
+            padding: 0 32px;
+            box-shadow: none;
+            display: flex;
+            align-items: center;
         }
-        .footer-banner p{font-size:16px;line-height:1.7;color:rgba(255,255,255,.94);}
+
+        .footer-banner p {
+            font-size: 11px;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, .88);
+            letter-spacing: .2px;
+            text-align: justify;
+            width: 100%;
+        }
 
         /* ─── CONFETTI / STARS ────────────────────────────────── */
-        #fx{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;}
-        .cp{position:absolute;border-radius:2px;animation:fall linear forwards;}
-        @keyframes fall{0%{transform:translateY(-100px) rotate(0);opacity:1;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
-        .sp{position:fixed;pointer-events:none;animation:spop 1s ease-out forwards;font-size:24px;z-index:9999;}
-        @keyframes spop{0%{transform:scale(0);opacity:1;}60%{transform:scale(1.6);opacity:1;}100%{transform:scale(0) translateY(-50px);opacity:0;}}
+        #fx {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .cp {
+            position: absolute;
+            border-radius: 2px;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .sp {
+            position: fixed;
+            pointer-events: none;
+            animation: spop 1s ease-out forwards;
+            font-size: 24px;
+            z-index: 9999;
+        }
+
+        @keyframes spop {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+
+            60% {
+                transform: scale(1.6);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0) translateY(-50px);
+                opacity: 0;
+            }
+        }
 
         /* ─── RESPONSIVE ──────────────────────────────────────── */
-        @media(max-width:860px){
-            .main{padding:16px 14px 32px;}
-            .brand-lockup{gap:10px;}
-            .h-logo{width:52px;height:52px;}
-            .h-logo img,.h-logo svg{width:52px;height:52px;}
-            .h-tutorias{height:34px;max-width:120px;}
-            .h-brand{display:none;}
-            .top-nav{display:none;}
+        @media(max-width:860px) {
+            .main {
+                padding: 16px 14px 32px;
+            }
 
-            .welcome-hero{grid-template-columns:1fr;}
-            .welcome-intro{padding:26px 22px;}
-            .welcome-intro h2{font-size:42px;}
-            .opts{grid-template-columns:1fr;}
-            .tabs{flex-wrap:wrap;top:74px;}
-            .pres-toolbar{flex-direction:column;align-items:flex-start;gap:8px;}
-            #pres-iframe{height:340px;}
-            .about-hero{padding:26px 22px;}
-            .about-hero h2{font-size:40px;}
-            .about-hero-layout{grid-template-columns:1fr;}
-            .about-hero-photo{justify-content:flex-start;}
-            .about-grid{grid-template-columns:1fr;}
-            .diag-hero{padding:26px 22px;}
-            .diag-hero h2{font-size:40px;}
-            .diag-grid,.diag-chart-wrap,.diag-options{grid-template-columns:1fr;}
-            .module-surface{padding:14px;}
+            .brand-lockup {
+                gap: 10px;
+            }
+
+            .h-logo {
+                width: 52px;
+                height: 52px;
+            }
+
+            .h-logo img,
+            .h-logo svg {
+                width: 52px;
+                height: 52px;
+            }
+
+            .h-tutorias {
+                height: 34px;
+                max-width: 120px;
+            }
+
+            .h-brand {
+                display: none;
+            }
+
+            .top-nav {
+                display: none;
+            }
+
+            .welcome-hero {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-intro {
+                min-height: 260px;
+            }
+
+            .welcome-intro-text {
+                padding: 32px 24px;
+                max-width: 100%;
+            }
+
+            .welcome-intro-text h2 {
+                font-size: 30px;
+            }
+
+            .welcome-intro::before {
+                background: linear-gradient(90deg, var(--navy) 20%, rgba(19, 52, 95, 0.75) 50%, rgba(19, 52, 95, 0.4) 100%);
+            }
+
+            .mod-preview-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .opts {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+                top: 74px;
+            }
+
+            .pres-toolbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            #pres-iframe {
+                height: 340px;
+            }
+
+            .about-hero {
+                padding: 26px 22px;
+            }
+
+            .about-hero h2 {
+                font-size: 40px;
+            }
+
+            .about-hero-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .about-hero-photo {
+                justify-content: flex-start;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .diag-hero {
+                padding: 26px 22px;
+            }
+
+            .diag-hero h2 {
+                font-size: 40px;
+            }
+
+            .diag-grid,
+            .diag-chart-wrap,
+            .diag-options {
+                grid-template-columns: 1fr;
+            }
+
+            .module-surface {
+                padding: 14px;
+            }
         }
     </style>
 </head>
+
 <body>
-<div id="fx"></div>
+    <div id="fx"></div>
 
-<!-- ══════════════════ HEADER ══════════════════ -->
-<header>
-    <div class="h-left">
-        <div class="brand-lockup">
-            <div class="h-logo">
-                <img
-                    src="assets/Logo.png"
-                    alt="Logo La Obra UC"
-                    onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-                >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" style="display:none">
-                    <polyline points="9,52 50,12 91,52 91,73"
-                        stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-                    <polyline points="9,52 9,90 68,90"
-                        stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-                    <text x="19" y="70" fill="white" font-weight="800" font-size="18"
-                        font-family="'Barlow Condensed',sans-serif" letter-spacing="1">LA</text>
-                    <text x="14" y="87" fill="white" font-weight="800" font-size="18"
-                        font-family="'Barlow Condensed',sans-serif" letter-spacing="0.5">OBRA</text>
-                </svg>
+    <!-- ══════════════════ HEADER ══════════════════ -->
+    <header>
+        <div class="h-left">
+            <div class="brand-lockup">
+                <div class="h-logo">
+                    <img src="assets/Logo.png" alt="Logo La Obra UC"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" style="display:none">
+                        <polyline points="9,52 50,12 91,52 91,73" stroke="white" stroke-width="6" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <polyline points="9,52 9,90 68,90" stroke="white" stroke-width="6" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <text x="19" y="70" fill="white" font-weight="800" font-size="18"
+                            font-family="'Barlow Condensed',sans-serif" letter-spacing="1">LA</text>
+                        <text x="14" y="87" fill="white" font-weight="800" font-size="18"
+                            font-family="'Barlow Condensed',sans-serif" letter-spacing="0.5">OBRA</text>
+                    </svg>
+                </div>
+                <img class="h-tutorias" src="assets/Captura de pantalla 2026-03-26 a la(s) 11.43.07 a.m..png"
+                    alt="Tutorías">
+                <div class="h-brand">
+                    <span class="main">La Obra Tutorías</span>
+                </div>
             </div>
-            <img
-                class="h-tutorias"
-                src="assets/Captura de pantalla 2026-03-26 a la(s) 11.43.07 a.m..png"
-                alt="Tutorías"
-            >
-            <div class="h-brand">
-                <span class="main">La Obra Tutorías</span>
-            </div>
+
+            <nav class="top-nav" aria-label="Secciones principales">
+                <button class="top-nav-btn" id="nav-about" onclick="showAbout()">¿Quiénes somos?</button>
+                <button class="top-nav-btn active" id="nav-classes" onclick="showClasses()">Clases</button>
+                <button class="top-nav-btn" type="button" onclick="openOfficialSite()">Página oficial</button>
+            </nav>
         </div>
+    </header>
 
-        <nav class="top-nav" aria-label="Secciones principales">
-            <button class="top-nav-btn" id="nav-about" onclick="showAbout()">¿Quiénes somos?</button>
-            <button class="top-nav-btn active" id="nav-classes" onclick="showClasses()">Clases</button>
-            <button class="top-nav-btn" id="nav-diagnostic" onclick="showDiagnostic()">Evaluación diagnóstica</button>
-            <button class="top-nav-btn" type="button" onclick="openOfficialSite()">Página oficial</button>
-        </nav>
-    </div>
-</header>
+    <!-- ══════════════════ LAYOUT ══════════════════ -->
+    <div class="layout">
+        <main class="main" id="main">
 
-<!-- ══════════════════ LAYOUT ══════════════════ -->
-<div class="layout">
-    <main class="main" id="main">
-
-        <section id="about-view" class="about-view">
-            <div class="about-shell">
-                <div class="about-hero">
-                    <div class="about-hero-layout">
-                        <div class="about-hero-copy">
-                            <div class="about-kicker">Tutorías</div>
-                            <h2>Educación con vínculo, continuidad y sentido.</h2>
-                            <p>Trabajamos durante todo el año para acompañar a estudiantes de 4° básico de la Escuela Casa Azul, fortaleciendo sus aprendizajes y construyendo confianza a través de tutorías y encuentros significativos.</p>
+            <section id="about-view" class="about-view">
+                <div class="about-shell">
+                    <div class="about-hero">
+                        <div class="about-hero-layout">
+                            <div class="about-hero-copy">
+                                <div class="about-kicker">Tutorías</div>
+                                <h2>Educación con vínculo, continuidad y sentido.</h2>
+                                <p>Trabajamos durante todo el año para acompañar a estudiantes de 4° básico de la
+                                    Escuela Casa Azul, fortaleciendo sus aprendizajes y construyendo confianza a través
+                                    de tutorías y encuentros significativos.</p>
+                            </div>
+                            <div class="about-hero-photo">
+                                <img src="assets/WhatsApp%20Image%202026-03-15%20at%2012.55.25.jpeg"
+                                    alt="Tutorías La Obra UC">
+                            </div>
                         </div>
-                        <div class="about-hero-photo">
-                            <img src="assets/WhatsApp%20Image%202026-03-15%20at%2012.55.25.jpeg" alt="Tutorías La Obra UC">
+                    </div>
+                    <div class="about-grid">
+                        <article class="about-card about-copy">
+                            <h3>¿Qué hacemos?</h3>
+                            <p>Tutorías nace para enfrentar la crisis educacional que afecta a miles de niños y niñas en
+                                Chile. Nuestro foco está puesto en los estudiantes de 4° básico de la Escuela Casa Azul,
+                                con quienes trabajamos durante todo el año para fortalecer sus aprendizajes y brindarles
+                                nuevas oportunidades.</p>
+                            <p>A través de tutorías online semanales, acompañamos su proceso educativo con cercanía y
+                                compromiso. Además, realizamos salidas presenciales como el Día de Huerto, donde
+                                compartimos con los estudiantes en un espacio significativo para conocernos mejor y
+                                construir confianza.</p>
+                            <p>Creemos en una educación transformadora y afectiva, donde el vínculo humano es tan
+                                importante como los contenidos. Nuestro trabajo no solo busca mejorar resultados
+                                académicos, sino también sembrar esperanza y motivación en cada niño y niña que acompaña
+                                Tutorías.</p>
+                        </article>
+                        <aside class="about-side">
+                            <div class="about-card">
+                                <h3>Nuestro enfoque</h3>
+                                <div class="impact-list">
+                                    <div class="impact-item">
+                                        <strong>Tutorías online semanales</strong>
+                                        <span>Acompañamiento constante para reforzar contenidos y hábitos de
+                                            aprendizaje.</span>
+                                    </div>
+                                    <div class="impact-item">
+                                        <strong>Encuentros presenciales</strong>
+                                        <span>Instancias como el Día de Huerto para conocernos mejor y fortalecer
+                                            vínculos.</span>
+                                    </div>
+                                    <div class="impact-item">
+                                        <strong>Aprendizaje con sentido</strong>
+                                        <span>Buscamos mejorar resultados académicos y también la confianza de cada
+                                            estudiante.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="about-quote">
+                                <p>Creemos en una educación transformadora y afectiva, donde el vínculo humano es tan
+                                    importante como los contenidos.</p>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+
+            <section id="diagnostic-view" class="diagnostic-view" style="display:none"></section>
+
+            <!-- Welcome -->
+            <div id="home" class="welcome">
+                <div class="welcome-hero">
+                    <div class="welcome-intro">
+                        <div class="welcome-intro-text">
+                            <h2>Bienvenido a Tutorías<br>con La Obra 📚</h2>
+                            <p>¿Qué aprenderemos hoy? Haz clic en un módulo y comencemos.</p>
+                        </div>
+                        <div class="welcome-intro-image">
+                            <img src="assets/foto-bienvenida.jpg" alt="Tutorías con La Obra">
                         </div>
                     </div>
                 </div>
-                <div class="about-grid">
-                    <article class="about-card about-copy">
-                        <h3>¿Qué hacemos?</h3>
-                        <p>Tutorías nace para enfrentar la crisis educacional que afecta a miles de niños y niñas en Chile. Nuestro foco está puesto en los estudiantes de 4° básico de la Escuela Casa Azul, con quienes trabajamos durante todo el año para fortalecer sus aprendizajes y brindarles nuevas oportunidades.</p>
-                        <p>A través de tutorías online semanales, acompañamos su proceso educativo con cercanía y compromiso. Además, realizamos salidas presenciales como el Día de Huerto, donde compartimos con los estudiantes en un espacio significativo para conocernos mejor y construir confianza.</p>
-                        <p>Creemos en una educación transformadora y afectiva, donde el vínculo humano es tan importante como los contenidos. Nuestro trabajo no solo busca mejorar resultados académicos, sino también sembrar esperanza y motivación en cada niño y niña que acompaña Tutorías.</p>
-                    </article>
-                    <aside class="about-side">
-                        <div class="about-card">
-                            <h3>Nuestro enfoque</h3>
-                            <div class="impact-list">
-                                <div class="impact-item">
-                                    <strong>Tutorías online semanales</strong>
-                                    <span>Acompañamiento constante para reforzar contenidos y hábitos de aprendizaje.</span>
-                                </div>
-                                <div class="impact-item">
-                                    <strong>Encuentros presenciales</strong>
-                                    <span>Instancias como el Día de Huerto para conocernos mejor y fortalecer vínculos.</span>
-                                </div>
-                                <div class="impact-item">
-                                    <strong>Aprendizaje con sentido</strong>
-                                    <span>Buscamos mejorar resultados académicos y también la confianza de cada estudiante.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="about-quote">
-                            <p>Creemos en una educación transformadora y afectiva, donde el vínculo humano es tan importante como los contenidos.</p>
-                        </div>
-                    </aside>
+                <div class="welcome-section-header">
+                    <h2>Nuestras Clases</h2>
+                    <p>Elige un módulo para comenzar tu aventura de aprendizaje 🚀</p>
                 </div>
-            </div>
-        </section>
-
-        <section id="diagnostic-view" class="diagnostic-view">
-            <div class="diag-shell" id="diag-shell"></div>
-        </section>
-
-        <!-- Welcome -->
-        <div id="home" class="welcome">
-            <div class="welcome-hero">
-                <div class="welcome-intro">
-                    <div class="welcome-kicker">Tutorías La Obra UC</div>
-                    <h2>Bienvenido/a a las tutorías con La Obra!</h2>
-                    <p>Con qué clase nos divertiremos hoy?</p>
-                </div>
-            </div>
-            <p>Selecciona un módulo para comenzar la clase.</p>
-            <div class="mod-preview-grid" id="prev-grid"></div>
-        </div>
-
-        <!-- Module content -->
-        <div id="mod-view" style="display:none">
-
-            <div class="mod-header">
-                <div class="mod-cat-tag"><span class="dot" id="mh-dot"></span><span id="mh-cat"></span></div>
-                <h1 id="mh-title">Título</h1>
-                <div class="mod-meta">
-                    <div class="meta-item">📚 <span id="mh-num">Módulo 1</span></div>
-                    <div class="meta-item">👦 4to Básico</div>
-                    <div class="meta-item">⏱️ <span id="mh-dur">45 min</span></div>
-                </div>
-                <ul class="obj-list" id="mh-objs"></ul>
+                <div class="mod-preview-grid" id="prev-grid"></div>
             </div>
 
-            <div class="module-surface">
-                <div class="tabs">
-                    <button type="button" class="tab-btn active" data-tab="pres">📊 Presentación</button>
-                    <button type="button" class="tab-btn" data-tab="ticket">🎟️ Ticket de Salida</button>
+            <!-- Module content -->
+            <div id="mod-view" style="display:none">
+
+                <div class="mod-header">
+                    <div class="mod-cat-tag"><span class="dot" id="mh-dot"></span><span id="mh-cat"></span></div>
+                    <h1 id="mh-title">Título</h1>
+                    <div class="mod-meta">
+                        <div class="meta-item">📚 <span id="mh-num">Módulo 1</span></div>
+                        <div class="meta-item">👦 4to Básico</div>
+                        <div class="meta-item">⏱️ <span id="mh-dur">45 min</span></div>
+                    </div>
+                    <ul class="obj-list" id="mh-objs"></ul>
                 </div>
 
-                <div class="tab-panel active" id="panel-pres"></div>
-                <div class="tab-panel"        id="panel-ticket"></div>
+                <div class="module-surface">
+                    <div class="tabs">
+                        <button type="button" class="tab-btn active" data-tab="pres">📊 Presentación</button>
+                        <button type="button" class="tab-btn" data-tab="ticket">🎟️ Ticket de Salida</button>
+                    </div>
+
+                    <div class="tab-panel active" id="panel-pres"></div>
+                    <div class="tab-panel" id="panel-ticket"></div>
+                </div>
             </div>
-        </div>
 
-    </main>
-</div>
+        </main>
+    </div>
 
-<div class="footer-banner">
-    <p>Pagina creada con mucho amor ❤️, por jefes 2026, Antonia Loehnert y Bruno Nattino</p>
-</div>
+    <div class="footer-banner">
+        <p>&copy; Todos los derechos reservados para La Obra UC 2026. Diseñada por Jefes de Tutorías 2026 Antonia
+            Loehnert y Bruno Nattino.</p>
+    </div>
 
-<script>
-// ══════════════════════════════════════════════════════════════════════
-//  📋 MÓDULOS — edita aquí para agregar contenido a cada módulo
-//  Lee la GUÍA AL FINAL del archivo para instrucciones detalladas.
-// ══════════════════════════════════════════════════════════════════════
+    <script>
+        // ══════════════════════════════════════════════════════════════════════
+        //  📋 MÓDULOS — edita aquí para agregar contenido a cada módulo
+        //  Lee la GUÍA AL FINAL del archivo para instrucciones detalladas.
+        // ══════════════════════════════════════════════════════════════════════
 
-const CATEGORIES = [
-    { id:'num',  name:'Números y Operaciones',    color:'#50AD9F' },
-    { id:'mul',  name:'Multiplicación y División', color:'#7C83FD' },
-    { id:'frac', name:'Fracciones y Decimales',   color:'#FF6B9D' },
-    { id:'geo',  name:'Geometría y Medición',     color:'#FFD166' },
-    { id:'extra', name:'Material Extra',              color:'#A0C4FF' },
-];
+        const CATEGORIES = [
+            { id: 'num', name: 'Números y Operaciones', color: '#88D8B0' },
+            { id: 'mul', name: 'Multiplicación y División', color: '#A8C0FF' },
+            { id: 'frac', name: 'Fracciones y Decimales', color: '#FFB7B2' },
+            { id: 'geo', name: 'Geometría y Medición', color: '#FFE29F' },
+            { id: 'extra', name: 'Material Extra', color: '#D5AAFF' },
+        ];
 
-const MODULES = [
-    // ── MULTIPLICACIÓN ────────────────────────────────────────────────
-    {
-        id:1, cat:'mul', title:'Multiplicación 1', dur:'45 min',
-        objectives:['Consolidar tablas del 2 y 5','Comprender la suma iterada','Aplicar la propiedad conmutativa'],
-        htmlSlide:'clases/multiplicacion/multiplicaciones_1.html',
-        activities:[],
-        ticket:{
-            title:'Ticket de salida – Multiplicación 1',
-            questions:[
-                {emoji:'✖️',q:'¿Cuánto es 5 × 2?',opts:['7','10','12','15'],ok:1,exp:'5 × 2 = 10 ✓'},
-                {emoji:'✖️',q:'¿Cuánto es 2 × 8?',opts:['10','14','16','18'],ok:2,exp:'2 × 8 = 16 ✓'},
-                {emoji:'🍎',q:'3 grupos de 5 manzanas son...',opts:['8','15','12','10'],ok:1,exp:'3 × 5 = 15 ✓'},
-                {emoji:'🔢',q:'Si 5 × 4 = 20, ¿cuánto es 4 × 5?',opts:['15','20','25','30'],ok:1,exp:'Propiedad conmutativa: el orden no altera el producto ✓'},
-            ]
+        const MODULES = [
+            // ── SUMA Y RESTA ────────────────────────────────────────────────
+            {
+                id: 7, serial: 1, cat: 'num', title: 'Suma y resta I', dur: '45 min',
+                objectives: ['Reconocer sumandos y propiedades de la suma', 'Representar números con bloques', 'Sumar 1 dígito y 2 dígitos descomponiendo'],
+                htmlSlide: 'clases/suma-resta/suma-resta-1.html',
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Suma y resta 1',
+                    questions: [
+                        { emoji: '🧱', q: '¿Cuál es el resultado de 7 + 2?', opts: ['8', '9', '10', '11'], ok: 1, exp: '7 + 2 = 9 ✓' },
+                        { emoji: '🔄', q: '¿Qué suma vale lo mismo que 4 + 3?', opts: ['4 + 4', '3 + 4', '3 + 3', '5 + 3'], ok: 1, exp: 'Por la conmutativa, 4 + 3 = 3 + 4 ✓' },
+                        { emoji: '➕', q: '¿Cuánto es 23 + 5?', opts: ['27', '28', '29', '35'], ok: 1, exp: '23 + 5 = 28 ✓' },
+                        { emoji: '🎯', q: 'Si descompones 18 + 6 para llegar a la decena siguiente, el resultado es...', opts: ['22', '23', '24', '25'], ok: 2, exp: '18 + 6 = 24 ✓' },
+                    ]
+                }
+            },
+            {
+                id: 8, serial: 2, cat: 'num', title: 'Suma y resta II', dur: '50 min',
+                objectives: ['Usar centenas y decenas en sumas de 3 dígitos', 'Sumar en columna con reserva', 'Introducir la resta y sus elementos'],
+                htmlSlide: 'clases/suma-resta/suma-resta-2.html',
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Suma y resta 2',
+                    questions: [
+                        { emoji: '🏗️', q: 'En el número 248, el 2 representa...', opts: ['2 unidades', '2 decenas', '2 centenas', '2 millares'], ok: 2, exp: 'El 2 está en las centenas ✓' },
+                        { emoji: '➕', q: '¿Cuánto es 326 + 157?', opts: ['473', '483', '493', '513'], ok: 1, exp: '326 + 157 = 483 ✓' },
+                        { emoji: '➖', q: 'En 15 − 6 = 9, el 15 es el...', opts: ['sustraendo', 'minuendo', 'diferencia', 'sumando'], ok: 1, exp: '15 es el minuendo ✓' },
+                        { emoji: '🍪', q: '¿Cuánto es 58 − 3?', opts: ['45', '53', '55', '61'], ok: 2, exp: '58 − 3 = 55 ✓' },
+                    ]
+                }
+            },
+            {
+                id: 9, serial: 3, cat: 'num', title: 'Suma y resta III', dur: '55 min',
+                objectives: ['Restar números de 1 y 2 dígitos', 'Dominar la desagrupación en unidades', 'Resolver restas de 3 dígitos con centenas y decenas'],
+                htmlSlide: 'clases/suma-resta/suma-resta-3.html',
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Suma y resta 3',
+                    questions: [
+                        { emoji: '➖', q: '¿Cuánto es 42 − 19?', opts: ['21', '22', '23', '24'], ok: 2, exp: '42 − 19 = 23 ✓' },
+                        { emoji: '🧱', q: '¿Cuánto es 50 − 23?', opts: ['17', '27', '33', '37'], ok: 1, exp: '50 − 23 = 27 ✓' },
+                        { emoji: '📘', q: '¿Cuánto es 521 − 143?', opts: ['368', '378', '388', '478'], ok: 1, exp: '521 − 143 = 378 ✓' },
+                        { emoji: '🏁', q: '¿Cuánto es 400 − 175?', opts: ['215', '225', '235', '245'], ok: 1, exp: '400 − 175 = 225 ✓' },
+                    ]
+                }
+            },
+
+            // ── MULTIPLICACIÓN ────────────────────────────────────────────────
+            {
+                id: 1, cat: 'mul', title: 'Multiplicación I', dur: '45 min',
+                objectives: ['Consolidar tablas del 2 y 5', 'Comprender la suma iterada', 'Aplicar la propiedad conmutativa'],
+                htmlSlide: 'clases/multiplicacion/multiplicaciones_1.html',
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Multiplicación 1',
+                    questions: [
+                        { emoji: '✖️', q: '¿Cuánto es 5 × 2?', opts: ['7', '10', '12', '15'], ok: 1, exp: '5 × 2 = 10 ✓' },
+                        { emoji: '✖️', q: '¿Cuánto es 2 × 8?', opts: ['10', '14', '16', '18'], ok: 2, exp: '2 × 8 = 16 ✓' },
+                        { emoji: '🍎', q: '3 grupos de 5 manzanas son...', opts: ['8', '15', '12', '10'], ok: 1, exp: '3 × 5 = 15 ✓' },
+                        { emoji: '🔢', q: 'Si 5 × 4 = 20, ¿cuánto es 4 × 5?', opts: ['15', '20', '25', '30'], ok: 1, exp: 'Propiedad conmutativa: el orden no altera el producto ✓' },
+                    ]
+                }
+            },
+            {
+                id: 2, cat: 'mul', title: 'Multiplicación II', dur: '45 min',
+                objectives: ['Tablas del 3 al 9 con lógica', 'Maestros de los atajos mentales', 'Resolver problemas aplicados'],
+                htmlSlide: 'clases/multiplicacion/multiplicaciones_2.html',
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Multiplicación 2',
+                    questions: [
+                        { emoji: '✖️', q: '¿Cuánto es 3 × 4?', opts: ['7', '12', '10', '14'], ok: 1, exp: '3 × 4 = 12 ✓' },
+                        { emoji: '✖️', q: '¿Cuánto es 7 × 8?', opts: ['54', '56', '49', '64'], ok: 1, exp: '7 × 8 = 56 ✓' },
+                        { emoji: '🔢', q: '¿Cuánto es 9 × 6?', opts: ['45', '54', '63', '56'], ok: 1, exp: '9 × 6 = 54 ✓' },
+                        { emoji: '🎯', q: '¿Cuánto es 4 × 8?', opts: ['28', '30', '32', '36'], ok: 2, exp: '4 × 8 = 32 ✓' },
+                    ]
+                }
+            },
+            {
+                id: 3, cat: 'mul', title: 'Multiplicación III', dur: '60 min',
+                objectives: ['Algoritmo vertical paso a paso', 'Multiplicaciones con reserva', 'Práctica maestra de multiplicaciones'],
+                htmlSlide: 'clases/multiplicacion/multiplicaciones_3.html',
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Multiplicación 3',
+                    questions: [
+                        { emoji: '📝', q: '¿Cuánto es 124 × 2?', opts: ['248', '244', '228', '250'], ok: 0, exp: '124 × 2 = 248 ✓' },
+                        { emoji: '✏️', q: '¿Cuánto es 35 × 3?', opts: ['95', '105', '115', '100'], ok: 1, exp: '35 × 3 = 105 ✓' },
+                        { emoji: '🔢', q: '¿Cómo se descompone 42 × 5?', opts: ['40×5 + 2', '40×5 + 2×5', '4×5 + 2×5', '40 + 2 × 5'], ok: 1, exp: '42 × 5 = (40 + 2) × 5 = 40×5 + 2×5 ✓' },
+                        { emoji: '🏆', q: '¿Cuánto es 213 × 3?', opts: ['633', '639', '629', '613'], ok: 1, exp: '213 × 3 = 639 ✓' },
+                    ]
+                }
+            },
+            {
+                id: 10, serial: 1, cat: 'mul', title: 'División I', dur: '45 min',
+                objectives: ['Repartir en partes iguales', 'Relacionar multiplicación y división', 'Reconocer dividendo, divisor, cociente y resto'],
+                htmlSlide: 'clases/division/division-1.html',
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – División 1',
+                    questions: [
+                        { emoji: '🍊', q: '¿Cuánto es 12 ÷ 3?', opts: ['3', '4', '6', '9'], ok: 1, exp: '12 dividido en 3 grupos iguales da 4 ✓' },
+                        { emoji: '✖️', q: 'Si 4 × 5 = 20, entonces 20 ÷ 5 es...', opts: ['4', '5', '10', '20'], ok: 0, exp: '20 ÷ 5 = 4 ✓' },
+                        { emoji: '🧠', q: 'En 17 ÷ 5 = 3 y sobra 2, el 17 es el...', opts: ['divisor', 'cociente', 'dividendo', 'resto'], ok: 2, exp: '17 es el dividendo ✓' },
+                        { emoji: '1️⃣', q: '¿Cuánto es 9 ÷ 1?', opts: ['1', '8', '9', '10'], ok: 2, exp: 'Todo número dividido en 1 queda igual ✓' },
+                    ]
+                }
+            },
+            {
+                id: 11, serial: 2, cat: 'mul', title: 'División II', dur: '50 min',
+                objectives: ['Entender la división inexacta', 'Trabajar con resto', 'Resolver cuocientes de 2 dígitos exactos e inexactos'],
+                htmlSlide: 'clases/division/division-2.html',
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – División 2',
+                    questions: [
+                        { emoji: '🧺', q: '¿Cuál es el resultado de 48 ÷ 3?', opts: ['14', '15', '16', '18'], ok: 2, exp: '48 ÷ 3 = 16 ✓' },
+                        { emoji: '➗', q: '¿Cuál es el resultado de 58 ÷ 4?', opts: ['14 y sobra 2', '15 y sobra 1', '12 y sobra 4', '16 y sobra 2'], ok: 0, exp: '58 ÷ 4 = 14 y sobra 2 ✓' },
+                        { emoji: '🟣', q: 'En 67 ÷ 5 = 13 y sobra 2, el resto es...', opts: ['2', '5', '13', '67'], ok: 0, exp: 'El resto es 2 ✓' },
+                        { emoji: '📚', q: '¿Cuánto es 75 ÷ 5?', opts: ['10', '12', '15', '20'], ok: 2, exp: '75 ÷ 5 = 15 ✓' },
+                    ]
+                }
+            },
+            {
+                id: 12, serial: 3, cat: 'mul', title: 'División III', dur: '55 min',
+                objectives: ['Dividir por descomposición', 'Estimar cuocientes', 'Resolver ejercicios combinando estrategias'],
+                htmlSlide: 'clases/division/division-3.html',
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – División 3',
+                    questions: [
+                        { emoji: '🧩', q: '¿Cuánto es 84 ÷ 4?', opts: ['20', '21', '22', '24'], ok: 1, exp: '84 ÷ 4 = 21 ✓' },
+                        { emoji: '🎯', q: 'Una buena estimación inicial para 92 ÷ 4 es...', opts: ['20', '4', '40', '90'], ok: 0, exp: 'Porque 4 × 20 = 80 y 92 está cerca de 80 ✓' },
+                        { emoji: '🚌', q: '¿Cuánto es 77 ÷ 6?', opts: ['11 y sobra 5', '12 y sobra 5', '12 y sobra 6', '13 y sobra 1'], ok: 1, exp: '77 ÷ 6 = 12 y sobra 5 ✓' },
+                        { emoji: '📦', q: '¿Cuánto es 96 ÷ 3?', opts: ['22', '30', '32', '36'], ok: 2, exp: '96 ÷ 3 = 32 ✓' },
+                    ]
+                }
+            },
+
+            // ── FRACCIONES ──────────────────────────────────────────────────
+            {
+                id: 4, cat: 'frac', title: 'Fracciones I', dur: '45 min',
+                objectives: ['Entender partes de un entero', 'Identificar numerador y denominador', 'Representar gráficamente'],
+                htmlSlide: 'clases/fracciones/09-fracciones-1.html',
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Fracciones 1',
+                    questions: [
+                        { emoji: '🍰', q: '¿Cuál fracción representa una mitad?', opts: ['1/2', '1/3', '2/3', '3/4'], ok: 0, exp: 'Una mitad se escribe 1/2 ✓' },
+                        { emoji: '🍕', q: 'Una pizza se divide en 8 partes. Ana come 3. ¿Qué fracción comió?', opts: ['3/5', '8/3', '3/8', '5/8'], ok: 2, exp: '3 de 8 partes = 3/8 ✓' },
+                        { emoji: '🔢', q: 'En la fracción 5/7, ¿cuál es el denominador?', opts: ['5', '7', '2', '57'], ok: 1, exp: 'El denominador es el número de abajo = 7 ✓' },
+                        { emoji: '📊', q: '¿Cuál fracción es mayor: 3/8 o 5/8?', opts: ['3/8', '5/8', 'Son iguales', 'No se puede saber'], ok: 1, exp: 'Con mismo denominador, mayor numerador = mayor fracción → 5/8 ✓' },
+                    ]
+                }
+            },
+            {
+                id: 5, cat: 'frac', title: 'Fracciones II', dur: '45 min',
+                objectives: ['Descubrir equivalencias visuales', 'Amplificar y Simplificar', 'Ubicar en la recta numérica'],
+                htmlSlide: 'clases/fracciones/10-fracciones-2.html',
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Fracciones 2',
+                    questions: [
+                        { emoji: '🟰', q: '¿Cuál es igual a 2/4?', opts: ['1/2', '1/3', '3/4', '2/3'], ok: 0, exp: '2/4 es equivalente a 1/2 ✓' },
+                        { emoji: '🟰', q: '¿Cuál es equivalente a 1/2?', opts: ['2/6', '2/4', '3/8', '1/4'], ok: 1, exp: '1/2 = 2/4 (se multiplica numerador y denominador por 2) ✓' },
+                        { emoji: '➕', q: '¿Cuánto es 2/7 + 3/7?', opts: ['5/14', '5/7', '6/7', '1/7'], ok: 1, exp: '2/7 + 3/7 = 5/7 ✓' },
+                        { emoji: '🍫', q: 'Comes 1/4 de chocolate y luego 2/4 más. ¿Cuánto comiste?', opts: ['3/8', '2/4', '3/4', '1/2'], ok: 2, exp: '1/4 + 2/4 = 3/4 ✓' },
+                    ]
+                }
+            },
+            {
+                id: 6, cat: 'frac', title: 'Fracciones III', dur: '45 min',
+                objectives: ['Sumar y restar con distinto denominador', 'Dominar el MCM mágicamente', 'Problemas de la vida real'],
+                htmlSlide: 'clases/fracciones/11-ejercicios-fracciones.html',
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Fracciones 3',
+                    questions: [
+                        { emoji: '🔢', q: '¿Cuál es el MCM de 2 y 3?', opts: ['4', '5', '6', '8'], ok: 2, exp: 'Tabla del 2: 2,4,6... Tabla del 3: 3,6... El primero es 6 ✓' },
+                        { emoji: '➕', q: '¿Cuánto es 1/2 + 1/4?', opts: ['2/6', '3/4', '2/4', '1/4'], ok: 1, exp: '1/2 es 2/4, más 1/4 = 3/4 ✓' },
+                        { emoji: '➖', q: '¿Cuánto es 3/4 - 1/2?', opts: ['1/4', '2/4', '2/8', '1/2'], ok: 0, exp: '3/4 - 2/4 = 1/4 ✓' },
+                        { emoji: '🎯', q: '¿Cual es el MCM de 4 y 5?', opts: ['9', '20', '15', '10'], ok: 1, exp: '4 × 5 = 20 es su MCM ✓' },
+                    ]
+                }
+            }
+        ];
+        const DIAGNOSTIC_SECTIONS = [
+            {
+                id: 'num',
+                name: 'Números y Operaciones',
+                color: '#50AD9F',
+                questions: [
+                    { topic: 'Valor posicional', q: 'En el número 5.482, el 4 vale...', opts: ['4 unidades', '40 unidades', '400 unidades', '4.000 unidades'], ok: 2, exp: 'El 4 está en la posición de centenas, por eso vale 400.' },
+                    { topic: 'Suma', q: '¿Cuánto es 368 + 257?', opts: ['615', '625', '635', '725'], ok: 1, exp: '368 + 257 = 625.' },
+                    { topic: 'Resta', q: '¿Cuánto es 900 - 458?', opts: ['442', '452', '462', '542'], ok: 0, exp: '900 - 458 = 442.' },
+                    { topic: 'Redondeo y estimación', q: '¿A qué centena se redondea 1.349?', opts: ['1.200', '1.300', '1.400', '1.500'], ok: 1, exp: '1.349 está más cerca de 1.300 que de 1.400.' },
+                ]
+            },
+            {
+                id: 'mul',
+                name: 'Multiplicación y División',
+                color: '#7C83FD',
+                questions: [
+                    { topic: 'Tablas de multiplicar', q: '¿Cuánto es 7 × 8?', opts: ['54', '56', '63', '64'], ok: 1, exp: '7 × 8 = 56.' },
+                    { topic: 'Multiplicación por dos cifras', q: '¿Cuánto es 24 × 3?', opts: ['62', '68', '72', '84'], ok: 2, exp: '24 × 3 = 72.' },
+                    { topic: 'División exacta', q: '¿Cuánto es 72 ÷ 9?', opts: ['6', '7', '8', '9'], ok: 2, exp: '72 ÷ 9 = 8.' },
+                    { topic: 'Problemas de reparto', q: 'Si 48 lápices se reparten en 6 cajas iguales, ¿cuántos van en cada caja?', opts: ['6', '7', '8', '9'], ok: 2, exp: '48 ÷ 6 = 8 lápices por caja.' },
+                ]
+            },
+            {
+                id: 'frac',
+                name: 'Fracciones y Decimales',
+                color: '#FF6B9D',
+                questions: [
+                    { topic: 'Lectura de fracciones', q: 'Si una torta se divide en 8 partes y se comen 3, la fracción comida es...', opts: ['3/8', '8/3', '5/8', '3/5'], ok: 0, exp: 'Se comen 3 de 8 partes: 3/8.' },
+                    { topic: 'Fracciones equivalentes', q: '¿Cuál es equivalente a 1/2?', opts: ['2/3', '2/4', '3/5', '1/3'], ok: 1, exp: '1/2 equivale a 2/4.' },
+                    { topic: 'Suma de fracciones', q: '¿Cuánto es 2/7 + 3/7?', opts: ['5/7', '5/14', '6/7', '1/7'], ok: 0, exp: 'Con igual denominador, se suman numeradores: 5/7.' },
+                    { topic: 'Decimales', q: '¿Qué decimal representa tres cuartos?', opts: ['0,25', '0,3', '0,5', '0,75'], ok: 3, exp: '3/4 equivale a 0,75.' },
+                ]
+            },
+            {
+                id: 'geo',
+                name: 'Geometría y Medición',
+                color: '#FFD166',
+                questions: [
+                    { topic: 'Figuras geométricas', q: '¿Cuántos lados tiene un hexágono?', opts: ['5', '6', '7', '8'], ok: 1, exp: 'Un hexágono tiene 6 lados.' },
+                    { topic: 'Perímetro', q: '¿Cuál es el perímetro de un cuadrado de lado 6 cm?', opts: ['12 cm', '18 cm', '24 cm', '36 cm'], ok: 2, exp: 'Perímetro = 4 × 6 = 24 cm.' },
+                    { topic: 'Tiempo', q: 'Si una clase empieza a las 14:20 y dura 40 minutos, termina a las...', opts: ['14:50', '15:00', '15:10', '15:20'], ok: 1, exp: '14:20 + 40 minutos = 15:00.' },
+                    { topic: 'Longitud', q: '¿Cuántos centímetros hay en 3 metros?', opts: ['30', '300', '3.000', '300.000'], ok: 1, exp: '1 metro = 100 cm, entonces 3 metros = 300 cm.' },
+                ]
+            }
+        ];
+
+        const DIAGNOSTIC_CHART_COLORS = ['#50AD9F', '#7C83FD', '#FF6B9D', '#FFD166', '#3498DB', '#EF476F', '#06D6A0', '#0F2B50'];
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  ESTADO DE LA APP
+        // ══════════════════════════════════════════════════════════════════════
+        let current = null;
+        let qIdx = 0;
+        let qAns = [];
+        let matchSt = {};
+        let done = new Set(JSON.parse(localStorage.getItem('tutorias-done') || '[]'));
+        let currentSection = 'classes';
+        let diagSectionIdx = 0;
+        let diagQuestionIdx = 0;
+        let diagResponses = [];
+        let diagnosticStarted = false;
+        let currentModuleTab = 'pres';
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  INICIO
+        // ══════════════════════════════════════════════════════════════════════
+        function init() {
+            buildPrevGrid();
+            bindModuleTabs();
+
         }
-    },
-    {
-        id:2, cat:'mul', title:'Multiplicación 2', dur:'45 min',
-        objectives:['Tablas del 3 al 9 con lógica','Maestros de los atajos mentales','Resolver problemas aplicados'],
-        htmlSlide:'clases/multiplicacion/multiplicaciones_2.html',
-        activities:[],
-        ticket:{
-            title:'Ticket de salida – Multiplicación 2',
-            questions:[
-                {emoji:'✖️',q:'¿Cuánto es 3 × 4?',opts:['7','12','10','14'],ok:1,exp:'3 × 4 = 12 ✓'},
-                {emoji:'✖️',q:'¿Cuánto es 7 × 8?',opts:['54','56','49','64'],ok:1,exp:'7 × 8 = 56 ✓'},
-                {emoji:'🔢',q:'¿Cuánto es 9 × 6?',opts:['45','54','63','56'],ok:1,exp:'9 × 6 = 54 ✓'},
-                {emoji:'🎯',q:'¿Cuánto es 4 × 8?',opts:['28','30','32','36'],ok:2,exp:'4 × 8 = 32 ✓'},
-            ]
+
+        function getCat(id) { return CATEGORIES.find(c => c.id === id); }
+
+        function getModuleSymbol(module) {
+            const t = `${module.title} ${module.objectives.join(' ')}`.toLowerCase();
+            if (t.includes('descomposición')) return '🔢';
+            if (t.includes('suma')) return '➕';
+            if (t.includes('resta')) return '➖';
+            if (t.includes('redondeo') || t.includes('estimación')) return '🎯';
+            if (t.includes('multiplicación')) return '✖️';
+            if (t.includes('división')) return '➗';
+            if (t.includes('fracciones')) return '¼';
+            if (t.includes('decimales')) return '0,5';
+            if (t.includes('geometría')) return '📐';
+            if (t.includes('tiempo')) return '⏰';
+            if (t.includes('longitudes')) return '📏';
+            if (t.includes('medición')) return '🧭';
+            return module.cat === 'extra' ? '✨' : '📘';
         }
-    },
-    {
-        id:3, cat:'mul', title:'Multiplicación 3', dur:'60 min',
-        objectives:['Algoritmo vertical paso a paso','Multiplicaciones con reserva','Práctica maestra de multiplicaciones'],
-        htmlSlide:'clases/multiplicacion/multiplicaciones_3.html',
-        activities:[],
-        ticket:{
-            title:'Ticket de salida – Multiplicación 3',
-            questions:[
-                {emoji:'📝',q:'¿Cuánto es 124 × 2?',opts:['248','244','228','250'],ok:0,exp:'124 × 2 = 248 ✓'},
-                {emoji:'✏️',q:'¿Cuánto es 35 × 3?',opts:['95','105','115','100'],ok:1,exp:'35 × 3 = 105 ✓'},
-                {emoji:'🔢',q:'¿Cómo se descompone 42 × 5?',opts:['40×5 + 2','40×5 + 2×5','4×5 + 2×5','40 + 2 × 5'],ok:1,exp:'42 × 5 = (40 + 2) × 5 = 40×5 + 2×5 ✓'},
-                {emoji:'🏆',q:'¿Cuánto es 213 × 3?',opts:['633','639','629','613'],ok:1,exp:'213 × 3 = 639 ✓'},
-            ]
+
+        function getModuleAccent(module, cat) {
+            const palette = {
+                num: '#0B6847',
+                mul: '#113c8f',
+                frac: '#96113b',
+                geo: '#9c6c0b',
+                extra: '#4a15a0',
+            };
+            return palette[module.cat] || cat.color;
         }
-    },
 
-    // ── FRACCIONES ──────────────────────────────────────────────────
-    {
-        id:4, cat:'frac', title:'Fracciones 1', dur:'45 min',
-        objectives:['Entender partes de un entero','Identificar numerador y denominador','Representar gráficamente'],
-        htmlSlide:'clases/fracciones/09-fracciones-1.html',
-        activities:[],
-        ticket:{
-            title:'Ticket de salida – Fracciones 1',
-            questions:[
-                {emoji:'🍰',q:'¿Cuál fracción representa una mitad?',opts:['1/2','1/3','2/3','3/4'],ok:0,exp:'Una mitad se escribe 1/2 ✓'},
-                {emoji:'🍕',q:'Una pizza se divide en 8 partes. Ana come 3. ¿Qué fracción comió?',opts:['3/5','8/3','3/8','5/8'],ok:2,exp:'3 de 8 partes = 3/8 ✓'},
-                {emoji:'🔢',q:'En la fracción 5/7, ¿cuál es el denominador?',opts:['5','7','2','57'],ok:1,exp:'El denominador es el número de abajo = 7 ✓'},
-                {emoji:'📊',q:'¿Cuál fracción es mayor: 3/8 o 5/8?',opts:['3/8','5/8','Son iguales','No se puede saber'],ok:1,exp:'Con mismo denominador, mayor numerador = mayor fracción → 5/8 ✓'},
-            ]
+        function getModulePreviewText(module) {
+            const textByTitle = [
+                ['descomposición', 'Valor posicional, lectura numérica y representación de cantidades.'],
+                ['suma', 'Práctica de adición con estrategias y algoritmos claros.'],
+                ['resta', 'Sustracción con sentido, cálculo y resolución de situaciones.'],
+                ['redondeo', 'Aproximación, estimación y cálculo mental aplicado.'],
+                ['multiplicación', 'Tablas, grupos iguales y producto en contexto.'],
+                ['división', 'Reparto equitativo, cociente y razonamiento multiplicativo.'],
+                ['fracciones', 'Partes de un todo, equivalencias y comparación visual.'],
+                ['decimales', 'Lectura, escritura y uso de décimas y centésimas.'],
+                ['geometría', 'Figuras, lados, ángulos y propiedades del espacio.'],
+                ['tiempo', 'Horas, duraciones y lectura de reloj.'],
+                ['longitudes', 'Unidades, conversiones y medición concreta.'],
+                ['medición', 'Aplicación integrada de medidas en problemas reales.'],
+                ['mentoreo', 'Material extra para repaso, refuerzo y extensión.'],
+            ];
+            const title = module.title.toLowerCase();
+            const matched = textByTitle.find(([key]) => title.includes(key));
+            return matched ? matched[1] : module.objectives[0];
         }
-    },
-    {
-        id:5, cat:'frac', title:'Fracciones 2', dur:'45 min',
-        objectives:['Descubrir equivalencias visuales','Amplificar y Simplificar','Ubicar en la recta numérica'],
-        htmlSlide:'clases/fracciones/10-fracciones-2.html',
-        activities:[],
-        ticket:{
-            title:'Ticket de salida – Fracciones 2',
-            questions:[
-                {emoji:'🟰',q:'¿Cuál es igual a 2/4?',opts:['1/2','1/3','3/4','2/3'],ok:0,exp:'2/4 es equivalente a 1/2 ✓'},
-                {emoji:'🟰',q:'¿Cuál es equivalente a 1/2?',opts:['2/6','2/4','3/8','1/4'],ok:1,exp:'1/2 = 2/4 (se multiplica numerador y denominador por 2) ✓'},
-                {emoji:'➕',q:'¿Cuánto es 2/7 + 3/7?',opts:['5/14','5/7','6/7','1/7'],ok:1,exp:'2/7 + 3/7 = 5/7 ✓'},
-                {emoji:'🍫',q:'Comes 1/4 de chocolate y luego 2/4 más. ¿Cuánto comiste?',opts:['3/8','2/4','3/4','1/2'],ok:2,exp:'1/4 + 2/4 = 3/4 ✓'},
-            ]
+
+        function getModuleDisplayId(module) {
+            return module.serial || module.id;
         }
-    },
-    {
-        id:6, cat:'frac', title:'Fracciones 3', dur:'45 min',
-        objectives:['Sumar y restar con distinto denominador','Dominar el MCM mágicamente','Problemas de la vida real'],
-        htmlSlide:'clases/fracciones/11-ejercicios-fracciones.html',
-        activities:[],
-        ticket:{
-            title:'Ticket de salida – Fracciones 3',
-            questions:[
-                {emoji:'🔢',q:'¿Cuál es el MCM de 2 y 3?',opts:['4','5','6','8'],ok:2,exp:'Tabla del 2: 2,4,6... Tabla del 3: 3,6... El primero es 6 ✓'},
-                {emoji:'➕',q:'¿Cuánto es 1/2 + 1/4?',opts:['2/6','3/4','2/4','1/4'],ok:1,exp:'1/2 es 2/4, más 1/4 = 3/4 ✓'},
-                {emoji:'➖',q:'¿Cuánto es 3/4 - 1/2?',opts:['1/4','2/4','2/8','1/2'],ok:0,exp:'3/4 - 2/4 = 1/4 ✓'},
-                {emoji:'🎯',q:'¿Cual es el MCM de 4 y 5?',opts:['9','20','15','10'],ok:1,exp:'4 × 5 = 20 es su MCM ✓'},
-            ]
-        }
-    }
-];
-const DIAGNOSTIC_SECTIONS = [
-    {
-        id:'num',
-        name:'Números y Operaciones',
-        color:'#50AD9F',
-        questions:[
-            {topic:'Valor posicional', q:'En el número 5.482, el 4 vale...', opts:['4 unidades','40 unidades','400 unidades','4.000 unidades'], ok:2, exp:'El 4 está en la posición de centenas, por eso vale 400.'},
-            {topic:'Suma', q:'¿Cuánto es 368 + 257?', opts:['615','625','635','725'], ok:1, exp:'368 + 257 = 625.'},
-            {topic:'Resta', q:'¿Cuánto es 900 - 458?', opts:['442','452','462','542'], ok:0, exp:'900 - 458 = 442.'},
-            {topic:'Redondeo y estimación', q:'¿A qué centena se redondea 1.349?', opts:['1.200','1.300','1.400','1.500'], ok:1, exp:'1.349 está más cerca de 1.300 que de 1.400.'},
-        ]
-    },
-    {
-        id:'mul',
-        name:'Multiplicación y División',
-        color:'#7C83FD',
-        questions:[
-            {topic:'Tablas de multiplicar', q:'¿Cuánto es 7 × 8?', opts:['54','56','63','64'], ok:1, exp:'7 × 8 = 56.'},
-            {topic:'Multiplicación por dos cifras', q:'¿Cuánto es 24 × 3?', opts:['62','68','72','84'], ok:2, exp:'24 × 3 = 72.'},
-            {topic:'División exacta', q:'¿Cuánto es 72 ÷ 9?', opts:['6','7','8','9'], ok:2, exp:'72 ÷ 9 = 8.'},
-            {topic:'Problemas de reparto', q:'Si 48 lápices se reparten en 6 cajas iguales, ¿cuántos van en cada caja?', opts:['6','7','8','9'], ok:2, exp:'48 ÷ 6 = 8 lápices por caja.'},
-        ]
-    },
-    {
-        id:'frac',
-        name:'Fracciones y Decimales',
-        color:'#FF6B9D',
-        questions:[
-            {topic:'Lectura de fracciones', q:'Si una torta se divide en 8 partes y se comen 3, la fracción comida es...', opts:['3/8','8/3','5/8','3/5'], ok:0, exp:'Se comen 3 de 8 partes: 3/8.'},
-            {topic:'Fracciones equivalentes', q:'¿Cuál es equivalente a 1/2?', opts:['2/3','2/4','3/5','1/3'], ok:1, exp:'1/2 equivale a 2/4.'},
-            {topic:'Suma de fracciones', q:'¿Cuánto es 2/7 + 3/7?', opts:['5/7','5/14','6/7','1/7'], ok:0, exp:'Con igual denominador, se suman numeradores: 5/7.'},
-            {topic:'Decimales', q:'¿Qué decimal representa tres cuartos?', opts:['0,25','0,3','0,5','0,75'], ok:3, exp:'3/4 equivale a 0,75.'},
-        ]
-    },
-    {
-        id:'geo',
-        name:'Geometría y Medición',
-        color:'#FFD166',
-        questions:[
-            {topic:'Figuras geométricas', q:'¿Cuántos lados tiene un hexágono?', opts:['5','6','7','8'], ok:1, exp:'Un hexágono tiene 6 lados.'},
-            {topic:'Perímetro', q:'¿Cuál es el perímetro de un cuadrado de lado 6 cm?', opts:['12 cm','18 cm','24 cm','36 cm'], ok:2, exp:'Perímetro = 4 × 6 = 24 cm.'},
-            {topic:'Tiempo', q:'Si una clase empieza a las 14:20 y dura 40 minutos, termina a las...', opts:['14:50','15:00','15:10','15:20'], ok:1, exp:'14:20 + 40 minutos = 15:00.'},
-            {topic:'Longitud', q:'¿Cuántos centímetros hay en 3 metros?', opts:['30','300','3.000','300.000'], ok:1, exp:'1 metro = 100 cm, entonces 3 metros = 300 cm.'},
-        ]
-    }
-];
 
-const DIAGNOSTIC_CHART_COLORS = ['#50AD9F','#7C83FD','#FF6B9D','#FFD166','#3498DB','#EF476F','#06D6A0','#0F2B50'];
-
-// ══════════════════════════════════════════════════════════════════════
-//  ESTADO DE LA APP
-// ══════════════════════════════════════════════════════════════════════
-let current   = null;
-let qIdx      = 0;
-let qAns      = [];
-let matchSt   = {};
-let done      = new Set(JSON.parse(localStorage.getItem('tutorias-done') || '[]'));
-let currentSection = 'classes';
-let diagSectionIdx = 0;
-let diagQuestionIdx = 0;
-let diagResponses = [];
-let diagnosticStarted = false;
-let currentModuleTab = 'pres';
-
-// ══════════════════════════════════════════════════════════════════════
-//  INICIO
-// ══════════════════════════════════════════════════════════════════════
-function init() {
-    buildPrevGrid();
-    bindModuleTabs();
-
-}
-
-function getCat(id){ return CATEGORIES.find(c=>c.id===id); }
-
-function getModuleSymbol(module) {
-    const t = `${module.title} ${module.objectives.join(' ')}`.toLowerCase();
-    if (t.includes('descomposición')) return '🔢';
-    if (t.includes('suma')) return '➕';
-    if (t.includes('resta')) return '➖';
-    if (t.includes('redondeo') || t.includes('estimación')) return '🎯';
-    if (t.includes('multiplicación')) return '✖️';
-    if (t.includes('división')) return '➗';
-    if (t.includes('fracciones')) return '¼';
-    if (t.includes('decimales')) return '0,5';
-    if (t.includes('geometría')) return '📐';
-    if (t.includes('tiempo')) return '⏰';
-    if (t.includes('longitudes')) return '📏';
-    if (t.includes('medición')) return '🧭';
-    return module.cat === 'extra' ? '✨' : '📘';
-}
-
-function getModuleAccent(module, cat) {
-    const palette = {
-        num:`linear-gradient(135deg, #2f8f82 0%, ${cat.color} 52%, #78d6c7 100%)`,
-        mul:`linear-gradient(135deg, #555ddd 0%, ${cat.color} 52%, #a6abff 100%)`,
-        frac:`linear-gradient(135deg, #f14f88 0%, ${cat.color} 54%, #ff9fbc 100%)`,
-        geo:`linear-gradient(135deg, #d6a42f 0%, ${cat.color} 48%, #ffe49a 100%)`,
-        extra:`linear-gradient(135deg, #6c9bd5 0%, ${cat.color} 52%, #c6dbff 100%)`,
-    };
-    return palette[module.cat] || `linear-gradient(135deg, ${cat.color} 0%, #eef3fa 100%)`;
-}
-
-function getModulePreviewText(module) {
-    const textByTitle = [
-        ['descomposición','Valor posicional, lectura numérica y representación de cantidades.'],
-        ['suma','Práctica de adición con estrategias y algoritmos claros.'],
-        ['resta','Sustracción con sentido, cálculo y resolución de situaciones.'],
-        ['redondeo','Aproximación, estimación y cálculo mental aplicado.'],
-        ['multiplicación','Tablas, grupos iguales y producto en contexto.'],
-        ['división','Reparto equitativo, cociente y razonamiento multiplicativo.'],
-        ['fracciones','Partes de un todo, equivalencias y comparación visual.'],
-        ['decimales','Lectura, escritura y uso de décimas y centésimas.'],
-        ['geometría','Figuras, lados, ángulos y propiedades del espacio.'],
-        ['tiempo','Horas, duraciones y lectura de reloj.'],
-        ['longitudes','Unidades, conversiones y medición concreta.'],
-        ['medición','Aplicación integrada de medidas en problemas reales.'],
-        ['mentoreo','Material extra para repaso, refuerzo y extensión.'],
-    ];
-    const title = module.title.toLowerCase();
-    const matched = textByTitle.find(([key]) => title.includes(key));
-    return matched ? matched[1] : module.objectives[0];
-}
-
-function buildPrevGrid() {
-    document.getElementById('prev-grid').innerHTML = MODULES.map(m => {
-        const cat = getCat(m.cat);
-        const symbol = getModuleSymbol(m);
-        const preview = getModulePreviewText(m);
-        const accent = getModuleAccent(m, cat);
-        return `<button type="button" class="prev-card" style="--card-bg:${accent};" onclick="loadMod(${m.id})" aria-label="Abrir módulo ${m.id}: ${m.title}">
-            <div class="pc-icon">${symbol}</div>
-            <div class="prev-card-top">
-                <div class="pc-badge">${cat.name}</div>
-            </div>
-            <div class="prev-card-bottom">
-                <div class="pc-module"><span class="pc-num">${m.id}</span> Módulo</div>
+        function buildPrevGrid() {
+            document.getElementById('prev-grid').innerHTML = MODULES.map(m => {
+                const cat = getCat(m.cat);
+                const symbol = getModuleSymbol(m);
+                const preview = getModulePreviewText(m);
+                const accent = getModuleAccent(m, cat);
+                return `<button type="button" class="prev-card" style="--card-accent:${accent};" onclick="loadMod(${m.id})" aria-label="Abrir ${m.title}">
+            <div class="pc-accent-bar"></div>
+            <div class="pc-emoji-col">${symbol}</div>
+            <div class="pc-text-col">
                 <div class="pc-name">${m.title}</div>
                 <div class="pc-desc">${preview}</div>
-                ${done.has(m.id) ? '<div class="pc-done">✓ Módulo completado</div>' : ''}
+                ${done.has(m.id) ? '<div class="pc-done">✅ Completado</div>' : ''}
             </div>
+            <div class="pc-arrow">›</div>
         </button>`;
-    }).join('');
-}
+            }).join('');
+        }
 
-function setTopNav(section) {
-    currentSection = section;
-    document.getElementById('nav-about')?.classList.toggle('active', section === 'about');
-    document.getElementById('nav-classes')?.classList.toggle('active', section === 'classes');
-    document.getElementById('nav-diagnostic')?.classList.toggle('active', section === 'diagnostic');
-}
+        function setTopNav(section) {
+            currentSection = section;
+            document.getElementById('nav-about')?.classList.toggle('active', section === 'about');
+            document.getElementById('nav-classes')?.classList.toggle('active', section === 'classes');
+            document.getElementById('nav-diagnostic')?.classList.toggle('active', section === 'diagnostic');
+        }
 
-function showAbout() {
-    setTopNav('about');
-    document.getElementById('about-view').style.display = 'block';
-    document.getElementById('diagnostic-view').style.display = 'none';
-    document.getElementById('home').style.display = 'none';
-    document.getElementById('mod-view').style.display = 'none';
-}
+        function showAbout() {
+            setTopNav('about');
+            document.getElementById('about-view').style.display = 'block';
+            document.getElementById('diagnostic-view').style.display = 'none';
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('mod-view').style.display = 'none';
+        }
 
-function showClasses() {
-    setTopNav('classes');
-    document.getElementById('about-view').style.display = 'none';
-    document.getElementById('diagnostic-view').style.display = 'none';
-    document.getElementById('home').style.display = 'flex';
-    document.getElementById('mod-view').style.display = 'none';
-    buildPrevGrid();
-}
+        function showClasses() {
+            setTopNav('classes');
+            document.getElementById('about-view').style.display = 'none';
+            document.getElementById('diagnostic-view').style.display = 'none';
+            document.getElementById('home').style.display = 'flex';
+            document.getElementById('mod-view').style.display = 'none';
+            buildPrevGrid();
+        }
 
-function showDiagnostic() {
-    setTopNav('diagnostic');
-    document.getElementById('about-view').style.display = 'none';
-    document.getElementById('home').style.display = 'none';
-    document.getElementById('mod-view').style.display = 'none';
-    document.getElementById('diagnostic-view').style.display = 'block';
-    renderDiagnosticLanding();
-}
+        function showDiagnostic() {
+            showClasses();
+        }
 
-// ══════════════════════════════════════════════════════════════════════
-//  CARGAR MÓDULO
-// ══════════════════════════════════════════════════════════════════════
-function loadMod(id) {
-    current = MODULES.find(m => m.id === id);
-    if (!current) return;
-    currentModuleTab = 'pres';
+        // ══════════════════════════════════════════════════════════════════════
+        //  CARGAR MÓDULO
+        // ══════════════════════════════════════════════════════════════════════
+        function loadMod(id) {
+            current = MODULES.find(m => m.id === id);
+            if (!current) return;
+            currentModuleTab = 'pres';
 
-    setTopNav('classes');
-    document.getElementById('about-view').style.display = 'none';
-    document.getElementById('diagnostic-view').style.display = 'none';
-    document.getElementById('home').style.display    = 'none';
-    document.getElementById('mod-view').style.display = 'block';
+            setTopNav('classes');
+            document.getElementById('about-view').style.display = 'none';
+            document.getElementById('diagnostic-view').style.display = 'none';
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('mod-view').style.display = 'block';
 
-    const cat = getCat(current.cat);
-    document.getElementById('mh-dot').style.background = cat.color;
-    document.getElementById('mh-cat').textContent    = cat.name;
-    document.getElementById('mh-title').textContent  = current.title;
-    document.getElementById('mh-num').textContent    = `Módulo ${current.id}`;
-    document.getElementById('mh-dur').textContent    = current.dur;
-    document.getElementById('mh-objs').innerHTML     = current.objectives.map(o=>`<li>${o}</li>`).join('');
+            const cat = getCat(current.cat);
+            document.getElementById('mh-dot').style.background = cat.color;
+            document.getElementById('mh-cat').textContent = cat.name;
+            document.getElementById('mh-title').textContent = current.title;
+            document.getElementById('mh-num').textContent = `Módulo ${getModuleDisplayId(current)}`;
+            document.getElementById('mh-dur').textContent = current.dur;
+            document.getElementById('mh-objs').innerHTML = current.objectives.map(o => `<li>${o}</li>`).join('');
 
-    setModuleTab('pres');
-    window.scrollTo({top:0,behavior:'smooth'});
-}
+            setModuleTab('pres');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-// ══════════════════════════════════════════════════════════════════════
-//  TABS
-// ══════════════════════════════════════════════════════════════════════
-function goTab(name, btn) {
-    setModuleTab(name, btn);
-}
+        // ══════════════════════════════════════════════════════════════════════
+        //  TABS
+        // ══════════════════════════════════════════════════════════════════════
+        function goTab(name, btn) {
+            setModuleTab(name, btn);
+        }
 
-function setModuleTab(name, btn) {
-    currentModuleTab = name;
-    const tabs = document.querySelectorAll('.tab-btn[data-tab]');
-    const panels = document.querySelectorAll('.tab-panel');
-    tabs.forEach(tab => tab.classList.toggle('active', tab.dataset.tab === name));
-    if (btn) btn.classList.add('active');
-    panels.forEach(panel => panel.classList.toggle('active', panel.id === `panel-${name}`));
-    const panel = document.getElementById(`panel-${name}`);
-    if (!panel) return;
-    try {
-        if (name==='pres') renderPres();
-        if (name==='ticket') initTicket();
-    } catch (err) {
-        console.error(err);
-        if (name === 'ticket') {
-            panel.innerHTML = `
+        function setModuleTab(name, btn) {
+            currentModuleTab = name;
+            const tabs = document.querySelectorAll('.tab-btn[data-tab]');
+            const panels = document.querySelectorAll('.tab-panel');
+            tabs.forEach(tab => tab.classList.toggle('active', tab.dataset.tab === name));
+            if (btn) btn.classList.add('active');
+            panels.forEach(panel => panel.classList.toggle('active', panel.id === `panel-${name}`));
+            const panel = document.getElementById(`panel-${name}`);
+            if (!panel) return;
+            try {
+                if (name === 'pres') renderPres();
+                if (name === 'ticket') initTicket();
+            } catch (err) {
+                console.error(err);
+                if (name === 'ticket') {
+                    panel.innerHTML = `
                 <div class="empty">
                     <div class="ei">🎟️</div>
                     <h3>No se pudo abrir el ticket</h3>
                     <p>Hubo un problema al cargar esta sección. Vuelve a intentar el ticket o revisa el módulo.</p>
                 </div>`;
+                }
+            }
         }
-    }
-}
 
-function bindModuleTabs() {
-    const tabsWrap = document.querySelector('.tabs');
-    if (!tabsWrap || tabsWrap.dataset.bound === 'true') return;
-    tabsWrap.dataset.bound = 'true';
-    tabsWrap.addEventListener('click', (evt) => {
-        const btn = evt.target.closest('.tab-btn[data-tab]');
-        if (!btn) return;
-        evt.preventDefault();
-        evt.stopPropagation();
-        const tabName = btn.dataset.tab;
-        if (!tabName) return;
-        setModuleTab(tabName, btn);
-    });
-}
+        function bindModuleTabs() {
+            const tabsWrap = document.querySelector('.tabs');
+            if (!tabsWrap || tabsWrap.dataset.bound === 'true') return;
+            tabsWrap.dataset.bound = 'true';
+            tabsWrap.addEventListener('click', (evt) => {
+                const btn = evt.target.closest('.tab-btn[data-tab]');
+                if (!btn) return;
+                evt.preventDefault();
+                evt.stopPropagation();
+                const tabName = btn.dataset.tab;
+                if (!tabName) return;
+                setModuleTab(tabName, btn);
+            });
+        }
 
-// ══════════════════════════════════════════════════════════════════════
-//  PRESENTACIÓN
-// ══════════════════════════════════════════════════════════════════════
-function getEmbedUrl(url) {
-    if (!url) return null;
-    if (!url.startsWith('http')) return url; // local file
-    // Google Drive file
-    const drM = url.match(/drive\.google\.com\/file\/d\/([^\/\?]+)/);
-    if (drM) return `https://drive.google.com/file/d/${drM[1]}/preview`;
-    // Google Slides presentation
-    const gsM = url.match(/docs\.google\.com\/presentation\/d\/([^\/\?]+)/);
-    if (gsM) return `https://docs.google.com/presentation/d/${gsM[1]}/embed?start=false&loop=false&delayms=5000`;
-    // Already a valid embed or other URL
-    return url;
-}
+        // ══════════════════════════════════════════════════════════════════════
+        //  PRESENTACIÓN
+        // ══════════════════════════════════════════════════════════════════════
+        function getEmbedUrl(url) {
+            if (!url) return null;
+            if (!url.startsWith('http')) return url; // local file
+            // Google Drive file
+            const drM = url.match(/drive\.google\.com\/file\/d\/([^\/\?]+)/);
+            if (drM) return `https://drive.google.com/file/d/${drM[1]}/preview`;
+            // Google Slides presentation
+            const gsM = url.match(/docs\.google\.com\/presentation\/d\/([^\/\?]+)/);
+            if (gsM) return `https://docs.google.com/presentation/d/${gsM[1]}/embed?start=false&loop=false&delayms=5000`;
+            // Already a valid embed or other URL
+            return url;
+        }
 
-function renderPres() {
-    const c = document.getElementById('panel-pres');
-    // Prefer interactive HTML slide if available
-    const htmlSrc = current?.htmlSlide || null;
-    const embedUrl = htmlSrc || getEmbedUrl(current?.slideUrl);
-    if (embedUrl) {
-        const isHtml = !!htmlSrc;
-        c.innerHTML = `
+        function renderPres() {
+            const c = document.getElementById('panel-pres');
+            // Prefer interactive HTML slide if available
+            const htmlSrc = current?.htmlSlide || null;
+            const embedUrl = htmlSrc || getEmbedUrl(current?.slideUrl);
+            if (embedUrl) {
+                const isHtml = !!htmlSrc;
+                c.innerHTML = `
             <div class="pres-wrapper">
                 <div class="pres-toolbar">
                     <div class="pres-toolbar-left">
@@ -1068,8 +2512,8 @@ function renderPres() {
                         allow="autoplay; fullscreen" allowfullscreen></iframe>
                 </div>
             </div>`;
-    } else {
-        c.innerHTML = `
+            } else {
+                c.innerHTML = `
             <div class="pres-wrapper">
                 <div class="no-slide">
                     <div class="ns-icon">📂</div>
@@ -1102,55 +2546,55 @@ function renderPres() {
                     </div>
                 </div>
             </div>`;
-    }
-}
+            }
+        }
 
-function goFullscreen() {
-    const wrap = document.getElementById('pres-frame-wrap');
-    if (!wrap) return;
-    const req = wrap.requestFullscreen || wrap.webkitRequestFullscreen || wrap.mozRequestFullScreen;
-    if (req) req.call(wrap);
-}
+        function goFullscreen() {
+            const wrap = document.getElementById('pres-frame-wrap');
+            if (!wrap) return;
+            const req = wrap.requestFullscreen || wrap.webkitRequestFullscreen || wrap.mozRequestFullScreen;
+            if (req) req.call(wrap);
+        }
 
-function openInNewTab(url) {
-    window.open(url, '_blank');
-}
+        function openInNewTab(url) {
+            window.open(url, '_blank');
+        }
 
-function openOfficialSite() {
-    window.open('https://www.laobrauc.com/', '_blank');
-}
+        function openOfficialSite() {
+            window.open('https://www.laobrauc.com/', '_blank');
+        }
 
 
 
-// ══════════════════════════════════════════════════════════════════════
-//  TICKET DE SALIDA
-// ══════════════════════════════════════════════════════════════════════
-function initTicket() {
-    const c = document.getElementById('panel-ticket');
-    if (!c || !current) return;
-    if (!current?.ticket) {
-        c.innerHTML=`
+        // ══════════════════════════════════════════════════════════════════════
+        //  TICKET DE SALIDA
+        // ══════════════════════════════════════════════════════════════════════
+        function initTicket() {
+            const c = document.getElementById('panel-ticket');
+            if (!c || !current) return;
+            if (!current?.ticket) {
+                c.innerHTML = `
             <div class="empty"><div class="ei">🎟️</div><h3>Sin ticket de salida</h3><p>Este módulo aún no tiene preguntas configuradas, pero el PPT/PDF del módulo sigue disponible desde aquí.</p></div>`;
-        return;
-    }
-    qIdx=0; qAns=[];
-    renderTicketQ();
-}
+                return;
+            }
+            qIdx = 0; qAns = [];
+            renderTicketQ();
+        }
 
-function renderTicketQ() {
-    const tkt = current.ticket;
-    const c   = document.getElementById('panel-ticket');
-    if (qIdx >= tkt.questions.length) { showTicketResults(); return; }
-    const q   = tkt.questions[qIdx];
-    const pct = (qIdx/tkt.questions.length)*100;
+        function renderTicketQ() {
+            const tkt = current.ticket;
+            const c = document.getElementById('panel-ticket');
+            if (qIdx >= tkt.questions.length) { showTicketResults(); return; }
+            const q = tkt.questions[qIdx];
+            const pct = (qIdx / tkt.questions.length) * 100;
 
-    c.innerHTML = `
+            c.innerHTML = `
         <div class="ticket-wrap">
             <div class="ticket-header">
                 <div class="ticket-icon">🎟️</div>
                 <div>
                     <h3>${tkt.title}</h3>
-                    <p>Pregunta ${qIdx+1} de ${tkt.questions.length} · Demuestra lo que aprendiste</p>
+                    <p>Pregunta ${qIdx + 1} de ${tkt.questions.length} · Demuestra lo que aprendiste</p>
                 </div>
             </div>
             <div class="q-progress"><div class="q-fill" style="width:${pct}%"></div></div>
@@ -1158,47 +2602,47 @@ function renderTicketQ() {
                 <span class="q-emoji">${q.emoji}</span>
                 <div class="q-text">${q.q}</div>
                 <div class="opts">
-                    ${q.opts.map((o,i)=>`<button class="opt" id="o${i}" onclick="pickQ(${i})">${o}</button>`).join('')}
+                    ${q.opts.map((o, i) => `<button class="opt" id="o${i}" onclick="pickQ(${i})">${o}</button>`).join('')}
                 </div>
                 <div class="q-feedback" id="qfb"></div>
                 <button class="next-btn" id="qnxt" onclick="nextTicketQ()">
-                    ${qIdx<tkt.questions.length-1 ? 'Siguiente →' : '¡Ver resultado! 🎉'}
+                    ${qIdx < tkt.questions.length - 1 ? 'Siguiente →' : '¡Ver resultado! 🎉'}
                 </button>
             </div>
         </div>`;
-}
+        }
 
-function pickQ(i) {
-    const panel = document.getElementById('panel-ticket');
-    if (!panel || !current?.ticket?.questions?.[qIdx]) return;
-    const q = current.ticket.questions[qIdx];
-    const buttons = panel.querySelectorAll('.opt');
-    buttons.forEach(b=>b.disabled=true);
-    buttons.forEach((b,j)=>{
-        if (j===q.ok) b.classList.add('ok');
-        if (j===i && i!==q.ok) b.classList.add('bad');
-    });
-    const ok = i===q.ok;
-    const fb = document.getElementById('qfb');
-    if (!fb) return;
-    fb.className=`q-feedback show ${ok?'ok':'bad'}`;
-    fb.textContent = ok ? `✅ ${q.exp}` : `❌ ${q.exp}`;
-    if (ok) spawnConfetti(6);
-    document.getElementById('qnxt')?.classList.add('show');
-    qAns.push(ok);
-}
+        function pickQ(i) {
+            const panel = document.getElementById('panel-ticket');
+            if (!panel || !current?.ticket?.questions?.[qIdx]) return;
+            const q = current.ticket.questions[qIdx];
+            const buttons = panel.querySelectorAll('.opt');
+            buttons.forEach(b => b.disabled = true);
+            buttons.forEach((b, j) => {
+                if (j === q.ok) b.classList.add('ok');
+                if (j === i && i !== q.ok) b.classList.add('bad');
+            });
+            const ok = i === q.ok;
+            const fb = document.getElementById('qfb');
+            if (!fb) return;
+            fb.className = `q-feedback show ${ok ? 'ok' : 'bad'}`;
+            fb.textContent = ok ? `✅ ${q.exp}` : `❌ ${q.exp}`;
+            if (ok) spawnConfetti(6);
+            document.getElementById('qnxt')?.classList.add('show');
+            qAns.push(ok);
+        }
 
-function nextTicketQ() { qIdx++; renderTicketQ(); }
+        function nextTicketQ() { qIdx++; renderTicketQ(); }
 
-function showTicketResults() {
-    const total  = current.ticket.questions.length;
-    const correct= qAns.filter(Boolean).length;
-    const pct    = Math.round(correct/total*100);
-    const [emoji,msg] = pct>=90?['🏆','¡Excelente! ¡Dominaste el módulo!']:
-                        pct>=70?['⭐','¡Muy bien! Casi perfecto.']:
-                        pct>=50?['👏','¡Buen trabajo! Sigue practicando.']:
-                               ['📚','¡Repasemos juntos el módulo!'];
-    document.getElementById('panel-ticket').innerHTML=`
+        function showTicketResults() {
+            const total = current.ticket.questions.length;
+            const correct = qAns.filter(Boolean).length;
+            const pct = Math.round(correct / total * 100);
+            const [emoji, msg] = pct >= 90 ? ['🏆', '¡Excelente! ¡Dominaste el módulo!'] :
+                pct >= 70 ? ['⭐', '¡Muy bien! Casi perfecto.'] :
+                    pct >= 50 ? ['👏', '¡Buen trabajo! Sigue practicando.'] :
+                        ['📚', '¡Repasemos juntos el módulo!'];
+            document.getElementById('panel-ticket').innerHTML = `
         <div class="ticket-wrap">
             <div class="results">
                 <div class="r-emoji">${emoji}</div>
@@ -1208,21 +2652,21 @@ function showTicketResults() {
                 <button class="retry-btn" onclick="initTicket()">🔄 Repetir</button>
             </div>
         </div>`;
-    if (pct>=70) {
-        spawnConfetti(32);
-        done.add(current.id);
-        localStorage.setItem('tutorias-done',JSON.stringify([...done]));
-        buildPrevGrid();
-    }
-}
+            if (pct >= 70) {
+                spawnConfetti(32);
+                done.add(current.id);
+                localStorage.setItem('tutorias-done', JSON.stringify([...done]));
+                buildPrevGrid();
+            }
+        }
 
-// ══════════════════════════════════════════════════════════════════════
-//  EVALUACIÓN DIAGNÓSTICA
-// ══════════════════════════════════════════════════════════════════════
-function renderDiagnosticLanding() {
-    const shell = document.getElementById('diag-shell');
-    if (!diagnosticStarted) {
-        shell.innerHTML = `
+        // ══════════════════════════════════════════════════════════════════════
+        //  EVALUACIÓN DIAGNÓSTICA
+        // ══════════════════════════════════════════════════════════════════════
+        function renderDiagnosticLanding() {
+            const shell = document.getElementById('diag-shell');
+            if (!diagnosticStarted) {
+                shell.innerHTML = `
             <div class="diag-hero">
                 <div class="diag-kicker">Diagnóstico inicial</div>
                 <h2>Evalúa rápidamente qué temas necesitan más refuerzo.</h2>
@@ -1251,34 +2695,34 @@ function renderDiagnosticLanding() {
                     </div>
                 </div>
             </div>`;
-        return;
-    }
+                return;
+            }
 
-    renderDiagnosticQuestion();
-}
+            renderDiagnosticQuestion();
+        }
 
-function startDiagnostic() {
-    diagnosticStarted = true;
-    diagSectionIdx = 0;
-    diagQuestionIdx = 0;
-    diagResponses = [];
-    renderDiagnosticQuestion();
-}
+        function startDiagnostic() {
+            diagnosticStarted = true;
+            diagSectionIdx = 0;
+            diagQuestionIdx = 0;
+            diagResponses = [];
+            renderDiagnosticQuestion();
+        }
 
-function renderDiagnosticQuestion() {
-    const shell = document.getElementById('diag-shell');
-    const section = DIAGNOSTIC_SECTIONS[diagSectionIdx];
-    if (!section) {
-        renderDiagnosticResults();
-        return;
-    }
+        function renderDiagnosticQuestion() {
+            const shell = document.getElementById('diag-shell');
+            const section = DIAGNOSTIC_SECTIONS[diagSectionIdx];
+            if (!section) {
+                renderDiagnosticResults();
+                return;
+            }
 
-    const question = section.questions[diagQuestionIdx];
-    const overallIndex = diagSectionIdx * 4 + diagQuestionIdx + 1;
-    const totalQuestions = DIAGNOSTIC_SECTIONS.length * 4;
-    const sectionPct = (diagQuestionIdx / section.questions.length) * 100;
+            const question = section.questions[diagQuestionIdx];
+            const overallIndex = diagSectionIdx * 4 + diagQuestionIdx + 1;
+            const totalQuestions = DIAGNOSTIC_SECTIONS.length * 4;
+            const sectionPct = (diagQuestionIdx / section.questions.length) * 100;
 
-    shell.innerHTML = `
+            shell.innerHTML = `
         <div class="diag-hero">
             <div class="diag-kicker">Evaluación diagnóstica</div>
             <h2>${section.name}</h2>
@@ -1300,67 +2744,67 @@ function renderDiagnosticQuestion() {
                 <button class="check-btn diag-next" id="diag-next" onclick="nextDiagnosticQuestion()">${diagQuestionIdx === section.questions.length - 1 && diagSectionIdx === DIAGNOSTIC_SECTIONS.length - 1 ? 'Ver resultados' : 'Siguiente pregunta'}</button>
             </div>
         </div>`;
-}
+        }
 
-function pickDiagnosticOption(optIdx) {
-    const section = DIAGNOSTIC_SECTIONS[diagSectionIdx];
-    const question = section.questions[diagQuestionIdx];
-    const isCorrect = optIdx === question.ok;
-    const buttons = document.querySelectorAll('#diagnostic-view .opt');
+        function pickDiagnosticOption(optIdx) {
+            const section = DIAGNOSTIC_SECTIONS[diagSectionIdx];
+            const question = section.questions[diagQuestionIdx];
+            const isCorrect = optIdx === question.ok;
+            const buttons = document.querySelectorAll('#diagnostic-view .opt');
 
-    buttons.forEach((button, idx) => {
-        button.disabled = true;
-        if (idx === question.ok) button.classList.add('ok');
-        if (idx === optIdx && optIdx !== question.ok) button.classList.add('bad');
-    });
+            buttons.forEach((button, idx) => {
+                button.disabled = true;
+                if (idx === question.ok) button.classList.add('ok');
+                if (idx === optIdx && optIdx !== question.ok) button.classList.add('bad');
+            });
 
-    diagResponses.push({
-        sectionId: section.id,
-        sectionName: section.name,
-        topic: question.topic,
-        correct: isCorrect,
-    });
+            diagResponses.push({
+                sectionId: section.id,
+                sectionName: section.name,
+                topic: question.topic,
+                correct: isCorrect,
+            });
 
-    const feedback = document.getElementById('diag-feedback');
-    feedback.className = `diag-feedback show ${isCorrect ? 'ok' : 'bad'}`;
-    feedback.textContent = `${isCorrect ? '✅' : '❌'} ${question.exp}`;
-    document.getElementById('diag-next').classList.add('show');
-    if (isCorrect) spawnConfetti(5);
-}
+            const feedback = document.getElementById('diag-feedback');
+            feedback.className = `diag-feedback show ${isCorrect ? 'ok' : 'bad'}`;
+            feedback.textContent = `${isCorrect ? '✅' : '❌'} ${question.exp}`;
+            document.getElementById('diag-next').classList.add('show');
+            if (isCorrect) spawnConfetti(5);
+        }
 
-function nextDiagnosticQuestion() {
-    const section = DIAGNOSTIC_SECTIONS[diagSectionIdx];
-    diagQuestionIdx++;
-    if (diagQuestionIdx >= section.questions.length) {
-        diagSectionIdx++;
-        diagQuestionIdx = 0;
-    }
-    renderDiagnosticQuestion();
-}
+        function nextDiagnosticQuestion() {
+            const section = DIAGNOSTIC_SECTIONS[diagSectionIdx];
+            diagQuestionIdx++;
+            if (diagQuestionIdx >= section.questions.length) {
+                diagSectionIdx++;
+                diagQuestionIdx = 0;
+            }
+            renderDiagnosticQuestion();
+        }
 
-function getDiagnosticSummary() {
-    return DIAGNOSTIC_SECTIONS.map(section => {
-        const responses = diagResponses.filter(item => item.sectionId === section.id);
-        const correct = responses.filter(item => item.correct).length;
-        return { ...section, responses, correct, total: section.questions.length };
-    });
-}
+        function getDiagnosticSummary() {
+            return DIAGNOSTIC_SECTIONS.map(section => {
+                const responses = diagResponses.filter(item => item.sectionId === section.id);
+                const correct = responses.filter(item => item.correct).length;
+                return { ...section, responses, correct, total: section.questions.length };
+            });
+        }
 
-function renderDiagnosticResults() {
-    const shell = document.getElementById('diag-shell');
-    const summary = getDiagnosticSummary();
-    const totalCorrect = diagResponses.filter(item => item.correct).length;
-    const totalQuestions = DIAGNOSTIC_SECTIONS.length * 4;
-    const areaScores = summary.map(section => ({
-        id: section.id,
-        name: section.name,
-        color: section.color,
-        correct: section.correct,
-        total: section.total,
-        pct: Math.round((section.correct / section.total) * 100),
-    }));
+        function renderDiagnosticResults() {
+            const shell = document.getElementById('diag-shell');
+            const summary = getDiagnosticSummary();
+            const totalCorrect = diagResponses.filter(item => item.correct).length;
+            const totalQuestions = DIAGNOSTIC_SECTIONS.length * 4;
+            const areaScores = summary.map(section => ({
+                id: section.id,
+                name: section.name,
+                color: section.color,
+                correct: section.correct,
+                total: section.total,
+                pct: Math.round((section.correct / section.total) * 100),
+            }));
 
-    shell.innerHTML = `
+            shell.innerHTML = `
         <div class="diag-hero">
             <div class="diag-kicker">Resultados</div>
             <h2>Panorama diagnóstico por materia</h2>
@@ -1383,20 +2827,20 @@ function renderDiagnosticResults() {
             </div>
         </div>`;
 
-    drawDiagnosticPie(areaScores);
-}
+            drawDiagnosticPie(areaScores);
+        }
 
-function buildDiagnosticChartBlock(areaScores) {
-    const totalCorrect = areaScores.reduce((sum, area) => sum + area.correct, 0);
-    if (!totalCorrect) {
-        return `
+        function buildDiagnosticChartBlock(areaScores) {
+            const totalCorrect = areaScores.reduce((sum, area) => sum + area.correct, 0);
+            if (!totalCorrect) {
+                return `
             <div class="diag-empty-chart">
                 <h4>Sin aciertos aún</h4>
                 <p>No hubo respuestas correctas en esta ejecución, así que todavía no se puede distribuir el gráfico por área.</p>
             </div>`;
-    }
+            }
 
-    return `
+            return `
         <div class="diag-chart-wrap">
             <div class="diag-canvas-box">
                 <canvas id="diag-chart" width="520" height="520" aria-label="Gráfico de torta de aciertos por área"></canvas>
@@ -1417,108 +2861,108 @@ function buildDiagnosticChartBlock(areaScores) {
                 </div>
             </div>
         </div>`;
-}
-
-function drawDiagnosticPie(areaScores) {
-    const canvas = document.getElementById('diag-chart');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const total = areaScores.reduce((sum, area) => sum + area.correct, 0);
-    if (!total) return;
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    const radius = 190;
-    let startAngle = -Math.PI / 2;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    areaScores.forEach(area => {
-        const slice = (area.correct / total) * Math.PI * 2;
-        const color = area.color;
-        ctx.beginPath();
-        ctx.moveTo(centerX, centerY);
-        ctx.arc(centerX, centerY, radius, startAngle, startAngle + slice);
-        ctx.closePath();
-        ctx.fillStyle = color;
-        ctx.fill();
-        ctx.lineWidth = 6;
-        ctx.strokeStyle = '#ffffff';
-        ctx.stroke();
-
-        if (slice > 0) {
-            const middle = startAngle + slice / 2;
-            const labelRadius = radius * 0.68;
-            const x = centerX + Math.cos(middle) * labelRadius;
-            const y = centerY + Math.sin(middle) * labelRadius;
-            ctx.fillStyle = '#0F2B50';
-            ctx.font = '700 22px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(`${area.pct}%`, x, y);
         }
 
-        startAngle += slice;
-    });
+        function drawDiagnosticPie(areaScores) {
+            const canvas = document.getElementById('diag-chart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return;
 
-    ctx.beginPath();
-    ctx.fillStyle = '#ffffff';
-    ctx.arc(centerX, centerY, 78, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.lineWidth = 4;
-    ctx.strokeStyle = '#e3ebf5';
-    ctx.stroke();
+            const total = areaScores.reduce((sum, area) => sum + area.correct, 0);
+            if (!total) return;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = 190;
+            let startAngle = -Math.PI / 2;
 
-    ctx.fillStyle = '#1A3F6E';
-    ctx.font = '700 24px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('Acierto', centerX, centerY - 14);
-    ctx.font = '700 20px sans-serif';
-    ctx.fillStyle = '#6B85A3';
-    ctx.fillText('por área', centerX, centerY + 16);
-}
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-// ══════════════════════════════════════════════════════════════════════
-//  ANIMACIONES
-// ══════════════════════════════════════════════════════════════════════
-function spawnConfetti(n) {
-    const box = document.getElementById('fx');
-    const cols=['#50AD9F','#FFD166','#EF476F','#7C83FD','#06D6A0','#0A1E30'];
-    for(let i=0;i<n;i++){
-        setTimeout(()=>{
-            const p=document.createElement('div');
-            p.className='cp';
-            const size=Math.random()*8+5;
-            p.style.cssText=`left:${Math.random()*100}vw;background:${cols[Math.floor(Math.random()*cols.length)]};animation-duration:${Math.random()*2+1.5}s;animation-delay:${Math.random()*0.3}s;width:${size}px;height:${size}px;border-radius:${Math.random()>.5?'50%':'3px'}`;
-            box.appendChild(p);
-            setTimeout(()=>p.remove(),3500);
-        },i*70);
-    }
-}
+            areaScores.forEach(area => {
+                const slice = (area.correct / total) * Math.PI * 2;
+                const color = area.color;
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startAngle, startAngle + slice);
+                ctx.closePath();
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.lineWidth = 6;
+                ctx.strokeStyle = '#ffffff';
+                ctx.stroke();
 
-function spawnStar(el) {
-    const r=el.getBoundingClientRect();
-    const s=document.createElement('div');
-    s.className='sp';
-    s.textContent=['⭐','🌟','✨'][Math.floor(Math.random()*3)];
-    s.style.cssText=`left:${r.left+r.width/2-12}px;top:${r.top-18}px`;
-    document.body.appendChild(s);
-    setTimeout(()=>s.remove(),1000);
-}
+                if (slice > 0) {
+                    const middle = startAngle + slice / 2;
+                    const labelRadius = radius * 0.68;
+                    const x = centerX + Math.cos(middle) * labelRadius;
+                    const y = centerY + Math.sin(middle) * labelRadius;
+                    ctx.fillStyle = '#0F2B50';
+                    ctx.font = '700 22px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(`${area.pct}%`, x, y);
+                }
 
-// ══════════════════════════════════════════════════════════════════════
-//  NAVEGACIÓN
-// ══════════════════════════════════════════════════════════════════════
-function goHome() {
-    showClasses();
-}
+                startAngle += slice;
+            });
 
-init();
-</script>
+            ctx.beginPath();
+            ctx.fillStyle = '#ffffff';
+            ctx.arc(centerX, centerY, 78, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = '#e3ebf5';
+            ctx.stroke();
 
-<!--
+            ctx.fillStyle = '#1A3F6E';
+            ctx.font = '700 24px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Acierto', centerX, centerY - 14);
+            ctx.font = '700 20px sans-serif';
+            ctx.fillStyle = '#6B85A3';
+            ctx.fillText('por área', centerX, centerY + 16);
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  ANIMACIONES
+        // ══════════════════════════════════════════════════════════════════════
+        function spawnConfetti(n) {
+            const box = document.getElementById('fx');
+            const cols = ['#50AD9F', '#FFD166', '#EF476F', '#7C83FD', '#06D6A0', '#0A1E30'];
+            for (let i = 0; i < n; i++) {
+                setTimeout(() => {
+                    const p = document.createElement('div');
+                    p.className = 'cp';
+                    const size = Math.random() * 8 + 5;
+                    p.style.cssText = `left:${Math.random() * 100}vw;background:${cols[Math.floor(Math.random() * cols.length)]};animation-duration:${Math.random() * 2 + 1.5}s;animation-delay:${Math.random() * 0.3}s;width:${size}px;height:${size}px;border-radius:${Math.random() > .5 ? '50%' : '3px'}`;
+                    box.appendChild(p);
+                    setTimeout(() => p.remove(), 3500);
+                }, i * 70);
+            }
+        }
+
+        function spawnStar(el) {
+            const r = el.getBoundingClientRect();
+            const s = document.createElement('div');
+            s.className = 'sp';
+            s.textContent = ['⭐', '🌟', '✨'][Math.floor(Math.random() * 3)];
+            s.style.cssText = `left:${r.left + r.width / 2 - 12}px;top:${r.top - 18}px`;
+            document.body.appendChild(s);
+            setTimeout(() => s.remove(), 1000);
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  NAVEGACIÓN
+        // ══════════════════════════════════════════════════════════════════════
+        function goHome() {
+            showClasses();
+        }
+
+        init();
+    </script>
+
+    <!--
 ════════════════════════════════════════════════════════════════
   📖 GUÍA DEL ADMINISTRADOR (Bruno Nattino)
 ════════════════════════════════════════════════════════════════
@@ -1576,4 +3020,5 @@ init();
 ════════════════════════════════════════════════════════════════
 -->
 </body>
+
 </html>

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>División 3</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root {
+    --base: #1C4A82;
+    --bg: #f5f6f8;
+    --tx: #333;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--tx);
+}
+.dk { position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex; }
+.sl {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 36px 40px 82px;
+    opacity: 0;
+    transform: scale(.96);
+    transition: opacity .4s, transform .4s;
+    pointer-events: none;
+    z-index: 1;
+}
+.sl.on { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
+.sl.pv { opacity: 0; transform: translateX(-50px) scale(.95); }
+.sl.nx { opacity: 0; transform: translateX(50px) scale(.95); }
+.head-title {
+    background: var(--base);
+    color: white;
+    padding: 10px 40px;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    display: inline-block;
+    border-radius: 12px;
+    text-align: center;
+}
+.sub-text {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+    line-height: 1.4;
+}
+.pb { position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100; }
+.nv {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 100;
+}
+.nb {
+    background: #eee;
+    color: var(--base);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all .2s;
+}
+.nb:hover { background: #ddd; }
+.nb:disabled { opacity: 0.3; cursor: not-allowed; }
+.sc { color: #888; font-size: 16px; font-weight: 900; }
+.stp {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+.stp.shwn { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.pnl {
+    background: #fff;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 3px solid #eaeaea;
+    width: 100%;
+}
+.pnl-border {
+    background: #fff;
+    border: 4px solid var(--base);
+    border-radius: 20px;
+    padding: 24px;
+    width: 100%;
+}
+.hl { color: var(--base); font-weight: 900; }
+.btn {
+    background: var(--base);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .2s;
+    font-family: 'Nunito', sans-serif;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3); }
+.math-eq {
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--base);
+    background: #fff;
+    padding: 12px 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border: 3px dashed #bbdefb;
+    margin: 12px;
+    text-align: center;
+}
+.chip-row, .card-row, .base-row, .quiz-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.mini-chip {
+    background: #eef5ff;
+    border: 2px solid #b6d4f3;
+    border-radius: 999px;
+    padding: 12px 18px;
+    font-size: 20px;
+    font-weight: 800;
+}
+.idea-card {
+    flex: 1 1 220px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+    border-radius: 18px;
+    padding: 18px;
+    border: 3px solid #d7e7f7;
+    min-height: 220px;
+}
+.idea-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    margin-bottom: 10px;
+}
+.idea-card p {
+    font-size: 21px;
+    line-height: 1.45;
+}
+.base-card {
+    flex: 1 1 320px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 18px;
+    border: 4px solid #d9e7f6;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+}
+.base-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    text-align: center;
+    margin-bottom: 14px;
+}
+.place-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+.place-box {
+    background: #f8fbff;
+    border: 2px dashed #c6d9ef;
+    border-radius: 16px;
+    padding: 12px;
+    min-height: 184px;
+}
+.place-title {
+    text-align: center;
+    font-size: 19px;
+    font-weight: 900;
+    color: #315c8d;
+    margin-bottom: 10px;
+}
+.block-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 88px;
+}
+.unit {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: var(--fill, #9DDEFF);
+    border: 2px solid rgba(0,0,0,0.18);
+}
+.rod {
+    width: 30px;
+    height: 108px;
+    border-radius: 8px;
+    background: var(--fill, #9DE3BD);
+    border: 2px solid rgba(0,0,0,0.18);
+}
+.flat {
+    width: 94px;
+    height: 94px;
+    border-radius: 12px;
+    background:
+        linear-gradient(rgba(255,255,255,0.42), rgba(255,255,255,0.42)),
+        repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(0,0,0,0.08) 18px, rgba(0,0,0,0.08) 20px),
+        repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(0,0,0,0.08) 18px, rgba(0,0,0,0.08) 20px),
+        var(--fill, #FFE082);
+    border: 2px solid rgba(0,0,0,0.18);
+}
+.number-tag {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 900;
+}
+.two-col {
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 18px;
+    width: 100%;
+    align-items: stretch;
+}
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.step-box {
+    background: #f7fbff;
+    border-left: 8px solid var(--base);
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+.column-wrap {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 18px;
+    width: 100%;
+    align-items: start;
+}
+.alg-board {
+    background: #fff;
+    border: 4px solid var(--base);
+    border-radius: 20px;
+    padding: 22px 26px;
+}
+.alg-grid {
+    display: grid;
+    grid-template-columns: 68px repeat(3, 76px);
+    grid-auto-rows: 58px;
+    align-items: center;
+    justify-items: center;
+    margin: 0 auto;
+    width: max-content;
+}
+.alg-grid.long {
+    grid-template-columns: 68px repeat(3, 76px);
+}
+.alg-label {
+    font-size: 20px;
+    font-weight: 900;
+    color: #57779d;
+}
+.alg-digit {
+    width: 60px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #f7fbff;
+    font-size: 34px;
+    font-weight: 900;
+    color: #173b67;
+    border: 2px solid #d4e5f8;
+}
+.alg-digit.dim { color: #b6c6d8; }
+.alg-digit.reserve {
+    height: 38px;
+    background: #fff7df;
+    border-color: #f0cf67;
+    color: #9f6200;
+    font-size: 24px;
+}
+.alg-line {
+    grid-column: 2 / span 3;
+    width: 100%;
+    height: 4px;
+    background: #395f90;
+    border-radius: 999px;
+}
+.alg-sign {
+    font-size: 30px;
+    font-weight: 900;
+    color: #c94d2a;
+}
+.side-panel {
+    background: linear-gradient(180deg, #fefefe 0%, #f4f9ff 100%);
+    border: 3px solid #d5e4f5;
+    border-radius: 18px;
+    padding: 18px;
+    min-height: 290px;
+}
+.side-panel h3 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 12px;
+}
+.side-panel p {
+    font-size: 20px;
+    line-height: 1.45;
+}
+.story-card {
+    width: 100%;
+    border-radius: 28px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: center;
+}
+.story-emoji {
+    font-size: 114px;
+    text-align: center;
+    animation: bob 2.8s infinite;
+}
+.story-card h2 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+.story-card p {
+    font-size: 24px;
+    line-height: 1.45;
+}
+.summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+.summary-item {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 18px;
+    border: 3px solid #dbe7f4;
+    font-size: 23px;
+    line-height: 1.45;
+}
+.count-board {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.count-card {
+    flex: 1 1 260px;
+    background: linear-gradient(180deg, #ffffff 0%, #f6fbff 100%);
+    border-radius: 22px;
+    padding: 20px;
+    border: 4px solid #d6e8f8;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+    text-align: center;
+}
+.count-card h3 {
+    font-size: 28px;
+    margin-bottom: 12px;
+    color: var(--base);
+}
+.emoji-pack {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    min-height: 86px;
+    margin-bottom: 12px;
+}
+.fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+.fact-box {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 18px;
+    padding: 16px;
+    border: 3px solid #d8e7f6;
+    min-height: 170px;
+}
+.fact-box h4 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 10px;
+    text-align: center;
+}
+.fact-box p {
+    font-size: 21px;
+    line-height: 1.45;
+    text-align: center;
+}
+.msg-area {
+    font-size: 24px;
+    font-weight: 900;
+    height: 40px;
+    text-align: center;
+    margin-top: 20px;
+}
+.hero-title {
+    font-size: 68px;
+    color: var(--base);
+    margin-bottom: 18px;
+    text-align: center;
+    line-height: 1;
+}
+.hero-sub {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    max-width: 720px;
+}
+.hero-emoji {
+    font-size: 108px;
+    margin-top: 28px;
+    animation: bounce 2s infinite;
+}
+.formula-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.label-pill {
+    background: #eef5ff;
+    border: 2px solid #c5dcf5;
+    border-radius: 14px;
+    padding: 10px 16px;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--base);
+}
+.warn-card {
+    background: #fff8e5;
+    border: 4px solid #f0ca59;
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 22px;
+    line-height: 1.45;
+    width: 100%;
+}
+.decomp-flow {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+}
+.decomp-box {
+    background: #fff;
+    border: 3px solid #d4e6f7;
+    border-radius: 18px;
+    padding: 14px 18px;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--base);
+}
+.arrow {
+    font-size: 34px;
+    font-weight: 900;
+    color: #4d6d94;
+}
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+</style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
+        <div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 class="hero-title">¡División 3!</h1>
+            <p class="hero-sub">Dividir por descomposición y estimar cuocientes para resolver ejercicios con más estrategia.</p>
+            <div class="hero-emoji">🧠</div>
+        </div>
+        </div><div class="sl">
+            <div class="head-title">¿Qué es dividir por descomposición?</div>
+            <p class="sub-text">Separamos el dividendo en partes más fáciles de dividir.</p>
+            <div class="decomp-flow">
+                <div class="decomp-box">84 ÷ 4</div>
+                <div class="arrow stp">→</div>
+                <div class="decomp-box stp">(80 ÷ 4) + (4 ÷ 4)</div>
+                <div class="arrow stp">→</div>
+                <div class="decomp-box stp">20 + 1</div>
+                <div class="arrow stp">→</div>
+                <div class="decomp-box stp">21</div>
+            </div>
+            </div><div class="sl">
+        <div class="head-title">Descomposición visual</div>
+        <p class="sub-text">El 84 se puede mirar como 80 y 4.</p>
+        <div class="count-board">
+            <div class="count-card" style="border-color:#FFE082; background:linear-gradient(180deg,#fffdf1 0%,#ffffff 100%);">
+                <h3>80</h3>
+                <div class="emoji-pack"><span style="font-size:50px; line-height:1;">🟨</span><span style="font-size:50px; line-height:1;">🟨</span><span style="font-size:50px; line-height:1;">🟨</span><span style="font-size:50px; line-height:1;">🟨</span><span style="font-size:50px; line-height:1;">🟨</span><span style="font-size:50px; line-height:1;">🟨</span><span style="font-size:50px; line-height:1;">🟨</span><span style="font-size:50px; line-height:1;">🟨</span></div>
+            </div>
+            <div class="math-eq" style="font-size:60px;">÷</div>
+            <div class="count-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#f4fff7 0%,#ffffff 100%);">
+                <h3>4</h3>
+                <div class="emoji-pack"><span style="font-size:50px; line-height:1;">🟣</span><span style="font-size:50px; line-height:1;">🟣</span><span style="font-size:50px; line-height:1;">🟣</span><span style="font-size:50px; line-height:1;">🟣</span></div>
+            </div>
+        </div>
+        <div class="stp math-eq" style="border-color:#9DE3BD; background:#faf4ff;">84 ÷ 4 = 21</div>
+        <div class="stp mini-chip">80 ÷ 4 = 20 y 4 ÷ 4 = 1.</div>
+        </div><div class="sl">
+        <div class="head-title">Descomponiendo divisiones exactas</div>
+        <p class="sub-text">Resuelve separando el dividendo en partes fáciles.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🎯</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">84 ÷ 4</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFE082; margin:0;">= 21</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">📦</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">96 ÷ 3</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 32</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🚗</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">72 ÷ 6</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 12</div>
+            </div>
+            </div>
+        </div><div class="sl">
+            <div class="head-title">Otro ejemplo de descomposición</div>
+            <div class="pnl-border">
+                <div class="math-eq">96 ÷ 3</div>
+                <div class="stp decomp-flow">
+                    <div class="decomp-box">90 ÷ 3 = 30</div>
+                    <div class="arrow">+</div>
+                    <div class="decomp-box">6 ÷ 3 = 2</div>
+                    <div class="arrow">→</div>
+                    <div class="decomp-box">32</div>
+                </div>
+                <div class="stp mini-chip">Descompongo el 96 en 90 y 6 porque ambos se pueden dividir fácil por 3.</div>
+            </div>
+            </div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Abre tu cuaderno: <b class="hl">63 ÷ 3</b>.</p>
+        
+        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">60 ÷ 3 = 20</div><div class="stp decomp-box">3 ÷ 3 = 1</div><div class="stp decomp-box">20 + 1 = 21</div></div>
+        </div><div class="sl">
+            <div class="head-title">Cuando no es exacta</div>
+            <p class="sub-text">También puedo descomponer y luego mirar qué sobra.</p>
+            <div class="decomp-flow">
+                <div class="decomp-box">95 ÷ 6</div>
+                <div class="arrow stp">→</div>
+                <div class="decomp-box stp">60 ÷ 6 = 10</div>
+                <div class="arrow stp">+</div>
+                <div class="decomp-box stp">30 ÷ 6 = 5</div>
+                <div class="arrow stp">→</div>
+                <div class="decomp-box stp">Quedan 5</div>
+            </div>
+            <div class="stp math-eq">95 ÷ 6 = 15 y sobra 5</div>
+            </div><div class="sl">
+        <div class="head-title">Descomposición con resto</div>
+        <p class="sub-text">Resuelve por partes y después revisa el resto.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFB74D; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🍎</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">95 ÷ 6</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFB74D; margin:0;">= 15 r 5</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">⚽</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">67 ÷ 4</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 16 r 3</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🧁</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">52 ÷ 5</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 10 r 2</div>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title">Elegimos una buena descomposición</div>
+        <p class="sub-text">La idea es partir el dividendo en números que sí se dejen dividir.</p>
+        <div class="fact-grid">
+            <div class="fact-box" style="border-color:#FFE082;">
+                <h4>84 ÷ 4</h4>
+                <p>Conviene usar <b>80 y 4</b>.</p>
+            </div>
+            
+            <div class="fact-box" style="border-color:#9DE3BD;">
+                <h4>96 ÷ 3</h4>
+                <p>Conviene usar <b>90 y 6</b>.</p>
+            </div>
+            
+            <div class="fact-box" style="border-color:#E1BEE7;">
+                <h4>95 ÷ 6</h4>
+                <p>Conviene usar <b>60 y 30</b>, y luego mirar lo que sobra.</p>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title">Desafío por descomposición</div>
+        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">Si <b>84 ÷ 4</b> se separa como <b>80 ÷ 4</b> y <b>4 ÷ 4</b>, el resultado es...</p>
+            <div class="quiz-row"><button class="btn" onclick="chkAns(this, false, &quot;20 + 1 = 21.&quot;)">20</button><button class="btn" onclick="chkAns(this, true, &quot;20 + 1 = 21.&quot;)">21</button><button class="btn" onclick="chkAns(this, false, &quot;20 + 1 = 21.&quot;)">24</button></div>
+            <div class="msg-area"></div>
+        </div>
+        </div><div class="sl">
+            <div class="head-title">¿Qué es estimar un cuociente?</div>
+            <p class="sub-text">Estimamos para saber <b class="hl">más o menos</b> cuántas veces cabe el divisor.</p>
+            <div class="decomp-flow">
+                <div class="decomp-box">92 ÷ 4</div>
+                <div class="arrow stp">→</div>
+                <div class="decomp-box stp">92 está cerca de 80 o 100</div>
+                <div class="arrow stp">→</div>
+                <div class="decomp-box stp">4 × 20 = 80</div>
+                <div class="arrow stp">→</div>
+                <div class="decomp-box stp">El cuociente estará cerca de 20</div>
+            </div>
+            </div><div class="sl">
+            <div class="head-title">Estimamos y luego ajustamos</div>
+            <div class="pnl-border">
+                <div class="math-eq">92 ÷ 4</div>
+                <div class="stp step-box">Estimación: 4 × 20 = 80. Entonces el cuociente será un poco mayor que 20.</div>
+                <div class="stp step-box">Ajuste: 4 × 23 = 92.</div>
+                <div class="stp math-eq">92 ÷ 4 = 23</div>
+            </div>
+            </div><div class="sl">
+        <div class="head-title">Estimamos cuocientes exactos</div>
+        <p class="sub-text">Primero adivina cerca de cuánto será y luego confirma.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🎈</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">92 ÷ 4</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFE082; margin:0;">= 23</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">📚</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">88 ÷ 4</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 22</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🌈</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">96 ÷ 8</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 12</div>
+            </div>
+            </div>
+        </div><div class="sl">
+            <div class="head-title">Estimación con resto</div>
+            <div class="pnl-border">
+                <div class="math-eq">77 ÷ 6</div>
+                <div class="stp step-box">Estimación: 6 × 10 = 60. El cuociente será un poco mayor que 10.</div>
+                <div class="stp step-box">Pruebo: 6 × 12 = 72. Sobran 5.</div>
+                <div class="stp math-eq">77 ÷ 6 = 12 y sobra 5</div>
+            </div>
+            </div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Abre tu cuaderno: <b class="hl">77 ÷ 6</b>.</p>
+        
+        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">6 × 10 = 60</div><div class="stp decomp-box">Quedan 17</div><div class="stp decomp-box">6 × 2 = 12</div><div class="stp decomp-box">Resultado: 12 y sobra 5</div></div>
+        </div><div class="sl">
+        <div class="head-title">Estimaciones con resto</div>
+        <p class="sub-text">Adivina primero y corrige después.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFB74D; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🧩</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">77 ÷ 6</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFB74D; margin:0;">= 12 r 5</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🚲</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">85 ÷ 7</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 12 r 1</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🍪</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">94 ÷ 8</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 11 r 6</div>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title">Unimos estimación y división</div>
+        <p class="sub-text">La estimación da una pista para el cociente.</p>
+        
+    <div class="column-wrap">
+        <div class="alg-board">
+            <div class="alg-grid long">
+                <div class="alg-label"></div><div class="alg-digit dim"></div><div class="alg-digit">2</div><div class="alg-digit">3</div><div class="alg-label">÷</div><div class="alg-digit dim"></div><div class="alg-digit">9</div><div class="alg-digit">2</div><div class="alg-label">4</div><div class="alg-digit dim"></div><div class="alg-digit dim"></div><div class="alg-digit dim"></div>
+                <div class="alg-line"></div>
+            </div>
+        </div>
+        <div class="side-panel">
+            <h3>Cómo pensar</h3>
+            <p class="stp" style="margin-bottom:12px;">Primero pienso: 4 × 20 = 80. El resultado será cercano a <b>20</b>.</p><p class="stp" style="margin-bottom:12px;">Luego pruebo un poco más: 4 × 23 = 92.</p><p class="stp" style="margin-bottom:12px;">Así sé que el cuociente exacto es <b>23</b>.</p>
+        </div>
+    </div>
+    </div><div class="sl">
+        <div class="head-title">Pistas para estimar bien</div>
+        <p class="sub-text">Estas ideas ayudan a no probar números al azar.</p>
+        <div class="fact-grid">
+            <div class="fact-box" style="border-color:#FFE082;">
+                <h4>Redondea</h4>
+                <p>Busca un múltiplo cercano del divisor.</p>
+            </div>
+            
+            <div class="fact-box" style="border-color:#9DE3BD;">
+                <h4>Compara</h4>
+                <p>Si 4 × 20 = 80, entonces 92 ÷ 4 será mayor que 20.</p>
+            </div>
+            
+            <div class="fact-box" style="border-color:#E1BEE7;">
+                <h4>Ajusta</h4>
+                <p>Sube o baja hasta encontrar el cuociente que sí sirve.</p>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title">Descomposición más estimación</div>
+        <p class="sub-text">Ahora mezcla ambas estrategias.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">📦</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">84 ÷ 4</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFE082; margin:0;">= 21</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🎯</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">92 ÷ 4</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 23</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🟣</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">77 ÷ 6</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 12 r 5</div>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Resuelve estimando y ajustando: <b class="hl">92 ÷ 4</b>.</p>
+        
+        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">4 × 20 = 80</div><div class="stp decomp-box">4 × 23 = 92</div><div class="stp decomp-box">Resultado: 23</div></div>
+        </div><div class="sl">
+            <div class="head-title">Ejemplo completo</div>
+            <div class="pnl-border">
+                <div class="math-eq">67 ÷ 4</div>
+                <div class="stp step-box">Estimación: 4 × 10 = 40, así que el cuociente será mayor que 10.</div>
+                <div class="stp step-box">Descomposición: 40 ÷ 4 = 10 y 24 ÷ 4 = 6.</div>
+                <div class="stp step-box">Llevamos 16 y quedan 3.</div>
+                <div class="stp math-eq">67 ÷ 4 = 16 y sobra 3</div>
+            </div>
+            </div><div class="sl">
+        <div class="head-title">Desafío de estrategia</div>
+        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">En <b>92 ÷ 4</b>, una buena estimación inicial para el cuociente es...</p>
+            <div class="quiz-row"><button class="btn" onclick="chkAns(this, true, &quot;Porque 4 \u00d7 20 = 80 y 92 est\u00e1 cerca de 80.&quot;)">20</button><button class="btn" onclick="chkAns(this, false, &quot;Porque 4 \u00d7 20 = 80 y 92 est\u00e1 cerca de 80.&quot;)">4</button><button class="btn" onclick="chkAns(this, false, &quot;Porque 4 \u00d7 20 = 80 y 92 est\u00e1 cerca de 80.&quot;)">40</button></div>
+            <div class="msg-area"></div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Resuelve estimando y ajustando: <b class="hl">85 ÷ 7</b>.</p>
+        
+        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">7 × 10 = 70</div><div class="stp decomp-box">7 × 12 = 84</div><div class="stp decomp-box">Resultado: 12 y sobra 1</div></div>
+        </div><div class="sl">
+        <div class="head-title">Ejercicios finales de estrategia</div>
+        <p class="sub-text">Ya puedes combinar descomposición y estimación.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🚌</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">85 ÷ 7</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFE082; margin:0;">= 12 r 1</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🍓</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">99 ÷ 9</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 11</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🎨</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">94 ÷ 8</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 11 r 6</div>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#E3F2FD; border:5px solid #1565C0;">
+            <div class="story-emoji">🎬</div>
+            <div>
+                <h2 style="color:#1565C0;">Asientos del cine</h2>
+                <p>Hay <b>92 personas</b> y se sientan en filas de <b>4</b>. ¿Cuántas filas completas se llenan?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #1565C0; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">92 ÷ 4 = 23<br><span style='color:var(--base);'>Se llenan 23 filas completas.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#FFF3E0; border:5px solid #EF6C00;">
+            <div class="story-emoji">🥔</div>
+            <div>
+                <h2 style="color:#EF6C00;">Bolsas de papas</h2>
+                <p>Hay <b>77 papas</b> para poner en bolsas de <b>6</b>. ¿Cuántas bolsas completas se llenan y cuántas papas sobran?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #EF6C00; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">77 ÷ 6 = 12 y sobra 5<br><span style='color:var(--base);'>Se llenan 12 bolsas y sobran 5 papas.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#E8F5E9; border:5px solid #2E7D32;">
+            <div class="story-emoji">🎴</div>
+            <div>
+                <h2 style="color:#2E7D32;">Láminas del álbum</h2>
+                <p>Un niño tiene <b>84 láminas</b> y las guarda en páginas de <b>4</b>. ¿Cuántas páginas completas ocupa?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #2E7D32; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">84 ÷ 4 = 21<br><span style='color:var(--base);'>Ocupa 21 páginas completas.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#F3E5F5; border:5px solid #8E44AD;">
+            <div class="story-emoji">🟣</div>
+            <div>
+                <h2 style="color:#8E44AD;">Pulseras de colores</h2>
+                <p>Hay <b>67 cuentas</b> y se hacen pulseras de <b>4</b> cuentas cada una. ¿Cuántas pulseras completas salen y cuántas cuentas sobran?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #8E44AD; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">67 ÷ 4 = 16 y sobra 3<br><span style='color:var(--base);'>Salen 16 pulseras y sobran 3 cuentas.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Resumen</div>
+        <div class="summary-list"><div class="stp summary-item"><b>Descomponer</b> ayuda a dividir números grandes en partes fáciles.</div><div class="stp summary-item"><b>Estimar cuocientes</b> da una pista para empezar mejor.</div><div class="stp summary-item"><b>Ajustar</b> significa probar un poco más o un poco menos hasta llegar al resultado.</div><div class="stp summary-item"><b>Con resto</b>, seguimos comprobando con divisor × cociente + resto.</div></div>
+        </div><div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:38px; font-weight:800; line-height:1.45; max-width:780px;">Ya puedes resolver divisiones pensando, estimando y descomponiendo con más estrategia.</p>
+            <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">🌟</div>
+        </div>
+        </div>
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div class="sc" id="sc">1 / 30</div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>
+const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+function ui() {
+    S.forEach((s,i)=>{
+        s.classList.remove('on','pv','nx');
+        if(i===c) s.classList.add('on');
+        else if(i<c) s.classList.add('pv');
+        else s.classList.add('nx');
+    });
+    document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+    document.getElementById('sc').textContent=`${c+1} / ${T}`;
+    document.getElementById('pv').disabled=c===0;
+    document.getElementById('nx').disabled=c===T-1;
+}
+function go(d) {
+    if(d>0) {
+        const hid = S[c].querySelectorAll('.stp:not(.shwn)');
+        if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+    } else {
+        const shw = S[c].querySelectorAll('.stp.shwn');
+        if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+    }
+    const n=c+d;
+    if(n>=0 && n<T) { c=n; ui(); }
+}
+document.addEventListener('keydown', e => {
+    if(e.key==='ArrowRight' || e.key===' ') go(1);
+    if(e.key==='ArrowLeft') go(-1);
+});
+function chkAns(btn, correct, exp) {
+    const wrap = btn.closest('.sl');
+    const buttons = btn.parentElement.querySelectorAll('.btn');
+    const msg = wrap.querySelector('.msg-area');
+    buttons.forEach(b => {
+        b.disabled = false;
+        b.style.background = 'var(--base)';
+        b.style.transform = 'scale(1)';
+    });
+    if (correct) {
+        btn.style.background = '#047857';
+        btn.style.transform = 'scale(1.06)';
+        msg.textContent = `¡Muy bien! ${exp}`;
+        msg.style.color = '#047857';
+    } else {
+        btn.style.background = '#b91c1c';
+        msg.textContent = 'Revisa las unidades primero y vuelve a intentarlo.';
+        msg.style.color = '#b91c1c';
+    }
+}
+ui();
+</script>
+</body>
+</html>

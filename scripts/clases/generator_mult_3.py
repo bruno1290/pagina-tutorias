@@ -1,0 +1,589 @@
+def generate_html():
+    css = """
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+    :root {--base: #1C4A82; --bg: #f5f6f8; --tx: #333;}
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family: 'Nunito', sans-serif; background: var(--bg); overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; color: var(--tx);}
+    .dk {position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex;}
+    
+    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 40px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1;}
+    .sl.on {opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10;}
+    .sl.pv {opacity: 0; transform: translateX(-50px) scale(.95);}
+    .sl.nx {opacity: 0; transform: translateX(50px) scale(.95);}
+    
+    .head-title {background: var(--base); color: white; padding: 10px 40px; font-size: 32px; font-weight: 900; margin-bottom: 20px; display: inline-block; border-radius: 12px; text-align:center;}
+    .sub-text {font-size: 26px; font-weight: 600; margin-bottom: 20px; text-align: center;}
+    
+    .pb {position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100;}
+    .nv {position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: white; border-top: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; z-index: 100;}
+    .nb {background: #eee; color: var(--base); border: none; padding: 10px 20px; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer; transition: all .2s;}
+    .nb:hover {background: #ddd;}
+    .nb:disabled {opacity: 0.3; cursor: not-allowed;}
+    .sc {color: #888; font-size: 16px; font-weight: 900;}
+    
+    .stp {opacity: 0; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;}
+    .stp.shwn {opacity: 1; transform: translateY(0); pointer-events: auto;}
+    
+    .pnl {background: #fff; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 2px solid #eaeaea; width: 100%; margin-bottom: 15px;}
+    .pnl-border {background: #fff; border: 4px solid var(--base); border-radius: 20px; padding: 25px; display: flex; flex-direction: column; align-items: center;}
+    .hl {color: var(--base); font-weight: 900;}
+    .btn {background: var(--base); color: white; border: none; padding: 14px 28px; border-radius: 12px; font-size: 20px; font-weight: 900; cursor: pointer; transition: transform .2s;}
+    .btn:hover {transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3);}
+    .math-eq {font-size: 40px; font-weight: 900; color: var(--base); background: #fff; padding: 10px 30px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); border: 3px dashed #bbdefb; margin: 15px;}
+    
+    .grid-algo { display: grid; grid-template-columns: repeat(4, 70px); grid-template-rows: repeat(5, 70px); font-size: 60px; font-weight: 900; font-family: monospace; text-align: center; margin: 0; background: #fff; padding: 30px; border-radius: 20px; border: 4px solid #e3f2fd; position:relative; }
+    .grid-algo div { display: flex; align-items: center; justify-content: center; }
+    .line-algo { grid-column: 1 / -1; grid-row: 4; height: 6px; background: #333; margin: auto 0 10px 0; border-radius: 3px; align-self: end; }
+    .res-carry { font-size: 28px; color: #c2185b; font-weight: 900; border: 3px dashed #c2185b; border-radius: 50%; width: 45px; height: 45px; display:flex; justify-content:center; align-items:center; margin: 0 auto; background: #fff0f5;}
+    """
+    
+    js = """
+    const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+    function ui() {
+        S.forEach((s,i)=>{ s.classList.remove('on','pv','nx'); if(i===c) s.classList.add('on'); else if(i<c) s.classList.add('pv'); else s.classList.add('nx'); });
+        document.getElementById('pb').style.width=((c+1)/T*100)+'%'; document.getElementById('sc').textContent=`${c+1} / ${T}`;
+        document.getElementById('pv').disabled=c===0; document.getElementById('nx').disabled=c===T-1;
+    }
+    function go(d) {
+        if(d>0) { const hid = S[c].querySelectorAll('.stp:not(.shwn)'); if(hid.length > 0) { hid[0].classList.add('shwn'); return; } }
+        else { const shw = S[c].querySelectorAll('.stp.shwn'); if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; } }
+        const n=c+d; if(n>=0 && n<T) { c=n; ui(); }
+    }
+    document.addEventListener('keydown', e => { if(e.key==='ArrowRight' || e.key===' ') go(1); if(e.key==='ArrowLeft') go(-1); });
+    ui();
+    function chkAns(btn, correct) {
+        let p = btn.parentElement; let msg = btn.closest('.sl').querySelector('.msg-area');
+        for (let b of p.children) b.style.transform = 'scale(1)';
+        if (correct) { btn.style.background = '#047857'; btn.style.transform = 'scale(1.1)'; msg.innerHTML = '¡Excelente! ✅ ¡Lo lograste!'; msg.style.color = '#047857'; }
+        else { btn.style.background = '#b91c1c'; let frases = ["¡Revisa el orden multiplicando de derecha a izquierda! 💪", "Observa las reservas 🧐", "¡Casi! Intentemos de nuevo 🚀"]; msg.innerHTML = frases[Math.floor(Math.random()*frases.length)]; msg.style.color = '#b91c1c'; }
+    }
+    """
+    
+    slides = []
+    def slide(html): slides.append(f'<div class="sl">{html}</div>')
+    
+    # 1. INTRO
+    slide(f"""
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 style="font-size: 70px; color: var(--base); margin-bottom: 20px; text-align:center;">¡Multiplicaciones 3!</h1>
+            <p class="sub-text">Algoritmos, Decenas y Grandes Números 🚀</p>
+            <p style="font-size:100px; margin-top:30px; animation: bounce 2s infinite;">📟</p>
+            <style>@keyframes bounce {{ 0%, 100%{{transform:translateY(0);}} 50%{{transform:translateY(-20px);}} }}</style>
+        </div>
+    """)
+    
+    # --- MULTIPLICAR POR 10, 100 ---
+    slide(f"""
+        <div class="head-title">Multiplicar por 10</div>
+        <p class="sub-text">¡La regla mágica de los ceros!</p>
+        <div class="stp pnl-border" style="background:#FFF9C4; border-color:#FBC02D; width:100%;">
+            <div style="display:flex; justify-content:center; align-items:center; gap:20px; width:100%;">
+                <div class="math-eq" style="background:#fefedc; font-size:60px;">8 x 10</div>
+                <div class="stp math-eq" style="background:#fff; font-size:60px; color:#047857;">8<span style="color:#d32f2f;">0</span></div>
+            </div>
+        </div>
+        <div class="stp" style="margin-top:20px; font-size:28px; font-weight:800; text-align:center;">
+            Si multiplicas por 10, le <b class="hl">agregas su CERO</b> al final del número.
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title">Multiplicar por 100 o 1000</div>
+        <p class="sub-text">Funciona exactamente igual, ¡cuentas los ceros!</p>
+        
+        <div style="display:flex; flex-direction:column; gap:20px; align-items:center; width:100%; margin-top:10px;">
+            <div class="stp" style="display:flex; align-items:center;">
+                <div style="font-size:40px; font-weight:900;">7 x 1<span style="color:#d32f2f;">00</span> =</div>
+                <div class="stp math-eq" style="color:#047857; margin-left:20px;">7<span style="color:#d32f2f;">00</span></div>
+            </div>
+            
+            <div class="stp" style="display:flex; align-items:center;">
+                <div style="font-size:40px; font-weight:900;">9 x 1<span style="color:#1976D2;">000</span> =</div>
+                <div class="stp math-eq" style="color:#047857; margin-left:20px;">9<span style="color:#1976D2;">000</span></div>
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Calcula mentalmente usando la regla mágica de los ceros:</p>
+        <div style="display:flex; flex-direction:column; gap:20px; font-size:40px; font-weight:900; align-items:center;">
+            <div class="stp" style="display:flex; justify-content:space-between; width:450px;">
+                <span>12 x 10 =</span> <span class="stp hl" style="color:#047857;">120</span>
+            </div>
+            <div class="stp" style="display:flex; justify-content:space-between; width:450px;">
+                <span>45 x 100 =</span> <span class="stp hl" style="color:#047857;">4.500</span>
+            </div>
+            <div class="stp" style="display:flex; justify-content:space-between; width:450px;">
+                <span>15 x 1000 =</span> <span class="stp hl" style="color:#047857;">15.000</span>
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title">Abre tu cuaderno (Inverso)</div>
+        <p class="sub-text">¿Por cuánto multiplicamos para llegar al resultado?</p>
+        <div style="display:flex; flex-direction:column; gap:20px; font-size:40px; font-weight:900; align-items:center;">
+            <div class="stp" style="display:flex; justify-content:space-between; width:500px;">
+                <span>8 x <span class="stp" style="color:#d32f2f;">100</span> =</span> <span>800</span>
+            </div>
+            <div class="stp" style="display:flex; justify-content:space-between; width:500px;">
+                <span>32 x <span class="stp" style="color:#d32f2f;">10</span> =</span> <span>320</span>
+            </div>
+        </div>
+    """)
+
+    # --- MULTIPLOS DE 10 ---
+    slide(f"""
+        <div class="head-title">Multiplicar por Múltiplos (20, 30..)</div>
+        <p class="sub-text">¿Y si queremos calcular <b class="hl" style="font-size:36px;">4 x 20</b>?</p>
+        
+        <div class="pnl-border" style="width:100%; border-color:#0288D1; background:#E3F2FD;">
+            <div class="stp" style="font-size:26px; text-align:center;">
+                <b style="color:#0288D1;">Paso 1:</b> Ignora el cero por un segundo y multiplica los números.<br>
+                <b style="font-size:40px;">4 x 2 = 8</b>
+            </div>
+            
+            <div class="stp" style="margin-top:20px; font-size:26px; text-align:center;">
+                <b style="color:#0288D1;">Paso 2:</b> Toma el cero que "guardaste" y pégalo al resultado.
+            </div>
+            
+            <div class="stp math-eq" style="margin-top:20px; font-size:60px; color:#047857;">
+                8<span style="color:#d32f2f;">0</span>
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Calcula mentalmente estos múltiplos:</p>
+        <div style="display:flex; flex-direction:column; gap:20px; font-size:40px; font-weight:900; align-items:center; width:100%;">
+            <div class="stp" style="display:flex; justify-content:space-between; width:500px;">
+                <span>3 x 30 =</span> <span class="stp hl" style="color:#047857;">90</span>
+            </div>
+            <div class="stp" style="display:flex; justify-content:space-between; width:500px;">
+                <span>6 x 200 =</span> <span class="stp hl" style="color:#047857;">1.200</span>
+            </div>
+            <div class="stp" style="display:flex; justify-content:space-between; width:500px;">
+                <span>5 x 40 =</span> <span class="stp hl" style="color:#047857;">200</span>
+            </div>
+        </div>
+    """)
+
+    # --- DESCOMPOSICIÓN ---
+    slide(f"""
+        <div class="head-title">Descomposición Aditiva</div>
+        <p class="sub-text">Cuando un número es difícil, ¡rómpelo en piezas fáciles!</p>
+        
+        <div class="stp pnl" style="border: 4px dashed var(--base); padding:40px; text-align:center;">
+            <p style="font-size:32px; font-weight:800;">Queremos calcular <b style="font-size:40px; color:#c2185b;">4 x 13</b></p>
+            <div class="stp" style="margin-top:20px; font-size:28px;">
+                Cualquiera sabe que <b class="hl">13</b> está hecho de <b class="hl">10 + 3</b>.
+            </div>
+            <div class="stp math-eq" style="background:#fff0f5; border-color:#c2185b; font-size:36px;">
+                4 x (10 + 3)
+            </div>
+            <div class="stp" style="margin-top:20px; font-size:28px; font-weight:800;">
+                ¡Ahora multiplicamos el 4 por el 10, y luego el 4 por el 3!
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title">Aplicando Descomposición</div>
+        <p class="sub-text">Calculamos las partes de: <b>4 x (10 + 3)</b></p>
+        
+        <div class="pnl-border" style="border-color:#9DE3BD;">
+            <div class="stp" style="font-size:36px; font-weight:900; text-align:center; display:flex; flex-direction:column; gap:15px;">
+                <div style="display:flex; justify-content:space-between; width:400px;">
+                    <span style="color:var(--base);">4 x 10 =</span> <span class="stp" style="color:#047857;">40</span>
+                </div>
+                <div class="stp" style="display:flex; justify-content:space-between; width:400px;">
+                    <span style="color:#c2185b;">4 x 3 =</span> <span class="stp" style="color:#047857;">12</span>
+                </div>
+            </div>
+            
+            <div class="stp" style="width:400px; height:4px; background:#333; margin:20px 0;"></div>
+            
+            <div class="stp" style="font-size:28px; text-align:center; font-weight:800;">
+                ¡Ahora sumamos las dos partes!<br>
+                <div class="math-eq" style="font-size:50px; color:#047857;">40 + 12 = 52</div>
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Aplica descomposición aditiva para: <b>5 x 14</b></p>
+        
+        <div class="pnl" style="font-size:28px; display:flex; flex-direction:column; align-items:center; border:3px solid #E3F2FD;">
+            <div class="stp math-eq" style="background:#fff;">5 x (10 + 4)</div>
+            
+            <div class="stp" style="margin-top:10px; font-weight:900;">
+                Paso 1: <span class="stp" style="color:var(--base);">5 x 10 = 50</span>
+            </div>
+            <div class="stp" style="margin-top:10px; font-weight:900;">
+                Paso 2: <span class="stp" style="color:#c2185b;">5 x 4 = 20</span>
+            </div>
+            
+            <div class="stp math-eq" style="margin-top:20px; font-size:46px; color:#047857;">
+                Suma: 50 + 20 = 70
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Resuelve usando descomposición: <b>3 x 25</b></p>
+        
+        <div class="pnl" style="font-size:28px; display:flex; flex-direction:column; align-items:center; border:3px solid #E3F2FD;">
+            <div class="stp math-eq" style="background:#fff;">3 x (20 + 5)</div>
+            
+            <div class="stp" style="margin-top:10px; font-weight:900;">
+                Paso 1: <span class="stp" style="color:var(--base);">3 x 20 = 60</span>
+            </div>
+            <div class="stp" style="margin-top:10px; font-weight:900;">
+                Paso 2: <span class="stp" style="color:#c2185b;">3 x 5 = 15</span>
+            </div>
+            
+            <div class="stp math-eq" style="margin-top:20px; font-size:46px; color:#047857;">
+                Suma: 60 + 15 = 75
+            </div>
+        </div>
+    """)
+
+    # --- ALGORITMO VERTICAL: BASE ---
+    slide(f"""
+        <div class="head-title" style="background:#047857;">El Algoritmo Vertical</div>
+        <p class="sub-text">Cálculos ordenados para números más grandes.</p>
+        <div class="pnl" style="font-size:26px; text-align:center;">
+            Para multiplicar <b class="hl" style="font-size:36px;">32 x 3</b> de forma rápida, los colocamos hacia abajo.
+            <div class="stp" style="margin-top:20px; padding:20px; font-weight:900; color:#c2185b; background:#fff0f5; border-radius:15px; border:2px dashed #c2185b;">
+                ⚠️ REGLA DE ORO:<br>SIEMPRE partimos multiplicando desde las Unidades (de Derecha a Izquierda).
+            </div>
+            <div class="stp" style="font-size:80px; margin-top:20px;">⬅️⬅️</div>
+        </div>
+    """)
+
+    # Animacion Algoritmo simple
+    slide(f"""
+        <div class="head-title" style="background:#047857;">Algoritmo Paso a Paso</div>
+        <p class="sub-text">Resolviendo: <b>32 x 3</b></p>
+        <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; width:100%;">
+            <div class="grid-algo" style="margin:0;">
+                <div style="grid-row:2; grid-column:3;">3</div>
+                <div style="grid-row:2; grid-column:4;">2</div>
+                
+                <div style="grid-row:3; grid-column:2; color:var(--base);">x</div>
+                <div style="grid-row:3; grid-column:4;">3</div>
+                <div class="line-algo"></div>
+                
+                <div class="stp result-u" style="grid-row:5; grid-column:4; color:#047857;">6</div>
+                <div class="stp result-d" style="grid-row:5; grid-column:3; color:#047857;">9</div>
+            </div>
+            
+            <div style="display:flex; flex-direction:column; gap:15px; width:360px;">
+                <div class="stp pnl" style="border-width:3px; border-color:#FF9D9D;">
+                    <b style="color:#c2185b; font-size:20px;">Paso 1 (Unidades):</b><br>
+                    <span style="font-size:24px;">Multiplicamos 3 x 2 = 6</span>
+                </div>
+                <div class="stp pnl" style="border-width:3px; border-color:#9DDEFF;">
+                    <b style="color:var(--base); font-size:20px;">Paso 2 (Decenas):</b><br>
+                    <span style="font-size:24px;">Multiplicamos 3 x 3 = 9</span>
+                </div>
+                <div class="stp pnl" style="border-width:3px; background:#e8f5e9; border-color:#047857; text-align:center;">
+                    <b style="color:#047857; font-size:24px;">Total = 96</b>
+                </div>
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Resuelve usando algoritmo: <b>12 x 4</b></p>
+        <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; width:100%;">
+            <div class="grid-algo" style="margin:0;">
+                <div style="grid-row:2; grid-column:3;">1</div>
+                <div style="grid-row:2; grid-column:4;">2</div>
+                <div style="grid-row:3; grid-column:2; color:var(--base);">x</div>
+                <div style="grid-row:3; grid-column:4;">4</div>
+                <div class="line-algo"></div>
+                
+                <div class="stp" style="grid-row:5; grid-column:4; color:#047857;">8</div>
+                <div class="stp" style="grid-row:5; grid-column:3; color:#047857;">4</div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:15px; width:360px;">
+                <div class="stp pnl" style="border-color:#FF9D9D;"><b>Paso 1:</b> 4 x 2 = 8</div>
+                <div class="stp pnl" style="border-color:#9DDEFF;"><b>Paso 2:</b> 4 x 1 = 4</div>
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Resuelve usando algoritmo: <b>21 x 4</b></p>
+        <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; width:100%;">
+            <div class="grid-algo" style="margin:0;">
+                <div style="grid-row:2; grid-column:3;">2</div>
+                <div style="grid-row:2; grid-column:4;">1</div>
+                <div style="grid-row:3; grid-column:2; color:var(--base);">x</div>
+                <div style="grid-row:3; grid-column:4;">4</div>
+                <div class="line-algo"></div>
+                
+                <div class="stp" style="grid-row:5; grid-column:4; color:#047857;">4</div>
+                <div class="stp" style="grid-row:5; grid-column:3; color:#047857;">8</div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:15px; width:360px;">
+                <div class="stp pnl" style="border-color:#FF9D9D;"><b>Paso 1:</b> 4 x 1 = 4</div>
+                <div class="stp pnl" style="border-color:#9DDEFF;"><b>Paso 2:</b> 4 x 2 = 8</div>
+            </div>
+        </div>
+    """)
+
+    # CON RESERVA INTRO
+    slide(f"""
+        <div class="head-title" style="background:#c2185b;">¿Y si hay Reserva?</div>
+        <div class="pnl" style="font-size:26px; text-align:center; border: 4px solid #FF9D9D;">
+            <p>Calcularemos <b class="hl" style="font-size:36px;">24 x 4</b>.</p>
+            <div class="stp" style="margin-top:20px;">
+                Al multiplicar las unidades: <b style="color:var(--base);">4 x 4 = 16</b>.<br>
+                ¡El 16 no cabe en un solo espacio de abajo!
+            </div>
+            <div class="stp" style="margin-top:20px; font-weight:800; background:#f5f6f8; padding:20px; border-radius:15px;">
+                Anotamos la unidad (6) abajo,<br>¡y la decena (1) la dejamos como <b style="color:#c2185b;">Reserva</b> flotando arriba en la columna vecina!
+            </div>
+        </div>
+    """)
+
+    # ALG CON RESERVA ANIMADO
+    slide(f"""
+        <div class="head-title" style="background:#c2185b;">Algoritmo con Reserva</div>
+        <p class="sub-text">Resolviendo: <b>24 x 4</b></p>
+        <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; width:100%;">
+            <div class="grid-algo" style="margin:0;">
+                <div style="grid-row:2; grid-column:3;">2</div>
+                <div style="grid-row:2; grid-column:4;">4</div>
+                
+                <div style="grid-row:3; grid-column:2; color:var(--base);">x</div>
+                <div style="grid-row:3; grid-column:4;">4</div>
+                <div class="line-algo"></div>
+                
+                <div class="stp" style="grid-row:5; grid-column:4; color:#047857;">6</div>
+                <div class="stp res-carry" style="grid-row:1; grid-column:3;">1</div>
+
+                <div class="stp" style="grid-row:5; grid-column:3; color:#047857;">9</div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:15px; width:380px;">
+                <div class="stp pnl" style="border-width:3px; border-color:#FF9D9D;">
+                    <b style="color:#c2185b; font-size:20px;">Paso 1 (Unidades): 4x4 = 16</b><br>
+                    <span style="font-size:22px;">Anoto el 6 abajo.</span>
+                </div>
+                <div class="stp pnl" style="border-width:3px; border-color:#FF9D9D;">
+                    <b style="color:#c2185b; font-size:20px;">La Reserva:</b><br>
+                    <span style="font-size:22px;">El 1 del '16' lo paso como reserva arriba de la columna siguiente.</span>
+                </div>
+                <div class="stp pnl" style="border-width:3px; border-color:#9DDEFF;">
+                    <b style="color:var(--base); font-size:20px;">Paso 2 (Decenas): 4x2 = 8</b><br>
+                    <span style="font-size:22px;">¡Le sumo la reserva!<br> 8 + 1 = 9. Anoto el 9.</span>
+                </div>
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Cuidado con la reserva: <b>16 x 5</b></p>
+        <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; width:100%;">
+            <div class="grid-algo" style="margin:0;">
+                <div style="grid-row:2; grid-column:3;">1</div>
+                <div style="grid-row:2; grid-column:4;">6</div>
+                <div style="grid-row:3; grid-column:2; color:var(--base);">x</div>
+                <div style="grid-row:3; grid-column:4;">5</div>
+                <div class="line-algo"></div>
+                
+                <div class="stp" style="grid-row:5; grid-column:4; color:#047857;">0</div>
+                <div class="stp res-carry" style="grid-row:1; grid-column:3;">3</div>
+                <div class="stp" style="grid-row:5; grid-column:3; color:#047857;">8</div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:15px; width:380px;">
+                <div class="stp pnl" style="border-color:#FF9D9D;"><b>Paso 1:</b> 5x6 = 30. Anoto 0, Subo 3.</div>
+                <div class="stp pnl" style="border-color:#FF9D9D;"><b>Paso 2:</b> Anoto la reserva de 3.</div>
+                <div class="stp pnl" style="border-color:#9DDEFF;"><b>Paso 3:</b> 5x1=5 (+3 reserva) = 8.</div>
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Cuidado con la reserva: <b>28 x 3</b></p>
+        <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; width:100%;">
+            <div class="grid-algo" style="margin:0;">
+                <div style="grid-row:2; grid-column:3;">2</div>
+                <div style="grid-row:2; grid-column:4;">8</div>
+                <div style="grid-row:3; grid-column:2; color:var(--base);">x</div>
+                <div style="grid-row:3; grid-column:4;">3</div>
+                <div class="line-algo"></div>
+                
+                <div class="stp" style="grid-row:5; grid-column:4; color:#047857;">4</div>
+                <div class="stp res-carry" style="grid-row:1; grid-column:3;">2</div>
+                <div class="stp" style="grid-row:5; grid-column:3; color:#047857;">8</div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:15px; width:380px;">
+                <div class="stp pnl" style="border-color:#FF9D9D;"><b>Paso 1:</b> 3x8 = 24. Anoto 4, Subo 2.</div>
+                <div class="stp pnl" style="border-color:#FF9D9D;"><b>Paso 2:</b> Anoto la reserva de 2.</div>
+                <div class="stp pnl" style="border-color:#9DDEFF;"><b>Paso 3:</b> 3x2=6 (+2 reserva) = 8.</div>
+            </div>
+        </div>
+    """)
+
+    # 3 DIGITOS
+    slide(f"""
+        <div class="head-title" style="background:var(--base);">El Rey: 3 Dígitos</div>
+        <p class="sub-text">Calculando <b>135 x 4</b>.</p>
+        <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; width:100%;">
+            <div class="grid-algo" style="margin:0; grid-template-columns: repeat(5, 60px);">
+                <div style="grid-row:2; grid-column:3;">1</div>
+                <div style="grid-row:2; grid-column:4;">3</div>
+                <div style="grid-row:2; grid-column:5;">5</div>
+                
+                <div style="grid-row:3; grid-column:3; color:var(--base);">x</div>
+                <div style="grid-row:3; grid-column:5;">4</div>
+                <div class="line-algo"></div>
+                
+                <div class="stp" style="grid-row:5; grid-column:5; color:#047857;">0</div>
+                <div class="stp res-carry" style="grid-row:1; grid-column:4; width:35px; height:35px; font-size:22px;">2</div>
+
+                <div class="stp" style="grid-row:5; grid-column:4; color:#047857;">4</div>
+                <div class="stp res-carry" style="grid-row:1; grid-column:3; width:35px; height:35px; font-size:22px;">1</div>
+
+                <div class="stp" style="grid-row:5; grid-column:3; color:#047857;">5</div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px; width:380px;">
+                <div class="stp pnl" style="padding:15px; border-width:3px; border-color:#FF9D9D;">
+                    <b style="color:#c2185b; font-size:18px;">Paso 1: Unidades</b><br>
+                    <span style="font-size:20px;">4x5 = 20. Anoto 0, Reserva 2.</span>
+                </div>
+                <div class="stp pnl" style="padding:15px; border-width:3px; border-color:#FFCC80;">
+                    <b style="color:#F57C00; font-size:18px;">Paso 2: Decenas</b><br>
+                    <span style="font-size:20px;">4x3 = 12 (+2 reserva) = 14. Anoto 4, Reserva 1.</span>
+                </div>
+                <div class="stp pnl" style="padding:15px; border-width:3px; border-color:#9DDEFF;">
+                    <b style="color:var(--base); font-size:18px;">Paso 3: Centenas</b><br>
+                    <span style="font-size:20px;">4x1 = 4 (+1 reserva) = 5. Anoto 5.</span>
+                </div>
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Resuelve: <b>123 x 3</b></p>
+        <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; width:100%;">
+            <div class="grid-algo" style="margin:0; grid-template-columns: repeat(5, 60px);">
+                <div style="grid-row:2; grid-column:3;">1</div>
+                <div style="grid-row:2; grid-column:4;">2</div>
+                <div style="grid-row:2; grid-column:5;">3</div>
+                
+                <div style="grid-row:3; grid-column:3; color:var(--base);">x</div>
+                <div style="grid-row:3; grid-column:5;">3</div>
+                <div class="line-algo"></div>
+                
+                <div class="stp" style="grid-row:5; grid-column:5; color:#047857;">9</div>
+                <div class="stp" style="grid-row:5; grid-column:4; color:#047857;">6</div>
+                <div class="stp" style="grid-row:5; grid-column:3; color:#047857;">3</div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px; width:380px;">
+                <div class="stp pnl" style="padding:15px;">Paso 1: 3x3 = 9</div>
+                <div class="stp pnl" style="padding:15px;">Paso 2: 3x2 = 6</div>
+                <div class="stp pnl" style="padding:15px;">Paso 3: 3x1 = 3</div>
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Resuelve: <b>104 x 5</b></p>
+        <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; width:100%;">
+            <div class="grid-algo" style="margin:0; grid-template-columns: repeat(5, 60px);">
+                <div style="grid-row:2; grid-column:3;">1</div>
+                <div style="grid-row:2; grid-column:4;">0</div>
+                <div style="grid-row:2; grid-column:5;">4</div>
+                
+                <div style="grid-row:3; grid-column:3; color:var(--base);">x</div>
+                <div style="grid-row:3; grid-column:5;">5</div>
+                <div class="line-algo"></div>
+                
+                <div class="stp" style="grid-row:5; grid-column:5; color:#047857;">0</div>
+                <div class="stp res-carry" style="grid-row:1; grid-column:4; width:35px; height:35px; font-size:22px;">2</div>
+                <div class="stp" style="grid-row:5; grid-column:4; color:#047857;">2</div>
+                <div class="stp" style="grid-row:5; grid-column:3; color:#047857;">5</div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px; width:400px;">
+                <div class="stp pnl" style="padding:15px;">Paso 1: 5x4 = 20. Res.=2</div>
+                <div class="stp pnl" style="padding:15px;">Paso 2: Reserva 2</div>
+                <div class="stp pnl" style="padding:15px;">Paso 3: 5x0=0 (+2)= 2</div>
+                <div class="stp pnl" style="padding:15px;">Paso 4: 5x1= 5</div>
+            </div>
+        </div>
+    """)
+
+    # --- EXAMENES ---
+    quizzes = [
+        ("Si multiplicas un número por 1.000, le agregas...", ["Un cero al final", "Tres ceros al final", "Tres ceros al inicio"], "Tres ceros al final"),
+        ("Al resolver el Algoritmo Vertical, ¿Por donde debemos empezar SIEMPRE?", ["Por las Centenas", "Por la izquierda", "Por las Unidades (derecha)"], "Por las Unidades (derecha)"),
+        ("Si al multiplicar las decenas obtienes 18, y tenías 3 de reserva arriba... ¿Cuál es el número a anotar?", ["18", "20", "21"], "21"),
+        ("Si descomponemos 5 x 24, ¿Por qué partes multiplicaremos el 5?", ["Por 5 y por 20", "Por 20 y por 4", "Por 24 y por 0"], "Por 20 y por 4"),
+        ("En 132 x 3, ¿Cuál es el producto de las decenas?", ["6", "9", "3"], "9")
+    ]
+    
+    for q_idx, q in enumerate(quizzes):
+        question, options, correct_ans = q
+        btns = ""
+        for opt in options:
+            is_corr = 'true' if opt == correct_ans else 'false'
+            btns += f"<button class='btn' style='font-size:22px; padding:20px; flex:1;' onclick='chkAns(this, {is_corr})'>{opt}</button>"
+            
+        slide(f"""
+        <div class="head-title">Examen Final 🧠 ({q_idx+1}/{len(quizzes)})</div>
+        <div class="pnl-border" style="width:100%; border-color:#0288D1; background:#e3f2fd;">
+            <p style="font-size:30px; font-weight:800; text-align:center; margin-bottom:40px;">{question}</p>
+            <div style="display:flex; justify-content:center; gap:20px; width:100%; margin-bottom:20px;">
+                {btns}
+            </div>
+            <div class="msg-area" style="font-size:26px; font-weight:900; height:40px; margin-top:20px; text-align:center;"></div>
+        </div>
+        """)
+
+    slide(f"""
+        <div class="head-title" style="background: var(--base);">📋 Qué aprendimos</div>
+        <div style="display:flex; flex-direction:column; gap:20px; width:100%;">
+            <div class="stp pnl" style="padding:15px; font-size:20px;"><b>Multiplicar por 10, 100:</b> Agrega los ceros al final.</div>
+            <div class="stp pnl" style="padding:15px; font-size:20px;"><b>Descomposición Aditiva:</b> Rompe los números grandes (ej: 24 = 20 + 4). Multiplica cada uno y suma todo.</div>
+            <div class="stp pnl" style="padding:15px; font-size:20px;"><b>Algoritmo Vertical:</b> ⚠️ Siempre de derecha a izquierda (desde las Unidades). ¡Anota las reservas arriba y súmalas al paso siguiente!</div>
+        </div>
+    """)
+    
+    slide(f"""
+        <div class="head-title" style="background: #c2185b;">🌟 ¡Módulo Completo!</div>
+        <div style="font-size:36px; font-weight:800; text-align:center; margin-top:30px; line-height:1.5;">
+            Has desbloqueado el máximo nivel multiplicando algoritmos grandes.<br>¡Felicitaciones!
+        </div>
+        <div style="font-size:120px; margin-top:50px; animation: bounce 2s infinite;">🎇</div>
+    """)
+
+    html = f"""<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Multiplicación 3 - Interactivo</title><style>{css}</style></head>
+<body><div class="pb" id="pb"></div><div class="dk">{"".join(slides)}</div>
+<div class="nv"><button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button><div class="sc" id="sc">1 / {len(slides)}</div><button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button></div>
+<script>{js}</script></body></html>"""
+    
+    output_path = '/Users/brunonattino/Desktop/PAGINA TUTORIAS/SLIDES/multiplicaciones HTMLS/multiplicaciones_3.html'
+    with open(output_path, 'w', encoding='utf-8') as f: f.write(html)
+    print(f"Módulo 3 actualizado: {len(slides)} slides con explicaciones separadas y sin overlap.")
+
+if __name__ == '__main__':
+    generate_html()
