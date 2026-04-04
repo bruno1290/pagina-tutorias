@@ -1982,9 +1982,22 @@
                 </div>
                 <div class="welcome-section-header">
                     <h2>Nuestras Clases</h2>
-                    <p>Elige un módulo para comenzar tu aventura de aprendizaje 🚀</p>
+                    <p>Elige un tema para comenzar tu aventura de aprendizaje 🚀</p>
                 </div>
                 <div class="mod-preview-grid" id="prev-grid"></div>
+            </div>
+
+            <!-- Topic content -->
+            <div id="topic-view" style="display:none" class="welcome">
+                <div class="welcome-section-header" style="text-align: left; align-items: flex-start;">
+                    <button class="tool-btn" onclick="history.back()"
+                        style="margin-bottom: 20px; cursor: pointer; border: 1px solid #ccc; padding: 6px 12px; border-radius: 8px; background: #fff; font-weight: 600;">
+                        ← Volver a Temas
+                    </button>
+                    <h2 id="topic-title" style="margin-top: 0;">Tema</h2>
+                    <p id="topic-desc">Descripción del tema</p>
+                </div>
+                <div class="mod-preview-grid" id="topic-grid"></div>
             </div>
 
             <!-- Module content -->
@@ -2034,10 +2047,17 @@
             { id: 'extra', name: 'Material Extra', color: '#D5AAFF' },
         ];
 
+        const TOPICS = [
+            { id: 'suma_resta', cat: 'num', topic: 'suma_resta', title: 'Suma y Resta', desc: 'Práctica de adición y sustracción, con estrategias y problemas.', symbol: '➕' },
+            { id: 'multiplicacion', cat: 'mul', topic: 'multiplicacion', title: 'Multiplicación', desc: 'Tablas, sumas reiteradas, arreglos y algoritmos.', symbol: '✖️' },
+            { id: 'division', cat: 'mul', topic: 'division', title: 'División', desc: 'Reparto, agrupación equitativa y estrategias de cálculo.', symbol: '➗' },
+            { id: 'fracciones', cat: 'frac', topic: 'fracciones', title: 'Fracciones', desc: 'Representación, equivalencias y operaciones matemáticas.', symbol: '¼' }
+        ];
+
         const MODULES = [
             // ── SUMA Y RESTA ────────────────────────────────────────────────
             {
-                id: 7, serial: 1, cat: 'num', title: 'Suma y resta I', dur: '45 min',
+                id: 7, serial: 1, cat: 'num', topic: 'suma_resta', title: 'Suma y resta I', dur: '45 min',
                 objectives: ['Reconocer sumandos y propiedades de la suma', 'Representar números con bloques', 'Sumar 1 dígito y 2 dígitos descomponiendo'],
                 htmlSlide: 'clases/suma-resta/suma-resta-1.html',
                 activities: [],
@@ -2052,7 +2072,7 @@
                 }
             },
             {
-                id: 8, serial: 2, cat: 'num', title: 'Suma y resta II', dur: '50 min',
+                id: 8, serial: 2, cat: 'num', topic: 'suma_resta', title: 'Suma y resta II', dur: '50 min',
                 objectives: ['Usar centenas y decenas en sumas de 3 dígitos', 'Sumar en columna con reserva', 'Introducir la resta y sus elementos'],
                 htmlSlide: 'clases/suma-resta/suma-resta-2.html',
                 activities: [],
@@ -2067,7 +2087,7 @@
                 }
             },
             {
-                id: 9, serial: 3, cat: 'num', title: 'Suma y resta III', dur: '55 min',
+                id: 9, serial: 3, cat: 'num', topic: 'suma_resta', title: 'Suma y resta III', dur: '55 min',
                 objectives: ['Restar números de 1 y 2 dígitos', 'Dominar la desagrupación en unidades', 'Resolver restas de 3 dígitos con centenas y decenas'],
                 htmlSlide: 'clases/suma-resta/suma-resta-3.html',
                 activities: [],
@@ -2084,7 +2104,7 @@
 
             // ── MULTIPLICACIÓN ────────────────────────────────────────────────
             {
-                id: 1, cat: 'mul', title: 'Multiplicación I', dur: '45 min',
+                id: 1, cat: 'mul', topic: 'multiplicacion', title: 'Multiplicación I', dur: '45 min',
                 objectives: ['Consolidar tablas del 2 y 5', 'Comprender la suma iterada', 'Aplicar la propiedad conmutativa'],
                 htmlSlide: 'clases/multiplicacion/multiplicaciones_1.html',
                 activities: [],
@@ -2099,7 +2119,7 @@
                 }
             },
             {
-                id: 2, cat: 'mul', title: 'Multiplicación II', dur: '45 min',
+                id: 2, cat: 'mul', topic: 'multiplicacion', title: 'Multiplicación II', dur: '45 min',
                 objectives: ['Tablas del 3 al 9 con lógica', 'Maestros de los atajos mentales', 'Resolver problemas aplicados'],
                 htmlSlide: 'clases/multiplicacion/multiplicaciones_2.html',
                 activities: [],
@@ -2114,7 +2134,7 @@
                 }
             },
             {
-                id: 3, cat: 'mul', title: 'Multiplicación III', dur: '60 min',
+                id: 3, cat: 'mul', topic: 'multiplicacion', title: 'Multiplicación III', dur: '60 min',
                 objectives: ['Algoritmo vertical paso a paso', 'Multiplicaciones con reserva', 'Práctica maestra de multiplicaciones'],
                 htmlSlide: 'clases/multiplicacion/multiplicaciones_3.html',
                 activities: [],
@@ -2129,7 +2149,7 @@
                 }
             },
             {
-                id: 10, serial: 1, cat: 'mul', title: 'División I', dur: '45 min',
+                id: 10, serial: 1, cat: 'mul', topic: 'division', title: 'División I', dur: '45 min',
                 objectives: ['Repartir en partes iguales', 'Relacionar multiplicación y división', 'Reconocer dividendo, divisor, cociente y resto'],
                 htmlSlide: 'clases/division/division-1.html',
                 activities: [],
@@ -2144,7 +2164,7 @@
                 }
             },
             {
-                id: 11, serial: 2, cat: 'mul', title: 'División II', dur: '50 min',
+                id: 11, serial: 2, cat: 'mul', topic: 'division', title: 'División II', dur: '50 min',
                 objectives: ['Entender la división inexacta', 'Trabajar con resto', 'Resolver cuocientes de 2 dígitos exactos e inexactos'],
                 htmlSlide: 'clases/division/division-2.html',
                 activities: [],
@@ -2159,7 +2179,7 @@
                 }
             },
             {
-                id: 12, serial: 3, cat: 'mul', title: 'División III', dur: '55 min',
+                id: 12, serial: 3, cat: 'mul', topic: 'division', title: 'División III', dur: '55 min',
                 objectives: ['Dividir por descomposición', 'Estimar cuocientes', 'Resolver ejercicios combinando estrategias'],
                 htmlSlide: 'clases/division/division-3.html',
                 activities: [],
@@ -2176,7 +2196,7 @@
 
             // ── FRACCIONES ──────────────────────────────────────────────────
             {
-                id: 4, cat: 'frac', title: 'Fracciones I', dur: '45 min',
+                id: 4, cat: 'frac', topic: 'fracciones', title: 'Fracciones I', dur: '45 min',
                 objectives: ['Entender partes de un entero', 'Identificar numerador y denominador', 'Representar gráficamente'],
                 htmlSlide: 'clases/fracciones/09-fracciones-1.html',
                 activities: [],
@@ -2191,7 +2211,7 @@
                 }
             },
             {
-                id: 5, cat: 'frac', title: 'Fracciones II', dur: '45 min',
+                id: 5, cat: 'frac', topic: 'fracciones', title: 'Fracciones II', dur: '45 min',
                 objectives: ['Descubrir equivalencias visuales', 'Amplificar y Simplificar', 'Ubicar en la recta numérica'],
                 htmlSlide: 'clases/fracciones/10-fracciones-2.html',
                 activities: [],
@@ -2206,7 +2226,7 @@
                 }
             },
             {
-                id: 6, cat: 'frac', title: 'Fracciones III', dur: '45 min',
+                id: 6, cat: 'frac', topic: 'fracciones', title: 'Fracciones III', dur: '45 min',
                 objectives: ['Sumar y restar con distinto denominador', 'Dominar el MCM mágicamente', 'Problemas de la vida real'],
                 htmlSlide: 'clases/fracciones/11-ejercicios-fracciones.html',
                 activities: [],
@@ -2291,7 +2311,19 @@
         function init() {
             buildPrevGrid();
             bindModuleTabs();
+            history.replaceState({ section: 'classes' }, '');
 
+            window.addEventListener('popstate', (e) => {
+                const state = e.state;
+                if (!state) {
+                    showClasses(false);
+                    return;
+                }
+                if (state.section === 'about') showAbout(false);
+                else if (state.section === 'topic') loadTopic(state.topicId, false);
+                else if (state.section === 'mod') loadMod(state.modId, false);
+                else showClasses(false);
+            });
         }
 
         function getCat(id) { return CATEGORIES.find(c => c.id === id); }
@@ -2350,7 +2382,39 @@
         }
 
         function buildPrevGrid() {
-            document.getElementById('prev-grid').innerHTML = MODULES.map(m => {
+            document.getElementById('prev-grid').innerHTML = TOPICS.map(t => {
+                const cat = getCat(t.cat);
+                const accent = cat.color;
+                return `<button type="button" class="prev-card" style="--card-accent:${accent};" onclick="loadTopic('${t.id}')" aria-label="Abrir ${t.title}">
+            <div class="pc-accent-bar"></div>
+            <div class="pc-emoji-col">${t.symbol}</div>
+            <div class="pc-text-col">
+                <div class="pc-name">${t.title}</div>
+                <div class="pc-desc">${t.desc}</div>
+            </div>
+            <div class="pc-arrow">›</div>
+        </button>`;
+            }).join('');
+        }
+
+        function loadTopic(topicId, push = true) {
+            if (push) history.pushState({ section: 'topic', topicId }, '');
+            const topic = TOPICS.find(t => t.id === topicId);
+            if (!topic) return;
+
+            setTopNav('classes');
+            document.getElementById('about-view').style.display = 'none';
+            document.getElementById('diagnostic-view').style.display = 'none';
+            document.getElementById('topic-view').style.display = 'none';
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('mod-view').style.display = 'none';
+            document.getElementById('topic-view').style.display = 'block';
+
+            document.getElementById('topic-title').textContent = topic.title;
+            document.getElementById('topic-desc').textContent = topic.desc;
+
+            const mods = MODULES.filter(m => m.topic === topicId);
+            document.getElementById('topic-grid').innerHTML = mods.map(m => {
                 const cat = getCat(m.cat);
                 const symbol = getModuleSymbol(m);
                 const preview = getModulePreviewText(m);
@@ -2366,6 +2430,8 @@
             <div class="pc-arrow">›</div>
         </button>`;
             }).join('');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function setTopNav(section) {
@@ -2375,18 +2441,22 @@
             document.getElementById('nav-diagnostic')?.classList.toggle('active', section === 'diagnostic');
         }
 
-        function showAbout() {
+        function showAbout(push = true) {
+            if (push) history.pushState({ section: "about" }, "");
             setTopNav('about');
             document.getElementById('about-view').style.display = 'block';
             document.getElementById('diagnostic-view').style.display = 'none';
+            document.getElementById('topic-view').style.display = 'none';
             document.getElementById('home').style.display = 'none';
             document.getElementById('mod-view').style.display = 'none';
         }
 
-        function showClasses() {
+        function showClasses(push = true) {
+            if (push) history.pushState({ section: "classes" }, "");
             setTopNav('classes');
             document.getElementById('about-view').style.display = 'none';
             document.getElementById('diagnostic-view').style.display = 'none';
+            document.getElementById('topic-view').style.display = 'none';
             document.getElementById('home').style.display = 'flex';
             document.getElementById('mod-view').style.display = 'none';
             buildPrevGrid();
@@ -2399,7 +2469,8 @@
         // ══════════════════════════════════════════════════════════════════════
         //  CARGAR MÓDULO
         // ══════════════════════════════════════════════════════════════════════
-        function loadMod(id) {
+        function loadMod(id, push = true) {
+            if (push) history.pushState({ section: "mod", modId: id }, "");
             current = MODULES.find(m => m.id === id);
             if (!current) return;
             currentModuleTab = 'pres';
@@ -2407,6 +2478,7 @@
             setTopNav('classes');
             document.getElementById('about-view').style.display = 'none';
             document.getElementById('diagnostic-view').style.display = 'none';
+            document.getElementById('topic-view').style.display = 'none';
             document.getElementById('home').style.display = 'none';
             document.getElementById('mod-view').style.display = 'block';
 
