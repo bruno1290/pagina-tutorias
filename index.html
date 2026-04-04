@@ -16,11 +16,11 @@
 
         :root {
             --font-main: 'Buckwheat TC', 'Barlow Condensed', 'Nunito', sans-serif;
-            --navy: #1A3F6E;
+            --navy: #133c60;
             /* La Obra UC primary blue */
-            --navy-mid: #1C4A82;
+            --navy-mid: #1a4f7e;
             /* Sidebar / lighter blue */
-            --navy-dark: #0F2B50;
+            --navy-dark: #0c2b46;
             /* Deep dark for depth */
             --teal: #3498DB;
             /* Interactive accent blue */
@@ -67,7 +67,7 @@
             left: 0;
             right: 0;
             height: var(--header-h);
-            background: #1A3F6E;
+            background: var(--navy);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -108,6 +108,7 @@
             height: 64px;
             display: block;
             object-fit: contain;
+            mix-blend-mode: screen;
         }
 
         .h-tutorias {
@@ -233,7 +234,7 @@
             top: 0;
             bottom: 0;
             width: 100%;
-            background: linear-gradient(90deg, var(--navy) 30%, rgba(19, 52, 95, 0.65) 55%, rgba(19, 52, 95, 0.2) 75%, transparent 100%);
+            background: linear-gradient(90deg, var(--navy) 30%, rgba(19, 60, 96, 0.65) 55%, rgba(19, 60, 96, 0.2) 75%, transparent 100%);
             z-index: 1;
             pointer-events: none;
         }
@@ -1795,7 +1796,7 @@
             }
 
             .welcome-intro::before {
-                background: linear-gradient(90deg, var(--navy) 20%, rgba(19, 52, 95, 0.75) 50%, rgba(19, 52, 95, 0.4) 100%);
+                background: linear-gradient(90deg, var(--navy) 20%, rgba(19, 60, 96, 0.75) 50%, rgba(19, 60, 96, 0.4) 100%);
             }
 
             .mod-preview-grid {
@@ -1894,6 +1895,7 @@
                 <button class="top-nav-btn" id="nav-about" onclick="showAbout()">¿Quiénes somos?</button>
                 <button class="top-nav-btn active" id="nav-classes" onclick="showClasses()">Clases</button>
                 <button class="top-nav-btn" type="button" onclick="openOfficialSite()">Página oficial</button>
+                <button class="top-nav-btn" type="button" onclick="openOfficialSite()">Contacto</button>
             </nav>
         </div>
     </header>
