@@ -1666,6 +1666,43 @@
             line-height: 1.6;
         }
 
+        /* ─── LEVEL SELECTOR ───────────────────────────────────── */
+        .level-selector {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 0 auto 32px;
+            padding: 6px;
+            background: #fff;
+            border-radius: 40px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+            width: fit-content;
+        }
+
+        .level-btn {
+            border: none;
+            padding: 10px 24px;
+            font-size: 16px;
+            font-weight: 800;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            background: transparent;
+            color: #666;
+            font-family: inherit;
+        }
+
+        .level-btn.active {
+            background: #1C4A82;
+            color: white;
+            box-shadow: 0 4px 10px rgba(28, 74, 130, 0.25);
+        }
+
+        .level-btn:hover:not(.active) {
+            background: #f0f4f8;
+            color: #1C4A82;
+        }
+
         /* ─── FOOTER BANNER ─────────────────────────────────── */
         .footer-banner {
             margin: 0;
@@ -1984,8 +2021,14 @@
                 </div>
                 <div class="welcome-section-header">
                     <h2>Nuestras Clases</h2>
-                    <p>Elige un tema para comenzar tu aventura de aprendizaje 🚀</p>
+                    <p>Elige tu curso y comienza tu aventura de aprendizaje 🚀</p>
                 </div>
+
+                <div class="level-selector">
+                    <button class="level-btn" id="lvl-3" onclick="setLevel(3)">3° Básico</button>
+                    <button class="level-btn active" id="lvl-4" onclick="setLevel(4)">4° Básico</button>
+                </div>
+
                 <div class="mod-preview-grid" id="prev-grid"></div>
             </div>
 
@@ -2045,7 +2088,8 @@
 
         const CATEGORIES = [
             { id: 'num', name: 'Números y Operaciones', color: '#88D8B0' },
-            { id: 'mul', name: 'Multiplicación y División', color: '#A8C0FF' },
+            { id: 'mul', name: 'Multiplicación', color: '#A8C0FF' },
+            { id: 'div', name: 'División', color: '#BDE0FE' },
             { id: 'frac', name: 'Fracciones y Decimales', color: '#FFB7B2' },
             { id: 'geo', name: 'Geometría y Medición', color: '#FFE29F' },
             { id: 'extra', name: 'Material Extra', color: '#D5AAFF' },
@@ -2054,7 +2098,7 @@
         const TOPICS = [
             { id: 'suma_resta', cat: 'num', topic: 'suma_resta', title: 'Suma y Resta', desc: 'Práctica de adición y sustracción, con estrategias y problemas.', symbol: '➕' },
             { id: 'multiplicacion', cat: 'mul', topic: 'multiplicacion', title: 'Multiplicación', desc: 'Tablas, sumas reiteradas, arreglos y algoritmos.', symbol: '✖️' },
-            { id: 'division', cat: 'mul', topic: 'division', title: 'División', desc: 'Reparto, agrupación equitativa y estrategias de cálculo.', symbol: '➗' },
+            { id: 'division', cat: 'div', topic: 'division', title: 'División', desc: 'Reparto, agrupación equitativa y estrategias de cálculo.', symbol: '➗' },
             { id: 'fracciones', cat: 'frac', topic: 'fracciones', title: 'Fracciones', desc: 'Representación, equivalencias y operaciones matemáticas.', symbol: '¼' },
             { id: 'sesiones_mentoreo_extra', cat: 'extra', topic: 'sesiones_mentoreo_extra', title: 'Sesiones de Mentoreo Extra', desc: 'Sesiones de mentoreo extra.', symbol: '📝' },
         ];
@@ -2160,7 +2204,7 @@
                 }
             },
             {
-                id: 10, serial: 1, cat: 'mul', topic: 'division', title: 'División I', dur: '45 min',
+                id: 10, serial: 1, cat: 'div', topic: 'division', title: 'División I', dur: '45 min',
                 objectives: ['Repartir en partes iguales', 'Relacionar multiplicación y división', 'Reconocer dividendo, divisor, cociente y resto'],
                 htmlSlide: 'clases/division/division-1.html',
                 mentoreo: { pdf: 'https://drive.google.com/file/d/1M8aiJ-dRo8Vua8vvsIVOuHkRzr5hIByQ/preview', title: 'Clase 12 – Ejercicios' },
@@ -2176,9 +2220,10 @@
                 }
             },
             {
-                id: 11, serial: 2, cat: 'mul', topic: 'division', title: 'División II', dur: '50 min',
+                id: 11, serial: 2, cat: 'div', topic: 'division', title: 'División II', dur: '50 min',
                 objectives: ['Entender la división inexacta', 'Trabajar con resto', 'Resolver cuocientes de 2 dígitos exactos e inexactos'],
                 htmlSlide: 'clases/division/division-2.html',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/182Hl6m59YnWxdqPsViuVHgzxvZDxWm56/preview', title: 'Mentoreo' },
                 activities: [],
                 ticket: {
                     title: 'Ticket de salida – División 2',
@@ -2191,9 +2236,10 @@
                 }
             },
             {
-                id: 12, serial: 3, cat: 'mul', topic: 'division', title: 'División III', dur: '55 min',
+                id: 12, serial: 3, cat: 'div', topic: 'division', title: 'División III', dur: '55 min',
                 objectives: ['Dividir por descomposición', 'Estimar cuocientes', 'Resolver ejercicios combinando estrategias'],
                 htmlSlide: 'clases/division/division-3.html',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1rhbygpflbrRWPaqk_5MHTJuxyrOk7hLH/preview', title: 'Mentoreo' },
                 activities: [],
                 ticket: {
                     title: 'Ticket de salida – División 3',
@@ -2211,6 +2257,7 @@
                 id: 4, cat: 'frac', topic: 'fracciones', title: 'Fracciones I', dur: '45 min',
                 objectives: ['Entender partes de un entero', 'Identificar numerador y denominador', 'Representar gráficamente'],
                 htmlSlide: 'clases/fracciones/09-fracciones-1.html',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1bvTPm219ToZf9SGB9_GbURNSn22hwXUe/preview', title: 'Mentoreo' },
                 activities: [],
                 ticket: {
                     title: 'Ticket de salida – Fracciones 1',
@@ -2226,6 +2273,7 @@
                 id: 5, cat: 'frac', topic: 'fracciones', title: 'Fracciones II', dur: '45 min',
                 objectives: ['Descubrir equivalencias visuales', 'Amplificar y Simplificar', 'Ubicar en la recta numérica'],
                 htmlSlide: 'clases/fracciones/10-fracciones-2.html',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1U-8ToajJYl9SFI9cEyJaAXy2ZHIJp8BN/preview', title: 'Mentoreo' },
                 activities: [],
                 ticket: {
                     title: 'Ticket de salida – Fracciones 2',
@@ -2365,6 +2413,7 @@
         let diagResponses = [];
         let diagnosticStarted = false;
         let currentModuleTab = 'pres';
+        let currentLevel = 4;
 
         // ══════════════════════════════════════════════════════════════════════
         //  INICIO
@@ -2385,6 +2434,13 @@
                 else if (state.section === 'mod') loadMod(state.modId, false);
                 else showClasses(false);
             });
+        }
+
+        function setLevel(lvl) {
+            currentLevel = lvl;
+            document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`lvl-${lvl}`).classList.add('active');
+            buildPrevGrid();
         }
 
         function getCat(id) { return CATEGORIES.find(c => c.id === id); }
@@ -2410,6 +2466,7 @@
             const palette = {
                 num: '#0B6847',
                 mul: '#113c8f',
+                div: '#023e8a',
                 frac: '#96113b',
                 geo: '#9c6c0b',
                 extra: '#4a15a0',
@@ -2443,7 +2500,18 @@
         }
 
         function buildPrevGrid() {
-            document.getElementById('prev-grid').innerHTML = TOPICS.map(t => {
+            const grid = document.getElementById('prev-grid');
+            if (currentLevel === 3) {
+                grid.innerHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #fff; border-radius: 20px; border: 1px solid #e2e8f0; width: 100%;">
+                    <div style="font-size: 52px; margin-bottom: 20px;">🏗️</div>
+                    <h3 style="font-size: 30px; color: #1A3F6E; margin-bottom: 12px; font-family: var(--font-main);">¡Estamos trabajando para usted!</h3>
+                    <p style="color: #64748b; font-size: 16px; max-width: 450px; margin: 0 auto; line-height: 1.6;">Estamos preparando las mejores aventuras educativas para 3° Básico. ¡Vuelve pronto!</p>
+                </div>`;
+                return;
+            }
+
+            grid.innerHTML = TOPICS.map(t => {
                 const cat = getCat(t.cat);
                 const accent = cat.color;
                 return `<button type="button" class="prev-card" style="--card-accent:${accent};" onclick="loadTopic('${t.id}')" aria-label="Abrir ${t.title}">
@@ -2643,9 +2711,7 @@
             c.innerHTML = `
             <div class="pres-wrapper">
                 <div class="pres-toolbar">
-                    <div class="pres-toolbar-left">
-                        <span class="toolbar-label">📋 ${m.title}</span>
-                    </div>
+                    <div class="pres-toolbar-left"></div>
                     <div style="display:flex;gap:8px">
                         <a class="tool-btn" href="${m.pdf}" download style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
                             ⬇️ Descargar PDF
