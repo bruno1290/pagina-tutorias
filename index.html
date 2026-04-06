@@ -1686,7 +1686,7 @@
             line-height: 1.4;
             color: rgba(255, 255, 255, .88);
             letter-spacing: .2px;
-            text-align: justify;
+            text-align: center;
             width: 100%;
         }
 
@@ -2033,7 +2033,7 @@
     </div>
 
     <div class="footer-banner">
-        <p>&copy; Todos los derechos reservados para La Obra UC 2026. Diseñada por Jefes de Tutorías 2026 Antonia
+        <p>&copy; La Obra UC 2026. Todos los derechos reservados. Diseñada por Jefes de Tutorías 2026, Antonia
             Loehnert y Bruno Nattino.</p>
     </div>
 
@@ -2547,7 +2547,7 @@
             const isExtra = current.topic === 'sesiones_mentoreo_extra';
             const mTabBtn = document.querySelector('.tab-btn[data-tab="mentoreo"]');
             const tTabBtn = document.querySelector('.tab-btn[data-tab="ticket"]');
-            
+
             if (mTabBtn) mTabBtn.style.display = isExtra ? 'none' : 'inline-block';
             if (tTabBtn) tTabBtn.style.display = (isExtra || !current.ticket?.questions?.length) ? 'none' : 'inline-block';
 
