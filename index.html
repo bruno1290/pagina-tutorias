@@ -2306,28 +2306,28 @@
             {
                 id: 13, serial: 1, cat: 'geo', topic: 'geometria', title: 'Geometría I', dur: '45 min',
                 objectives: ['Identificar polígonos y sus elementos', 'Clasificar figuras según sus lados', 'Explorar vértices y ángulos'],
-                htmlSlide: '#', 
+                htmlSlide: '#', isWip: true,
                 activities: [],
                 ticket: { title: 'Ticket de salida – Geometría 1', questions: [] }
             },
             {
                 id: 14, serial: 2, cat: 'geo', topic: 'geometria', title: 'Geometría II', dur: '45 min',
                 objectives: ['Reconocer tipos de ángulos', 'Clasificar triángulos', 'Usar el transportador'],
-                htmlSlide: '#',
+                htmlSlide: '#', isWip: true,
                 activities: [],
                 ticket: { title: 'Ticket de salida – Geometría 2', questions: [] }
             },
             {
                 id: 15, serial: 3, cat: 'geo', topic: 'geometria', title: 'Geometría III', dur: '45 min',
                 objectives: ['Calcular el perímetro de polígonos', 'Introducción al concepto de área', 'Resolver problemas de medición'],
-                htmlSlide: '#',
+                htmlSlide: '#', isWip: true,
                 activities: [],
                 ticket: { title: 'Ticket de salida – Geometría 3', questions: [] }
             },
             {
                 id: 16, serial: 4, cat: 'geo', topic: 'geometria', title: 'Geometría IV', dur: '45 min',
                 objectives: ['Diferenciar figuras 2D y cuerpos 3D', 'Identificar caras, aristas y vértices', 'Construir redes de cuerpos'],
-                htmlSlide: '#',
+                htmlSlide: '#', isWip: true,
                 activities: [],
                 ticket: { title: 'Ticket de salida – Geometría 4', questions: [] }
             },
@@ -2766,6 +2766,16 @@
 
         function renderPres() {
             const c = document.getElementById('panel-pres');
+            if (current?.isWip) {
+                const topicName = TOPICS.find(t => t.id === current.topic)?.title || 'esta sección';
+                c.innerHTML = `
+                <div style="text-align: center; padding: 60px 20px; background: #fff; border-radius: 20px; border: 1px solid #e2e8f0; width: 100%;">
+                    <div style="font-size: 52px; margin-bottom: 20px;">🏗️</div>
+                    <h3 style="font-size: 30px; color: #1A3F6E; margin-bottom: 12px; font-family: var(--font-main);">¡Estamos trabajando para usted!</h3>
+                    <p style="color: #64748b; font-size: 16px; max-width: 450px; margin: 0 auto; line-height: 1.6;">Estamos preparando las mejores aventuras educativas para ${topicName}. ¡Vuelve pronto!</p>
+                </div>`;
+                return;
+            }
             // Prefer interactive HTML slide if available
             const htmlSrc = current?.htmlSlide || null;
             const embedUrl = htmlSrc || getEmbedUrl(current?.slideUrl);
