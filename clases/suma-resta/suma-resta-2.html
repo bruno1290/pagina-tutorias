@@ -1,628 +1,820 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Suma y resta 2</title>
+    <title>Suma y resta</title>
     <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
-:root {
-    --base: #1C4A82;
-    --bg: #f5f6f8;
-    --tx: #333;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--bg);
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: var(--tx);
-}
-.dk { position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex; }
-.sl {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 36px 40px 82px;
-    opacity: 0;
-    transform: scale(.96);
-    transition: opacity .4s, transform .4s;
-    pointer-events: none;
-    z-index: 1;
-}
-.sl.on { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
-.sl.pv { opacity: 0; transform: translateX(-50px) scale(.95); }
-.sl.nx { opacity: 0; transform: translateX(50px) scale(.95); }
-.head-title {
-    background: var(--base);
-    color: white;
-    padding: 10px 40px;
-    font-size: 32px;
-    font-weight: 900;
-    margin-bottom: 24px;
-    display: inline-block;
-    border-radius: 12px;
-    text-align: center;
-}
-.sub-text {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 22px;
-    text-align: center;
-    line-height: 1.4;
-}
-.pb { position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100; }
-.nv {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    background: white;
-    border-top: 1px solid #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 40px;
-    z-index: 100;
-}
-.nb {
-    background: #eee;
-    color: var(--base);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 16px;
-    font-weight: 900;
-    cursor: pointer;
-    transition: all .2s;
-}
-.nb:hover { background: #ddd; }
-.nb:disabled { opacity: 0.3; cursor: not-allowed; }
-.sc { color: #888; font-size: 16px; font-weight: 900; }
-.stp {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
-}
-.stp.shwn { opacity: 1; transform: translateY(0); pointer-events: auto; }
-.pnl {
-    background: #fff;
-    padding: 24px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border: 3px solid #eaeaea;
-    width: 100%;
-}
-.pnl-border {
-    background: #fff;
-    border: 4px solid var(--base);
-    border-radius: 20px;
-    padding: 24px;
-    width: 100%;
-}
-.hl { color: var(--base); font-weight: 900; }
-.btn {
-    background: var(--base);
-    color: white;
-    border: none;
-    padding: 14px 24px;
-    border-radius: 12px;
-    font-size: 20px;
-    font-weight: 900;
-    cursor: pointer;
-    transition: transform .2s;
-    font-family: 'Nunito', sans-serif;
-}
-.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3); }
-.math-eq {
-    font-size: 52px;
-    font-weight: 900;
-    color: var(--base);
-    background: #fff;
-    padding: 12px 30px;
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    border: 3px dashed #bbdefb;
-    margin: 12px;
-    text-align: center;
-}
-.chip-row, .card-row, .base-row, .quiz-row {
-    display: flex;
-    justify-content: center;
-    gap: 18px;
-    width: 100%;
-    flex-wrap: wrap;
-}
-.mini-chip {
-    background: #eef5ff;
-    border: 2px solid #b6d4f3;
-    border-radius: 999px;
-    padding: 12px 18px;
-    font-size: 20px;
-    font-weight: 800;
-}
-.idea-card {
-    flex: 1 1 220px;
-    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
-    border-radius: 18px;
-    padding: 18px;
-    border: 3px solid #d7e7f7;
-    min-height: 220px;
-}
-.idea-card h3 {
-    font-size: 28px;
-    color: var(--base);
-    margin-bottom: 10px;
-}
-.idea-card p {
-    font-size: 21px;
-    line-height: 1.45;
-}
-.base-card {
-    flex: 1 1 320px;
-    background: #fff;
-    border-radius: 20px;
-    padding: 18px;
-    border: 4px solid #d9e7f6;
-    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
-}
-.base-card h3 {
-    font-size: 28px;
-    color: var(--base);
-    text-align: center;
-    margin-bottom: 14px;
-}
-.place-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-}
-.place-box {
-    background: #f8fbff;
-    border: 2px dashed #c6d9ef;
-    border-radius: 16px;
-    padding: 12px;
-    min-height: 184px;
-}
-.place-title {
-    text-align: center;
-    font-size: 19px;
-    font-weight: 900;
-    color: #315c8d;
-    margin-bottom: 10px;
-}
-.block-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: flex-start;
-    justify-content: center;
-    min-height: 88px;
-}
-.unit {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-    background: var(--fill, #9DDEFF);
-    border: 2px solid rgba(0,0,0,0.18);
-}
-.rod {
-    width: 30px;
-    height: 108px;
-    border-radius: 8px;
-    background: var(--fill, #9DE3BD);
-    border: 2px solid rgba(0,0,0,0.18);
-}
-.flat {
-    width: 94px;
-    height: 94px;
-    border-radius: 12px;
-    background:
-        linear-gradient(rgba(255,255,255,0.42), rgba(255,255,255,0.42)),
-        repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(0,0,0,0.08) 18px, rgba(0,0,0,0.08) 20px),
-        repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(0,0,0,0.08) 18px, rgba(0,0,0,0.08) 20px),
-        var(--fill, #FFE082);
-    border: 2px solid rgba(0,0,0,0.18);
-}
-.number-tag {
-    margin-top: 10px;
-    text-align: center;
-    font-size: 20px;
-    font-weight: 900;
-}
-.two-col {
-    display: grid;
-    grid-template-columns: 1.15fr .85fr;
-    gap: 18px;
-    width: 100%;
-    align-items: stretch;
-}
-.step-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-.step-box {
-    background: #f7fbff;
-    border-left: 8px solid var(--base);
-    padding: 14px 16px;
-    border-radius: 14px;
-    font-size: 20px;
-    line-height: 1.4;
-    font-weight: 700;
-}
-.column-wrap {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 18px;
-    width: 100%;
-    align-items: start;
-}
-.alg-board {
-    background: #fff;
-    border: 4px solid var(--base);
-    border-radius: 20px;
-    padding: 22px 26px;
-}
-.alg-grid {
-    display: grid;
-    grid-template-columns: 68px repeat(3, 76px);
-    grid-auto-rows: 58px;
-    align-items: center;
-    justify-items: center;
-    margin: 0 auto;
-    width: max-content;
-}
-.alg-grid.long {
-    grid-template-columns: 68px repeat(3, 76px);
-}
-.alg-label {
-    font-size: 20px;
-    font-weight: 900;
-    color: #57779d;
-}
-.alg-digit {
-    width: 60px;
-    height: 46px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    background: #f7fbff;
-    font-size: 34px;
-    font-weight: 900;
-    color: #173b67;
-    border: 2px solid #d4e5f8;
-}
-.alg-digit.dim { color: #b6c6d8; }
-.alg-digit.reserve {
-    height: 38px;
-    background: #fff7df;
-    border-color: #f0cf67;
-    color: #9f6200;
-    font-size: 24px;
-}
-.alg-line {
-    grid-column: 2 / span 3;
-    width: 100%;
-    height: 4px;
-    background: #395f90;
-    border-radius: 999px;
-}
-.alg-sign {
-    font-size: 30px;
-    font-weight: 900;
-    color: #c94d2a;
-}
-.side-panel {
-    background: linear-gradient(180deg, #fefefe 0%, #f4f9ff 100%);
-    border: 3px solid #d5e4f5;
-    border-radius: 18px;
-    padding: 18px;
-    min-height: 290px;
-}
-.side-panel h3 {
-    font-size: 24px;
-    color: var(--base);
-    margin-bottom: 12px;
-}
-.side-panel p {
-    font-size: 20px;
-    line-height: 1.45;
-}
-.story-card {
-    width: 100%;
-    border-radius: 28px;
-    padding: 28px;
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 24px;
-    align-items: center;
-}
-.story-emoji {
-    font-size: 114px;
-    text-align: center;
-    animation: bob 2.8s infinite;
-}
-.story-card h2 {
-    font-size: 30px;
-    margin-bottom: 12px;
-}
-.story-card p {
-    font-size: 24px;
-    line-height: 1.45;
-}
-.summary-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 100%;
-}
-.summary-item {
-    background: #fff;
-    border-radius: 16px;
-    padding: 16px 18px;
-    border: 3px solid #dbe7f4;
-    font-size: 23px;
-    line-height: 1.45;
-}
-.count-board {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
-    flex-wrap: wrap;
-}
-.count-card {
-    flex: 1 1 260px;
-    background: linear-gradient(180deg, #ffffff 0%, #f6fbff 100%);
-    border-radius: 22px;
-    padding: 20px;
-    border: 4px solid #d6e8f8;
-    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
-    text-align: center;
-}
-.count-card h3 {
-    font-size: 28px;
-    margin-bottom: 12px;
-    color: var(--base);
-}
-.emoji-pack {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    min-height: 86px;
-    margin-bottom: 12px;
-}
-.fact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-    width: 100%;
-}
-.fact-box {
-    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-    border-radius: 18px;
-    padding: 16px;
-    border: 3px solid #d8e7f6;
-    min-height: 170px;
-}
-.fact-box h4 {
-    font-size: 24px;
-    color: var(--base);
-    margin-bottom: 10px;
-    text-align: center;
-}
-.fact-box p {
-    font-size: 21px;
-    line-height: 1.45;
-    text-align: center;
-}
-.msg-area {
-    font-size: 24px;
-    font-weight: 900;
-    height: 40px;
-    text-align: center;
-    margin-top: 20px;
-}
-.hero-title {
-    font-size: 68px;
-    color: var(--base);
-    margin-bottom: 18px;
-    text-align: center;
-    line-height: 1;
-}
-.hero-sub {
-    font-size: 28px;
-    font-weight: 700;
-    text-align: center;
-    max-width: 720px;
-}
-.hero-emoji {
-    font-size: 108px;
-    margin-top: 28px;
-    animation: bounce 2s infinite;
-}
-.formula-row {
-    display: flex;
-    justify-content: center;
-    gap: 18px;
-    align-items: center;
-    flex-wrap: wrap;
-    width: 100%;
-}
-.label-pill {
-    background: #eef5ff;
-    border: 2px solid #c5dcf5;
-    border-radius: 14px;
-    padding: 10px 16px;
-    font-size: 22px;
-    font-weight: 900;
-    color: var(--base);
-}
-.warn-card {
-    background: #fff8e5;
-    border: 4px solid #f0ca59;
-    border-radius: 20px;
-    padding: 20px;
-    font-size: 22px;
-    line-height: 1.45;
-    width: 100%;
-}
-.decomp-flow {
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-    flex-wrap: wrap;
-    width: 100%;
-    align-items: center;
-}
-.decomp-box {
-    background: #fff;
-    border: 3px solid #d4e6f7;
-    border-radius: 18px;
-    padding: 14px 18px;
-    font-size: 28px;
-    font-weight: 900;
-    color: var(--base);
-}
-.arrow {
-    font-size: 34px;
-    font-weight: 900;
-    color: #4d6d94;
-}
-@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
-@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-</style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+
+        :root {
+            --base: #1C4A82;
+            --bg: #f5f6f8;
+            --tx: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--tx);
+        }
+
+        .dk {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 1000px;
+            display: flex;
+        }
+
+        .sl {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 36px 40px 82px;
+            opacity: 0;
+            transform: scale(.96);
+            transition: opacity .4s, transform .4s;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .sl.on {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+            z-index: 10;
+        }
+
+        .sl.pv {
+            opacity: 0;
+            transform: translateX(-50px) scale(.95);
+        }
+
+        .sl.nx {
+            opacity: 0;
+            transform: translateX(50px) scale(.95);
+        }
+
+        .head-title {
+            background: var(--base);
+            color: white;
+            padding: 10px 40px;
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 24px;
+            display: inline-block;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .sub-text {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 22px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .pb {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 6px;
+            background: var(--base);
+            transition: width .4s;
+            z-index: 100;
+        }
+
+        .nv {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: white;
+            border-top: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            z-index: 100;
+        }
+
+        .nb {
+            background: #eee;
+            color: var(--base);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 16px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .nb:hover {
+            background: #ddd;
+        }
+
+        .nb:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .sc {
+            color: #888;
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .stp {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .stp.shwn {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .pnl {
+            background: #fff;
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 3px solid #eaeaea;
+            width: 100%;
+        }
+
+        .pnl-border {
+            background: #fff;
+            border: 4px solid var(--base);
+            border-radius: 20px;
+            padding: 24px;
+            width: 100%;
+        }
+
+        .hl {
+            color: var(--base);
+            font-weight: 900;
+        }
+
+        .btn {
+            background: var(--base);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: transform .2s;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(28, 74, 130, 0.3);
+        }
+
+        .math-eq {
+            font-size: 52px;
+            font-weight: 900;
+            color: var(--base);
+            background: #fff;
+            padding: 12px 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border: 3px dashed #bbdefb;
+            margin: 12px;
+            text-align: center;
+        }
+
+        .chip-row,
+        .card-row,
+        .base-row,
+        .quiz-row {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .mini-chip {
+            background: #eef5ff;
+            border: 2px solid #b6d4f3;
+            border-radius: 999px;
+            padding: 12px 18px;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .idea-card {
+            flex: 1 1 220px;
+            background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+            border-radius: 18px;
+            padding: 18px;
+            border: 3px solid #d7e7f7;
+            min-height: 220px;
+        }
+
+        .idea-card h3 {
+            font-size: 28px;
+            color: var(--base);
+            margin-bottom: 10px;
+        }
+
+        .idea-card p {
+            font-size: 21px;
+            line-height: 1.45;
+        }
+
+        .base-card {
+            flex: 1 1 320px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 18px;
+            border: 4px solid #d9e7f6;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.06);
+        }
+
+        .base-card h3 {
+            font-size: 28px;
+            color: var(--base);
+            text-align: center;
+            margin-bottom: 14px;
+        }
+
+        .place-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .place-box {
+            background: #f8fbff;
+            border: 2px dashed #c6d9ef;
+            border-radius: 16px;
+            padding: 12px;
+            min-height: 184px;
+        }
+
+        .place-title {
+            text-align: center;
+            font-size: 19px;
+            font-weight: 900;
+            color: #315c8d;
+            margin-bottom: 10px;
+        }
+
+        .block-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: flex-start;
+            justify-content: center;
+            min-height: 88px;
+        }
+
+        .unit {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            background: var(--fill, #9DDEFF);
+            border: 1px solid rgba(0, 0, 0, 0.3);
+        }
+
+        .rod {
+            width: 12px;
+            height: 120px;
+            border-radius: 2px;
+            background: var(--fill, #9DE3BD);
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            background-image: repeating-linear-gradient(to bottom, transparent, transparent 11px, rgba(0, 0, 0, 0.3) 11px, rgba(0, 0, 0, 0.3) 12px);
+        }
+
+        .flat {
+            width: 120px;
+            height: 120px;
+            border-radius: 2px;
+            background: var(--fill, #FFB74D);
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            background-image:
+                repeating-linear-gradient(to bottom, transparent, transparent 11px, rgba(0, 0, 0, 0.3) 11px, rgba(0, 0, 0, 0.3) 12px),
+                repeating-linear-gradient(to right, transparent, transparent 11px, rgba(0, 0, 0, 0.3) 11px, rgba(0, 0, 0, 0.3) 12px);
+        }
+
+        .number-tag {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1.15fr .85fr;
+            gap: 18px;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .step-box {
+            background: #f7fbff;
+            border-left: 8px solid var(--base);
+            padding: 14px 16px;
+            border-radius: 14px;
+            font-size: 20px;
+            line-height: 1.4;
+            font-weight: 700;
+        }
+
+        .column-wrap {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 18px;
+            width: 100%;
+            align-items: start;
+        }
+
+        .alg-board {
+            background: #fff;
+            border: 4px solid var(--base);
+            border-radius: 20px;
+            padding: 22px 26px;
+        }
+
+        .alg-grid {
+            display: grid;
+            grid-template-columns: 68px repeat(3, 76px);
+            grid-auto-rows: 58px;
+            align-items: center;
+            justify-items: center;
+            margin: 0 auto;
+            width: max-content;
+        }
+
+        .alg-grid.long {
+            grid-template-columns: 68px repeat(3, 76px);
+        }
+
+        .alg-label {
+            font-size: 20px;
+            font-weight: 900;
+            color: #57779d;
+        }
+
+        .alg-digit {
+            width: 60px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: #f7fbff;
+            font-size: 34px;
+            font-weight: 900;
+            color: #173b67;
+            border: 2px solid #d4e5f8;
+        }
+
+        .alg-digit.dim {
+            color: #b6c6d8;
+        }
+
+        .alg-digit.reserve {
+            height: 38px;
+            background: #fff7df;
+            border-color: #f0cf67;
+            color: #9f6200;
+            font-size: 24px;
+        }
+
+        .alg-line {
+            grid-column: 2 / span 3;
+            width: 100%;
+            height: 4px;
+            background: #395f90;
+            border-radius: 999px;
+        }
+
+        .alg-sign {
+            font-size: 30px;
+            font-weight: 900;
+            color: #c94d2a;
+        }
+
+        .side-panel {
+            background: linear-gradient(180deg, #fefefe 0%, #f4f9ff 100%);
+            border: 3px solid #d5e4f5;
+            border-radius: 18px;
+            padding: 18px;
+            min-height: 290px;
+        }
+
+        .side-panel h3 {
+            font-size: 24px;
+            color: var(--base);
+            margin-bottom: 12px;
+        }
+
+        .side-panel p {
+            font-size: 20px;
+            line-height: 1.45;
+        }
+
+        .story-card {
+            width: 100%;
+            border-radius: 28px;
+            padding: 28px;
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .story-emoji {
+            font-size: 114px;
+            text-align: center;
+            animation: bob 2.8s infinite;
+        }
+
+        .story-card h2 {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .story-card p {
+            font-size: 24px;
+            line-height: 1.45;
+        }
+
+        .summary-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .summary-item {
+            background: #fff;
+            border-radius: 16px;
+            padding: 16px 18px;
+            border: 3px solid #dbe7f4;
+            font-size: 23px;
+            line-height: 1.45;
+        }
+
+        .count-board {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .count-card {
+            flex: 1 1 260px;
+            background: linear-gradient(180deg, #ffffff 0%, #f6fbff 100%);
+            border-radius: 22px;
+            padding: 20px;
+            border: 4px solid #d6e8f8;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+            text-align: center;
+        }
+
+        .count-card h3 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: var(--base);
+        }
+
+        .emoji-pack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            min-height: 86px;
+            margin-bottom: 12px;
+        }
+
+        .fact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            width: 100%;
+        }
+
+        .fact-box {
+            background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+            border-radius: 18px;
+            padding: 16px;
+            border: 3px solid #d8e7f6;
+            min-height: 170px;
+        }
+
+        .fact-box h4 {
+            font-size: 24px;
+            color: var(--base);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .fact-box p {
+            font-size: 21px;
+            line-height: 1.45;
+            text-align: center;
+        }
+
+        .msg-area {
+            font-size: 24px;
+            font-weight: 900;
+            height: 40px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .hero-title {
+            font-size: 68px;
+            color: var(--base);
+            margin-bottom: 18px;
+            text-align: center;
+            line-height: 1;
+        }
+
+        .hero-sub {
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            max-width: 720px;
+        }
+
+        .hero-emoji {
+            font-size: 108px;
+            margin-top: 28px;
+            animation: bounce 2s infinite;
+        }
+
+        .formula-row {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .label-pill {
+            background: #eef5ff;
+            border: 2px solid #c5dcf5;
+            border-radius: 14px;
+            padding: 10px 16px;
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--base);
+        }
+
+        .warn-card {
+            background: #fff8e5;
+            border: 4px solid #f0ca59;
+            border-radius: 20px;
+            padding: 20px;
+            font-size: 22px;
+            line-height: 1.45;
+            width: 100%;
+        }
+
+        .decomp-flow {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            width: 100%;
+            align-items: center;
+        }
+
+        .decomp-box {
+            background: #fff;
+            border: 3px solid #d4e6f7;
+            border-radius: 18px;
+            padding: 14px 18px;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--base);
+        }
+
+        .arrow {
+            font-size: 34px;
+            font-weight: 900;
+            color: #4d6d94;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-16px);
+            }
+        }
+
+        @keyframes bob {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
 </head>
+
 <body>
     <div class="pb" id="pb"></div>
     <div class="dk">
         <div class="sl">
-        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-            <h1 class="hero-title">¡Suma y resta 2!</h1>
-            <p class="hero-sub">Centenas, decenas, suma de 3 dígitos y una primera entrada al mundo de la resta.</p>
-            <div class="hero-emoji">🏗️</div>
+            <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                <h1 class="hero-title">¡Suma y resta!</h1>
+                <p class="hero-sub">Centenas, decenas, suma de 3 dígitos y una primera entrada al mundo de la resta.</p>
+                <div class="hero-emoji">🏗️</div>
+            </div>
         </div>
-        </div><div class="sl">
+        <div class="sl">
             <div class="head-title">Centenas, decenas y unidades</div>
             <p class="sub-text">Con bloques grandes podemos representar números de <b class="hl">3 dígitos</b>.</p>
             <div class="base-row">
-                
-    <div class="base-card">
-        <h3>248 = 2 centenas, 4 decenas y 8 unidades</h3>
-        <div class="place-grid">
-            <div class="place-box">
-                <div class="place-title">Centenas</div>
-                <div class="block-stack"><span class="flat" style="--fill:#FFE082;"></span><span class="flat" style="--fill:#FFE082;"></span></div>
-                <div class="number-tag">2</div>
-            </div>
-            <div class="place-box">
-                <div class="place-title">Decenas</div>
-                <div class="block-stack"><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span></div>
-                <div class="number-tag">4</div>
-            </div>
-            <div class="place-box">
-                <div class="place-title">Unidades</div>
-                <div class="block-stack"><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span></div>
-                <div class="number-tag">8</div>
-            </div>
-        </div>
-        <div class="math-eq" style="font-size:34px;">248</div>
-    </div>
-    
+
+                <div class="base-card">
+                    <h3>248 = 2 centenas, 4 decenas y 8 unidades</h3>
+                    <div class="place-grid">
+                        <div class="place-box">
+                            <div class="place-title">Centenas</div>
+                            <div class="block-stack"><span class="flat" style="--fill:#FFB74D;"></span><span
+                                    class="flat" style="--fill:#FFB74D;"></span></div>
+                            <div class="number-tag">2</div>
+                        </div>
+                        <div class="place-box">
+                            <div class="place-title">Decenas</div>
+                            <div class="block-stack"><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod"
+                                    style="--fill:#9DE3BD;"></span><span class="rod"
+                                    style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span>
+                            </div>
+                            <div class="number-tag">4</div>
+                        </div>
+                        <div class="place-box">
+                            <div class="place-title">Unidades</div>
+                            <div class="block-stack"><span class="unit" style="--fill:#9DDEFF;"></span><span
+                                    class="unit" style="--fill:#9DDEFF;"></span><span class="unit"
+                                    style="--fill:#9DDEFF;"></span><span class="unit"
+                                    style="--fill:#9DDEFF;"></span><span class="unit"
+                                    style="--fill:#9DDEFF;"></span><span class="unit"
+                                    style="--fill:#9DDEFF;"></span><span class="unit"
+                                    style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span>
+                            </div>
+                            <div class="number-tag">8</div>
+                        </div>
+                    </div>
+                    <div class="math-eq" style="font-size:34px;">248</div>
+                </div>
+
             </div>
             <div class="stp mini-chip">Una centena vale 100. Una decena vale 10. Una unidad vale 1.</div>
-            </div><div class="sl">
+        </div>
+        <div class="sl">
             <div class="head-title">Otro ejemplo visual</div>
             <p class="sub-text">Miremos cómo se ve un número grande cuando lo separamos por valor posicional.</p>
             <div class="base-row">
-                
-    <div class="base-card">
-        <h3>356 = 3 centenas, 5 decenas y 6 unidades</h3>
-        <div class="place-grid">
-            <div class="place-box">
-                <div class="place-title">Centenas</div>
-                <div class="block-stack"><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span></div>
-                <div class="number-tag">3</div>
-            </div>
-            <div class="place-box">
-                <div class="place-title">Decenas</div>
-                <div class="block-stack"><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span></div>
-                <div class="number-tag">5</div>
-            </div>
-            <div class="place-box">
-                <div class="place-title">Unidades</div>
-                <div class="block-stack"><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span></div>
-                <div class="number-tag">6</div>
-            </div>
-        </div>
-        <div class="math-eq" style="font-size:34px;">356</div>
-    </div>
-    
+
+                <div class="base-card">
+                    <h3>356 = 3 centenas, 5 decenas y 6 unidades</h3>
+                    <div class="place-grid">
+                        <div class="place-box">
+                            <div class="place-title">Centenas</div>
+                            <div class="block-stack"><span class="flat" style="--fill:#FFB74D;"></span><span
+                                    class="flat" style="--fill:#FFB74D;"></span><span class="flat"
+                                    style="--fill:#FFB74D;"></span></div>
+                            <div class="number-tag">3</div>
+                        </div>
+                        <div class="place-box">
+                            <div class="place-title">Decenas</div>
+                            <div class="block-stack"><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod"
+                                    style="--fill:#9DE3BD;"></span><span class="rod"
+                                    style="--fill:#9DE3BD;"></span><span class="rod"
+                                    style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span>
+                            </div>
+                            <div class="number-tag">5</div>
+                        </div>
+                        <div class="place-box">
+                            <div class="place-title">Unidades</div>
+                            <div class="block-stack"><span class="unit" style="--fill:#9DDEFF;"></span><span
+                                    class="unit" style="--fill:#9DDEFF;"></span><span class="unit"
+                                    style="--fill:#9DDEFF;"></span><span class="unit"
+                                    style="--fill:#9DDEFF;"></span><span class="unit"
+                                    style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span>
+                            </div>
+                            <div class="number-tag">6</div>
+                        </div>
+                    </div>
+                    <div class="math-eq" style="font-size:34px;">356</div>
+                </div>
+
             </div>
             <div class="stp mini-chip">356 = 300 + 50 + 6.</div>
-            </div><div class="sl">
+        </div>
+        <div class="sl">
             <div class="head-title">Sumar 3 dígitos con bloques</div>
             <p class="sub-text">Primero juntamos unidades, después decenas y finalmente centenas.</p>
             <div class="base-row">
-                
-    <div class="base-card">
-        <h3>Primer número</h3>
-        <div class="place-grid">
-            <div class="place-box">
-                <div class="place-title">Centenas</div>
-                <div class="block-stack"><span class="flat" style="--fill:#FFE082;"></span></div>
-                <div class="number-tag">1</div>
-            </div>
-            <div class="place-box">
-                <div class="place-title">Decenas</div>
-                <div class="block-stack"><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span></div>
-                <div class="number-tag">2</div>
-            </div>
-            <div class="place-box">
-                <div class="place-title">Unidades</div>
-                <div class="block-stack"><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span></div>
-                <div class="number-tag">5</div>
-            </div>
-        </div>
-        <div class="math-eq" style="font-size:34px;">125</div>
-    </div>
-    
-    <div class="base-card">
-        <h3>Segundo número</h3>
-        <div class="place-grid">
-            <div class="place-box">
-                <div class="place-title">Centenas</div>
-                <div class="block-stack"><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span></div>
-                <div class="number-tag">2</div>
-            </div>
-            <div class="place-box">
-                <div class="place-title">Decenas</div>
-                <div class="block-stack"><span class="rod" style="--fill:#B39DDB;"></span><span class="rod" style="--fill:#B39DDB;"></span><span class="rod" style="--fill:#B39DDB;"></span><span class="rod" style="--fill:#B39DDB;"></span></div>
-                <div class="number-tag">4</div>
-            </div>
-            <div class="place-box">
-                <div class="place-title">Unidades</div>
-                <div class="block-stack"><span class="unit" style="--fill:#FF9D9D;"></span><span class="unit" style="--fill:#FF9D9D;"></span><span class="unit" style="--fill:#FF9D9D;"></span></div>
-                <div class="number-tag">3</div>
-            </div>
-        </div>
-        <div class="math-eq" style="font-size:34px;">243</div>
-    </div>
-    
+
+                <div class="base-card">
+                    <h3>Primer número</h3>
+                    <div class="place-grid">
+                        <div class="place-box">
+                            <div class="place-title">Centenas</div>
+                            <div class="block-stack"><span class="flat" style="--fill:#FFB74D;"></span></div>
+                            <div class="number-tag">1</div>
+                        </div>
+                        <div class="place-box">
+                            <div class="place-title">Decenas</div>
+                            <div class="block-stack"><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod"
+                                    style="--fill:#9DE3BD;"></span></div>
+                            <div class="number-tag">2</div>
+                        </div>
+                        <div class="place-box">
+                            <div class="place-title">Unidades</div>
+                            <div class="block-stack"><span class="unit" style="--fill:#9DDEFF;"></span><span
+                                    class="unit" style="--fill:#9DDEFF;"></span><span class="unit"
+                                    style="--fill:#9DDEFF;"></span><span class="unit"
+                                    style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span>
+                            </div>
+                            <div class="number-tag">5</div>
+                        </div>
+                    </div>
+                    <div class="math-eq" style="font-size:34px;">125</div>
+                </div>
+
+                <div class="base-card">
+                    <h3>Segundo número</h3>
+                    <div class="place-grid">
+                        <div class="place-box">
+                            <div class="place-title">Centenas</div>
+                            <div class="block-stack"><span class="flat" style="--fill:#FFB74D;"></span><span
+                                    class="flat" style="--fill:#FFB74D;"></span></div>
+                            <div class="number-tag">2</div>
+                        </div>
+                        <div class="place-box">
+                            <div class="place-title">Decenas</div>
+                            <div class="block-stack"><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod"
+                                    style="--fill:#9DE3BD;"></span><span class="rod"
+                                    style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span>
+                            </div>
+                            <div class="number-tag">4</div>
+                        </div>
+                        <div class="place-box">
+                            <div class="place-title">Unidades</div>
+                            <div class="block-stack"><span class="unit" style="--fill:#9DDEFF;"></span><span
+                                    class="unit" style="--fill:#9DDEFF;"></span><span class="unit"
+                                    style="--fill:#9DDEFF;"></span></div>
+                            <div class="number-tag">3</div>
+                        </div>
+                    </div>
+                    <div class="math-eq" style="font-size:34px;">243</div>
+                </div>
+
             </div>
             <div class="stp decomp-flow" style="margin-top:18px;">
                 <div class="decomp-box">125 + 243</div>
@@ -631,9 +823,11 @@ body {
                 <div class="arrow">→</div>
                 <div class="decomp-box">368</div>
             </div>
-            </div><div class="sl">
+        </div>
+        <div class="sl">
             <div class="head-title">Cuando hay reserva</div>
-            <p class="sub-text">Si junto 10 unidades, las cambio por 1 decena. Si junto 10 decenas, las cambio por 1 centena.</p>
+            <p class="sub-text">Si junto 10 unidades, las cambio por 1 decena. Si junto 10 decenas, las cambio por 1
+                centena.</p>
             <div class="two-col">
                 <div class="pnl-border">
                     <div class="math-eq">138 + 274</div>
@@ -643,198 +837,326 @@ body {
                     <div class="stp math-eq">412</div>
                 </div>
                 <div class="warn-card stp">
-                    La reserva aparece porque estamos cambiando <b>10 unidades por 1 decena</b> o <b>10 decenas por 1 centena</b>.
+                    La reserva aparece porque estamos cambiando <b>10 unidades por 1 decena</b> o <b>10 decenas por 1
+                        centena</b>.
                 </div>
             </div>
-            </div><div class="sl">
+        </div>
+        <div class="sl">
             <div class="head-title">Suma en columna</div>
             <p class="sub-text">Seguimos el orden correcto: <b class="hl">unidades, decenas y centenas</b>.</p>
-            
-    <div class="column-wrap">
-        <div class="alg-board">
-            <div class="alg-grid">
-                <div class="alg-label"></div><div class="alg-digit reserve">1</div><div class="alg-digit reserve">1</div><div class="alg-digit dim"></div><div class="alg-label">C D U</div><div class="alg-digit">1</div><div class="alg-digit">3</div><div class="alg-digit">8</div><div class="alg-label">+</div><div class="alg-digit">2</div><div class="alg-digit">7</div><div class="alg-digit">4</div><div class="alg-label"></div><div class="alg-digit">4</div><div class="alg-digit">1</div><div class="alg-digit">2</div>
-                <div class="alg-line"></div>
+
+            <div class="column-wrap">
+                <div class="alg-board">
+                    <div class="alg-grid">
+                        <div class="alg-label"></div>
+                        <div class="alg-digit reserve">1</div>
+                        <div class="alg-digit reserve">1</div>
+                        <div class="alg-digit dim"></div>
+                        <div class="alg-label">C D U</div>
+                        <div class="alg-digit">1</div>
+                        <div class="alg-digit">3</div>
+                        <div class="alg-digit">8</div>
+                        <div class="alg-label">+</div>
+                        <div class="alg-digit">2</div>
+                        <div class="alg-digit">7</div>
+                        <div class="alg-digit">4</div>
+                        <div class="alg-label"></div>
+                        <div class="alg-digit">4</div>
+                        <div class="alg-digit">1</div>
+                        <div class="alg-digit">2</div>
+                        <div class="alg-line"></div>
+                    </div>
+                </div>
+                <div class="side-panel">
+                    <h3>Paso a paso</h3>
+                    <p class="stp" style="margin-bottom:12px;">Unidades: 8 + 4 = 12. El <b>2</b> queda abajo y la <b>1
+                            decena</b> sube.</p>
+                    <p class="stp" style="margin-bottom:12px;">Decenas: 3 + 7 + 1 = 11. El <b>1</b> queda abajo y la
+                        <b>1 centena</b> sube.</p>
+                    <p class="stp" style="margin-bottom:12px;">Centenas: 1 + 2 + 1 = 4. Resultado final: <b>412</b>.</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="sl">
+            <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+            <p class="sub-text">Resuelve en columna: <b class="hl">326 + 157</b>.</p>
+
+            <div class="decomp-flow" style="margin-top:20px;">
+                <div class="stp decomp-box">Unidades: 6 + 7 = 13</div>
+                <div class="stp decomp-box">Decenas: 2 + 5 + 1 = 8</div>
+                <div class="stp decomp-box">Centenas: 3 + 1 = 4</div>
+                <div class="stp decomp-box">Resultado: 483</div>
             </div>
         </div>
-        <div class="side-panel">
-            <h3>Paso a paso</h3>
-            <p class="stp" style="margin-bottom:12px;">Unidades: 8 + 4 = 12. El <b>2</b> queda abajo y la <b>1 decena</b> sube.</p><p class="stp" style="margin-bottom:12px;">Decenas: 3 + 7 + 1 = 11. El <b>1</b> queda abajo y la <b>1 centena</b> sube.</p><p class="stp" style="margin-bottom:12px;">Centenas: 1 + 2 + 1 = 4. Resultado final: <b>412</b>.</p>
-        </div>
-    </div>
-    
-            </div><div class="sl">
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Resuelve en columna: <b class="hl">326 + 157</b>.</p>
-        
-        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">Unidades: 6 + 7 = 13</div><div class="stp decomp-box">Decenas: 2 + 5 + 1 = 8</div><div class="stp decomp-box">Centenas: 3 + 1 = 4</div><div class="stp decomp-box">Resultado: 483</div></div>
-        </div><div class="sl">
+        <div class="sl">
             <div class="head-title">Sumar 3 números en columna</div>
-            <p class="sub-text">El orden sigue siendo el mismo, pero ahora juntamos <b class="hl">tres números</b> en cada columna.</p>
-            
-    <div class="column-wrap">
-        <div class="alg-board">
-            <div class="alg-grid">
-                <div class="alg-label"></div><div class="alg-digit dim"></div><div class="alg-digit reserve">1</div><div class="alg-digit dim"></div><div class="alg-label">C D U</div><div class="alg-digit">1</div><div class="alg-digit">0</div><div class="alg-digit">8</div><div class="alg-label">+</div><div class="alg-digit">5</div><div class="alg-digit">4</div><div class="alg-digit">9</div><div class="alg-label">+</div><div class="alg-digit">1</div><div class="alg-digit">3</div><div class="alg-digit">7</div><div class="alg-label"></div><div class="alg-digit">7</div><div class="alg-digit">9</div><div class="alg-digit">4</div>
-                <div class="alg-line"></div>
+            <p class="sub-text">El orden sigue siendo el mismo, pero ahora juntamos <b class="hl">tres números</b> en
+                cada columna.</p>
+
+            <div class="column-wrap">
+                <div class="alg-board">
+                    <div class="alg-grid">
+                        <div class="alg-label"></div>
+                        <div class="alg-digit dim"></div>
+                        <div class="alg-digit reserve">1</div>
+                        <div class="alg-digit dim"></div>
+                        <div class="alg-label">C D U</div>
+                        <div class="alg-digit">1</div>
+                        <div class="alg-digit">0</div>
+                        <div class="alg-digit">8</div>
+                        <div class="alg-label">+</div>
+                        <div class="alg-digit">5</div>
+                        <div class="alg-digit">4</div>
+                        <div class="alg-digit">9</div>
+                        <div class="alg-label">+</div>
+                        <div class="alg-digit">1</div>
+                        <div class="alg-digit">3</div>
+                        <div class="alg-digit">7</div>
+                        <div class="alg-label"></div>
+                        <div class="alg-digit">7</div>
+                        <div class="alg-digit">9</div>
+                        <div class="alg-digit">4</div>
+                        <div class="alg-line"></div>
+                    </div>
+                </div>
+                <div class="side-panel">
+                    <h3>Cómo pensar</h3>
+                    <p class="stp" style="margin-bottom:12px;">Unidades: 8 + 9 + 7 = 24. Escribo 4 y reservo 2 decenas.
+                    </p>
+                    <p class="stp" style="margin-bottom:12px;">Decenas: 0 + 4 + 3 + 2 = 9. Escribo 9.</p>
+                    <p class="stp" style="margin-bottom:12px;">Centenas: 1 + 5 + 1 = 7. Resultado: <b>794</b>.</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="sl">
+            <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+            <p class="sub-text">Suma estos tres números: <b class="hl">370 + 48 + 64</b>.</p>
+
+            <div class="decomp-flow" style="margin-top:20px;">
+                <div class="stp decomp-box">Unidades: 0 + 8 + 4 = 12</div>
+                <div class="stp decomp-box">Decenas: 7 + 4 + 6 + 1 = 18</div>
+                <div class="stp decomp-box">Centenas: 3 + 1 = 4</div>
+                <div class="stp decomp-box">Resultado: 482</div>
             </div>
         </div>
-        <div class="side-panel">
-            <h3>Cómo pensar</h3>
-            <p class="stp" style="margin-bottom:12px;">Unidades: 8 + 9 + 7 = 24. Escribo 4 y reservo 2 decenas.</p><p class="stp" style="margin-bottom:12px;">Decenas: 0 + 4 + 3 + 2 = 9. Escribo 9.</p><p class="stp" style="margin-bottom:12px;">Centenas: 1 + 5 + 1 = 7. Resultado: <b>794</b>.</p>
+        <div class="sl">
+            <div class="head-title">Suma visual de centenas</div>
+            <p class="sub-text">Los bloques grandes también se pueden juntar mentalmente.</p>
+            <div class="count-board">
+                <div class="count-card"
+                    style="border-color:#FFE082; background:linear-gradient(180deg,#fffdf1 0%,#ffffff 100%);">
+                    <h3>240</h3>
+                    <div class="emoji-pack"><span class="flat" style="--fill:#FFB74D;"></span><span class="flat"
+                            style="--fill:#FFB74D;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span
+                            class="rod" style="--fill:#9DE3BD;"></span><span class="rod"
+                            style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span></div>
+                </div>
+                <div class="math-eq" style="font-size:60px;">+</div>
+                <div class="count-card"
+                    style="border-color:#E1BEE7; background:linear-gradient(180deg,#f4fff7 0%,#ffffff 100%);">
+                    <h3>130</h3>
+                    <div class="emoji-pack"><span class="flat" style="--fill:#FFB74D;"></span><span class="rod"
+                            style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span
+                            class="rod" style="--fill:#9DE3BD;"></span></div>
+                </div>
+            </div>
+            <div class="stp math-eq" style="border-color:#9DE3BD; background:#faf4ff;">240 + 130 = 370</div>
+            <div class="stp mini-chip">2 centenas + 1 centena = 3 centenas. 4 decenas + 3 decenas = 7 decenas.</div>
         </div>
-    </div>
-    
-            </div><div class="sl">
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Suma estos tres números: <b class="hl">370 + 48 + 64</b>.</p>
-        
-        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">Unidades: 0 + 8 + 4 = 12</div><div class="stp decomp-box">Decenas: 7 + 4 + 6 + 1 = 18</div><div class="stp decomp-box">Centenas: 3 + 1 = 4</div><div class="stp decomp-box">Resultado: 482</div></div>
-        </div><div class="sl">
-        <div class="head-title">Suma visual de centenas</div>
-        <p class="sub-text">Los bloques grandes también se pueden juntar mentalmente.</p>
-        <div class="count-board">
-            <div class="count-card" style="border-color:#FFE082; background:linear-gradient(180deg,#fffdf1 0%,#ffffff 100%);">
-                <h3>240</h3>
-                <div class="emoji-pack"><span class="flat" style="--fill:#FFE082;"></span><span class="flat" style="--fill:#FFE082;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span></div>
-            </div>
-            <div class="math-eq" style="font-size:60px;">+</div>
-            <div class="count-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#f4fff7 0%,#ffffff 100%);">
-                <h3>130</h3>
-                <div class="emoji-pack"><span class="flat" style="--fill:#FFB74D;"></span><span class="rod" style="--fill:#E1BEE7;"></span><span class="rod" style="--fill:#E1BEE7;"></span><span class="rod" style="--fill:#E1BEE7;"></span></div>
-            </div>
-        </div>
-        <div class="stp math-eq" style="border-color:#9DE3BD; background:#faf4ff;">240 + 130 = 370</div>
-        <div class="stp mini-chip">2 centenas + 1 centena = 3 centenas. 4 decenas + 3 decenas = 7 decenas.</div>
-        </div><div class="sl">
-        <div class="head-title">Sumas de 3 dígitos sin reserva</div>
-        <p class="sub-text">Primero practica casos donde no necesitamos cambiar 10 unidades por 1 decena.</p>
-        <div class="card-row">
-            <div class="idea-card" style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">📦</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">241 + 126</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#FFE082; margin:0;">= 367</div>
-            </div>
-            
-            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🚲</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">352 + 214</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 566</div>
-            </div>
-            
-            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🌈</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">430 + 125</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 555</div>
-            </div>
-            </div>
-        </div><div class="sl">
-        <div class="head-title">Sumas de 3 dígitos con reserva</div>
-        <p class="sub-text">Ahora sí aparece la reserva en unidades o decenas.</p>
-        <div class="card-row">
-            <div class="idea-card" style="border-color:#FFB74D; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🎯</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">138 + 274</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#FFB74D; margin:0;">= 412</div>
-            </div>
-            
-            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🧩</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">247 + 168</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 415</div>
-            </div>
-            
-            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🪁</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">359 + 186</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 545</div>
-            </div>
-            </div>
-        </div><div class="sl">
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Resuelve en columna: <b class="hl">451 + 239</b>.</p>
-        
-        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">Unidades: 1 + 9 = 10</div><div class="stp decomp-box">Decenas: 5 + 3 + 1 = 9</div><div class="stp decomp-box">Centenas: 4 + 2 = 6</div><div class="stp decomp-box">Resultado: 690</div></div>
-        </div><div class="sl">
-        <div class="head-title">Cómo ordenar los números</div>
-        <p class="sub-text">En columna, cada cifra va con su lugar correcto.</p>
-        <div class="fact-grid">
-            <div class="fact-box" style="border-color:#FFE082;">
-                <h4>🟡 Unidades</h4>
-                <p>Las unidades van <b>debajo de unidades</b>.</p>
-            </div>
-            
-            <div class="fact-box" style="border-color:#9DE3BD;">
-                <h4>🟢 Decenas</h4>
-                <p>Las decenas van <b>debajo de decenas</b>.</p>
-            </div>
-            
-            <div class="fact-box" style="border-color:#E1BEE7;">
-                <h4>🟣 Centenas</h4>
-                <p>Las centenas van <b>debajo de centenas</b>.</p>
-            </div>
-            </div>
-        </div><div class="sl">
-        <div class="head-title">Tres sumandos visuales</div>
-        <p class="sub-text">También podemos pensar una suma de tres números por partes.</p>
-        <div class="count-board">
-            <div class="count-card" style="border-color:#FFE082; background:linear-gradient(180deg,#fffdf1 0%,#ffffff 100%);">
-                <h3>108</h3>
-                <div class="emoji-pack"><span class="flat" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span></div>
-            </div>
-            <div class="math-eq" style="font-size:60px;">+</div>
-            <div class="count-card" style="border-color:#FFB74D; background:linear-gradient(180deg,#f4fff7 0%,#ffffff 100%);">
-                <h3>549 y 137</h3>
-                <div class="emoji-pack"><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span></div>
+        <div class="sl">
+            <div class="head-title">Sumas de 3 dígitos sin reserva</div>
+            <p class="sub-text">Primero practica casos donde no necesitamos cambiar 10 unidades por 1 decena.</p>
+            <div class="card-row">
+                <div class="idea-card"
+                    style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                    <div style="font-size:60px; text-align:center; margin-bottom:10px;">📦</div>
+                    <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">
+                        241 + 126</div>
+                    <div class="stp math-eq" style="font-size:38px; border-color:#FFE082; margin:0;">= 367</div>
+                </div>
+
+                <div class="idea-card"
+                    style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                    <div style="font-size:60px; text-align:center; margin-bottom:10px;">🚲</div>
+                    <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">
+                        352 + 214</div>
+                    <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 566</div>
+                </div>
+
+                <div class="idea-card"
+                    style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                    <div style="font-size:60px; text-align:center; margin-bottom:10px;">🌈</div>
+                    <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">
+                        430 + 125</div>
+                    <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 555</div>
+                </div>
             </div>
         </div>
-        <div class="stp math-eq" style="border-color:#9DE3BD; background:#faf4ff;">108 + 549 + 137 = 794</div>
-        <div class="stp mini-chip">Aunque hay tres números, seguimos sumando unidades, decenas y centenas.</div>
-        </div><div class="sl">
-        <div class="head-title">Práctica con tres números</div>
-        <p class="sub-text">Resuelve estas sumas en columna.</p>
-        <div class="card-row">
-            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🏁</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">108 + 549 + 137</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 794</div>
+        <div class="sl">
+            <div class="head-title">Sumas de 3 dígitos con reserva</div>
+            <p class="sub-text">Ahora sí aparece la reserva en unidades o decenas.</p>
+            <div class="card-row">
+                <div class="idea-card"
+                    style="border-color:#FFB74D; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                    <div style="font-size:60px; text-align:center; margin-bottom:10px;">🎯</div>
+                    <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">
+                        138 + 274</div>
+                    <div class="stp math-eq" style="font-size:38px; border-color:#FFB74D; margin:0;">= 412</div>
+                </div>
+
+                <div class="idea-card"
+                    style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                    <div style="font-size:60px; text-align:center; margin-bottom:10px;">🧩</div>
+                    <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">
+                        247 + 168</div>
+                    <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 415</div>
+                </div>
+
+                <div class="idea-card"
+                    style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                    <div style="font-size:60px; text-align:center; margin-bottom:10px;">🪁</div>
+                    <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">
+                        359 + 186</div>
+                    <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 545</div>
+                </div>
             </div>
-            
-            <div class="idea-card" style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🎨</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">126 + 417 + 203</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#FFE082; margin:0;">= 746</div>
-            </div>
-            
-            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🪄</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">233 + 508 + 111</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 852</div>
-            </div>
-            </div>
-        </div><div class="sl">
-        <div class="head-title">Desafío rápido</div>
-        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
-            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">¿Cuál es el resultado de <b>138 + 274</b>?</p>
-            <div class="quiz-row"><button class="btn" onclick="chkAns(this, false, &quot;La suma correcta es 412.&quot;)">302</button><button class="btn" onclick="chkAns(this, true, &quot;La suma correcta es 412.&quot;)">412</button><button class="btn" onclick="chkAns(this, false, &quot;La suma correcta es 412.&quot;)">422</button></div>
-            <div class="msg-area"></div>
         </div>
-        </div><div class="sl">
+        <div class="sl">
+            <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+            <p class="sub-text">Resuelve en columna: <b class="hl">451 + 239</b>.</p>
+
+            <div class="decomp-flow" style="margin-top:20px;">
+                <div class="stp decomp-box">Unidades: 1 + 9 = 10</div>
+                <div class="stp decomp-box">Decenas: 5 + 3 + 1 = 9</div>
+                <div class="stp decomp-box">Centenas: 4 + 2 = 6</div>
+                <div class="stp decomp-box">Resultado: 690</div>
+            </div>
+        </div>
+        <div class="sl">
+            <div class="head-title">Cómo ordenar los números</div>
+            <p class="sub-text">En columna, cada cifra va con su lugar correcto.</p>
+            <div class="fact-grid">
+                <div class="fact-box" style="border-color:#FFE082;">
+                    <h4>🟡 Unidades</h4>
+                    <p>Las unidades van <b>debajo de unidades</b>.</p>
+                </div>
+
+                <div class="fact-box" style="border-color:#9DE3BD;">
+                    <h4>🟢 Decenas</h4>
+                    <p>Las decenas van <b>debajo de decenas</b>.</p>
+                </div>
+
+                <div class="fact-box" style="border-color:#E1BEE7;">
+                    <h4>🟣 Centenas</h4>
+                    <p>Las centenas van <b>debajo de centenas</b>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="sl">
+            <div class="head-title">Tres sumandos visuales</div>
+            <p class="sub-text">También podemos pensar una suma de tres números por partes.</p>
+            <div class="count-board">
+                <div class="count-card"
+                    style="border-color:#FFE082; background:linear-gradient(180deg,#fffdf1 0%,#ffffff 100%);">
+                    <h3>108</h3>
+                    <div class="emoji-pack"><span class="flat" style="--fill:#FFB74D;"></span><span class="unit"
+                            style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span
+                            class="unit" style="--fill:#9DDEFF;"></span><span class="unit"
+                            style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span
+                            class="unit" style="--fill:#9DDEFF;"></span><span class="unit"
+                            style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span></div>
+                </div>
+                <div class="math-eq" style="font-size:60px;">+</div>
+                <div class="count-card"
+                    style="border-color:#FFB74D; background:linear-gradient(180deg,#f4fff7 0%,#ffffff 100%);">
+                    <h3>549 y 137</h3>
+                    <div class="emoji-pack"><span class="flat" style="--fill:#FFB74D;"></span><span class="flat"
+                            style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span
+                            class="flat" style="--fill:#FFB74D;"></span><span class="flat"
+                            style="--fill:#FFB74D;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span
+                            class="rod" style="--fill:#9DE3BD;"></span><span class="rod"
+                            style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span
+                            class="unit" style="--fill:#9DDEFF;"></span><span class="unit"
+                            style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span
+                            class="unit" style="--fill:#9DDEFF;"></span><span class="unit"
+                            style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span
+                            class="unit" style="--fill:#9DDEFF;"></span><span class="unit"
+                            style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span></div>
+                </div>
+            </div>
+            <div class="stp math-eq" style="border-color:#9DE3BD; background:#faf4ff;">108 + 549 + 137 = 794</div>
+            <div class="stp mini-chip">Aunque hay tres números, seguimos sumando unidades, decenas y centenas.</div>
+        </div>
+        <div class="sl">
+            <div class="head-title">Práctica con tres números</div>
+            <p class="sub-text">Resuelve estas sumas en columna.</p>
+            <div class="card-row">
+                <div class="idea-card"
+                    style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                    <div style="font-size:60px; text-align:center; margin-bottom:10px;">🏁</div>
+                    <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">
+                        108 + 549 + 137</div>
+                    <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 794</div>
+                </div>
+
+                <div class="idea-card"
+                    style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                    <div style="font-size:60px; text-align:center; margin-bottom:10px;">🎨</div>
+                    <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">
+                        126 + 417 + 203</div>
+                    <div class="stp math-eq" style="font-size:38px; border-color:#FFE082; margin:0;">= 746</div>
+                </div>
+
+                <div class="idea-card"
+                    style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                    <div style="font-size:60px; text-align:center; margin-bottom:10px;">🪄</div>
+                    <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">
+                        233 + 508 + 111</div>
+                    <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 852</div>
+                </div>
+            </div>
+        </div>
+        <div class="sl">
+            <div class="head-title">Desafío rápido</div>
+            <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+                <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">¿Cuál es el resultado
+                    de <b>138 + 274</b>?</p>
+                <div class="quiz-row"><button class="btn"
+                        onclick="chkAns(this, false, &quot;La suma correcta es 412.&quot;)">302</button><button
+                        class="btn"
+                        onclick="chkAns(this, true, &quot;La suma correcta es 412.&quot;)">412</button><button
+                        class="btn" onclick="chkAns(this, false, &quot;La suma correcta es 412.&quot;)">422</button>
+                </div>
+                <div class="msg-area"></div>
+            </div>
+        </div>
+        <div class="sl">
             <div class="head-title">¿Qué es restar?</div>
             <p class="sub-text">Restar es <b class="hl">quitar</b>, <b class="hl">separar</b> o saber cuánto falta.</p>
             <div class="formula-row">
                 <div class="pnl" style="max-width:320px; text-align:center; border-color:#9DDEFF;">
-                    <div class="block-stack"><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span></div>
+                    <div class="block-stack"><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit"
+                            style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span
+                            class="unit" style="--fill:#9DDEFF;"></span><span class="unit"
+                            style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span
+                            class="unit" style="--fill:#9DDEFF;"></span><span class="unit"
+                            style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span></div>
                     <div class="number-tag">Tengo 9</div>
                 </div>
                 <div class="math-eq" style="font-size:58px;">−</div>
                 <div class="pnl" style="max-width:260px; text-align:center; border-color:#FF9D9D;">
-                    <div class="block-stack"><span class="unit" style="--fill:#FF9D9D;"></span><span class="unit" style="--fill:#FF9D9D;"></span><span class="unit" style="--fill:#FF9D9D;"></span><span class="unit" style="--fill:#FF9D9D;"></span></div>
+                    <div class="block-stack"><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit"
+                            style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span
+                            class="unit" style="--fill:#9DDEFF;"></span></div>
                     <div class="number-tag">Quito 4</div>
                 </div>
             </div>
             <div class="stp math-eq">9 − 4 = 5</div>
-            </div><div class="sl">
+        </div>
+        <div class="sl">
             <div class="head-title">Elementos de la resta</div>
             <div class="pnl-border" style="background:#f8fbff;">
                 <div class="formula-row" style="margin-bottom:16px;">
@@ -849,26 +1171,28 @@ body {
                     <div class="mini-chip">9 es la <b>diferencia</b>: lo que queda.</div>
                 </div>
             </div>
-            </div><div class="sl">
-        <div class="head-title">Ideas importantes de la resta</div>
-        <p class="sub-text">Estas reglas ayudan a entender mejor lo que hacemos al restar.</p>
-        <div class="fact-grid">
-            <div class="fact-box" style="border-color:#FFE082;">
-                <h4>0 no cambia</h4>
-                <p>Si resto <b>0</b>, el número queda igual.</p>
+        </div>
+        <div class="sl">
+            <div class="head-title">Ideas importantes de la resta</div>
+            <p class="sub-text">Estas reglas ayudan a entender mejor lo que hacemos al restar.</p>
+            <div class="fact-grid">
+                <div class="fact-box" style="border-color:#FFE082;">
+                    <h4>0 no cambia</h4>
+                    <p>Si resto <b>0</b>, el número queda igual.</p>
+                </div>
+
+                <div class="fact-box" style="border-color:#FFB74D;">
+                    <h4>El orden importa</h4>
+                    <p><b>9 − 4</b> no es lo mismo que <b>4 − 9</b>.</p>
+                </div>
+
+                <div class="fact-box" style="border-color:#E1BEE7;">
+                    <h4>Comprobación</h4>
+                    <p>Si sumo <b>diferencia + sustraendo</b>, vuelvo al minuendo.</p>
+                </div>
             </div>
-            
-            <div class="fact-box" style="border-color:#FFB74D;">
-                <h4>El orden importa</h4>
-                <p><b>9 − 4</b> no es lo mismo que <b>4 − 9</b>.</p>
-            </div>
-            
-            <div class="fact-box" style="border-color:#E1BEE7;">
-                <h4>Comprobación</h4>
-                <p>Si sumo <b>diferencia + sustraendo</b>, vuelvo al minuendo.</p>
-            </div>
-            </div>
-        </div><div class="sl">
+        </div>
+        <div class="sl">
             <div class="head-title">Primera resta en columna</div>
             <p class="sub-text">Si las unidades alcanzan, restamos primero ahí y luego seguimos con las decenas.</p>
             <div class="two-col">
@@ -880,104 +1204,185 @@ body {
                 </div>
                 <div class="warn-card stp">El sustraendo tiene 0 decenas. Por eso solo quitamos unidades.</div>
             </div>
-            </div><div class="sl">
-        <div class="head-title">Resta visual</div>
-        <p class="sub-text">También podemos ver una resta con dibujos grandes.</p>
-        <div class="count-board">
-            <div class="count-card" style="border-color:#FFB74D; background:linear-gradient(180deg,#fffdf1 0%,#ffffff 100%);">
-                <h3>Tengo 7 globos</h3>
-                <div class="emoji-pack"><span style="font-size:56px; line-height:1;">🎈</span><span style="font-size:56px; line-height:1;">🎈</span><span style="font-size:56px; line-height:1;">🎈</span><span style="font-size:56px; line-height:1;">🎈</span><span style="font-size:56px; line-height:1;">🎈</span><span style="font-size:56px; line-height:1;">🎈</span><span style="font-size:56px; line-height:1;">🎈</span></div>
+        </div>
+        <div class="sl">
+            <div class="head-title">Resta visual</div>
+            <p class="sub-text">También podemos ver una resta con dibujos grandes.</p>
+            <div class="count-board">
+                <div class="count-card"
+                    style="border-color:#FFB74D; background:linear-gradient(180deg,#fffdf1 0%,#ffffff 100%);">
+                    <h3>Tengo 7 globos</h3>
+                    <div class="emoji-pack"><span style="font-size:56px; line-height:1;">🎈</span><span
+                            style="font-size:56px; line-height:1;">🎈</span><span
+                            style="font-size:56px; line-height:1;">🎈</span><span
+                            style="font-size:56px; line-height:1;">🎈</span><span
+                            style="font-size:56px; line-height:1;">🎈</span><span
+                            style="font-size:56px; line-height:1;">🎈</span><span
+                            style="font-size:56px; line-height:1;">🎈</span></div>
+                </div>
+                <div class="math-eq" style="font-size:60px;">−</div>
+                <div class="count-card"
+                    style="border-color:#E1BEE7; background:linear-gradient(180deg,#f4fff7 0%,#ffffff 100%);">
+                    <h3>Se van 5</h3>
+                    <div class="emoji-pack"><span style="font-size:50px; line-height:1;">⬜</span><span
+                            style="font-size:50px; line-height:1;">⬜</span><span
+                            style="font-size:50px; line-height:1;">⬜</span><span
+                            style="font-size:50px; line-height:1;">⬜</span><span
+                            style="font-size:50px; line-height:1;">⬜</span></div>
+                </div>
             </div>
-            <div class="math-eq" style="font-size:60px;">−</div>
-            <div class="count-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#f4fff7 0%,#ffffff 100%);">
-                <h3>Se van 5</h3>
-                <div class="emoji-pack"><span style="font-size:50px; line-height:1;">⬜</span><span style="font-size:50px; line-height:1;">⬜</span><span style="font-size:50px; line-height:1;">⬜</span><span style="font-size:50px; line-height:1;">⬜</span><span style="font-size:50px; line-height:1;">⬜</span></div>
+            <div class="stp math-eq" style="border-color:#9DE3BD; background:#faf4ff;">7 − 5 = 2</div>
+            <div class="stp mini-chip">Primero miro lo que tengo y después cuento cuánto queda.</div>
+        </div>
+        <div class="sl">
+            <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+            <p class="sub-text">Resuelve: <b class="hl">89 − 5</b>.</p>
+
+            <div class="decomp-flow" style="margin-top:20px;">
+                <div class="stp decomp-box">Unidades: 9 − 5 = 4</div>
+                <div class="stp decomp-box">Decenas: 8 − 0 = 8</div>
+                <div class="stp decomp-box">Resultado: 84</div>
             </div>
         </div>
-        <div class="stp math-eq" style="border-color:#9DE3BD; background:#faf4ff;">7 − 5 = 2</div>
-        <div class="stp mini-chip">Primero miro lo que tengo y después cuento cuánto queda.</div>
-        </div><div class="sl">
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Resuelve: <b class="hl">89 − 5</b>.</p>
-        
-        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">Unidades: 9 − 5 = 4</div><div class="stp decomp-box">Decenas: 8 − 0 = 8</div><div class="stp decomp-box">Resultado: 84</div></div>
-        </div><div class="sl">
-        <div class="head-title">Restas simples para practicar</div>
-        <p class="sub-text">Aquí todavía no necesitamos desagrupar.</p>
-        <div class="card-row">
-            <div class="idea-card" style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🍪</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">67 − 5</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#FFE082; margin:0;">= 62</div>
-            </div>
-            
-            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🧸</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">74 − 2</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 72</div>
-            </div>
-            
-            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">⚽</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">93 − 4</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 89</div>
-            </div>
-            </div>
-        </div><div class="sl">
-        <div class="head-title">Desafío de resta</div>
-        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
-            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">En <b>15 − 6 = 9</b>, ¿qué nombre recibe el 9?</p>
-            <div class="quiz-row"><button class="btn" onclick="chkAns(this, false, &quot;9 es la diferencia.&quot;)">Minuendo</button><button class="btn" onclick="chkAns(this, false, &quot;9 es la diferencia.&quot;)">Sustraendo</button><button class="btn" onclick="chkAns(this, true, &quot;9 es la diferencia.&quot;)">Diferencia</button></div>
-            <div class="msg-area"></div>
-        </div>
-        </div><div class="sl">
-        <div class="head-title">Problemas Situacionales</div>
-        <div class="story-card" style="background:#E8F5E9; border:5px solid #2E7D32;">
-            <div class="story-emoji">📦</div>
-            <div>
-                <h2 style="color:#2E7D32;">Cajas en la bodega</h2>
-                <p>En una bodega había <b>138 cajas</b> y llegaron <b>274 cajas más</b>. ¿Cuántas cajas hay en total?</p>
-                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #2E7D32; border-radius:18px; padding:18px 20px;">
-                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
-                    <div style="font-size:28px; font-weight:900; line-height:1.4;">138 + 274 = 412<br><span style='color:var(--base);'>Ahora hay 412 cajas.</span></div>
+        <div class="sl">
+            <div class="head-title">Restas simples para practicar</div>
+            <p class="sub-text">Aquí todavía no necesitamos desagrupar.</p>
+            <div class="card-row">
+                <div class="idea-card"
+                    style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                    <div style="font-size:60px; text-align:center; margin-bottom:10px;">🍪</div>
+                    <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">
+                        67 − 5</div>
+                    <div class="stp math-eq" style="font-size:38px; border-color:#FFE082; margin:0;">= 62</div>
+                </div>
+
+                <div class="idea-card"
+                    style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                    <div style="font-size:60px; text-align:center; margin-bottom:10px;">🧸</div>
+                    <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">
+                        74 − 2</div>
+                    <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 72</div>
+                </div>
+
+                <div class="idea-card"
+                    style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                    <div style="font-size:60px; text-align:center; margin-bottom:10px;">⚽</div>
+                    <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">
+                        93 − 4</div>
+                    <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 89</div>
                 </div>
             </div>
         </div>
-        </div><div class="sl">
-        <div class="head-title">Problemas Situacionales</div>
-        <div class="story-card" style="background:#E3F2FD; border:5px solid #1565C0;">
-            <div class="story-emoji">🏅</div>
-            <div>
-                <h2 style="color:#1565C0;">Puntos del campeonato</h2>
-                <p>Un equipo logró <b>108 puntos</b> en la mañana, <b>549</b> en la tarde y <b>137</b> al final. ¿Cuántos puntos juntó?</p>
-                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #1565C0; border-radius:18px; padding:18px 20px;">
-                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
-                    <div style="font-size:28px; font-weight:900; line-height:1.4;">108 + 549 + 137 = 794<br><span style='color:var(--base);'>Juntó 794 puntos.</span></div>
+        <div class="sl">
+            <div class="head-title">Desafío de resta</div>
+            <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+                <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">En <b>15 − 6 = 9</b>,
+                    ¿qué nombre recibe el 9?</p>
+                <div class="quiz-row"><button class="btn"
+                        onclick="chkAns(this, false, &quot;9 es la diferencia.&quot;)">Minuendo</button><button
+                        class="btn"
+                        onclick="chkAns(this, false, &quot;9 es la diferencia.&quot;)">Sustraendo</button><button
+                        class="btn" onclick="chkAns(this, true, &quot;9 es la diferencia.&quot;)">Diferencia</button>
+                </div>
+                <div class="msg-area"></div>
+            </div>
+        </div>
+        <div class="sl">
+            <div class="head-title">Problemas Situacionales</div>
+            <div class="story-card" style="background:#E8F5E9; border:5px solid #2E7D32;">
+                <div class="story-emoji">📦</div>
+                <div>
+                    <h2 style="color:#2E7D32;">Cajas en la bodega</h2>
+                    <p>En una bodega había <b>138 cajas</b> y llegaron <b>274 cajas más</b>. ¿Cuántas cajas hay en
+                        total?</p>
+                    <div class="stp"
+                        style="margin-top:18px; background:#fff; border-left:10px solid #2E7D32; border-radius:18px; padding:18px 20px;">
+                        <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                        <div style="font-size:28px; font-weight:900; line-height:1.4;">138 + 274 = 412<br><span
+                                style='color:var(--base);'>Ahora hay 412 cajas.</span></div>
+                    </div>
                 </div>
             </div>
         </div>
-        </div><div class="sl">
-        <div class="head-title">Problemas Situacionales</div>
-        <div class="story-card" style="background:#FFF8E1; border:5px solid #F9A825;">
-            <div class="story-emoji">🍪</div>
-            <div>
-                <h2 style="color:#F9A825;">Galletas que quedaron</h2>
-                <p>Había <b>58 galletas</b> y se comieron <b>3</b>. ¿Cuántas quedaron?</p>
-                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #F9A825; border-radius:18px; padding:18px 20px;">
-                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
-                    <div style="font-size:28px; font-weight:900; line-height:1.4;">58 − 3 = 55<br><span style='color:var(--base);'>Quedaron 55 galletas.</span></div>
+        <div class="sl">
+            <div class="head-title">Problemas Situacionales</div>
+            <div class="story-card" style="background:#E3F2FD; border:5px solid #1565C0;">
+                <div class="story-emoji">🏅</div>
+                <div>
+                    <h2 style="color:#1565C0;">Puntos del campeonato</h2>
+                    <p>Un equipo logró <b>108 puntos</b> en la mañana, <b>549</b> en la tarde y <b>137</b> al final.
+                        ¿Cuántos puntos juntó?</p>
+                    <div class="stp"
+                        style="margin-top:18px; background:#fff; border-left:10px solid #1565C0; border-radius:18px; padding:18px 20px;">
+                        <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                        <div style="font-size:28px; font-weight:900; line-height:1.4;">108 + 549 + 137 = 794<br><span
+                                style='color:var(--base);'>Juntó 794 puntos.</span></div>
+                    </div>
                 </div>
             </div>
         </div>
-        </div><div class="sl">
-        <div class="head-title">Resumen</div>
-        <div class="summary-list"><div class="stp summary-item"><b>En 3 dígitos</b> pensamos en centenas, decenas y unidades.</div><div class="stp summary-item"><b>Suma en columna:</b> empezamos por las unidades y reservamos cuando se juntan 10.</div><div class="stp summary-item"><b>Resta:</b> minuendo, sustraendo y diferencia.</div><div class="stp summary-item"><b>Comprobar una resta:</b> diferencia + sustraendo = minuendo.</div></div>
-        </div><div class="sl">
-        <div class="head-title" style="background:#047857;">Cierre</div>
-        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
-            <p style="font-size:38px; font-weight:800; line-height:1.45; max-width:780px;">Ya puedes sumar números grandes en columna y reconocer cómo funciona una resta antes de desagrupar.</p>
-            <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">🚀</div>
+        <div class="sl">
+            <div class="head-title">Problemas Situacionales</div>
+            <div class="story-card" style="background:#FFF8E1; border:5px solid #F9A825;">
+                <div class="story-emoji">🍪</div>
+                <div>
+                    <h2 style="color:#F9A825;">Galletas que quedaron</h2>
+                    <p>Había <b>58 galletas</b> y se comieron <b>3</b>. ¿Cuántas quedaron?</p>
+                    <div class="stp"
+                        style="margin-top:18px; background:#fff; border-left:10px solid #F9A825; border-radius:18px; padding:18px 20px;">
+                        <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                        <div style="font-size:28px; font-weight:900; line-height:1.4;">58 − 3 = 55<br><span
+                                style='color:var(--base);'>Quedaron 55 galletas.</span></div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <div class="sl">
+            <div class="head-title">Resumen</div>
+            <div class="summary-list">
+                <div class="stp summary-item"><b>En 3 dígitos</b> pensamos en centenas, decenas y unidades.</div>
+                <div class="stp summary-item"><b>Suma en columna:</b> empezamos por las unidades y reservamos cuando se
+                    juntan 10.</div>
+                <div class="stp summary-item"><b>Resta:</b> minuendo, sustraendo y diferencia.</div>
+                <div class="stp summary-item"><b>Comprobar una resta:</b> diferencia + sustraendo = minuendo.</div>
+            </div>
+        </div>
+        <div class="sl">
+            <div class="head-title" style="background:#047857;">Cierre</div>
+            <div
+                style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+                <p style="font-size:38px; font-weight:800; line-height:1.45; max-width:780px;">Ya puedes sumar números
+                    grandes en columna y reconocer cómo funciona una resta antes de desagrupar.</p>
+                <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">🚀</div>
+            </div>
+        </div>
+        <div class="sl">
+            <div class="head-title">Desafío Relámpago ⚡ 1</div>
+            <div class="pnl-border" style="width:100%; border-color:#FF9D9D;">
+                <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:40px;">¿Qué número tiene
+                    <b>3 centenas, 5 decenas y 2 unidades</b>?</p>
+                <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; width:100%;">
+                    <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>532</button>
+                    <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>325</button>
+                    <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, true)'>352</button>
+                </div>
+                <div class="msg-area"
+                    style="font-size:26px; font-weight:900; height:40px; margin-top:40px; text-align:center;"></div>
+            </div>
+        </div>
+        <div class="sl">
+            <div class="head-title">Desafío Relámpago ⚡ 2</div>
+            <div class="pnl-border" style="width:100%; border-color:#FF9D9D;">
+                <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:40px;">Calcula la suma con
+                    reserva: <b>248 + 135</b></p>
+                <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; width:100%;">
+                    <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, true)'>383</button>
+                    <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>373</button>
+                    <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>393</button>
+                </div>
+                <div class="msg-area"
+                    style="font-size:26px; font-weight:900; height:40px; margin-top:40px; text-align:center;"></div>
+            </div>
         </div>
     </div>
     <div class="nv">
@@ -986,55 +1391,56 @@ body {
         <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
     </div>
     <script>
-const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
-function ui() {
-    S.forEach((s,i)=>{
-        s.classList.remove('on','pv','nx');
-        if(i===c) s.classList.add('on');
-        else if(i<c) s.classList.add('pv');
-        else s.classList.add('nx');
-    });
-    document.getElementById('pb').style.width=((c+1)/T*100)+'%';
-    document.getElementById('sc').textContent=`${c+1} / ${T}`;
-    document.getElementById('pv').disabled=c===0;
-    document.getElementById('nx').disabled=c===T-1;
-}
-function go(d) {
-    if(d>0) {
-        const hid = S[c].querySelectorAll('.stp:not(.shwn)');
-        if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
-    } else {
-        const shw = S[c].querySelectorAll('.stp.shwn');
-        if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
-    }
-    const n=c+d;
-    if(n>=0 && n<T) { c=n; ui(); }
-}
-document.addEventListener('keydown', e => {
-    if(e.key==='ArrowRight' || e.key===' ') go(1);
-    if(e.key==='ArrowLeft') go(-1);
-});
-function chkAns(btn, correct, exp) {
-    const wrap = btn.closest('.sl');
-    const buttons = btn.parentElement.querySelectorAll('.btn');
-    const msg = wrap.querySelector('.msg-area');
-    buttons.forEach(b => {
-        b.disabled = false;
-        b.style.background = 'var(--base)';
-        b.style.transform = 'scale(1)';
-    });
-    if (correct) {
-        btn.style.background = '#047857';
-        btn.style.transform = 'scale(1.06)';
-        msg.textContent = `¡Muy bien! ${exp}`;
-        msg.style.color = '#047857';
-    } else {
-        btn.style.background = '#b91c1c';
-        msg.textContent = 'Revisa las unidades primero y vuelve a intentarlo.';
-        msg.style.color = '#b91c1c';
-    }
-}
-ui();
-</script>
+        const S = document.querySelectorAll('.sl'); let c = 0; const T = S.length;
+        function ui() {
+            S.forEach((s, i) => {
+                s.classList.remove('on', 'pv', 'nx');
+                if (i === c) s.classList.add('on');
+                else if (i < c) s.classList.add('pv');
+                else s.classList.add('nx');
+            });
+            document.getElementById('pb').style.width = ((c + 1) / T * 100) + '%';
+            document.getElementById('sc').textContent = `${c + 1} / ${T}`;
+            document.getElementById('pv').disabled = c === 0;
+            document.getElementById('nx').disabled = c === T - 1;
+        }
+        function go(d) {
+            if (d > 0) {
+                const hid = S[c].querySelectorAll('.stp:not(.shwn)');
+                if (hid.length > 0) { hid[0].classList.add('shwn'); return; }
+            } else {
+                const shw = S[c].querySelectorAll('.stp.shwn');
+                if (shw.length > 0) { shw[shw.length - 1].classList.remove('shwn'); return; }
+            }
+            const n = c + d;
+            if (n >= 0 && n < T) { c = n; ui(); }
+        }
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight' || e.key === ' ') go(1);
+            if (e.key === 'ArrowLeft') go(-1);
+        });
+        function chkAns(btn, correct, exp) {
+            const wrap = btn.closest('.sl');
+            const buttons = btn.parentElement.querySelectorAll('.btn');
+            const msg = wrap.querySelector('.msg-area');
+            buttons.forEach(b => {
+                b.disabled = false;
+                b.style.background = 'var(--base)';
+                b.style.transform = 'scale(1)';
+            });
+            if (correct) {
+                btn.style.background = '#047857';
+                btn.style.transform = 'scale(1.06)';
+                msg.textContent = `¡Muy bien! ${exp}`;
+                msg.style.color = '#047857';
+            } else {
+                btn.style.background = '#b91c1c';
+                msg.textContent = 'Revisa las unidades primero y vuelve a intentarlo.';
+                msg.style.color = '#b91c1c';
+            }
+        }
+        ui();
+    </script>
 </body>
+
 </html>

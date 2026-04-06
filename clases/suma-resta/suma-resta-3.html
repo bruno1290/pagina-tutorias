@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Suma y resta 3</title>
+    <title>Resta</title>
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
 :root {
@@ -211,29 +211,29 @@ body {
     min-height: 88px;
 }
 .unit {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
     background: var(--fill, #9DDEFF);
-    border: 2px solid rgba(0,0,0,0.18);
+    border: 1px solid rgba(0,0,0,0.3);
 }
 .rod {
-    width: 30px;
-    height: 108px;
-    border-radius: 8px;
+    width: 12px;
+    height: 120px;
+    border-radius: 2px;
     background: var(--fill, #9DE3BD);
-    border: 2px solid rgba(0,0,0,0.18);
+    border: 1px solid rgba(0,0,0,0.3);
+    background-image: repeating-linear-gradient(to bottom, transparent, transparent 11px, rgba(0,0,0,0.3) 11px, rgba(0,0,0,0.3) 12px);
 }
 .flat {
-    width: 94px;
-    height: 94px;
-    border-radius: 12px;
-    background:
-        linear-gradient(rgba(255,255,255,0.42), rgba(255,255,255,0.42)),
-        repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(0,0,0,0.08) 18px, rgba(0,0,0,0.08) 20px),
-        repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(0,0,0,0.08) 18px, rgba(0,0,0,0.08) 20px),
-        var(--fill, #FFE082);
-    border: 2px solid rgba(0,0,0,0.18);
+    width: 120px;
+    height: 120px;
+    border-radius: 2px;
+    background: var(--fill, #FFB74D);
+    border: 1px solid rgba(0,0,0,0.3);
+    background-image: 
+        repeating-linear-gradient(to bottom, transparent, transparent 11px, rgba(0,0,0,0.3) 11px, rgba(0,0,0,0.3) 12px),
+        repeating-linear-gradient(to right, transparent, transparent 11px, rgba(0,0,0,0.3) 11px, rgba(0,0,0,0.3) 12px);
 }
 .number-tag {
     margin-top: 10px;
@@ -512,7 +512,7 @@ body {
     <div class="dk">
         <div class="sl">
         <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-            <h1 class="hero-title">¡Suma y resta 3!</h1>
+            <h1 class="hero-title">¡¡Resta!!</h1>
             <p class="hero-sub">Restas de 1, 2 y 3 dígitos con desagrupación en unidades, decenas y centenas.</p>
             <div class="hero-emoji">➖</div>
         </div>
@@ -522,12 +522,12 @@ body {
         <div class="count-board">
             <div class="count-card" style="border-color:#FFE082; background:linear-gradient(180deg,#fffdf1 0%,#ffffff 100%);">
                 <h3>Tengo 9 cubitos</h3>
-                <div class="emoji-pack"><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span></div>
+                <div class="emoji-pack"><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span></div>
             </div>
             <div class="math-eq" style="font-size:60px;">−</div>
             <div class="count-card" style="border-color:#FF9D9D; background:linear-gradient(180deg,#f4fff7 0%,#ffffff 100%);">
                 <h3>Quito 5</h3>
-                <div class="emoji-pack"><span class="unit" style="--fill:#FF9D9D;"></span><span class="unit" style="--fill:#FF9D9D;"></span><span class="unit" style="--fill:#FF9D9D;"></span><span class="unit" style="--fill:#FF9D9D;"></span><span class="unit" style="--fill:#FF9D9D;"></span></div>
+                <div class="emoji-pack"><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span></div>
             </div>
         </div>
         <div class="stp math-eq" style="border-color:#9DE3BD; background:#faf4ff;">9 − 5 = 4</div>
@@ -544,7 +544,7 @@ body {
                 </div>
                 <div class="base-card stp" style="border-color:#9DE3BD;">
                     <h3>67</h3>
-                    <div class="block-stack"><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span></div>
+                    <div class="block-stack"><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span></div>
                     <p style="font-size:22px; margin-top:14px; text-align:center;">Quitamos 4 unidades y quedan 3 unidades.</p>
                 </div>
             </div>
@@ -697,12 +697,12 @@ body {
         <div class="count-board">
             <div class="count-card" style="border-color:#FFE082; background:linear-gradient(180deg,#fffdf1 0%,#ffffff 100%);">
                 <h3>864</h3>
-                <div class="emoji-pack"><span class="flat" style="--fill:#FFE082;"></span><span class="flat" style="--fill:#FFE082;"></span><span class="flat" style="--fill:#FFE082;"></span><span class="flat" style="--fill:#FFE082;"></span><span class="flat" style="--fill:#FFE082;"></span><span class="flat" style="--fill:#FFE082;"></span><span class="flat" style="--fill:#FFE082;"></span><span class="flat" style="--fill:#FFE082;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span></div>
+                <div class="emoji-pack"><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span></div>
             </div>
             <div class="math-eq" style="font-size:60px;">−</div>
             <div class="count-card" style="border-color:#FFB74D; background:linear-gradient(180deg,#f4fff7 0%,#ffffff 100%);">
                 <h3>321</h3>
-                <div class="emoji-pack"><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="unit" style="--fill:#FF9D9D;"></span></div>
+                <div class="emoji-pack"><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="unit" style="--fill:#9DDEFF;"></span></div>
             </div>
         </div>
         <div class="stp math-eq" style="border-color:#9DE3BD; background:#faf4ff;">864 − 321 = 543</div>
@@ -898,6 +898,29 @@ body {
             <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">🏁</div>
         </div>
         </div>
+    <div class="sl">
+        <div class="head-title">Desafío Relámpago ⚡ 1</div>
+        <div class="pnl-border" style="width:100%; border-color:#FF9D9D;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:40px;">Si tienes <b>62</b> y quitas <b>15</b>, ¿Necesitas desagrupar una decena?</p>
+            <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; width:100%;">
+                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, true)'>Sí, porque 2 es menor que 5</button>
+                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>No, se resta normal</button>
+                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>Sí, porque 6 es mayor que 1</button>
+            </div>
+            <div class="msg-area" style="font-size:26px; font-weight:900; height:40px; margin-top:40px; text-align:center;"></div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">Desafío Relámpago ⚡ 2</div>
+        <div class="pnl-border" style="width:100%; border-color:#FF9D9D;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:40px;">¿Cuál es el resultado de <b>400 − 125</b>?</p>
+            <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; width:100%;">
+                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>375</button>
+                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>285</button>
+                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, true)'>275</button>
+            </div>
+            <div class="msg-area" style="font-size:26px; font-weight:900; height:40px; margin-top:40px; text-align:center;"></div>
+        </div>
+    </div>
     </div>
     <div class="nv">
         <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>

@@ -2018,10 +2018,12 @@
 
                 <div class="module-surface">
                     <div class="tabs">
+                        <button type="button" class="tab-btn" data-tab="mentoreo">📋 Sesión de Mentoreo</button>
                         <button type="button" class="tab-btn active" data-tab="pres">📊 Presentación</button>
                         <button type="button" class="tab-btn" data-tab="ticket">🎟️ Ticket de Salida</button>
                     </div>
 
+                    <div class="tab-panel" id="panel-mentoreo"></div>
                     <div class="tab-panel active" id="panel-pres"></div>
                     <div class="tab-panel" id="panel-ticket"></div>
                 </div>
@@ -2053,18 +2055,20 @@
             { id: 'suma_resta', cat: 'num', topic: 'suma_resta', title: 'Suma y Resta', desc: 'Práctica de adición y sustracción, con estrategias y problemas.', symbol: '➕' },
             { id: 'multiplicacion', cat: 'mul', topic: 'multiplicacion', title: 'Multiplicación', desc: 'Tablas, sumas reiteradas, arreglos y algoritmos.', symbol: '✖️' },
             { id: 'division', cat: 'mul', topic: 'division', title: 'División', desc: 'Reparto, agrupación equitativa y estrategias de cálculo.', symbol: '➗' },
-            { id: 'fracciones', cat: 'frac', topic: 'fracciones', title: 'Fracciones', desc: 'Representación, equivalencias y operaciones matemáticas.', symbol: '¼' }
+            { id: 'fracciones', cat: 'frac', topic: 'fracciones', title: 'Fracciones', desc: 'Representación, equivalencias y operaciones matemáticas.', symbol: '¼' },
+            { id: 'sesiones_mentoreo_extra', cat: 'extra', topic: 'sesiones_mentoreo_extra', title: 'Sesiones de Mentoreo Extra', desc: 'Sesiones de mentoreo extra.', symbol: '📝' },
         ];
 
         const MODULES = [
             // ── SUMA Y RESTA ────────────────────────────────────────────────
             {
-                id: 7, serial: 1, cat: 'num', topic: 'suma_resta', title: 'Suma y resta I', dur: '45 min',
+                id: 7, serial: 1, cat: 'num', topic: 'suma_resta', title: 'Suma', dur: '45 min',
                 objectives: ['Reconocer sumandos y propiedades de la suma', 'Representar números con bloques', 'Sumar 1 dígito y 2 dígitos descomponiendo'],
                 htmlSlide: 'clases/suma-resta/suma-resta-1.html',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1gV52LQVhRDUZXJ3eGJwyP3eTpr2iK_RG/preview', title: 'Clase 1 – Descomposición' },
                 activities: [],
                 ticket: {
-                    title: 'Ticket de salida – Suma y resta 1',
+                    title: 'Ticket de salida – Suma',
                     questions: [
                         { emoji: '🧱', q: '¿Cuál es el resultado de 7 + 2?', opts: ['8', '9', '10', '11'], ok: 1, exp: '7 + 2 = 9 ✓' },
                         { emoji: '🔄', q: '¿Qué suma vale lo mismo que 4 + 3?', opts: ['4 + 4', '3 + 4', '3 + 3', '5 + 3'], ok: 1, exp: 'Por la conmutativa, 4 + 3 = 3 + 4 ✓' },
@@ -2074,12 +2078,13 @@
                 }
             },
             {
-                id: 8, serial: 2, cat: 'num', topic: 'suma_resta', title: 'Suma y resta II', dur: '50 min',
+                id: 8, serial: 2, cat: 'num', topic: 'suma_resta', title: 'Suma y resta', dur: '50 min',
                 objectives: ['Usar centenas y decenas en sumas de 3 dígitos', 'Sumar en columna con reserva', 'Introducir la resta y sus elementos'],
                 htmlSlide: 'clases/suma-resta/suma-resta-2.html',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1qKuZ3xPGNCA_p9MK4MaQrr8BiinCe-fG/preview', title: 'Clase 3 – Resta' },
                 activities: [],
                 ticket: {
-                    title: 'Ticket de salida – Suma y resta 2',
+                    title: 'Ticket de salida – Suma y resta',
                     questions: [
                         { emoji: '🏗️', q: 'En el número 248, el 2 representa...', opts: ['2 unidades', '2 decenas', '2 centenas', '2 millares'], ok: 2, exp: 'El 2 está en las centenas ✓' },
                         { emoji: '➕', q: '¿Cuánto es 326 + 157?', opts: ['473', '483', '493', '513'], ok: 1, exp: '326 + 157 = 483 ✓' },
@@ -2089,16 +2094,17 @@
                 }
             },
             {
-                id: 9, serial: 3, cat: 'num', topic: 'suma_resta', title: 'Suma y resta III', dur: '55 min',
+                id: 9, serial: 3, cat: 'num', topic: 'suma_resta', title: 'Resta', dur: '55 min',
                 objectives: ['Restar números de 1 y 2 dígitos', 'Dominar la desagrupación en unidades', 'Resolver restas de 3 dígitos con centenas y decenas'],
                 htmlSlide: 'clases/suma-resta/suma-resta-3.html',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1QEaioGu9tJO5_F86HsQKo6fni0n-Okqb/preview', title: 'Clase 5 – Redondeo y Estimación' },
                 activities: [],
                 ticket: {
-                    title: 'Ticket de salida – Suma y resta 3',
+                    title: 'Ticket de salida – Resta',
                     questions: [
                         { emoji: '➖', q: '¿Cuánto es 42 − 19?', opts: ['21', '22', '23', '24'], ok: 2, exp: '42 − 19 = 23 ✓' },
                         { emoji: '🧱', q: '¿Cuánto es 50 − 23?', opts: ['17', '27', '33', '37'], ok: 1, exp: '50 − 23 = 27 ✓' },
-                        { emoji: '📘', q: '¿Cuánto es 521 − 143?', opts: ['368', '378', '388', '478'], ok: 1, exp: '521 − 143 = 378 ✓' },
+                        { emoji: '📘', q: '¿Cuánto es 521 − 121?', opts: ['368', '378', '400', '478'], ok: 1, exp: '521 − 121 = 400 ✓' },
                         { emoji: '🏁', q: '¿Cuánto es 400 − 175?', opts: ['215', '225', '235', '245'], ok: 1, exp: '400 − 175 = 225 ✓' },
                     ]
                 }
@@ -2109,6 +2115,7 @@
                 id: 1, cat: 'mul', topic: 'multiplicacion', title: 'Multiplicación I', dur: '45 min',
                 objectives: ['Consolidar tablas del 2 y 5', 'Comprender la suma iterada', 'Aplicar la propiedad conmutativa'],
                 htmlSlide: 'clases/multiplicacion/multiplicaciones_1.html',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1gEE5VZ-sBNQXRnR2bBethZIpQUxxR_-8/preview', title: 'Clase 7 – División' },
                 activities: [],
                 ticket: {
                     title: 'Ticket de salida – Multiplicación 1',
@@ -2124,6 +2131,7 @@
                 id: 2, cat: 'mul', topic: 'multiplicacion', title: 'Multiplicación II', dur: '45 min',
                 objectives: ['Tablas del 3 al 9 con lógica', 'Maestros de los atajos mentales', 'Resolver problemas aplicados'],
                 htmlSlide: 'clases/multiplicacion/multiplicaciones_2.html',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1OjhSWlMUpXvcdeawv2ssaGxlP_EMySMu/preview', title: 'Clase 10 – Fracciones' },
                 activities: [],
                 ticket: {
                     title: 'Ticket de salida – Multiplicación 2',
@@ -2139,6 +2147,7 @@
                 id: 3, cat: 'mul', topic: 'multiplicacion', title: 'Multiplicación III', dur: '60 min',
                 objectives: ['Algoritmo vertical paso a paso', 'Multiplicaciones con reserva', 'Práctica maestra de multiplicaciones'],
                 htmlSlide: 'clases/multiplicacion/multiplicaciones_3.html',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/196Nytv9L36Gh5vhnlzjFs13pBNUpoinC/preview', title: 'Clase 11 – Decimales' },
                 activities: [],
                 ticket: {
                     title: 'Ticket de salida – Multiplicación 3',
@@ -2154,6 +2163,7 @@
                 id: 10, serial: 1, cat: 'mul', topic: 'division', title: 'División I', dur: '45 min',
                 objectives: ['Repartir en partes iguales', 'Relacionar multiplicación y división', 'Reconocer dividendo, divisor, cociente y resto'],
                 htmlSlide: 'clases/division/division-1.html',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1M8aiJ-dRo8Vua8vvsIVOuHkRzr5hIByQ/preview', title: 'Clase 12 – Ejercicios' },
                 activities: [],
                 ticket: {
                     title: 'Ticket de salida – División 1',
@@ -2241,6 +2251,55 @@
                         { emoji: '🎯', q: '¿Cual es el MCM de 4 y 5?', opts: ['9', '20', '15', '10'], ok: 1, exp: '4 × 5 = 20 es su MCM ✓' },
                     ]
                 }
+            },
+            // ── SESIONES DE MENTOREO EXTRA ──────────────────────────────────
+            {
+                id: 101, serial: 1, cat: 'extra', topic: 'sesiones_mentoreo_extra', title: 'Mi Futuro', dur: '45 min',
+                objectives: ['Explorar metas y sueños personales', 'Visualizar el camino a seguir'],
+                slideUrl: 'https://drive.google.com/file/d/1bAR-dd5PiweTiAWnvM3i-AceI1u0x7TE/view',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1bAR-dd5PiweTiAWnvM3i-AceI1u0x7TE/preview', title: 'Sesión: Mi Futuro' },
+                activities: [],
+                ticket: { title: 'Ticket de salida – Mi Futuro', questions: [] }
+            },
+            {
+                id: 102, serial: 2, cat: 'extra', topic: 'sesiones_mentoreo_extra', title: 'Mi Mejor Versión', dur: '45 min',
+                objectives: ['Identificar fortalezas personales', 'Trabajar en el crecimiento propio'],
+                slideUrl: 'https://drive.google.com/file/d/19kcFpZ7gMLGrzXxYga-DZSwmoknIYgK6/view',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/19kcFpZ7gMLGrzXxYga-DZSwmoknIYgK6/preview', title: 'Sesión: Mi Mejor Versión' },
+                activities: [],
+                ticket: { title: 'Ticket de salida – Mi Mejor Versión', questions: [] }
+            },
+            {
+                id: 103, serial: 3, cat: 'extra', topic: 'sesiones_mentoreo_extra', title: 'Mis Aventuras', dur: '45 min',
+                objectives: ['Compartir experiencias significativas', 'Valorar las vivencias del pasado'],
+                slideUrl: 'https://drive.google.com/file/d/189v9UW7EosORaUYI69w7SNaHMBut7sby/view',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/189v9UW7EosORaUYI69w7SNaHMBut7sby/preview', title: 'Sesión: Mis Aventuras' },
+                activities: [],
+                ticket: { title: 'Ticket de salida – Mis Aventuras', questions: [] }
+            },
+            {
+                id: 104, serial: 4, cat: 'extra', topic: 'sesiones_mentoreo_extra', title: 'Mis Personas Favoritas', dur: '45 min',
+                objectives: ['Reconocer los vínculos afectivos', 'Valorar la red de apoyo personal'],
+                slideUrl: 'https://drive.google.com/file/d/1LCyvFlaV0bE1h9gI8H-CANkcX1kFNQO-/view',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1LCyvFlaV0bE1h9gI8H-CANkcX1kFNQO-/preview', title: 'Sesión: Mis Personas Favoritas' },
+                activities: [],
+                ticket: { title: 'Ticket de salida – Mis Personas Favoritas', questions: [] }
+            },
+            {
+                id: 105, serial: 5, cat: 'extra', topic: 'sesiones_mentoreo_extra', title: 'Soñar', dur: '45 min',
+                objectives: ['Permitirse imaginar sin límites', 'Fomentar la creatividad y la esperanza'],
+                slideUrl: 'https://drive.google.com/file/d/10l_sPtdN2cTRExHyPFuVpD1ZQxRKP-HK/view',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/10l_sPtdN2cTRExHyPFuVpD1ZQxRKP-HK/preview', title: 'Sesión: Soñar' },
+                activities: [],
+                ticket: { title: 'Ticket de salida – Soñar', questions: [] }
+            },
+            {
+                id: 106, serial: 6, cat: 'extra', topic: 'sesiones_mentoreo_extra', title: 'Talento', dur: '45 min',
+                objectives: ['Descubrir habilidades innatas', 'Fomentar la confianza en uno mismo'],
+                slideUrl: 'https://drive.google.com/file/d/1bcim7aItvia4hP8VImIKGxJ3Ts2sV553/view',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1bcim7aItvia4hP8VImIKGxJ3Ts2sV553/preview', title: 'Sesión: Talento' },
+                activities: [],
+                ticket: { title: 'Ticket de salida – Talento', questions: [] }
             }
         ];
         const DIAGNOSTIC_SECTIONS = [
@@ -2484,6 +2543,14 @@
             document.getElementById('home').style.display = 'none';
             document.getElementById('mod-view').style.display = 'block';
 
+            // Ocultar pestañas innecesarias para mentoreos extra
+            const isExtra = current.topic === 'sesiones_mentoreo_extra';
+            const mTabBtn = document.querySelector('.tab-btn[data-tab="mentoreo"]');
+            const tTabBtn = document.querySelector('.tab-btn[data-tab="ticket"]');
+            
+            if (mTabBtn) mTabBtn.style.display = isExtra ? 'none' : 'inline-block';
+            if (tTabBtn) tTabBtn.style.display = (isExtra || !current.ticket?.questions?.length) ? 'none' : 'inline-block';
+
             const cat = getCat(current.cat);
             document.getElementById('mh-dot').style.background = cat.color;
             document.getElementById('mh-cat').textContent = cat.name;
@@ -2513,6 +2580,7 @@
             const panel = document.getElementById(`panel-${name}`);
             if (!panel) return;
             try {
+                if (name === 'mentoreo') renderMentoreo();
                 if (name === 'pres') renderPres();
                 if (name === 'ticket') initTicket();
             } catch (err) {
@@ -2557,6 +2625,46 @@
             if (gsM) return `https://docs.google.com/presentation/d/${gsM[1]}/embed?start=false&loop=false&delayms=5000`;
             // Already a valid embed or other URL
             return url;
+        }
+
+        function renderMentoreo() {
+            const c = document.getElementById('panel-mentoreo');
+            const m = current?.mentoreo;
+            if (!m || !m.pdf) {
+                c.innerHTML = `
+                <div class="empty">
+                    <div class="ei">📋</div>
+                    <h3>Sin sesión de mentoreo</h3>
+                    <p>Este módulo todavía no tiene una sesión de mentoreo asignada.</p>
+                </div>`;
+                return;
+            }
+            const encodedPdf = encodeURIComponent(m.pdf).replace(/%2F/g, '/');
+            c.innerHTML = `
+            <div class="pres-wrapper">
+                <div class="pres-toolbar">
+                    <div class="pres-toolbar-left">
+                        <span class="toolbar-label">📋 ${m.title}</span>
+                    </div>
+                    <div style="display:flex;gap:8px">
+                        <a class="tool-btn" href="${m.pdf}" download style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+                            ⬇️ Descargar PDF
+                        </a>
+                        <button class="tool-btn primary" onclick="document.getElementById('mentoreo-iframe').requestFullscreen()">
+                            ⛶ Pantalla completa
+                        </button>
+                    </div>
+                </div>
+                <div id="pres-frame-wrap">
+                    <iframe id="mentoreo-iframe" src="${m.pdf}"
+                        style="width:100%;height:680px;border:none;border-radius:12px;"
+                        allow="fullscreen" allowfullscreen></iframe>
+                </div>
+                <p style="text-align:center;font-size:13px;color:#888;margin-top:10px;">
+                    Si el PDF no carga, 
+                    <a href="${m.pdf}" target="_blank" style="color:#1C4A82;font-weight:700;">ábrelo en nueva pestaña ↗</a>
+                </p>
+            </div>`;
         }
 
         function renderPres() {
