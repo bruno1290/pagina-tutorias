@@ -2100,6 +2100,7 @@
             { id: 'multiplicacion', cat: 'mul', topic: 'multiplicacion', title: 'Multiplicación', desc: 'Tablas, sumas reiteradas, arreglos y algoritmos.', symbol: '✖️' },
             { id: 'division', cat: 'div', topic: 'division', title: 'División', desc: 'Reparto, agrupación equitativa y estrategias de cálculo.', symbol: '➗' },
             { id: 'fracciones', cat: 'frac', topic: 'fracciones', title: 'Fracciones', desc: 'Representación, equivalencias y operaciones matemáticas.', symbol: '¼' },
+            { id: 'geometria', cat: 'geo', topic: 'geometria', title: 'Geometría', desc: 'Formas, ángulos, perímetros y cuerpos geométricos.', symbol: '📐' },
             { id: 'sesiones_mentoreo_extra', cat: 'extra', topic: 'sesiones_mentoreo_extra', title: 'Sesiones de Mentoreo Extra', desc: 'Sesiones de mentoreo extra.', symbol: '📝' },
         ];
 
@@ -2109,7 +2110,7 @@
                 id: 7, serial: 1, cat: 'num', topic: 'suma_resta', title: 'Suma', dur: '45 min',
                 objectives: ['Reconocer sumandos y propiedades de la suma', 'Representar números con bloques', 'Sumar 1 dígito y 2 dígitos descomponiendo'],
                 htmlSlide: 'clases/suma-resta/suma-resta-1.html',
-                mentoreo: { pdf: 'https://drive.google.com/file/d/1gV52LQVhRDUZXJ3eGJwyP3eTpr2iK_RG/preview', title: 'Clase 1 – Descomposición' },
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1ggm88G4qkNc_VyEKzH735M2lDYJvaFX7/preview', title: 'Mentoreo' },
                 activities: [],
                 ticket: {
                     title: 'Ticket de salida – Suma',
@@ -2289,6 +2290,7 @@
                 id: 6, cat: 'frac', topic: 'fracciones', title: 'Fracciones III', dur: '45 min',
                 objectives: ['Sumar y restar con distinto denominador', 'Dominar el MCM mágicamente', 'Problemas de la vida real'],
                 htmlSlide: 'clases/fracciones/11-ejercicios-fracciones.html',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1gV52LQVhRDUZXJ3eGJwyP3eTpr2iK_RG/preview', title: 'Mentoreo' },
                 activities: [],
                 ticket: {
                     title: 'Ticket de salida – Fracciones 3',
@@ -2299,6 +2301,35 @@
                         { emoji: '🎯', q: '¿Cual es el MCM de 4 y 5?', opts: ['9', '20', '15', '10'], ok: 1, exp: '4 × 5 = 20 es su MCM ✓' },
                     ]
                 }
+            },
+            // ── GEOMETRÍA ──────────────────────────────────────────────────
+            {
+                id: 13, serial: 1, cat: 'geo', topic: 'geometria', title: 'Geometría I', dur: '45 min',
+                objectives: ['Identificar polígonos y sus elementos', 'Clasificar figuras según sus lados', 'Explorar vértices y ángulos'],
+                htmlSlide: '#', 
+                activities: [],
+                ticket: { title: 'Ticket de salida – Geometría 1', questions: [] }
+            },
+            {
+                id: 14, serial: 2, cat: 'geo', topic: 'geometria', title: 'Geometría II', dur: '45 min',
+                objectives: ['Reconocer tipos de ángulos', 'Clasificar triángulos', 'Usar el transportador'],
+                htmlSlide: '#',
+                activities: [],
+                ticket: { title: 'Ticket de salida – Geometría 2', questions: [] }
+            },
+            {
+                id: 15, serial: 3, cat: 'geo', topic: 'geometria', title: 'Geometría III', dur: '45 min',
+                objectives: ['Calcular el perímetro de polígonos', 'Introducción al concepto de área', 'Resolver problemas de medición'],
+                htmlSlide: '#',
+                activities: [],
+                ticket: { title: 'Ticket de salida – Geometría 3', questions: [] }
+            },
+            {
+                id: 16, serial: 4, cat: 'geo', topic: 'geometria', title: 'Geometría IV', dur: '45 min',
+                objectives: ['Diferenciar figuras 2D y cuerpos 3D', 'Identificar caras, aristas y vértices', 'Construir redes de cuerpos'],
+                htmlSlide: '#',
+                activities: [],
+                ticket: { title: 'Ticket de salida – Geometría 4', questions: [] }
             },
             // ── SESIONES DE MENTOREO EXTRA ──────────────────────────────────
             {
@@ -2447,14 +2478,14 @@
 
         function getModuleSymbol(module) {
             const t = `${module.title} ${module.objectives.join(' ')}`.toLowerCase();
+            if (t.includes('fracciones')) return '¼';
+            if (t.includes('decimales')) return '0,5';
             if (t.includes('descomposición')) return '🔢';
+            if (t.includes('multiplicación')) return '✖️';
+            if (t.includes('división')) return '➗';
             if (t.includes('suma')) return '➕';
             if (t.includes('resta')) return '➖';
             if (t.includes('redondeo') || t.includes('estimación')) return '🎯';
-            if (t.includes('multiplicación')) return '✖️';
-            if (t.includes('división')) return '➗';
-            if (t.includes('fracciones')) return '¼';
-            if (t.includes('decimales')) return '0,5';
             if (t.includes('geometría')) return '📐';
             if (t.includes('tiempo')) return '⏰';
             if (t.includes('longitudes')) return '📏';
