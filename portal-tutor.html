@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal del Tutor · La Obra UC</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        /* Base styles */
+        :root {
+            --font-titles: 'Buckwheat TC', sans-serif;
+            --font-body: 'Canva Sans', sans-serif;
+            --navy: #133c60; --navy-mid: #1a4f7e; --navy-dark: #0c2b46;
+            --teal: #3498DB; --blue-light: #A8C8E8;
+            --bg: #EEF3FA; --white: #FFFFFF; --text: #17334F;
+            --text-light: #6B85A3; --success: #06D6A0;
+            --header-h: 66px;
+        }
+
+        @font-face { font-family: 'Buckwheat TC'; src: url('assets/fonts/Buckwheat%20TC%20Rg.otf') format('opentype'); }
+        @font-face { font-family: 'Canva Sans'; src: url('assets/fonts/CanvaSans/CanvaSans-Regular.otf') format('opentype'); }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; }
+        h1, h2, h3, .mod-title { font-family: var(--font-titles); text-transform: uppercase; letter-spacing: 0.05em; }
+        
+        /* Header */
+        header {
+            position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
+            background: var(--navy); display: flex; align-items: center; justify-content: space-between;
+            padding: 0 22px; z-index: 200; box-shadow: 0 3px 20px rgba(10, 22, 48, .5);
+        }
+        .h-logo img { width: 44px; height: 44px; display: block; }
+        .top-nav { display: flex; gap: 8px; }
+        .top-nav-btn {
+            border: none; background: rgba(255, 255, 255, .08); color: rgba(255, 255, 255, .82);
+            padding: 10px 16px; border-radius: 999px; cursor: pointer; font-family: var(--font-titles);
+            text-transform: uppercase; font-size: 13px; font-weight: 800; transition: all .18s ease;
+        }
+        .top-nav-btn:hover { background: rgba(255, 255, 255, .16); color: var(--white); }
+        
+        /* Layout */
+        .layout { padding-top: calc(var(--header-h) + 30px); min-height: 100vh; max-width: 900px; margin: 0 auto; padding-bottom: 50px; }
+        
+        .welcome-box {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-mid) 100%);
+            border-radius: 16px; padding: 24px 28px; color: var(--white); margin-bottom: 24px;
+            box-shadow: 0 18px 40px rgba(15, 43, 80, .16);
+        }
+        .welcome-box h1 { font-size: 30px; margin-bottom: 8px; }
+        .welcome-box p { color: var(--blue-light); font-size: 16px; }
+        
+        .card {
+            background: var(--white); border-radius: 16px; padding: 24px; margin-bottom: 24px;
+            box-shadow: 0 2px 10px rgba(19, 51, 79, .05); border: 1px solid #dde8f5;
+        }
+        
+        .card h2 { color: var(--navy); font-size: 20px; border-bottom: 2px solid var(--bg); padding-bottom: 12px; margin-bottom: 20px; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--navy); }
+        .form-input, .form-textarea {
+            width: 100%; border: 2px solid #dde8f5; border-radius: 8px; padding: 12px;
+            font-family: var(--font-body); font-size: 15px; resize: vertical;
+        }
+        
+        .attendance-options { display: flex; gap: 10px; }
+        .attendance-lbl {
+            flex: 1; text-align: center; padding: 12px; border: 2px solid #dde8f5; border-radius: 8px; cursor: pointer;
+            font-weight: bold; transition: all 0.2s; color: var(--text-light);
+        }
+        .attendance-lbl input { display: none; }
+        
+        /* Estilos específicos por estado */
+        .lbl-presente:has(input:checked) { border-color: #06D6A0; background: #e6fff7; color: #059669; }
+        .lbl-ausente:has(input:checked) { border-color: #EF476F; background: #ffeeef; color: #dc2626; }
+        
+        /* Radio para calificación */
+        .rating-group { display: flex; justify-content: space-between; gap: 5px; }
+        .rating-btn {
+            flex: 1; text-align: center; padding: 10px 5px; border: 2px solid #dde8f5; border-radius: 8px;
+            cursor: pointer; font-weight: bold; font-size: 14px; transition: all 0.2s;
+        }
+        .rating-btn input { display: none; }
+        .rating-btn:has(input:checked) { background: var(--navy); border-color: var(--navy); color: white; }
+        
+        .btn {
+            background: var(--teal); color: var(--white); border: none; padding: 14px 24px;
+            border-radius: 8px; font-family: var(--font-titles); text-transform: uppercase; font-size: 16px; cursor: pointer;
+        }
+        .btn:hover { background: var(--teal-dark); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .history-list { display: flex; flex-direction: column; gap: 12px; }
+        .history-item { background: var(--bg); padding: 16px; border-radius: 8px; border-left: 4px solid var(--teal); }
+        .history-date { font-weight: bold; color: var(--navy); margin-bottom: 4px; font-size: 14px; }
+        .history-ass { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; margin-bottom: 8px; }
+        .history-ass.Presente { background: #d1fae5; color: #065f46; }
+        .history-ass.Ausente { background: #fee2e2; color: #991b1b; }
+        .history-notes { font-size: 14px; color: var(--text); line-height: 1.5; white-space: pre-wrap; }
+        
+        .loader { text-align: center; padding: 40px; color: var(--teal); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="h-left">
+        <a href="index.html" class="h-logo">
+            <svg width="44" height="44" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="32" fill="white" fill-opacity="0.1"/>
+                <path d="M42.6667 21.3333C42.6667 17.6533 39.68 14.6667 36 14.6667H28C24.32 14.6667 21.3333 17.6533 21.3333 21.3333V42.6667C21.3333 46.3467 24.32 49.3333 28 49.3333H36C39.68 49.3333 42.6667 46.3467 42.6667 42.6667V21.3333ZM28 21.3333H36V28H28V21.3333ZM36 42.6667H28V34.6667H36V42.6667Z" fill="white"/>
+            </svg>
+        </a>
+    </div>
+    <div class="top-nav">
+        <button class="top-nav-btn" onclick="AppAuth.logout()">Cerrar Sesión</button>
+    </div>
+</header>
+
+<div class="layout" id="mainLayout" style="display: none;">
+    <div class="welcome-box">
+        <h1 id="welcomeName">Hola, Tutor</h1>
+        <p>Tu atutorado(a): <strong id="studentName">Cargando...</strong></p>
+    </div>
+
+    <div class="card">
+        <h2>Registrar Clase de Hoy</h2>
+        <form id="classForm">
+            <div class="form-group">
+                <label class="form-label">Fecha</label>
+                <input type="date" id="classDate" class="form-input" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Asistencia</label>
+                <div class="attendance-options">
+                    <label class="attendance-lbl lbl-presente">
+                        <input type="radio" name="attendance" value="Presente" required> Presente
+                    </label>
+                    <label class="attendance-lbl lbl-ausente">
+                        <input type="radio" name="attendance" value="Ausente"> Ausente
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">¿Cómo puntúas la clase? (1 al 7)</label>
+                <div class="rating-group">
+                    <label class="rating-btn"><input type="radio" name="rating" value="1" required> 1</label>
+                    <label class="rating-btn"><input type="radio" name="rating" value="2"> 2</label>
+                    <label class="rating-btn"><input type="radio" name="rating" value="3"> 3</label>
+                    <label class="rating-btn"><input type="radio" name="rating" value="4"> 4</label>
+                    <label class="rating-btn"><input type="radio" name="rating" value="5"> 5</label>
+                    <label class="rating-btn"><input type="radio" name="rating" value="6"> 6</label>
+                    <label class="rating-btn"><input type="radio" name="rating" value="7"> 7</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Bitácora / Notas de la sesión</label>
+                <textarea id="classNotes" class="form-textarea" rows="4" placeholder="¿Qué repasaron hoy? ¿En qué tuvo más dificultad? ¿Hubo algo destacable?"></textarea>
+            </div>
+            
+            <button type="submit" id="saveBtn" class="btn">Guardar Clase</button>
+            <span id="saveStatus" style="margin-left:14px; font-weight:bold;"></span>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Historial de Clases</h2>
+        <div id="historyList" class="history-list">
+            <div class="loader">Cargando historial...</div>
+        </div>
+    </div>
+</div>
+<div id="loadingScreen" class="loader" style="padding-top:100px;">Verificando sesión...</div>
+
+<script src="scripts/supabase-config.js"></script>
+<script>
+    let currentUserProfile = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Establecer fecha por defecto a hoy
+        if (document.getElementById('classDate')) {
+            document.getElementById('classDate').valueAsDate = new Date();
+        }
+        
+        // 1. Validar sesión Auth
+        const session = await AppAuth.checkSession(true);
+        if(!session) return;
+        
+        // 2. Cargar perfil del tutor
+        const { data: profile, error } = await supabaseClient
+            .from('perfiles')
+            .select('*')
+            .eq('id', session.user.id)
+            .single();
+            
+        if(error || !profile) {
+            alert('Error cargando perfil. Por favor contacta al administrador.');
+            return;
+        }
+        
+        currentUserProfile = profile;
+        
+        // 3. Renderizar interfaz
+        document.getElementById('loadingScreen').style.display = 'none';
+        document.getElementById('mainLayout').style.display = 'block';
+        document.getElementById('welcomeName').textContent = `Hola, ${profile.nombre_completo}`;
+        document.getElementById('studentName').textContent = profile.nombre_atutorado || 'No asignado';
+        
+        // 4. Cargar historial
+        await loadHistory();
+    });
+
+    async function loadHistory() {
+        if (!currentUserProfile) return;
+        
+        const { data: classes, error } = await supabaseClient
+            .from('sesiones_clases')
+            .select('*')
+            .eq('tutor_id', currentUserProfile.id)
+            .order('fecha', { ascending: false });
+            
+        const listContainer = document.getElementById('historyList');
+        
+        if (error) {
+            listContainer.innerHTML = '<div style="color:red;">Error cargando el historial.</div>';
+            return;
+        }
+        
+        if (!classes || classes.length === 0) {
+            listContainer.innerHTML = '<div>No has registrado clases aún.</div>';
+            return;
+        }
+        
+        listContainer.innerHTML = classes.map(c => `
+            <div class="history-item">
+                <div class="history-date">${c.fecha}</div>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <div class="history-ass ${c.asistencia}">${c.asistencia}</div>
+                    ${c.calificacion ? `<div class="history-ass" style="background:#eee; color:#333;">Nota: ${c.calificacion}</div>` : ''}
+                </div>
+                <div class="history-notes">${c.notas_desempeno ? c.notas_desempeno : '<i>Sin bitácora registrada.</i>'}</div>
+            </div>
+        `).join('');
+    }
+
+    document.getElementById('classForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const btn = document.getElementById('saveBtn');
+        const status = document.getElementById('saveStatus');
+        const date = document.getElementById('classDate').value;
+        const attendance = document.querySelector('input[name="attendance"]:checked').value;
+        const rating = document.querySelector('input[name="rating"]:checked').value;
+        const notes = document.getElementById('classNotes').value;
+        
+        btn.disabled = true;
+        btn.textContent = 'Guardando...';
+        
+        const { error } = await supabaseClient
+            .from('sesiones_clases')
+            .insert([
+                {
+                    tutor_id: currentUserProfile.id,
+                    fecha: date,
+                    asistencia: attendance,
+                    calificacion: parseInt(rating),
+                    notas_desempeno: notes
+                }
+            ]);
+            
+        if (error) {
+            console.error(error);
+            status.style.color = 'red';
+            status.textContent = 'Error al guardar.';
+            btn.disabled = false;
+            btn.textContent = 'Guardar Clase';
+            return;
+        }
+        
+        status.style.color = '#06D6A0';
+        status.textContent = '¡Clase guardada exitosamente!';
+        
+        // Limpiar el campo de texto y recargar
+        document.getElementById('classNotes').value = '';
+        await loadHistory();
+        
+        setTimeout(() => {
+            status.textContent = '';
+            btn.disabled = false;
+            btn.textContent = 'Guardar Clase';
+        }, 3000);
+    });
+</script>
+</body>
+</html>

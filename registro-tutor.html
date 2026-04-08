@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Tutor · La Obra UC</title>
+    <!-- Incluir Supabase SDK (Importante hacerlo antes de nuestros scripts) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        /* Variables replicadas de index.html para mantener el diseño */
+        :root {
+            --font-titles: 'Buckwheat TC', sans-serif;
+            --font-body: 'Canva Sans', sans-serif;
+            --navy: #133c60;
+            --teal: #3498DB;
+            --bg: #EEF3FA;
+            --white: #FFFFFF;
+            --text: #17334F;
+            --error: #EF476F;
+            --success: #06D6A0;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: var(--font-body), sans-serif; background: var(--bg); color: var(--text); display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        h1, h2, label { font-family: var(--font-titles), sans-serif; text-transform: uppercase; }
+        
+        .auth-container {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(19, 60, 96, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .auth-logo { text-align: center; margin-bottom: 24px; }
+        .auth-logo img { width: 80px; }
+        .auth-title { text-align: center; color: var(--navy); font-size: 24px; margin-bottom: 24px; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; font-size: 14px; color: var(--navy); letter-spacing: 0.5px; }
+        .form-input {
+            width: 100%; padding: 12px 16px; border: 2px solid #dde8f5; border-radius: 8px;
+            font-size: 15px; transition: border-color 0.2s;
+        }
+        .form-input:focus { outline: none; border-color: var(--teal); }
+        
+        .btn {
+            width: 100%; padding: 14px; background: var(--navy); color: var(--white);
+            border: none; border-radius: 8px; font-family: var(--font-titles); text-transform: uppercase;
+            font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.2s;
+            margin-top: 10px;
+        }
+        .btn:hover { background: #0c2b46; }
+        .btn:disabled { background: #5580A8; cursor: not-allowed; }
+        
+        .auth-links { text-align: center; margin-top: 20px; font-size: 14px; }
+        .auth-links a { color: var(--teal); text-decoration: none; font-weight: bold; }
+        
+        .msg { margin-top: 15px; font-size: 14px; text-align: center; display: none; padding: 10px; border-radius: 6px; }
+        .msg.error { background: #ffeeef; color: var(--error); display: block; }
+        .msg.success { background: #e6fff7; color: var(--success); display: block; }
+    </style>
+</head>
+<body>
+
+<div class="auth-container">
+    <div class="auth-logo">
+        <a href="index.html">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="32" fill="#133C60"/>
+                <path d="M42.6667 21.3333C42.6667 17.6533 39.68 14.6667 36 14.6667H28C24.32 14.6667 21.3333 17.6533 21.3333 21.3333V42.6667C21.3333 46.3467 24.32 49.3333 28 49.3333H36C39.68 49.3333 42.6667 46.3467 42.6667 42.6667V21.3333ZM28 21.3333H36V28H28V21.3333ZM36 42.6667H28V34.6667H36V42.6667Z" fill="white"/>
+            </svg>
+        </a>
+    </div>
+    <h2 class="auth-title">Crear Cuenta de Tutor</h2>
+    
+    <form id="signupForm">
+        <div class="form-group">
+            <label class="form-label" for="nombre_completo">Nombre y Apellido</label>
+            <input type="text" id="nombre_completo" class="form-input" required placeholder="Ej: Josue Jorquera">
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label" for="nombre_atutorado">Nombre del Alumno (Atutorado)</label>
+            <input type="text" id="nombre_atutorado" class="form-input" required placeholder="Ej: Agustina Gutiérrez">
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label" for="email">Correo Electrónico</label>
+            <input type="email" id="email" class="form-input" required>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label" for="password">Contraseña (Mín. 6 caracteres)</label>
+            <input type="password" id="password" class="form-input" required minlength="6">
+        </div>
+        
+        <div id="statusMsg" class="msg"></div>
+        
+        <button type="submit" id="submitBtn" class="btn">Registrarse</button>
+    </form>
+    
+    <div class="auth-links">
+        ¿Ya tienes cuenta? <a href="login.html">Inicia Sesión</a>
+    </div>
+</div>
+
+<script src="scripts/supabase-config.js"></script>
+<script>
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        const msg = document.getElementById('statusMsg');
+        
+        const nombre_completo = document.getElementById('nombre_completo').value;
+        const nombre_atutorado = document.getElementById('nombre_atutorado').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        btn.disabled = true;
+        btn.textContent = 'Registrando...';
+        msg.className = 'msg';
+        
+        try {
+            // 1. Sign up user
+            const { data, error } = await supabaseClient.auth.signUp({
+                email: email,
+                password: password,
+            });
+            
+            if (error) throw error;
+            
+            if (data.user) {
+                // 2. Insert into perfiles
+                const { error: profileError } = await supabaseClient
+                    .from('perfiles')
+                    .insert([
+                        { 
+                            id: data.user.id, 
+                            nombre_completo: nombre_completo,
+                            nombre_atutorado: nombre_atutorado,
+                            rol: 'tutor'
+                        }
+                    ]);
+                    
+                if (profileError) throw profileError;
+                
+                msg.className = 'msg success';
+                msg.textContent = '¡Cuenta creada! Redirigiendo al portal...';
+                
+                setTimeout(() => {
+                    window.location.href = 'portal-tutor.html';
+                }, 1500);
+            } else {
+                msg.className = 'msg success';
+                msg.textContent = 'Revisa tu correo para confirmar tu cuenta (si tienes confirmación por email activada).';
+            }
+            
+        } catch (error) {
+            console.error(error);
+            msg.className = 'msg error';
+            msg.textContent = error.message;
+            btn.disabled = false;
+            btn.textContent = 'Registrarse';
+        }
+    });
+</script>
+</body>
+</html>
