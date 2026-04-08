@@ -214,11 +214,42 @@
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
         }
 
-        .top-nav-btn:hover {
-            background: rgba(255, 255, 255, .16);
-            color: var(--white);
-            transform: translateY(-1px);
+        .top-nav-btn:hover { background: rgba(255, 255, 255, .16); color: var(--white); }
+        
+        /* ─── LIVE BITÁCORA DRAWER ───────────────────────────── */
+        #bitacoraDrawer {
+            position: fixed; top: var(--header-h); right: -400px; width: 380px; height: calc(100vh - var(--header-h));
+            background: white; z-index: 500; transition: right 0.3s ease;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.1); border-left: 1px solid #dde8f5;
+            display: flex; flex-direction: column; overflow-y: auto;
         }
+        #bitacoraDrawer.open { right: 0; }
+        .drawer-header { background: var(--navy); color: white; padding: 20px; position: sticky; top: 0; z-index: 10; }
+        .drawer-content { padding: 25px; flex: 1; }
+        .drawer-footer { padding: 20px; border-top: 1px solid #eee; background: #fafafa; }
+        
+        .floating-bit-btn {
+            position: fixed; bottom: 30px; right: 30px; width: 64px; height: 64px;
+            background: var(--navy); color: white; border-radius: 50%; border: none;
+            cursor: pointer; z-index: 501; box-shadow: 0 4px 15px rgba(19, 60, 96, 0.4);
+            display: flex; align-items: center; justify-content: center; font-size: 24px; transition: transform 0.2s;
+        }
+        .floating-bit-btn:hover { transform: scale(1.1); background: var(--navy-mid); }
+        
+        /* Lock Overlay for Classes */
+        .locked-view {
+            text-align: center; padding: 100px 20px; background: white; border-radius: 20px;
+            border: 2px dashed #cbdcf0; margin: 20px auto; max-width: 800px;
+        }
+        .locked-view h3 { color: var(--navy); font-size: 28px; margin-bottom: 12px; }
+        .locked-view p { color: var(--text-light); margin-bottom: 24px; }
+        
+        /* Attendance selector in drawer */
+        .att-toggle { display: flex; gap: 10px; margin-bottom: 15px; }
+        .att-btn { flex: 1; padding: 10px; border-radius: 8px; border: 2px solid #eee; cursor: pointer; text-align: center; font-weight: bold; font-size: 13px; }
+        .att-btn input { display: none; }
+        .att-btn:has(input:checked).p { border-color: #06D6A0; background: #e6fff7; color: #059669; }
+        .att-btn:has(input:checked).a { border-color: #EF476F; background: #ffeeef; color: #dc2626; }
 
         .top-nav-btn.active {
             background: var(--white);
@@ -1986,12 +2017,12 @@
                 </div>
             </div>
 
-            <nav class="top-nav" aria-label="Secciones principales">
+            <nav class="top-nav" aria-label="Secciones principales" id="mainNav">
                 <button class="top-nav-btn" id="nav-about" onclick="showAbout()">¿Quiénes somos?</button>
                 <button class="top-nav-btn active" id="nav-classes" onclick="showClasses()">Clases</button>
                 <button class="top-nav-btn" id="nav-contact" onclick="showContact()">Contacto</button>
                 <button class="top-nav-btn" type="button" onclick="openOfficialSite()">Proyecto</button>
-                <button class="top-nav-btn" type="button"
+                <button class="top-nav-btn" id="loginBtn" type="button"
                     style="background:white; color:var(--navy); border: none; font-weight: 900;"
                     onclick="window.location.href='login.html'">Login</button>
             </nav>
@@ -2065,8 +2096,18 @@
 
             <section id="diagnostic-view" class="diagnostic-view" style="display:none"></section>
 
+            <!-- Locked View Container -->
+            <div id="locked-view" class="welcome" style="display:none">
+                <div class="locked-view-card" style="text-align: center; padding: 100px 20px; background: white; border-radius: 20px; border: 2px dashed #cbdcf0; margin: 20px auto; max-width: 800px;">
+                    <div style="font-size:60px; margin-bottom:20px;">🔒</div>
+                    <h3>Contenido Restringido</h3>
+                    <p>Los módulos de clase son exclusivos para nuestros tutores y administradores.<br>Por favor, inicia sesión para acceder a las clases.</p>
+                    <button class="tool-btn primary" onclick="window.location.href='login.html'" style="margin: 0 auto; display: block;">Ir al Login</button>
+                </div>
+            </div>
+
             <!-- Welcome -->
-            <div id="home" class="welcome">
+            <div id="home" class="welcome" style="display:none">
                 <div class="welcome-hero">
                     <div class="welcome-intro">
                         <div class="welcome-intro-text">
@@ -2134,12 +2175,178 @@
         </main>
     </div>
 
+    <!-- 📋 SIDE DRAWER BITÁCORA -->
+    <div id="bitacoraDrawer">
+        <div class="drawer-header">
+            <h3 style="margin:0; font-size:18px;">Bitácora de Sesión</h3>
+            <p id="drawerStudent" style="margin:5px 0 0; font-size:13px; opacity:0.8;">Alumno: ...</p>
+        </div>
+        <div class="drawer-content">
+            <form id="drawerForm">
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; font-size:13px; font-weight:bold; margin-bottom:5px;">Fecha</label>
+                    <input type="date" id="drDate" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;" required>
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; font-size:13px; font-weight:bold; margin-bottom:5px;">Asistencia</label>
+                    <div class="att-toggle">
+                        <label class="att-btn p"><input type="radio" name="drAtt" value="Presente" required> Presente</label>
+                        <label class="att-btn a"><input type="radio" name="drAtt" value="Ausente"> Ausente</label>
+                    </div>
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; font-size:13px; font-weight:bold; margin-bottom:5px;">Nota (1-7)</label>
+                    <div style="display:flex; justify-content:space-between;">
+                        ${[1,2,3,4,5,6,7].map(n => `<label style="cursor:pointer;"><input type="radio" name="drRating" value="${n}" required> ${n}</label>`).join('')}
+                    </div>
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; font-size:13px; font-weight:bold; margin-bottom:5px;">Comentarios</label>
+                    <textarea id="drNotes" rows="5" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; font-family:inherit;" placeholder="¿Cómo le fue hoy?"></textarea>
+                </div>
+                <button type="submit" id="drSaveBtn" style="width:100%; background:var(--navy); color:white; border:none; padding:15px; border-radius:8px; font-weight:bold; cursor:pointer;">Guardar Sesión</button>
+                <p id="drStatus" style="text-align:center; margin-top:10px; font-size:12px; font-weight:bold;"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- 🔘 FLOATING BUTTON -->
+    <button class="floating-bit-btn" id="bitBtn" onclick="toggleDrawer()" style="display:none;">📝</button>
+
     <div class="footer-banner">
         <p>&copy; La Obra UC 2026. Todos los derechos reservados. Diseñada por Jefes de Tutorías 2026, Antonia
             Loehnert y Bruno Nattino.</p>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="scripts/supabase-config.js"></script>
     <script>
+        let currentUser = null;
+        let userData    = null;
+
+        // ── Helpers de UI ─────────────────────────────────────────────────────
+        function applyLoggedInUI(profile) {
+            const loginBtn = document.getElementById('loginBtn');
+            const bitBtn   = document.getElementById('bitBtn');
+            if (loginBtn) {
+                loginBtn.textContent = 'MI PERFIL';
+                loginBtn.onclick = () => window.location.href =
+                    profile.rol === 'admin' ? 'portal-admin.html' : 'portal-tutor.html';
+            }
+            if (bitBtn) bitBtn.style.display = 'flex';
+            const ds = document.getElementById('drawerStudent');
+            if (ds) ds.textContent = `Atutorado: ${profile.nombre_atutorado || 'No asignado'}`;
+        }
+
+        function applyLoggedOutUI() {
+            const loginBtn = document.getElementById('loginBtn');
+            const bitBtn   = document.getElementById('bitBtn');
+            if (loginBtn) {
+                loginBtn.textContent = 'Login';
+                loginBtn.onclick = () => window.location.href = 'login.html';
+            }
+            if (bitBtn) bitBtn.style.display = 'none';
+        }
+
+        // ── Arranque principal ─────────────────────────────────────────────────
+        document.addEventListener('DOMContentLoaded', async () => {
+            document.getElementById('drDate').valueAsDate = new Date();
+
+            // 1. Leer sesión actual de forma confiable (await garantiza que
+            //    currentUser esté listo antes de llamar init())
+            const { data: { session } } = await supabaseClient.auth.getSession();
+
+            if (session) {
+                currentUser = session.user;
+                const { data: profile } = await supabaseClient
+                    .from('perfiles').select('*').eq('id', currentUser.id).single();
+                userData = profile;
+                if (profile) applyLoggedInUI(profile);
+            } else {
+                applyLoggedOutUI();
+            }
+
+            // 2. Init con currentUser ya definido → showClasses ve el estado correcto
+            init();
+
+            // 3. Escuchar cambios FUTUROS (logout / login desde otra pestaña)
+            supabaseClient.auth.onAuthStateChange(async (event, session) => {
+                if (event === 'SIGNED_IN' && session) {
+                    currentUser = session.user;
+                    const { data: profile } = await supabaseClient
+                        .from('perfiles').select('*').eq('id', currentUser.id).single();
+                    userData = profile;
+                    if (profile) applyLoggedInUI(profile);
+                    if (currentSection === 'classes') showClasses(false);
+                } else if (event === 'SIGNED_OUT') {
+                    currentUser = null;
+                    userData    = null;
+                    applyLoggedOutUI();
+                    if (currentSection === 'classes') showClasses(false);
+                }
+            });
+            // 4. Actualizar si usuario vuelve usando el botón de "Atrás" del navegador (bfcache)
+            window.addEventListener('pageshow', async (e) => {
+                if (e.persisted) {
+                    const { data: { session } } = await supabaseClient.auth.getSession();
+                    if (session) {
+                        currentUser = session.user;
+                        const { data: profile } = await supabaseClient
+                            .from('perfiles').select('*').eq('id', currentUser.id).single();
+                        userData = profile;
+                        if (profile) applyLoggedInUI(profile);
+                        if (currentSection === 'classes') showClasses(false);
+                    } else {
+                        currentUser = null;
+                        userData    = null;
+                        applyLoggedOutUI();
+                        if (currentSection === 'classes') showClasses(false);
+                    }
+                }
+            });
+        });
+
+
+        function toggleDrawer() {
+            document.getElementById('bitacoraDrawer').classList.toggle('open');
+        }
+
+        document.getElementById('drawerForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!userData) return;
+
+            const btn = document.getElementById('drSaveBtn');
+            const status = document.getElementById('drStatus');
+            const date = document.getElementById('drDate').value;
+            const att = document.querySelector('input[name="drAtt"]:checked').value;
+            const rating = document.querySelector('input[name="drRating"]:checked').value;
+            const notes = document.getElementById('drNotes').value;
+
+            btn.disabled = true;
+            btn.textContent = 'Guardando...';
+
+            const { error } = await supabaseClient.from('sesiones_clases').insert([{
+                tutor_id: userData.id,
+                fecha: date,
+                asistencia: att,
+                calificacion: parseInt(rating),
+                notas_desempeno: notes
+            }]);
+
+            if (error) {
+                status.style.color = 'red';
+                status.textContent = 'Error al guardar.';
+            } else {
+                status.style.color = '#06D6A0';
+                status.textContent = '¡Guardado correctamente! 🎉';
+                document.getElementById('drNotes').value = '';
+                setTimeout(() => toggleDrawer(), 1500);
+            }
+            
+            btn.disabled = false;
+            btn.textContent = 'Guardar Sesión';
+            setTimeout(() => status.textContent = '', 3000);
+        });
+
         // ══════════════════════════════════════════════════════════════════════
         //  🖼️ CARRUSEL "QUIÉNES SOMOS"
         // ══════════════════════════════════════════════════════════════════════
@@ -2417,6 +2624,21 @@
                 activities: [],
                 ticket: { title: 'Ticket de salida – Geometría 3', questions: [] }
             },
+            {
+                id: 16, serial: 4, cat: 'geo', topic: 'geometria', title: 'Geometría IV', dur: '50 min',
+                objectives: ['Identificar y clasificar cuerpos geométricos (cubo, esfera, cilindro, cono, pirámide)', 'Contar caras, aristas y vértices de poliedros', 'Reconocer ejes de simetría en figuras planas'],
+                htmlSlide: 'clases/geometria/geometria-4.html',
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Geometría 4',
+                    questions: [
+                        { emoji: '🧊', q: '¿Cuántas caras tiene un cubo?', opts: ['4', '6', '8', '12'], ok: 1, exp: 'Un cubo tiene 6 caras, todas cuadradas e iguales ✓' },
+                        { emoji: '🍦', q: '¿Cuántos vértices tiene un cono?', opts: ['0', '1', '2', '4'], ok: 1, exp: 'El cono tiene 1 vértice (la punta o ápice) ✓' },
+                        { emoji: '🦋', q: '¿Cuántos ejes de simetría tiene un cuadrado?', opts: ['1', '2', '4', '8'], ok: 2, exp: 'El cuadrado tiene 4 ejes: 2 rectos y 2 diagonales ✓' },
+                        { emoji: '⚽', q: '¿Qué tienen en común la esfera y el cilindro?', opts: ['Solo caras planas', 'Superficie curva', '8 vértices', '12 aristas'], ok: 1, exp: 'La esfera y el cilindro tienen superficie curva, son cuerpos redondos ✓' },
+                    ]
+                }
+            },
             // ── SESIONES DE MENTOREO EXTRA ──────────────────────────────────
             {
                 id: 101, serial: 1, cat: 'extra', topic: 'sesiones_mentoreo_extra', title: 'Mi Futuro', dur: '45 min',
@@ -2539,17 +2761,15 @@
             buildPrevGrid();
             bindModuleTabs();
             history.replaceState({ section: 'classes' }, '');
+            showClasses(false); // currentUser ya está seteado por onAuthStateChange
 
             window.addEventListener('popstate', (e) => {
                 const state = e.state;
-                if (!state) {
-                    showClasses(false);
-                    return;
-                }
-                if (state.section === 'about') showAbout(false);
+                if (!state) { showClasses(false); return; }
+                if (state.section === 'about')   showAbout(false);
                 else if (state.section === 'contact') showContact(false);
-                else if (state.section === 'topic') loadTopic(state.topicId, false);
-                else if (state.section === 'mod') loadMod(state.modId, false);
+                else if (state.section === 'topic')   loadTopic(state.topicId, false);
+                else if (state.section === 'mod')     loadMod(state.modId, false);
                 else showClasses(false);
             });
         }
@@ -2701,14 +2921,19 @@
         }
 
         function showClasses(push = true) {
-            if (push) history.pushState({ section: "classes" }, "");
+            if (push) history.pushState({ section: 'classes' }, '');
+            currentSection = 'classes';
             setTopNav('classes');
-            document.getElementById('about-view').style.display = 'none';
-            document.getElementById('contact-view').style.display = 'none';
-            document.getElementById('diagnostic-view').style.display = 'none';
-            document.getElementById('topic-view').style.display = 'none';
-            document.getElementById('home').style.display = 'flex';
-            document.getElementById('mod-view').style.display = 'none';
+
+            document.getElementById('about-view').style.display      = 'none';
+            document.getElementById('contact-view').style.display     = 'none';
+            document.getElementById('diagnostic-view').style.display  = 'none';
+            document.getElementById('topic-view').style.display       = 'none';
+            document.getElementById('mod-view').style.display         = 'none';
+
+            document.getElementById('locked-view').style.display      = 'none';
+            document.getElementById('home').style.display             = 'flex';
+            
             buildPrevGrid();
         }
 
@@ -2742,6 +2967,14 @@
             document.getElementById('diagnostic-view').style.display = 'none';
             document.getElementById('topic-view').style.display = 'none';
             document.getElementById('home').style.display = 'none';
+
+            if (!currentUser) {
+                document.getElementById('mod-view').style.display = 'none';
+                document.getElementById('locked-view').style.display = 'flex';
+                return;
+            }
+
+            document.getElementById('locked-view').style.display = 'none';
             document.getElementById('mod-view').style.display = 'block';
 
             // Ocultar pestañas innecesarias para mentoreos extra
@@ -3350,7 +3583,6 @@
             showClasses();
         }
 
-        init();
     </script>
 
     <!--

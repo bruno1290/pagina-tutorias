@@ -73,7 +73,7 @@
             </svg>
         </a>
     </div>
-    <h2 class="auth-title">Crear Cuenta de Tutor</h2>
+    <h2 class="auth-title">Crear Cuenta</h2>
     
     <form id="signupForm">
         <div class="form-group">
@@ -82,8 +82,16 @@
         </div>
         
         <div class="form-group">
+            <label class="form-label" for="rol">¿Cuál es tu rol?</label>
+            <select id="rol" class="form-input" required onchange="toggleStudentField()">
+                <option value="tutor" selected>Tutor</option>
+                <option value="admin">Administrador</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="studentGroup">
             <label class="form-label" for="nombre_atutorado">Nombre del Alumno (Atutorado)</label>
-            <input type="text" id="nombre_atutorado" class="form-input" required placeholder="Ej: Agustina Gutiérrez">
+            <input type="text" id="nombre_atutorado" class="form-input" placeholder="Ej: Agustina Gutiérrez">
         </div>
         
         <div class="form-group">
@@ -96,6 +104,23 @@
             <input type="password" id="password" class="form-input" required minlength="6">
         </div>
         
+        <script>
+            function toggleStudentField() {
+                const rol = document.getElementById('rol').value;
+                const studentGroup = document.getElementById('studentGroup');
+                const studentInput = document.getElementById('nombre_atutorado');
+                if (rol === 'admin') {
+                    studentGroup.style.display = 'none';
+                    studentInput.required = false;
+                } else {
+                    studentGroup.style.display = 'block';
+                    studentInput.required = true;
+                }
+            }
+            // Initialize visibility
+            window.addEventListener('DOMContentLoaded', toggleStudentField);
+        </script>
+
         <div id="statusMsg" class="msg"></div>
         
         <button type="submit" id="submitBtn" class="btn">Registrarse</button>
@@ -133,24 +158,25 @@
             
             if (data.user) {
                 // 2. Insert into perfiles
+                const rol = document.getElementById('rol').value;
                 const { error: profileError } = await supabaseClient
                     .from('perfiles')
                     .insert([
                         { 
                             id: data.user.id, 
                             nombre_completo: nombre_completo,
-                            nombre_atutorado: nombre_atutorado,
-                            rol: 'tutor'
+                            nombre_atutorado: rol === 'tutor' ? nombre_atutorado : null,
+                            rol: rol
                         }
                     ]);
                     
                 if (profileError) throw profileError;
                 
                 msg.className = 'msg success';
-                msg.textContent = '¡Cuenta creada! Redirigiendo al portal...';
+                msg.textContent = '¡Cuenta creada! Redirigiendo...';
                 
                 setTimeout(() => {
-                    window.location.href = 'portal-tutor.html';
+                    window.location.href = rol === 'admin' ? 'portal-admin.html' : 'portal-tutor.html';
                 }, 1500);
             } else {
                 msg.className = 'msg success';
