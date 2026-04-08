@@ -14,8 +14,35 @@
             font-display: swap;
         }
 
+        @font-face {
+            font-family: 'Canva Sans';
+            src: url('assets/fonts/CanvaSans/CanvaSans-Regular.otf') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Canva Sans';
+            src: url('assets/fonts/CanvaSans/CanvaSans-Medium.otf') format('opentype');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Canva Sans';
+            src: url('assets/fonts/CanvaSans/CanvaSans-Bold.otf') format('opentype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root {
-            --font-main: 'Buckwheat TC', 'Barlow Condensed', 'Nunito', sans-serif;
+            --font-titles: 'Buckwheat TC', sans-serif;
+            --font-body: 'Canva Sans', sans-serif;
+            --font-main: var(--font-titles);
+            /* For legacy references */
             --navy: #133c60;
             /* La Obra UC primary blue */
             --navy-mid: #1a4f7e;
@@ -44,10 +71,22 @@
         }
 
         body {
-            font-family: var(--font-main);
+            font-family: var(--font-body);
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .main-title,
+        .nav-label,
+        .pc-name {
+            font-family: var(--font-titles);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         button {
@@ -127,7 +166,8 @@
         }
 
         .h-brand .main {
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-weight: 900;
             font-size: 16px;
             letter-spacing: 2.8px;
@@ -161,7 +201,8 @@
             padding: 12px 16px;
             border-radius: 999px;
             cursor: pointer;
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 13px;
             font-weight: 800;
             letter-spacing: .2px;
@@ -250,7 +291,8 @@
         }
 
         .welcome-intro-text h2 {
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-weight: 800;
             font-size: 44px;
             line-height: 1.1;
@@ -290,7 +332,8 @@
         }
 
         .welcome-section-header h2 {
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 32px;
             font-weight: 800;
             color: var(--navy);
@@ -381,7 +424,8 @@
         }
 
         .pc-name {
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 18px;
             font-weight: 800;
             color: var(--navy);
@@ -420,172 +464,167 @@
             transform: translateY(-50%) translateX(3px);
         }
 
+        /* ─── ABOUT SECTION (REDESIGN) ────────────────────────── */
         .about-view {
             display: none;
+            padding-bottom: 60px;
         }
 
-        .about-shell {
-            max-width: 980px;
-            margin: 0 auto;
-        }
-
-        .about-hero {
-            background: linear-gradient(135deg, #14345f 0%, #1a3f6e 55%, #3a76a8 100%);
-            border-radius: 28px;
-            color: var(--white);
-            padding: 34px 34px 30px;
-            box-shadow: 0 16px 40px rgba(15, 43, 80, .2);
-            position: relative;
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            background: var(--white);
+            border-radius: 32px;
             overflow: hidden;
-            margin-bottom: 24px;
+            box-shadow: 0 20px 50px rgba(19, 60, 96, 0.1);
+            min-height: 600px;
+            margin-top: 20px;
         }
 
-        .about-hero::before {
-            content: "";
-            position: absolute;
-            right: -60px;
-            top: -50px;
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, .08);
+        .about-text {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .about-carousel {
+            position: relative;
+            background: #0b1e33;
+            overflow: hidden;
         }
 
         .about-kicker {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, .12);
-            border: 1px solid rgba(255, 255, 255, .16);
-            padding: 8px 12px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-
-        .about-hero h2 {
-            font-family: var(--font-main);
-            font-size: 54px;
-            line-height: 1;
-            margin-bottom: 14px;
-            max-width: 520px;
-        }
-
-        .about-hero p {
-            max-width: 560px;
-            font-size: 17px;
-            line-height: 1.7;
-            color: rgba(255, 255, 255, .9);
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1.3fr .9fr;
-            gap: 20px;
-            align-items: start;
-        }
-
-        .about-hero-layout {
-            display: grid;
-            grid-template-columns: 1.2fr .8fr;
-            gap: 24px;
-            align-items: center;
-        }
-
-        .about-hero-copy {
-            position: relative;
-            z-index: 1;
-        }
-
-        .about-hero-photo {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .about-hero-photo img {
-            width: 100%;
-            max-width: 320px;
-            border-radius: 24px;
-            border: 4px solid rgba(255, 255, 255, .16);
-            box-shadow: 0 18px 34px rgba(8, 22, 43, .22);
-            object-fit: cover;
-        }
-
-        .about-card {
-            background: var(--white);
-            border-radius: 22px;
-            padding: 28px 28px 24px;
-            box-shadow: 0 10px 28px rgba(19, 51, 79, .08);
-        }
-
-        .about-card h3 {
-            font-family: var(--font-main);
-            font-size: 32px;
-            color: var(--navy);
-            margin-bottom: 14px;
-        }
-
-        .about-copy p {
-            font-size: 16px;
-            line-height: 1.8;
-            color: var(--text);
-            margin-bottom: 16px;
-        }
-
-        .about-copy p:last-child {
-            margin-bottom: 0;
-        }
-
-        .about-side {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .impact-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .impact-item {
-            background: linear-gradient(180deg, #f8fbff, #edf3fb);
-            border: 1px solid #dbe6f4;
-            border-radius: 16px;
-            padding: 16px 18px;
-        }
-
-        .impact-item strong {
-            display: block;
+            color: var(--teal);
             font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .about-text h2 {
+            font-size: 48px;
             color: var(--navy);
-            margin-bottom: 5px;
+            margin-bottom: 24px;
+            line-height: 1.1;
         }
 
-        .impact-item span {
+        .about-description p {
+            font-size: 17px;
+            color: var(--text);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .carousel-track {
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+
+        .carousel-item {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .carousel-item.active {
+            opacity: 1;
+        }
+
+        .carousel-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.3));
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        @media(max-width: 1100px) {
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-carousel {
+                height: 400px;
+            }
+        }
+
+        /* ─── CONTACT SECTION ────────────────────────────── */
+        .contact-view {
+            display: none;
+            padding-bottom: 60px;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            background: var(--white);
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(19, 60, 96, 0.1);
+            min-height: 600px;
+            margin-top: 20px;
+        }
+
+        .contact-text {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .contact-text h2 {
+            margin-bottom: 32px;
+        }
+
+        .contact-image {
+            background-image: url('assets/contacto.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .contact-info {
+            margin-top: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .cs-label {
             display: block;
-            font-size: 13px;
-            line-height: 1.6;
-            color: var(--text-light);
+            font-family: var(--font-titles);
+            font-size: 16px;
+            letter-spacing: 1.5px;
+            color: var(--teal);
+            margin-bottom: 8px;
+            text-transform: uppercase;
         }
 
-        .about-quote {
-            background: linear-gradient(135deg, #fef7df, #fffaf0);
-            border: 1.5px solid #f3d777;
-            border-radius: 18px;
-            padding: 20px 22px;
+        .cs-li {
+            font-size: 16px;
+            color: var(--navy);
+            line-height: 1.8;
         }
 
-        .about-quote p {
-            font-size: 15px;
-            line-height: 1.7;
-            color: var(--navy-dark);
+        .cs-li a {
+            color: var(--navy);
             font-weight: 700;
+            text-decoration: underline;
+            text-decoration-color: rgba(19, 60, 96, 0.2);
+            transition: text-decoration-color .2s;
+        }
+
+        .cs-li a:hover {
+            text-decoration-color: var(--navy);
         }
 
         /* (card text styles moved to main .pc-name / .pc-desc above) */
@@ -625,7 +664,8 @@
         }
 
         .mod-header h1 {
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 34px;
             font-weight: 700;
             letter-spacing: .4px;
@@ -708,7 +748,8 @@
             background: none;
             border-radius: 8px;
             cursor: pointer;
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 13px;
             font-weight: 700;
             color: var(--text-light);
@@ -784,7 +825,8 @@
             border-radius: 8px;
             background: none;
             cursor: pointer;
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 12px;
             font-weight: 700;
             color: var(--blue-grey);
@@ -865,7 +907,8 @@
         }
 
         .no-slide h3 {
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 24px;
             color: var(--navy);
             margin-bottom: 6px;
@@ -887,7 +930,8 @@
         }
 
         .howto h4 {
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 18px;
             color: var(--navy-mid);
             margin-bottom: 12px;
@@ -958,7 +1002,8 @@
         }
 
         .act-title {
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 19px;
             font-weight: 700;
             margin-bottom: 5px;
@@ -987,7 +1032,8 @@
             border: 2px solid var(--blue-light);
             border-radius: 8px;
             padding: 3px 9px;
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 15px;
             font-weight: 700;
             width: 100px;
@@ -1019,7 +1065,8 @@
             color: var(--white);
             border: none;
             border-radius: 9px;
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 13px;
             font-weight: 700;
             cursor: pointer;
@@ -1101,7 +1148,8 @@
         }
 
         .ticket-header h3 {
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 22px;
             color: var(--navy);
             margin-bottom: 2px;
@@ -1169,7 +1217,8 @@
             border: 2px solid var(--blue-light);
             border-radius: 12px;
             background: var(--bg);
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 15px;
             font-weight: 700;
             cursor: pointer;
@@ -1232,7 +1281,8 @@
             color: var(--white);
             border: none;
             border-radius: 12px;
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 15px;
             font-weight: 800;
             cursor: pointer;
@@ -1265,7 +1315,8 @@
         }
 
         .r-title {
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 40px;
             color: var(--navy);
             margin-bottom: 6px;
@@ -1296,7 +1347,8 @@
             color: var(--white);
             border: none;
             border-radius: 12px;
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 15px;
             font-weight: 800;
             cursor: pointer;
@@ -1342,7 +1394,8 @@
         }
 
         .diag-hero h2 {
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 52px;
             line-height: 1;
             margin-bottom: 12px;
@@ -1452,7 +1505,8 @@
         }
 
         .diag-question h3 {
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 30px;
             color: var(--navy);
             margin-bottom: 8px;
@@ -1518,7 +1572,8 @@
         }
 
         .diag-score-card h4 {
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 24px;
             color: var(--navy);
             margin-bottom: 4px;
@@ -1606,7 +1661,8 @@
         }
 
         .diag-chart-title {
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 34px;
             color: var(--navy);
             margin-bottom: 8px;
@@ -1628,7 +1684,8 @@
         }
 
         .diag-empty-chart h4 {
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 28px;
             color: #047857;
             margin-bottom: 6px;
@@ -1653,7 +1710,8 @@
         }
 
         .empty h3 {
-            font-family: var(--font-main);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
             font-size: 26px;
             color: var(--navy);
             margin-bottom: 6px;
@@ -1931,8 +1989,8 @@
             <nav class="top-nav" aria-label="Secciones principales">
                 <button class="top-nav-btn" id="nav-about" onclick="showAbout()">¿Quiénes somos?</button>
                 <button class="top-nav-btn active" id="nav-classes" onclick="showClasses()">Clases</button>
-                <button class="top-nav-btn" type="button" onclick="openOfficialSite()">Página oficial</button>
-                <button class="top-nav-btn" type="button" onclick="openOfficialSite()">Contacto</button>
+                <button class="top-nav-btn" id="nav-contact" onclick="showContact()">Contacto</button>
+                <button class="top-nav-btn" type="button" onclick="openOfficialSite()">Proyecto</button>
             </nav>
         </div>
     </header>
@@ -1942,64 +2000,61 @@
         <main class="main" id="main">
 
             <section id="about-view" class="about-view">
-                <div class="about-shell">
-                    <div class="about-hero">
-                        <div class="about-hero-layout">
-                            <div class="about-hero-copy">
-                                <div class="about-kicker">Tutorías</div>
-                                <h2>Educación con vínculo, continuidad y sentido.</h2>
-                                <p>Trabajamos durante todo el año para acompañar a estudiantes de 4° básico de la
-                                    Escuela Casa Azul, fortaleciendo sus aprendizajes y construyendo confianza a través
-                                    de tutorías y encuentros significativos.</p>
-                            </div>
-                            <div class="about-hero-photo">
-                                <img src="assets/WhatsApp%20Image%202026-03-15%20at%2012.55.25.jpeg"
-                                    alt="Tutorías La Obra UC">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="about-grid">
-                        <article class="about-card about-copy">
-                            <h3>¿Qué hacemos?</h3>
-                            <p>Tutorías nace para enfrentar la crisis educacional que afecta a miles de niños y niñas en
-                                Chile. Nuestro foco está puesto en los estudiantes de 4° básico de la Escuela Casa Azul,
-                                con quienes trabajamos durante todo el año para fortalecer sus aprendizajes y brindarles
-                                nuevas oportunidades.</p>
+                <div class="about-container">
+                    <div class="about-text">
+                        <div class="about-kicker">Nuestra Misión</div>
+                        <h2>Educación con un vínculo humano y cercano.</h2>
+                        <div class="about-description">
+                            <p>Tutorías nace para enfrentar la brecha educacional que afecta a miles de niños y niñas en
+                                Chile. Nuestro foco: acompañar en el desarollo y aprendizaje a estudiantes de 4° básico
+                                de la Escuela Casa Azul</p>
                             <p>A través de tutorías online semanales, acompañamos su proceso educativo con cercanía y
-                                compromiso. Además, realizamos salidas presenciales como el Día de Huerto, donde
-                                compartimos con los estudiantes en un espacio significativo para conocernos mejor y
-                                construir confianza.</p>
+                                compromiso. Además, realizamos salidas presenciales como el Recreo con la Obra, donde
+                                compartimos con los estudiantes, de forma entretenida, y guiada.</p>
                             <p>Creemos en una educación transformadora y afectiva, donde el vínculo humano es tan
                                 importante como los contenidos. Nuestro trabajo no solo busca mejorar resultados
                                 académicos, sino también sembrar esperanza y motivación en cada niño y niña que acompaña
                                 Tutorías.</p>
-                        </article>
-                        <aside class="about-side">
-                            <div class="about-card">
-                                <h3>Nuestro enfoque</h3>
-                                <div class="impact-list">
-                                    <div class="impact-item">
-                                        <strong>Tutorías online semanales</strong>
-                                        <span>Acompañamiento constante para reforzar contenidos y hábitos de
-                                            aprendizaje.</span>
-                                    </div>
-                                    <div class="impact-item">
-                                        <strong>Encuentros presenciales</strong>
-                                        <span>Instancias como el Día de Huerto para conocernos mejor y fortalecer
-                                            vínculos.</span>
-                                    </div>
-                                    <div class="impact-item">
-                                        <strong>Aprendizaje con sentido</strong>
-                                        <span>Buscamos mejorar resultados académicos y también la confianza de cada
-                                            estudiante.</span>
-                                    </div>
+                        </div>
+                    </div>
+                    <div class="about-carousel">
+                        <div class="carousel-track" id="carousel-track">
+                            <!-- Injected by JS -->
+                        </div>
+                        <div class="carousel-overlay"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact-view" class="contact-view">
+                <div class="contact-container">
+                    <div class="contact-text">
+                        <h2>Ponte en contacto con nosotros.</h2>
+                        <div class="about-description">
+                            <p>Si tienes dudas, sugerencias o simplemente quieres saber más sobre el proyecto de
+                                Tutorías, no dudes en escribirnos. Estamos aquí para escucharte y trabajar juntos por la
+                                educación de Casa Azul.</p>
+                            <div class="contact-info">
+                                <div class="contact-section">
+                                    <span class="cs-label">Jefes de Tutorías</span>
+                                    <div class="cs-li">Antonia Loehner · <a
+                                            href="mailto:antonia.loehnert@uc.cl">antonia.loehnert@uc.cl</a></div>
+                                    <div class="cs-li">Bruno Nattino · <a
+                                            href="mailto:bnattino@uc.cl">bnattino@uc.cl</a></div>
+                                </div>
+                                <div class="contact-section">
+                                    <span class="cs-label">Canales Directos</span>
+                                    <div class="cs-li">Email proyecto: <a
+                                            href="mailto:trabajoslaobra@gmail.com">trabajoslaobra@gmail.com</a></div>
+                                    <div class="cs-li">Instagram: <a href="https://www.instagram.com/laobrauc/"
+                                            target="_blank">@laobrauc</a></div>
+                                    <div class="cs-li">Ubicación: Pontificia Universidad Católica de Chile</div>
                                 </div>
                             </div>
-                            <div class="about-quote">
-                                <p>Creemos en una educación transformadora y afectiva, donde el vínculo humano es tan
-                                    importante como los contenidos.</p>
-                            </div>
-                        </aside>
+                        </div>
+                    </div>
+                    <div class="contact-image">
+                        <div class="carousel-overlay"></div>
                     </div>
                 </div>
             </section>
@@ -2081,6 +2136,40 @@
     </div>
 
     <script>
+        // ══════════════════════════════════════════════════════════════════════
+        //  🖼️ CARRUSEL "QUIÉNES SOMOS"
+        // ══════════════════════════════════════════════════════════════════════
+        const CAROUSEL_IMAGES = [
+            'DSC05800.JPG', 'DSC05805.JPG', 'DSC05807.JPG', 'DSC05821.JPG',
+            'DSC05849.JPG', 'DSC05852.JPG', 'DSC05859.JPG', 'DSC05869.JPG',
+            'DSC05893.JPG', 'DSC05936.JPG', 'DSC05947.JPG', 'DSC05972.JPG',
+            'DSC_1846.JPG', 'DSC_1847.JPG', 'DSC_1849.JPG'
+        ];
+
+        function initCarousel() {
+            const track = document.getElementById('carousel-track');
+            if (!track) return;
+
+            CAROUSEL_IMAGES.forEach((img, idx) => {
+                const item = document.createElement('div');
+                item.className = `carousel-item ${idx === 0 ? 'active' : ''}`;
+                item.style.backgroundImage = `url('assets/carrusel/${img}')`;
+                track.appendChild(item);
+            });
+
+            let currentIdx = 0;
+            const items = track.querySelectorAll('.carousel-item');
+
+            setInterval(() => {
+                items[currentIdx].classList.remove('active');
+                currentIdx = (currentIdx + 1) % items.length;
+                items[currentIdx].classList.add('active');
+            }, 3000);
+        }
+
+        // Llamar tras cargar o al mostrar la sección
+        window.addEventListener('DOMContentLoaded', initCarousel);
+
         // ══════════════════════════════════════════════════════════════════════
         //  📋 MÓDULOS — edita aquí para agregar contenido a cada módulo
         //  Lee la GUÍA AL FINAL del archivo para instrucciones detalladas.
@@ -2304,32 +2393,25 @@
             },
             // ── GEOMETRÍA ──────────────────────────────────────────────────
             {
-                id: 13, serial: 1, cat: 'geo', topic: 'geometria', title: 'Geometría I', dur: '45 min',
-                objectives: ['Identificar polígonos y sus elementos', 'Clasificar figuras según sus lados', 'Explorar vértices y ángulos'],
-                htmlSlide: '#', isWip: true,
+                id: 13, serial: 1, cat: 'geo', topic: 'geometria', title: 'Geometría I', dur: '50 min',
+                objectives: ['Comparar y convertir unidades de longitud (mm, cm, m, km)', 'Ubicar puntos en el plano cartesiano con precisión', 'Leer coordenadas y resolver desafíos de orientación'],
+                htmlSlide: 'clases/geometria/geometria-1.html',
                 activities: [],
                 ticket: { title: 'Ticket de salida – Geometría 1', questions: [] }
             },
             {
-                id: 14, serial: 2, cat: 'geo', topic: 'geometria', title: 'Geometría II', dur: '45 min',
-                objectives: ['Reconocer tipos de ángulos', 'Clasificar triángulos', 'Usar el transportador'],
-                htmlSlide: '#', isWip: true,
+                id: 14, serial: 2, cat: 'geo', topic: 'geometria', title: 'Geometría II', dur: '55 min',
+                objectives: ['Clasificar ángulos y rectas según sus propiedades', 'Reconocer rectas paralelas, perpendiculares y secantes', 'Explorar traslación, reflexión y rotación con animaciones'],
+                htmlSlide: 'clases/geometria/geometria-2.html',
                 activities: [],
                 ticket: { title: 'Ticket de salida – Geometría 2', questions: [] }
             },
             {
-                id: 15, serial: 3, cat: 'geo', topic: 'geometria', title: 'Geometría III', dur: '45 min',
-                objectives: ['Calcular el perímetro de polígonos', 'Introducción al concepto de área', 'Resolver problemas de medición'],
-                htmlSlide: '#', isWip: true,
+                id: 15, serial: 3, cat: 'geo', topic: 'geometria', title: 'Geometría III', dur: '55 min',
+                objectives: ['Calcular el perímetro de cuadrados, rectángulos y triángulos', 'Comprender y calcular el área con fórmulas visuales', 'Resolver problemas reales de medición con ejercicios interactivos'],
+                htmlSlide: 'clases/geometria/geometria-3.html',
                 activities: [],
                 ticket: { title: 'Ticket de salida – Geometría 3', questions: [] }
-            },
-            {
-                id: 16, serial: 4, cat: 'geo', topic: 'geometria', title: 'Geometría IV', dur: '45 min',
-                objectives: ['Diferenciar figuras 2D y cuerpos 3D', 'Identificar caras, aristas y vértices', 'Construir redes de cuerpos'],
-                htmlSlide: '#', isWip: true,
-                activities: [],
-                ticket: { title: 'Ticket de salida – Geometría 4', questions: [] }
             },
             // ── SESIONES DE MENTOREO EXTRA ──────────────────────────────────
             {
@@ -2461,6 +2543,7 @@
                     return;
                 }
                 if (state.section === 'about') showAbout(false);
+                else if (state.section === 'contact') showContact(false);
                 else if (state.section === 'topic') loadTopic(state.topicId, false);
                 else if (state.section === 'mod') loadMod(state.modId, false);
                 else showClasses(false);
@@ -2598,6 +2681,7 @@
             currentSection = section;
             document.getElementById('nav-about')?.classList.toggle('active', section === 'about');
             document.getElementById('nav-classes')?.classList.toggle('active', section === 'classes');
+            document.getElementById('nav-contact')?.classList.toggle('active', section === 'contact');
             document.getElementById('nav-diagnostic')?.classList.toggle('active', section === 'diagnostic');
         }
 
@@ -2605,6 +2689,7 @@
             if (push) history.pushState({ section: "about" }, "");
             setTopNav('about');
             document.getElementById('about-view').style.display = 'block';
+            document.getElementById('contact-view').style.display = 'none';
             document.getElementById('diagnostic-view').style.display = 'none';
             document.getElementById('topic-view').style.display = 'none';
             document.getElementById('home').style.display = 'none';
@@ -2615,11 +2700,23 @@
             if (push) history.pushState({ section: "classes" }, "");
             setTopNav('classes');
             document.getElementById('about-view').style.display = 'none';
+            document.getElementById('contact-view').style.display = 'none';
             document.getElementById('diagnostic-view').style.display = 'none';
             document.getElementById('topic-view').style.display = 'none';
             document.getElementById('home').style.display = 'flex';
             document.getElementById('mod-view').style.display = 'none';
             buildPrevGrid();
+        }
+
+        function showContact(push = true) {
+            if (push) history.pushState({ section: "contact" }, "");
+            setTopNav('contact');
+            document.getElementById('about-view').style.display = 'none';
+            document.getElementById('contact-view').style.display = 'block';
+            document.getElementById('diagnostic-view').style.display = 'none';
+            document.getElementById('topic-view').style.display = 'none';
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('mod-view').style.display = 'none';
         }
 
         function showDiagnostic() {
@@ -2637,6 +2734,7 @@
 
             setTopNav('classes');
             document.getElementById('about-view').style.display = 'none';
+            document.getElementById('contact-view').style.display = 'none';
             document.getElementById('diagnostic-view').style.display = 'none';
             document.getElementById('topic-view').style.display = 'none';
             document.getElementById('home').style.display = 'none';
