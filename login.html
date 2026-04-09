@@ -18,6 +18,10 @@
             --error: #EF476F;
             --success: #06D6A0;
         }
+
+        @font-face { font-family: 'Buckwheat TC'; src: url('assets/fonts/Buckwheat%20TC%20Rg.otf') format('opentype'); }
+        @font-face { font-family: 'Canva Sans'; src: url('assets/fonts/CanvaSans/CanvaSans-Regular.otf') format('opentype'); }
+
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: var(--font-body), sans-serif; background: var(--bg); color: var(--text); display: flex; align-items: center; justify-content: center; min-height: 100vh; }
@@ -32,8 +36,17 @@
             max-width: 400px;
         }
 
-        .auth-logo { text-align: center; margin-bottom: 24px; }
-        .auth-logo img { width: 80px; }
+        .auth-logo { 
+            text-align: center; margin-bottom: 24px; padding: 20px 14px; 
+            background: var(--navy); border-radius: 12px; 
+            display: flex; gap: 14px; justify-content: center; align-items: center; 
+            text-decoration: none; 
+        }
+        .h-logo { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .2)); }
+        .h-logo img, .h-logo svg { width: 44px; height: 44px; display: block; object-fit: contain; mix-blend-mode: screen; }
+        .h-tutorias { height: 32px; width: auto; display: block; object-fit: contain; flex-shrink: 0; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .2)); }
+        .h-brand { display: flex; flex-direction: column; justify-content: center; text-align: left; }
+        .h-brand span.main { color: var(--white); font-family: var(--font-titles); text-transform: uppercase; letter-spacing: 0.05em; font-size: 16px; font-weight: 800; line-height: 1; }
         .auth-title { text-align: center; color: var(--navy); font-size: 24px; margin-bottom: 24px; }
         
         .form-group { margin-bottom: 20px; }
@@ -63,14 +76,13 @@
 <body>
 
 <div class="auth-container">
-    <div class="auth-logo">
-        <a href="index.html">
-            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="32" cy="32" r="32" fill="#133C60"/>
-                <path d="M42.6667 21.3333C42.6667 17.6533 39.68 14.6667 36 14.6667H28C24.32 14.6667 21.3333 17.6533 21.3333 21.3333V42.6667C21.3333 46.3467 24.32 49.3333 28 49.3333H36C39.68 49.3333 42.6667 46.3467 42.6667 42.6667V21.3333ZM28 21.3333H36V28H28V21.3333ZM36 42.6667H28V34.6667H36V42.6667Z" fill="white"/>
-            </svg>
-        </a>
-    </div>
+    <a href="index.html" class="auth-logo">
+        <div class="h-logo">
+            <img src="assets/Logo.png" alt="Logo La Obra UC" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" style="display:none"><polyline points="9,52 50,12 91,52 91,73" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /><polyline points="9,52 9,90 68,90" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /><text x="19" y="70" fill="white" font-weight="800" font-size="18" font-family="'Barlow Condensed',sans-serif" letter-spacing="1">LA</text><text x="14" y="87" fill="white" font-weight="800" font-size="18" font-family="'Barlow Condensed',sans-serif" letter-spacing="0.5">OBRA</text></svg>
+        </div>
+        <img class="h-tutorias" src="assets/Captura de pantalla 2026-03-26 a la(s) 11.43.07 a.m..png" alt="Tutorías">
+    </a>
     <h2 class="auth-title">Ingresar al Portal</h2>
     
     <form id="loginForm">

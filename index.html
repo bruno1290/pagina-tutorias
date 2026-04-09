@@ -2102,7 +2102,7 @@
                     <div style="font-size:60px; margin-bottom:20px;">🔒</div>
                     <h3>Contenido Restringido</h3>
                     <p>Los módulos de clase son exclusivos para nuestros tutores y administradores.<br>Por favor, inicia sesión para acceder a las clases.</p>
-                    <button class="tool-btn primary" onclick="window.location.href='login.html'" style="margin: 0 auto; display: block;">Ir al Login</button>
+                    <button class="tool-btn primary" onclick="window.location.href='login.html'" style="margin: 20px auto 0; display: block;">Ir al Login</button>
                 </div>
             </div>
 
@@ -2197,7 +2197,13 @@
                 <div style="margin-bottom:15px;">
                     <label style="display:block; font-size:13px; font-weight:bold; margin-bottom:5px;">Nota (1-7)</label>
                     <div style="display:flex; justify-content:space-between;">
-                        ${[1,2,3,4,5,6,7].map(n => `<label style="cursor:pointer;"><input type="radio" name="drRating" value="${n}" required> ${n}</label>`).join('')}
+                        <label style="cursor:pointer;"><input type="radio" name="drRating" value="1" required> 1</label>
+                        <label style="cursor:pointer;"><input type="radio" name="drRating" value="2" required> 2</label>
+                        <label style="cursor:pointer;"><input type="radio" name="drRating" value="3" required> 3</label>
+                        <label style="cursor:pointer;"><input type="radio" name="drRating" value="4" required> 4</label>
+                        <label style="cursor:pointer;"><input type="radio" name="drRating" value="5" required> 5</label>
+                        <label style="cursor:pointer;"><input type="radio" name="drRating" value="6" required> 6</label>
+                        <label style="cursor:pointer;"><input type="radio" name="drRating" value="7" required> 7</label>
                     </div>
                 </div>
                 <div style="margin-bottom:15px;">

@@ -22,13 +22,20 @@
         body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
         h1, h2, h3 { font-family: var(--font-titles); text-transform: uppercase; letter-spacing: 0.05em; }
         
-        header {
-            position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
-            background: var(--navy-dark); display: flex; align-items: center; justify-content: space-between;
-            padding: 0 24px; z-index: 200; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        .h-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .h-logo span { color: white; font-family: var(--font-titles); text-transform: uppercase; }
+        header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-h); background: var(--navy); display: flex; align-items: center; justify-content: space-between; padding: 0 22px 0 18px; z-index: 200; box-shadow: 0 3px 20px rgba(10, 22, 48, .5); overflow: hidden; }
+        .h-left { display: flex; align-items: center; gap: 14px; width: 100%; min-width: 0; }
+        .brand-lockup { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+        .h-logo { width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; filter: drop-shadow(0 6px 18px rgba(7, 17, 38, .22)); }
+        .h-logo img, .h-logo svg { width: 64px; height: 64px; display: block; object-fit: contain; mix-blend-mode: screen; }
+        .h-tutorias { height: 44px; width: auto; display: block; object-fit: contain; flex-shrink: 0; filter: drop-shadow(0 6px 18px rgba(7, 17, 38, .22)); }
+        .h-brand { display: flex; flex-direction: column; justify-content: center; }
+        .h-brand span.main { color: var(--white); font-family: var(--font-titles); text-transform: uppercase; letter-spacing: 0.05em; font-size: 22px; font-weight: 800; line-height: 1; }
+        
+        .top-nav { display: flex; gap: 8px; }
+        .top-nav-btn { border: none; background: rgba(255, 255, 255, .08); color: rgba(255, 255, 255, .82); padding: 10px 16px; border-radius: 999px; cursor: pointer; font-family: var(--font-titles); text-transform: uppercase; font-size: 13px; font-weight: 800; transition: all .18s ease; }
+        .top-nav-btn:hover { background: rgba(255, 255, 255, .16); color: var(--white); }
+        .footer-banner { margin: 0; width: 100%; max-width: none; height: var(--header-h); background: #1A3F6E; box-shadow: none; display: flex; align-items: center; justify-content: center; }
+        .footer-banner p { font-size: 11px; line-height: 1.4; color: rgba(255, 255, 255, .88); letter-spacing: .2px; text-align: center; }
 
         .layout { padding-top: calc(var(--header-h) + 20px); max-width: 1400px; margin: 0 auto; padding-inline: 20px; padding-bottom: 60px; }
         
@@ -75,18 +82,21 @@
 <body>
 
 <header>
-    <a href="index.html" class="h-logo">
-        <svg width="40" height="40" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="32" cy="32" r="32" fill="white" fill-opacity="0.2"/>
-            <path d="M42.6667 21.3333C42.6667 17.6533 39.68 14.6667 36 14.6667H28C24.32 14.6667 21.3333 17.6533 21.3333 21.3333V42.6667C21.3333 46.3467 24.32 49.3333 28 49.3333H36C39.68 49.3333 42.6667 46.3467 42.6667 42.6667V21.3333ZM28 21.3333H36V28H28V21.3333ZM36 42.6667H28V34.6667H36V42.6667Z" fill="white"/>
-        </svg>
-        <span>Consola de Administración</span>
-    </a>
+    <div class="h-left">
+        <a href="index.html" class="brand-lockup">
+            <div class="h-logo">
+                <img src="assets/Logo.png" alt="Logo La Obra UC" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" style="display:none"><polyline points="9,52 50,12 91,52 91,73" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /><polyline points="9,52 9,90 68,90" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /><text x="19" y="70" fill="white" font-weight="800" font-size="18" font-family="'Barlow Condensed',sans-serif" letter-spacing="1">LA</text><text x="14" y="87" fill="white" font-weight="800" font-size="18" font-family="'Barlow Condensed',sans-serif" letter-spacing="0.5">OBRA</text></svg>
+            </div>
+            <img class="h-tutorias" src="assets/Captura de pantalla 2026-03-26 a la(s) 11.43.07 a.m..png" alt="Tutorías">
+            <div class="h-brand">
+                <span class="main">Consola Admin</span>
+            </div>
+        </a>
+    </div>
     <div class="top-nav">
-        <div style="display:flex; gap:15px; align-items:center;">
-            <button class="top-nav-btn" style="background:none; border:none; color:white; cursor:pointer; font-weight:bold;" onclick="window.location.href='index.html'">📖 VER CLASES</button>
-            <button class="top-nav-btn" style="background:none; border:none; color:white; cursor:pointer; font-weight:bold;" onclick="AppAuth.logout()">CERRAR SESIÓN</button>
-        </div>
+        <button class="top-nav-btn" onclick="window.location.href='index.html'">📖 VER CLASES</button>
+        <button class="top-nav-btn" onclick="AppAuth.logout()">CERRAR SESIÓN</button>
     </div>
 </header>
 
@@ -317,5 +327,8 @@
         document.body.removeChild(link);
     }
 </script>
+<div class="footer-banner">
+    <p>&copy; La Obra UC 2026. Todos los derechos reservados. Diseñada por Jefes de Tutorías 2026, Antonia Loehnert y Bruno Nattino.</p>
+</div>
 </body>
 </html>
