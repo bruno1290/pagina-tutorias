@@ -511,14 +511,27 @@
         </div>
         <div style="font-size:120px; margin-top:50px; animation: bounce 2s infinite;">🎇</div>
     </div></div>
-<div class="nv"><button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button><div class="sc" id="sc">1 / 29</div><button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button></div>
+<div class="nv"><button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button><div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <div class="sc" id="sc"></div>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="10" value="1" oninput="goToSlide(this.value)">
+        </div><button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button></div>
 <script>
     const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
     function ui() {
         S.forEach((s,i)=>{ s.classList.remove('on','pv','nx'); if(i===c) s.classList.add('on'); else if(i<c) s.classList.add('pv'); else s.classList.add('nx'); });
         document.getElementById('pb').style.width=((c+1)/T*100)+'%'; document.getElementById('sc').textContent=`${c+1} / ${T}`;
         document.getElementById('pv').disabled=c===0; document.getElementById('nx').disabled=c===T-1;
+            let sl = document.getElementById('slide-slider');
+            if(sl) { sl.max = T; sl.value = c + 1; }
     }
+
+        function goToSlide(n) {
+            let index = parseInt(n) - 1;
+            if (index >= 0 && index < T) {
+                c = index;
+                ui();
+            }
+        }
     function go(d) {
         if(d>0) { const hid = S[c].querySelectorAll('.stp:not(.shwn)'); if(hid.length > 0) { hid[0].classList.add('shwn'); return; } }
         else { const shw = S[c].querySelectorAll('.stp.shwn'); if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; } }

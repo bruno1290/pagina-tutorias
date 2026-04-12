@@ -668,7 +668,7 @@
     <div class="dk">
         <div class="sl">
             <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-                <h1 class="hero-title">Primera Clase! 🎉</h1>
+                <h1 class="hero-title">Suma</h1>
                 <p class="hero-sub">Hoy comenzaremos con la Suma, paso a paso, juntos.</p>
                 <div class="hero-emoji">🪄</div>
             </div>
@@ -1206,14 +1206,11 @@
         <div class="sl">
             <div class="head-title">Desafío rápido</div>
             <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
-                <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">¿Cuál descomposición
-                    ayuda mejor a resolver <b>8 + 5</b>?</p>
+                <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">Si tienes <b>5</b> y le sumas <b>2</b>, ¿cuánto tienes en total?</p>
                 <div class="quiz-row"><button class="btn"
-                        onclick="chkAns(this, false, &quot;8 necesita 2 para llegar a 10.&quot;)">8 + 4 +
-                        1</button><button class="btn"
-                        onclick="chkAns(this, true, &quot;8 necesita 2 para llegar a 10.&quot;)">8 + 2 +
-                        3</button><button class="btn"
-                        onclick="chkAns(this, false, &quot;8 necesita 2 para llegar a 10.&quot;)">8 + 5 + 5</button>
+                        onclick="chkAns(this, false, &quot;5 + 2 = 7.&quot;)">6</button><button class="btn"
+                        onclick="chkAns(this, true, &quot;5 + 2 = 7.&quot;)">7</button><button class="btn"
+                        onclick="chkAns(this, false, &quot;5 + 2 = 7.&quot;)">8</button>
                 </div>
                 <div class="msg-area"></div>
             </div>
@@ -1323,11 +1320,10 @@
         <div class="sl">
             <div class="head-title">Desafío Relámpago ⚡ 1</div>
             <div class="pnl-border" style="width:100%; border-color:#FF9D9D;">
-                <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:40px;">Calcula rápidamente
-                    completando la decena: <b>8 + 5 = ?</b></p>
+                <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:40px;">Calcula rápidamente: <b>10 + 4 = ?</b></p>
                 <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; width:100%;">
                     <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>12</button>
-                    <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, true)'>13</button>
+                    <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, true)'>14</button>
                     <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>15</button>
                 </div>
                 <div class="msg-area"
@@ -1340,9 +1336,9 @@
                 <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:40px;">Propiedad
                     conmutativa: Si <b>4 + 2 = 6</b>, ¿Cuánto es <b>2 + 4</b>?</p>
                 <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; width:100%;">
-                    <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>42</button>
+                    <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>5</button>
                     <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, true)'>6</button>
-                    <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>8</button>
+                    <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>7</button>
                 </div>
                 <div class="msg-area"
                     style="font-size:26px; font-weight:900; height:40px; margin-top:40px; text-align:center;"></div>
@@ -1351,7 +1347,10 @@
     </div>
     <div class="nv">
         <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
-        <div class="sc" id="sc">1 / 30</div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <div class="sc" id="sc"></div>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="10" value="1" oninput="goToSlide(this.value)">
+        </div>
         <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
     </div>
     <script>
@@ -1367,6 +1366,16 @@
             document.getElementById('sc').textContent = `${c + 1} / ${T}`;
             document.getElementById('pv').disabled = c === 0;
             document.getElementById('nx').disabled = c === T - 1;
+            let sl = document.getElementById('slide-slider');
+            if(sl) { sl.max = T; sl.value = c + 1; }
+        }
+
+        function goToSlide(n) {
+            let index = parseInt(n) - 1;
+            if (index >= 0 && index < T) {
+                c = index;
+                ui();
+            }
         }
         function go(d) {
             if (d > 0) {

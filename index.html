@@ -216,42 +216,132 @@
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
         }
 
-        .top-nav-btn:hover { background: rgba(255, 255, 255, .16); color: var(--white); }
-        
+        .top-nav-btn:hover {
+            background: rgba(255, 255, 255, .16);
+            color: var(--white);
+        }
+
         /* ─── LIVE BITÁCORA DRAWER ───────────────────────────── */
         #bitacoraDrawer {
-            position: fixed; top: var(--header-h); right: -400px; width: 380px; height: calc(100vh - var(--header-h));
-            background: white; z-index: 500; transition: right 0.3s ease;
-            box-shadow: -5px 0 25px rgba(0,0,0,0.1); border-left: 1px solid #dde8f5;
-            display: flex; flex-direction: column; overflow-y: auto;
+            position: fixed;
+            top: var(--header-h);
+            right: -400px;
+            width: 380px;
+            height: calc(100vh - var(--header-h));
+            background: white;
+            z-index: 500;
+            transition: right 0.3s ease;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+            border-left: 1px solid #dde8f5;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
         }
-        #bitacoraDrawer.open { right: 0; }
-        .drawer-header { background: var(--navy); color: white; padding: 20px; position: sticky; top: 0; z-index: 10; }
-        .drawer-content { padding: 25px; flex: 1; }
-        .drawer-footer { padding: 20px; border-top: 1px solid #eee; background: #fafafa; }
-        
+
+        #bitacoraDrawer.open {
+            right: 0;
+        }
+
+        .drawer-header {
+            background: var(--navy);
+            color: white;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .drawer-content {
+            padding: 25px;
+            flex: 1;
+        }
+
+        .drawer-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            background: #fafafa;
+        }
+
         .floating-bit-btn {
-            position: fixed; bottom: 30px; right: 30px; width: 64px; height: 64px;
-            background: var(--navy); color: white; border-radius: 50%; border: none;
-            cursor: pointer; z-index: 501; box-shadow: 0 4px 15px rgba(19, 60, 96, 0.4);
-            display: flex; align-items: center; justify-content: center; font-size: 24px; transition: transform 0.2s;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 64px;
+            height: 64px;
+            background: var(--navy);
+            color: white;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            z-index: 501;
+            box-shadow: 0 4px 15px rgba(19, 60, 96, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: transform 0.2s;
         }
-        .floating-bit-btn:hover { transform: scale(1.1); background: var(--navy-mid); }
-        
+
+        .floating-bit-btn:hover {
+            transform: scale(1.1);
+            background: var(--navy-mid);
+        }
+
         /* Lock Overlay for Classes */
         .locked-view {
-            text-align: center; padding: 100px 20px; background: white; border-radius: 20px;
-            border: 2px dashed #cbdcf0; margin: 20px auto; max-width: 800px;
+            text-align: center;
+            padding: 100px 20px;
+            background: white;
+            border-radius: 20px;
+            border: 2px dashed #cbdcf0;
+            margin: 20px auto;
+            max-width: 800px;
         }
-        .locked-view h3 { color: var(--navy); font-size: 28px; margin-bottom: 12px; }
-        .locked-view p { color: var(--text-light); margin-bottom: 24px; }
-        
+
+        .locked-view h3 {
+            color: var(--navy);
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .locked-view p {
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+
         /* Attendance selector in drawer */
-        .att-toggle { display: flex; gap: 10px; margin-bottom: 15px; }
-        .att-btn { flex: 1; padding: 10px; border-radius: 8px; border: 2px solid #eee; cursor: pointer; text-align: center; font-weight: bold; font-size: 13px; }
-        .att-btn input { display: none; }
-        .att-btn:has(input:checked).p { border-color: #06D6A0; background: #e6fff7; color: #059669; }
-        .att-btn:has(input:checked).a { border-color: #EF476F; background: #ffeeef; color: #dc2626; }
+        .att-toggle {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .att-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #eee;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .att-btn input {
+            display: none;
+        }
+
+        .att-btn:has(input:checked).p {
+            border-color: #06D6A0;
+            background: #e6fff7;
+            color: #059669;
+        }
+
+        .att-btn:has(input:checked).a {
+            border-color: #EF476F;
+            background: #ffeeef;
+            color: #dc2626;
+        }
 
         .top-nav-btn.active {
             background: var(--white);
@@ -2100,11 +2190,14 @@
 
             <!-- Locked View Container -->
             <div id="locked-view" class="welcome" style="display:none">
-                <div class="locked-view-card" style="text-align: center; padding: 100px 20px; background: white; border-radius: 20px; border: 2px dashed #cbdcf0; margin: 20px auto; max-width: 800px;">
+                <div class="locked-view-card"
+                    style="text-align: center; padding: 100px 20px; background: white; border-radius: 20px; border: 2px dashed #cbdcf0; margin: 20px auto; max-width: 800px;">
                     <div style="font-size:60px; margin-bottom:20px;">🔒</div>
                     <h3>Contenido Restringido</h3>
-                    <p>Los módulos de clase son exclusivos para nuestros tutores y administradores.<br>Por favor, inicia sesión para acceder a las clases.</p>
-                    <button class="tool-btn primary" onclick="window.location.href='login.html'" style="margin: 20px auto 0; display: block;">Ir al Login</button>
+                    <p>Los módulos de clase son exclusivos para nuestros tutores y administradores.<br>Por favor, inicia
+                        sesión para acceder a las clases.</p>
+                    <button class="tool-btn primary" onclick="window.location.href='login.html'"
+                        style="margin: 20px auto 0; display: block;">Ir al Login</button>
                 </div>
             </div>
 
@@ -2113,7 +2206,7 @@
                 <div class="welcome-hero">
                     <div class="welcome-intro">
                         <div class="welcome-intro-text">
-                            <h2>Bienvenido a Tutorías<br>con La Obra 📚</h2>
+                            <h2>Bienvenidos a Tutorías<br>con La Obra 📚</h2>
                             <p>¿Qué aprenderemos hoy?</p>
                         </div>
                         <div class="welcome-intro-image">
@@ -2187,17 +2280,21 @@
             <form id="drawerForm">
                 <div style="margin-bottom:15px;">
                     <label style="display:block; font-size:13px; font-weight:bold; margin-bottom:5px;">Fecha</label>
-                    <input type="date" id="drDate" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;" required>
+                    <input type="date" id="drDate"
+                        style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;" required>
                 </div>
                 <div style="margin-bottom:15px;">
-                    <label style="display:block; font-size:13px; font-weight:bold; margin-bottom:5px;">Asistencia</label>
+                    <label
+                        style="display:block; font-size:13px; font-weight:bold; margin-bottom:5px;">Asistencia</label>
                     <div class="att-toggle">
-                        <label class="att-btn p"><input type="radio" name="drAtt" value="Presente" required> Presente</label>
+                        <label class="att-btn p"><input type="radio" name="drAtt" value="Presente" required>
+                            Presente</label>
                         <label class="att-btn a"><input type="radio" name="drAtt" value="Ausente"> Ausente</label>
                     </div>
                 </div>
                 <div style="margin-bottom:15px;">
-                    <label style="display:block; font-size:13px; font-weight:bold; margin-bottom:5px;">Nota (1-7)</label>
+                    <label style="display:block; font-size:13px; font-weight:bold; margin-bottom:5px;">Nota
+                        (1-7)</label>
                     <div style="display:flex; justify-content:space-between;">
                         <label style="cursor:pointer;"><input type="radio" name="drRating" value="1" required> 1</label>
                         <label style="cursor:pointer;"><input type="radio" name="drRating" value="2" required> 2</label>
@@ -2209,10 +2306,15 @@
                     </div>
                 </div>
                 <div style="margin-bottom:15px;">
-                    <label style="display:block; font-size:13px; font-weight:bold; margin-bottom:5px;">Comentarios</label>
-                    <textarea id="drNotes" rows="5" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; font-family:inherit;" placeholder="¿Cómo le fue hoy?"></textarea>
+                    <label
+                        style="display:block; font-size:13px; font-weight:bold; margin-bottom:5px;">Comentarios</label>
+                    <textarea id="drNotes" rows="5"
+                        style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; font-family:inherit;"
+                        placeholder="¿Cómo le fue hoy?"></textarea>
                 </div>
-                <button type="submit" id="drSaveBtn" style="width:100%; background:var(--navy); color:white; border:none; padding:15px; border-radius:8px; font-weight:bold; cursor:pointer;">Guardar Sesión</button>
+                <button type="submit" id="drSaveBtn"
+                    style="width:100%; background:var(--navy); color:white; border:none; padding:15px; border-radius:8px; font-weight:bold; cursor:pointer;">Guardar
+                    Sesión</button>
                 <p id="drStatus" style="text-align:center; margin-top:10px; font-size:12px; font-weight:bold;"></p>
             </form>
         </div>
@@ -2229,12 +2331,12 @@
     <script src="scripts/supabase-config.js"></script>
     <script>
         let currentUser = null;
-        let userData    = null;
+        let userData = null;
 
         // ── Helpers de UI ─────────────────────────────────────────────────────
         function applyLoggedInUI(profile) {
             const loginBtn = document.getElementById('loginBtn');
-            const bitBtn   = document.getElementById('bitBtn');
+            const bitBtn = document.getElementById('bitBtn');
             if (loginBtn) {
                 loginBtn.textContent = 'MI PERFIL';
                 loginBtn.onclick = () => window.location.href =
@@ -2247,7 +2349,7 @@
 
         function applyLoggedOutUI() {
             const loginBtn = document.getElementById('loginBtn');
-            const bitBtn   = document.getElementById('bitBtn');
+            const bitBtn = document.getElementById('bitBtn');
             if (loginBtn) {
                 loginBtn.textContent = 'Login';
                 loginBtn.onclick = () => window.location.href = 'login.html';
@@ -2287,7 +2389,7 @@
                     if (currentSection === 'classes') showClasses(false);
                 } else if (event === 'SIGNED_OUT') {
                     currentUser = null;
-                    userData    = null;
+                    userData = null;
                     applyLoggedOutUI();
                     if (currentSection === 'classes') showClasses(false);
                 }
@@ -2305,7 +2407,7 @@
                         if (currentSection === 'classes') showClasses(false);
                     } else {
                         currentUser = null;
-                        userData    = null;
+                        userData = null;
                         applyLoggedOutUI();
                         if (currentSection === 'classes') showClasses(false);
                     }
@@ -2349,7 +2451,7 @@
                 document.getElementById('drNotes').value = '';
                 setTimeout(() => toggleDrawer(), 1500);
             }
-            
+
             btn.disabled = false;
             btn.textContent = 'Guardar Sesión';
             setTimeout(() => status.textContent = '', 3000);
@@ -2774,10 +2876,10 @@
             window.addEventListener('popstate', (e) => {
                 const state = e.state;
                 if (!state) { showClasses(false); return; }
-                if (state.section === 'about')   showAbout(false);
+                if (state.section === 'about') showAbout(false);
                 else if (state.section === 'contact') showContact(false);
-                else if (state.section === 'topic')   loadTopic(state.topicId, false);
-                else if (state.section === 'mod')     loadMod(state.modId, false);
+                else if (state.section === 'topic') loadTopic(state.topicId, false);
+                else if (state.section === 'mod') loadMod(state.modId, false);
                 else showClasses(false);
             });
         }
@@ -2933,15 +3035,15 @@
             currentSection = 'classes';
             setTopNav('classes');
 
-            document.getElementById('about-view').style.display      = 'none';
-            document.getElementById('contact-view').style.display     = 'none';
-            document.getElementById('diagnostic-view').style.display  = 'none';
-            document.getElementById('topic-view').style.display       = 'none';
-            document.getElementById('mod-view').style.display         = 'none';
+            document.getElementById('about-view').style.display = 'none';
+            document.getElementById('contact-view').style.display = 'none';
+            document.getElementById('diagnostic-view').style.display = 'none';
+            document.getElementById('topic-view').style.display = 'none';
+            document.getElementById('mod-view').style.display = 'none';
 
-            document.getElementById('locked-view').style.display      = 'none';
-            document.getElementById('home').style.display             = 'flex';
-            
+            document.getElementById('locked-view').style.display = 'none';
+            document.getElementById('home').style.display = 'flex';
+
             buildPrevGrid();
         }
 

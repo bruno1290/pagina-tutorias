@@ -512,7 +512,7 @@ body {
     <div class="dk">
         <div class="sl">
         <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-            <h1 class="hero-title">¡¡Resta!!</h1>
+            <h1 class="hero-title">Resta</h1>
             <p class="hero-sub">Restas de 1, 2 y 3 dígitos con desagrupación en unidades, decenas y centenas.</p>
             <div class="hero-emoji">➖</div>
         </div>
@@ -832,8 +832,8 @@ body {
         </div><div class="sl">
         <div class="head-title">Desafío de 3 dígitos</div>
         <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
-            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">¿Cuál es el resultado de <b>521 − 143</b>?</p>
-            <div class="quiz-row"><button class="btn" onclick="chkAns(this, false, &quot;La resta correcta es 378.&quot;)">368</button><button class="btn" onclick="chkAns(this, true, &quot;La resta correcta es 378.&quot;)">378</button><button class="btn" onclick="chkAns(this, false, &quot;La resta correcta es 378.&quot;)">388</button></div>
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">Calcula mentalmente: <b>100 − 50</b></p>
+            <div class="quiz-row"><button class="btn" onclick="chkAns(this, false, &quot;La resta correcta es 50.&quot;)">40</button><button class="btn" onclick="chkAns(this, true, &quot;La resta correcta es 50.&quot;)">50</button><button class="btn" onclick="chkAns(this, false, &quot;La resta correcta es 50.&quot;)">60</button></div>
             <div class="msg-area"></div>
         </div>
         </div><div class="sl">
@@ -901,22 +901,21 @@ body {
     <div class="sl">
         <div class="head-title">Desafío Relámpago ⚡ 1</div>
         <div class="pnl-border" style="width:100%; border-color:#FF9D9D;">
-            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:40px;">Si tienes <b>62</b> y quitas <b>15</b>, ¿Necesitas desagrupar una decena?</p>
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:40px;">En <b>12 − 5</b>, como a <b>2</b> no le puedo quitar <b>5</b>, ¿necesito pedir prestado (desagrupar)?</p>
             <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; width:100%;">
-                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, true)'>Sí, porque 2 es menor que 5</button>
-                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>No, se resta normal</button>
-                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>Sí, porque 6 es mayor que 1</button>
+                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, true, "¡Sí! Siempre que el número de arriba es menor, pedimos prestado.")'>Sí</button>
+                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>No</button>
             </div>
             <div class="msg-area" style="font-size:26px; font-weight:900; height:40px; margin-top:40px; text-align:center;"></div>
         </div>
     </div><div class="sl">
         <div class="head-title">Desafío Relámpago ⚡ 2</div>
         <div class="pnl-border" style="width:100%; border-color:#FF9D9D;">
-            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:40px;">¿Cuál es el resultado de <b>400 − 125</b>?</p>
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:40px;">Calcula rápidamente: <b>100 − 1</b></p>
             <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; width:100%;">
-                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>375</button>
-                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>285</button>
-                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, true)'>275</button>
+                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>90</button>
+                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, true)'>99</button>
+                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>101</button>
             </div>
             <div class="msg-area" style="font-size:26px; font-weight:900; height:40px; margin-top:40px; text-align:center;"></div>
         </div>
@@ -924,7 +923,10 @@ body {
     </div>
     <div class="nv">
         <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
-        <div class="sc" id="sc">1 / 30</div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <div class="sc" id="sc"></div>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="10" value="1" oninput="goToSlide(this.value)">
+        </div>
         <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
     </div>
     <script>
@@ -940,7 +942,17 @@ function ui() {
     document.getElementById('sc').textContent=`${c+1} / ${T}`;
     document.getElementById('pv').disabled=c===0;
     document.getElementById('nx').disabled=c===T-1;
+            let sl = document.getElementById('slide-slider');
+            if(sl) { sl.max = T; sl.value = c + 1; }
 }
+
+        function goToSlide(n) {
+            let index = parseInt(n) - 1;
+            if (index >= 0 && index < T) {
+                c = index;
+                ui();
+            }
+        }
 function go(d) {
     if(d>0) {
         const hid = S[c].querySelectorAll('.stp:not(.shwn)');

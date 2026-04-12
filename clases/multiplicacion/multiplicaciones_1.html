@@ -411,7 +411,10 @@
     </div>
     <div class="nv">
         <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
-        <div class="sc" id="sc">1 / 27</div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <div class="sc" id="sc"></div>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="10" value="1" oninput="goToSlide(this.value)">
+        </div>
         <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
     </div>
     <script>
@@ -427,7 +430,17 @@
         document.getElementById('sc').textContent=`${c+1} / ${T}`;
         document.getElementById('pv').disabled=c===0;
         document.getElementById('nx').disabled=c===T-1;
+            let sl = document.getElementById('slide-slider');
+            if(sl) { sl.max = T; sl.value = c + 1; }
     }
+
+        function goToSlide(n) {
+            let index = parseInt(n) - 1;
+            if (index >= 0 && index < T) {
+                c = index;
+                ui();
+            }
+        }
     function go(d) {
         if(d>0) {
             const hid = S[c].querySelectorAll('.stp:not(.shwn)');

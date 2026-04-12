@@ -1080,7 +1080,10 @@
 
 <div class="nv">
   <button class="nb" id="pvBtn" onclick="go(-1)" disabled>← Anterior</button>
-  <span class="sc" id="sc">1 / 24</span>
+  <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <span class="sc" id="sc">1 / 24</span>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="24" value="1" oninput="goToSlide(this.value)">
+        </div>
   <button class="nb" id="nxBtn" onclick="go(1)">Siguiente →</button>
 </div>
 
@@ -1105,6 +1108,8 @@
     document.getElementById('pvBtn').disabled = cur === 0;
     document.getElementById('nxBtn').disabled = cur === total - 1;
     document.getElementById('sc').textContent = `${cur + 1} / ${total}`;
+    let sl = document.getElementById('slide-slider');
+    if(sl) { sl.max = total; sl.value = cur + 1; }
     document.getElementById('pb').style.width = `${((cur + 1) / total) * 100}%`;
   }
 
@@ -1158,6 +1163,14 @@
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
     if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   go(-1);
   });
+
+function goToSlide(n) {
+  let index = parseInt(n) - 1;
+  if(index >= 0 && index < total) {
+    showSlide(index);
+    updateNav();
+  }
+}
 </script>
 </body>
 </html>
