@@ -2434,27 +2434,34 @@
             btn.disabled = true;
             btn.textContent = 'Guardando...';
 
-            const { error } = await supabaseClient.from('sesiones_clases').insert([{
-                tutor_id: userData.id,
-                fecha: date,
-                asistencia: att,
-                calificacion: parseInt(rating),
-                notas_desempeno: notes
-            }]);
+            try {
+                const { error } = await supabaseClient.from('sesiones_clases').insert([{
+                    tutor_id: userData.id,
+                    fecha: date,
+                    asistencia: att,
+                    calificacion: parseInt(rating),
+                    notas_desempeno: notes
+                }]);
 
-            if (error) {
+                if (error) {
+                    console.error('Supabase error:', error);
+                    status.style.color = 'red';
+                    status.textContent = 'Error al guardar.';
+                } else {
+                    status.style.color = '#06D6A0';
+                    status.textContent = '¡Guardado correctamente! 🎉';
+                    document.getElementById('drNotes').value = '';
+                    setTimeout(() => toggleDrawer(), 1500);
+                }
+            } catch (err) {
+                console.error('Error inesperado:', err);
                 status.style.color = 'red';
-                status.textContent = 'Error al guardar.';
-            } else {
-                status.style.color = '#06D6A0';
-                status.textContent = '¡Guardado correctamente! 🎉';
-                document.getElementById('drNotes').value = '';
-                setTimeout(() => toggleDrawer(), 1500);
+                status.textContent = 'Error de conexión. Intenta de nuevo.';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Guardar Sesión';
+                setTimeout(() => { if (status.textContent !== '¡Guardado correctamente! 🎉') status.textContent = '' }, 3000);
             }
-
-            btn.disabled = false;
-            btn.textContent = 'Guardar Sesión';
-            setTimeout(() => status.textContent = '', 3000);
         });
 
         // ══════════════════════════════════════════════════════════════════════
