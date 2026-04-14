@@ -126,7 +126,7 @@
     <!-- Matrix Card -->
     <div class="card">
         <div class="card-header">
-            <h2>Matriz de Seguimiento (23 Semanas)</h2>
+            <h2>Matriz de Seguimiento (22 Semanas)</h2>
             <div style="font-size:12px; color:var(--text-light);">🟢 Presente | 🔴 Ausente | ⚪ Pendiente</div>
         </div>
         <div class="matrix-container">
@@ -176,7 +176,19 @@
 
 <script src="scripts/supabase-config.js"></script>
 <script>
-    const START_DATE = new Date('2026-04-06'); // Semana 1 según calendario
+    const START_DATE = new Date('2026-04-13'); 
+    
+    // Listado de lunes con clase (extraído del calendario oficial)
+    const CLASS_WEEKS = [
+        '2026-04-13', '2026-04-20', '2026-04-27',
+        '2026-05-04', '2026-05-11', '2026-05-25',
+        '2026-06-01', '2026-06-08',
+        '2026-08-10', '2026-08-17', '2026-08-24', '2026-08-31',
+        '2026-09-14', '2026-09-21',
+        '2026-10-05', '2026-10-12', '2026-10-19', '2026-10-26',
+        '2026-11-02', '2026-11-09', '2026-11-16', '2026-11-23'
+    ];
+
     let allData = [];
     let allTutors = [];
 
@@ -236,32 +248,49 @@
         document.getElementById('stat-tutors').textContent = allTutors.length;
     }
 
-    function getWeekNumber(dateStr) {
-        const date = new Date(dateStr);
-        const diff = date - START_DATE;
-        const oneWeek = 1000 * 60 * 60 * 24 * 7;
-        return Math.floor(diff / oneWeek) + 1;
+    function getWeekIndex(dateStr) {
+        // Evitamos problemas de zona horaria parseando manualmente y usando componentes locales
+        const parts = dateStr.split('-');
+        if (parts.length < 3) return -1;
+        const [y, m, d] = parts.map(Number);
+        const date = new Date(y, m - 1, d);
+        
+        const day = date.getDay(); // 0 (dom) a 6 (sab)
+        const diff = date.getDate() - (day === 0 ? 6 : day - 1); // lunes es 1
+        const monday = new Date(y, m - 1, diff);
+        
+        const y2 = monday.getFullYear();
+        const m2 = String(monday.getMonth() + 1).padStart(2, '0');
+        const d2 = String(monday.getDate()).padStart(2, '0');
+        const mondayStr = `${y2}-${m2}-${d2}`;
+        
+        return CLASS_WEEKS.indexOf(mondayStr);
     }
 
     function renderMatrix() {
         const header = document.getElementById('matrixHeader');
         const body = document.getElementById('matrixBody');
         
-        // Generar cabeceras de semana 1-23
-        for(let i=1; i<=23; i++) {
+        // Limpiar cabeceras dinámicas si existen
+        header.innerHTML = '<th class="cell-tutor">Tutor / Alumno</th>';
+
+        // Generar cabeceras basadas en CLASS_WEEKS
+        CLASS_WEEKS.forEach((mondayStr, index) => {
+            const [y, m, d] = mondayStr.split('-');
             const th = document.createElement('th');
             th.className = 'cell-s';
-            th.textContent = `S${i}`;
+            th.textContent = `S ${parseInt(d)}/${parseInt(m)}`;
+            th.title = `Semana ${index + 1}: ${mondayStr}`;
             header.appendChild(th);
-        }
+        });
 
         // Generar filas por tutor
         body.innerHTML = allTutors.map(tutor => {
             const tutorClasses = allData.filter(c => c.tutor_id === tutor.id);
             let rowHtml = `<tr><td class="cell-tutor">${tutor.nombre_completo}<br><span style="font-size:9px; color:#999;">${tutor.nombre_atutorado}</span></td>`;
             
-            for(let w=1; w<=23; w++) {
-                const session = tutorClasses.find(c => getWeekNumber(c.fecha) === w);
+            CLASS_WEEKS.forEach((mondayStr, wIdx) => {
+                const session = tutorClasses.find(c => getWeekIndex(c.fecha) === wIdx);
                 let cls = 's-m';
                 let icon = '-';
                 if(session) {
@@ -269,7 +298,7 @@
                     icon = session.asistencia === 'Presente' ? 'P' : 'A';
                 }
                 rowHtml += `<td class="${cls}">${icon}</td>`;
-            }
+            });
             rowHtml += '</tr>';
             return rowHtml;
         }).join('');
