@@ -2108,24 +2108,13 @@
             .main {
                 padding: 24px 16px 40px;
             }
-            
-            .welcome-intro {
-                flex-direction: column;
-                min-height: auto;
-            }
-            .welcome-intro-image {
-                position: relative;
-                width: 100%;
-                height: 200px;
-                order: -1; /* Move image to top */
-            }
             .welcome-intro-text {
                 padding: 30px 20px;
             }
             .welcome-intro-text h2 {
                 font-size: 32px;
             }
-            
+
             .mod-preview-grid {
                 grid-template-columns: 1fr;
                 padding: 0 10px;
@@ -2163,6 +2152,13 @@
             }
             .welcome-section-header h2 {
                 font-size: 26px;
+            }
+            
+            .about-view, .contact-view {
+                display: block !important;
+            }
+            #nav-about, #nav-contact {
+                display: none !important;
             }
         }
     </style>
