@@ -71,6 +71,36 @@
         
         .msg { margin-top: 15px; font-size: 14px; text-align: center; display: none; padding: 10px; border-radius: 6px; }
         .msg.error { background: #ffeeef; color: var(--error); display: block; }
+
+        /* ─── MOBILE VIEW (iPHONE / ANDROID) ONLY ──────────────── */
+        @media(max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            .auth-container {
+                padding: 24px;
+            }
+            .auth-title {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+            .auth-logo {
+                padding: 15px 10px;
+                margin-bottom: 20px;
+            }
+            .h-logo { width: 36px; height: 36px; }
+            .h-logo img, .h-logo svg { width: 36px; height: 36px; }
+            .h-tutorias { height: 26px; }
+            .h-brand span.main { font-size: 14px; }
+            .form-input {
+                padding: 10px 14px;
+                font-size: 14px;
+            }
+            .btn {
+                padding: 12px;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>

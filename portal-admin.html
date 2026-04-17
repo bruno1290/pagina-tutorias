@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,304 +10,680 @@
         :root {
             --font-titles: 'Buckwheat TC', sans-serif;
             --font-body: 'Canva Sans', sans-serif;
-            --navy: #133c60; --navy-mid: #1a4f7e; --navy-dark: #0a1f33;
-            --teal: #3498DB; --bg: #EEF3FA; --white: #FFFFFF; 
-            --text: #17334F; --text-light: #6B85A3;
-            --success: #06D6A0; --error: #EF476F; --header-h: 66px;
+            --navy: #133c60;
+            --navy-mid: #1a4f7e;
+            --navy-dark: #0a1f33;
+            --teal: #3498DB;
+            --bg: #EEF3FA;
+            --white: #FFFFFF;
+            --text: #17334F;
+            --text-light: #6B85A3;
+            --success: #06D6A0;
+            --error: #EF476F;
+            --header-h: 66px;
         }
 
-        @font-face { font-family: 'Buckwheat TC'; src: url('assets/fonts/Buckwheat%20TC%20Rg.otf') format('opentype'); }
-        @font-face { font-family: 'Canva Sans'; src: url('assets/fonts/CanvaSans/CanvaSans-Regular.otf') format('opentype'); }
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
-        h1, h2, h3 { font-family: var(--font-titles); text-transform: uppercase; letter-spacing: 0.05em; }
-        
-        header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-h); background: var(--navy); display: flex; align-items: center; justify-content: space-between; padding: 0 22px 0 18px; z-index: 200; box-shadow: 0 3px 20px rgba(10, 22, 48, .5); overflow: hidden; }
-        .h-left { display: flex; align-items: center; gap: 14px; width: 100%; min-width: 0; }
-        .brand-lockup { display: flex; align-items: center; gap: 14px; text-decoration: none; }
-        .h-logo { width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; filter: drop-shadow(0 6px 18px rgba(7, 17, 38, .22)); }
-        .h-logo img, .h-logo svg { width: 64px; height: 64px; display: block; object-fit: contain; mix-blend-mode: screen; }
-        .h-tutorias { height: 44px; width: auto; display: block; object-fit: contain; flex-shrink: 0; filter: drop-shadow(0 6px 18px rgba(7, 17, 38, .22)); }
-        .h-brand { display: flex; flex-direction: column; justify-content: center; }
-        .h-brand span.main { color: var(--white); font-family: var(--font-titles); text-transform: uppercase; letter-spacing: 0.05em; font-size: 22px; font-weight: 800; line-height: 1; }
-        
-        .top-nav { display: flex; gap: 8px; }
-        .top-nav-btn { border: none; background: rgba(255, 255, 255, .08); color: rgba(255, 255, 255, .82); padding: 10px 16px; border-radius: 999px; cursor: pointer; font-family: var(--font-titles); text-transform: uppercase; font-size: 13px; font-weight: 800; transition: all .18s ease; }
-        .top-nav-btn:hover { background: rgba(255, 255, 255, .16); color: var(--white); }
-        .footer-banner { margin: 0; width: 100%; max-width: none; height: var(--header-h); background: var(--navy); box-shadow: none; display: flex; align-items: center; justify-content: center; }
-        .footer-banner p { font-size: 11px; line-height: 1.4; color: rgba(255, 255, 255, .88); letter-spacing: .2px; text-align: center; }
+        @font-face {
+            font-family: 'Buckwheat TC';
+            src: url('assets/fonts/Buckwheat%20TC%20Rg.otf') format('opentype');
+        }
 
-        .layout { padding-top: calc(var(--header-h) + 20px); max-width: 1400px; margin: 0 auto; padding-inline: 20px; padding-bottom: 60px; }
-        
+        @font-face {
+            font-family: 'Canva Sans';
+            src: url('assets/fonts/CanvaSans/CanvaSans-Regular.otf') format('opentype');
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: var(--font-titles);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-h);
+            background: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 22px 0 18px;
+            z-index: 200;
+            box-shadow: 0 3px 20px rgba(10, 22, 48, .5);
+            overflow: hidden;
+        }
+
+        .h-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .brand-lockup {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .h-logo {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            filter: drop-shadow(0 6px 18px rgba(7, 17, 38, .22));
+        }
+
+        .h-logo img,
+        .h-logo svg {
+            width: 64px;
+            height: 64px;
+            display: block;
+            object-fit: contain;
+            mix-blend-mode: screen;
+        }
+
+        .h-tutorias {
+            height: 44px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+            flex-shrink: 0;
+            filter: drop-shadow(0 6px 18px rgba(7, 17, 38, .22));
+        }
+
+        .h-brand {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .h-brand span.main {
+            color: var(--white);
+            font-family: var(--font-titles);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 22px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .top-nav {
+            display: flex;
+            gap: 8px;
+        }
+
+        .top-nav-btn {
+            border: none;
+            background: rgba(255, 255, 255, .08);
+            color: rgba(255, 255, 255, .82);
+            padding: 10px 16px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-family: var(--font-titles);
+            text-transform: uppercase;
+            font-size: 13px;
+            font-weight: 800;
+            transition: all .18s ease;
+        }
+
+        .top-nav-btn:hover {
+            background: rgba(255, 255, 255, .16);
+            color: var(--white);
+        }
+
+        .footer-banner {
+            margin: 0;
+            width: 100%;
+            max-width: none;
+            height: var(--header-h);
+            background: var(--navy);
+            box-shadow: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-banner p {
+            font-size: 11px;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, .88);
+            letter-spacing: .2px;
+            text-align: center;
+        }
+
+        .layout {
+            padding-top: calc(var(--header-h) + 20px);
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-inline: 20px;
+            padding-bottom: 60px;
+        }
+
         /* Stats Cards */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 25px; }
-        .stat-card { background: white; padding: 20px; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #dde8f5; }
-        .stat-card .label { font-size: 13px; color: var(--text-light); font-weight: bold; text-transform: uppercase; margin-bottom: 5px; }
-        .stat-card .value { font-size: 28px; font-family: var(--font-titles); color: var(--navy); }
-        
-        .card { background: white; border-radius: 16px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #dde8f5; }
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--bg); }
-        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #dde8f5;
+        }
+
+        .stat-card .label {
+            font-size: 13px;
+            color: var(--text-light);
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .value {
+            font-size: 28px;
+            font-family: var(--font-titles);
+            color: var(--navy);
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border: 1px solid #dde8f5;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--bg);
+        }
+
         /* Control Bar */
-        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
-        .input-search { flex: 1; padding: 12px 18px; border: 2px solid #dde8f5; border-radius: 12px; font-size: 15px; }
-        .btn-action { padding: 12px 20px; border-radius: 12px; border: none; font-family: var(--font-titles); cursor: pointer; text-transform: uppercase; transition: transform 0.1s; }
-        .btn-csv { background: #1D6F42; color: white; }
-        .btn-action:active { transform: scale(0.98); }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .input-search {
+            flex: 1;
+            padding: 12px 18px;
+            border: 2px solid #dde8f5;
+            border-radius: 12px;
+            font-size: 15px;
+        }
+
+        .btn-action {
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: none;
+            font-family: var(--font-titles);
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: transform 0.1s;
+        }
+
+        .btn-csv {
+            background: #1D6F42;
+            color: white;
+        }
+
+        .btn-action:active {
+            transform: scale(0.98);
+        }
 
         /* Matrix Section */
-        .matrix-container { overflow-x: auto; margin-bottom: 15px; border-radius: 8px; border: 1px solid #eee; }
-        .matrix-table { border-collapse: separate; border-spacing: 2px; width: 100%; }
-        .matrix-table th { font-size: 10px; padding: 5px; background: #f7fbff; color: var(--navy); text-align: center; min-width: 30px; }
-        .matrix-table td { height: 30px; text-align: center; font-size: 10px; font-weight: bold; border-radius: 3px; }
-        .cell-tutor { text-align: left; padding: 0 10px; font-weight: bold; background: white; white-space: nowrap; font-size: 12px; }
-        .cell-s { width: 30px; }
-        
-        /* Status Colors */
-        .s-p { background: #06D6A0; color: white; } /* Presente */
-        .s-a { background: #EF476F; color: white; } /* Ausente */
-        .s-m { background: #eee; color: #aaa; }    /* Missing / Not logged */
-        
-        /* Main Table */
-        .table-log { width: 100%; border-collapse: collapse; }
-        .table-log th { padding: 12px; text-align: left; background: #f7fbff; font-size: 11px; text-transform: uppercase; color: var(--navy); }
-        .table-log td { padding: 12px; border-bottom: 1px solid #eef4fb; font-size: 14px; }
-        .ass-badge { padding: 4px 8px; border-radius: 10px; font-size: 11px; font-weight: bold; }
-        .ass-badge.Presente { background: #d1fae5; color: #065f46; }
-        .ass-badge.Ausente { background: #fee2e2; color: #991b1b; }
-        
-        .loader { padding: 40px; text-align: center; color: var(--teal); font-weight: bold; font-size: 18px; }
-    </style>
-</head>
-<body>
-
-<header>
-    <div class="h-left">
-        <a href="index.html" class="brand-lockup">
-            <div class="h-logo">
-                <img src="assets/Logo.png" alt="Logo La Obra UC" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" style="display:none"><polyline points="9,52 50,12 91,52 91,73" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /><polyline points="9,52 9,90 68,90" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /><text x="19" y="70" fill="white" font-weight="800" font-size="18" font-family="'Barlow Condensed',sans-serif" letter-spacing="1">LA</text><text x="14" y="87" fill="white" font-weight="800" font-size="18" font-family="'Barlow Condensed',sans-serif" letter-spacing="0.5">OBRA</text></svg>
-            </div>
-            <img class="h-tutorias" src="assets/Captura de pantalla 2026-03-26 a la(s) 11.43.07 a.m..png" alt="Tutorías">
-            <div class="h-brand">
-                <span class="main">Consola Admin</span>
-            </div>
-        </a>
-    </div>
-    <div class="top-nav">
-        <button class="top-nav-btn" onclick="window.location.href='index.html'">📖 VER CLASES</button>
-        <button class="top-nav-btn" onclick="AppAuth.logout()">CERRAR SESIÓN</button>
-    </div>
-</header>
-
-<div id="loadingScreen" class="loader" style="padding-top:100px;">Generando Dashboard...</div>
-
-<div class="layout" id="mainLayout" style="display: none;">
-    <!-- Stats Row -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="label">Total Sesiones</div>
-            <div class="value" id="stat-total">0</div>
-        </div>
-        <div class="stat-card">
-            <div class="label">Asistencia Global</div>
-            <div class="value" id="stat-ass">0%</div>
-        </div>
-        <div class="stat-card">
-            <div class="label">Nota Promedio</div>
-            <div class="value" id="stat-rating">0.0</div>
-        </div>
-        <div class="stat-card">
-            <div class="label">Tutores Activos</div>
-            <div class="value" id="stat-tutors">0</div>
-        </div>
-    </div>
-
-    <!-- Matrix Card -->
-    <div class="card">
-        <div class="card-header">
-            <h2>Matriz de Seguimiento (22 Semanas)</h2>
-            <div style="font-size:12px; color:var(--text-light);">🟢 Presente | 🔴 Ausente | ⚪ Pendiente</div>
-        </div>
-        <div class="matrix-container">
-            <table class="matrix-table" id="matrixTable">
-                <thead>
-                    <tr id="matrixHeader">
-                        <th class="cell-tutor">Tutor / Alumno</th>
-                        <!-- Semanas 1-23 se inyectan acá -->
-                    </tr>
-                </thead>
-                <tbody id="matrixBody">
-                    <!-- Filas se inyectan acá -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Logs Card -->
-    <div class="card">
-        <div class="card-header">
-            <h2>Bitácoras Detalladas</h2>
-            <button class="btn-action btn-csv" onclick="exportToCSV()">Descargar Excel (CSV)</button>
-        </div>
-        
-        <div class="controls">
-            <input type="text" id="searchInput" class="input-search" placeholder="Buscar por tutor o alumno..." onkeyup="filterData()">
-        </div>
-
-        <div class="table-responsive">
-            <table class="table-log">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Tutor / Alumno</th>
-                        <th>Estado</th>
-                        <th>Nota</th>
-                        <th>Bitácora</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <!-- Logs se inyectan acá -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<script src="scripts/supabase-config.js"></script>
-<script>
-    const START_DATE = new Date('2026-04-13'); 
-    
-    // Listado de lunes con clase (extraído del calendario oficial)
-    const CLASS_WEEKS = [
-        '2026-04-13', '2026-04-20', '2026-04-27',
-        '2026-05-04', '2026-05-11', '2026-05-25',
-        '2026-06-01', '2026-06-08',
-        '2026-08-10', '2026-08-17', '2026-08-24', '2026-08-31',
-        '2026-09-14', '2026-09-21',
-        '2026-10-05', '2026-10-12', '2026-10-19', '2026-10-26',
-        '2026-11-02', '2026-11-09', '2026-11-16', '2026-11-23'
-    ];
-
-    let allData = [];
-    let allTutors = [];
-
-    document.addEventListener('DOMContentLoaded', async () => {
-        const session = await AppAuth.checkSession(true);
-        if(!session) return;
-        
-        const { data: profile } = await supabaseClient.from('perfiles').select('*').eq('id', session.user.id).single();
-        if (!profile || profile.rol !== 'admin') {
-            window.location.href = 'portal-tutor.html';
-            return;
+        .matrix-container {
+            overflow-x: auto;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #eee;
         }
 
-        document.getElementById('loadingScreen').style.display = 'none';
-        document.getElementById('mainLayout').style.display = 'block';
-        
-        await initDashboard();
-    });
+        .matrix-table {
+            border-collapse: separate;
+            border-spacing: 2px;
+            width: 100%;
+        }
 
-    async function initDashboard() {
-        // 1. Cargar datos
-        const { data: classes } = await supabaseClient
-            .from('sesiones_clases')
-            .select('*, perfiles(nombre_completo, nombre_atutorado)')
-            .order('fecha', { ascending: false });
-        
-        const { data: tutors } = await supabaseClient
-            .from('perfiles')
-            .select('*')
-            .eq('rol', 'tutor')
-            .order('nombre_completo', { ascending: true });
+        .matrix-table th {
+            font-size: 10px;
+            padding: 5px;
+            background: #f7fbff;
+            color: var(--navy);
+            text-align: center;
+            min-width: 30px;
+        }
 
-        allData = classes || [];
-        allTutors = tutors || [];
+        .matrix-table td {
+            height: 30px;
+            text-align: center;
+            font-size: 10px;
+            font-weight: bold;
+            border-radius: 3px;
+        }
 
-        // 2. Renderizar KPIs
-        renderKPIs();
-        
-        // 3. Renderizar Matriz
-        renderMatrix();
-        
-        // 4. Renderizar Tabla
-        renderTable(allData);
-    }
+        .cell-tutor {
+            text-align: left;
+            padding: 0 10px;
+            font-weight: bold;
+            background: white;
+            white-space: nowrap;
+            font-size: 12px;
+        }
 
-    function renderKPIs() {
-        const total = allData.length;
-        const presents = allData.filter(d => d.asistencia === 'Presente').length;
-        const avgAss = total > 0 ? Math.round((presents / total) * 100) : 0;
-        
-        const grades = allData.filter(d => d.calificacion > 0).map(d => d.calificacion);
-        const avgGrade = grades.length > 0 ? (grades.reduce((a, b) => a + b, 0) / grades.length).toFixed(1) : '0.0';
+        .cell-s {
+            width: 30px;
+        }
 
-        document.getElementById('stat-total').textContent = total;
-        document.getElementById('stat-ass').textContent = `${avgAss}%`;
-        document.getElementById('stat-rating').textContent = avgGrade;
-        document.getElementById('stat-tutors').textContent = allTutors.length;
-    }
+        /* Status Colors */
+        .s-p {
+            background: #06D6A0;
+            color: white;
+        }
 
-    function getWeekIndex(dateStr) {
-        // Evitamos problemas de zona horaria parseando manualmente y usando componentes locales
-        const parts = dateStr.split('-');
-        if (parts.length < 3) return -1;
-        const [y, m, d] = parts.map(Number);
-        const date = new Date(y, m - 1, d);
-        
-        const day = date.getDay(); // 0 (dom) a 6 (sab)
-        const diff = date.getDate() - (day === 0 ? 6 : day - 1); // lunes es 1
-        const monday = new Date(y, m - 1, diff);
-        
-        const y2 = monday.getFullYear();
-        const m2 = String(monday.getMonth() + 1).padStart(2, '0');
-        const d2 = String(monday.getDate()).padStart(2, '0');
-        const mondayStr = `${y2}-${m2}-${d2}`;
-        
-        return CLASS_WEEKS.indexOf(mondayStr);
-    }
+        /* Presente */
+        .s-a {
+            background: #EF476F;
+            color: white;
+        }
 
-    function renderMatrix() {
-        const header = document.getElementById('matrixHeader');
-        const body = document.getElementById('matrixBody');
-        
-        // Limpiar cabeceras dinámicas si existen
-        header.innerHTML = '<th class="cell-tutor">Tutor / Alumno</th>';
+        /* Ausente */
+        .s-m {
+            background: #eee;
+            color: #aaa;
+        }
 
-        // Generar cabeceras basadas en CLASS_WEEKS
-        CLASS_WEEKS.forEach((mondayStr, index) => {
-            const [y, m, d] = mondayStr.split('-');
-            const th = document.createElement('th');
-            th.className = 'cell-s';
-            th.textContent = `S ${parseInt(d)}/${parseInt(m)}`;
-            th.title = `Semana ${index + 1}: ${mondayStr}`;
-            header.appendChild(th);
+        /* Missing / Not logged */
+
+        /* Main Table */
+        .table-log {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-log th {
+            padding: 12px;
+            text-align: left;
+            background: #f7fbff;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--navy);
+        }
+
+        .table-log td {
+            padding: 12px;
+            border-bottom: 1px solid #eef4fb;
+            font-size: 14px;
+        }
+
+        .ass-badge {
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .ass-badge.Presente {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .ass-badge.Ausente {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .loader {
+            padding: 40px;
+            text-align: center;
+            color: var(--teal);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* ─── MOBILE VIEW (iPHONE / ANDROID) ONLY ──────────────── */
+        @media(max-width: 768px) {
+            header {
+                padding: 0 12px;
+            }
+            .h-brand span.main {
+                font-size: 16px;
+            }
+            .h-tutorias {
+                display: none;
+            }
+            .h-logo {
+                width: 48px;
+                height: 48px;
+            }
+            .h-logo img, .h-logo svg {
+                width: 48px;
+                height: 48px;
+            }
+            .top-nav {
+                gap: 4px;
+            }
+            .top-nav-btn {
+                font-size: 10px;
+                padding: 8px 10px;
+            }
+            
+            .layout {
+                padding-inline: 10px;
+                padding-top: calc(var(--header-h) + 15px);
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .stat-card {
+                padding: 15px;
+            }
+            .stat-card .value {
+                font-size: 22px;
+            }
+            
+            .card {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .card-header h2 {
+                font-size: 18px;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            .input-search, .btn-action {
+                width: 100%;
+            }
+            
+            .table-log td, .table-log th {
+                font-size: 12px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="h-left">
+            <a href="index.html" class="brand-lockup">
+                <div class="h-logo">
+                    <img src="assets/Logo.png" alt="Logo La Obra UC"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" style="display:none">
+                        <polyline points="9,52 50,12 91,52 91,73" stroke="white" stroke-width="6" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <polyline points="9,52 9,90 68,90" stroke="white" stroke-width="6" stroke-linecap="round"
+                            stroke-linejoin="round" /><text x="19" y="70" fill="white" font-weight="800" font-size="18"
+                            font-family="'Barlow Condensed',sans-serif" letter-spacing="1">LA</text><text x="14" y="87"
+                            fill="white" font-weight="800" font-size="18" font-family="'Barlow Condensed',sans-serif"
+                            letter-spacing="0.5">OBRA</text>
+                    </svg>
+                </div>
+                <img class="h-tutorias" src="assets/Captura de pantalla 2026-03-26 a la(s) 11.43.07 a.m..png"
+                    alt="Tutorías">
+                <div class="h-brand">
+                    <span class="main">Admin</span>
+                </div>
+            </a>
+        </div>
+        <div class="top-nav">
+            <button class="top-nav-btn" onclick="window.location.href='index.html'">📖 VER CLASES</button>
+            <button class="top-nav-btn" onclick="AppAuth.logout()">CERRAR SESIÓN</button>
+        </div>
+    </header>
+
+    <div id="loadingScreen" class="loader" style="padding-top:100px;">Generando Dashboard...</div>
+
+    <div class="layout" id="mainLayout" style="display: none;">
+        <!-- Stats Row -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="label">Total Sesiones</div>
+                <div class="value" id="stat-total">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Asistencia Global</div>
+                <div class="value" id="stat-ass">0%</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Nota Promedio</div>
+                <div class="value" id="stat-rating">0.0</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Tutores Activos</div>
+                <div class="value" id="stat-tutors">0</div>
+            </div>
+        </div>
+
+        <!-- Matrix Card -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Matriz de Seguimiento (22 Semanas)</h2>
+                <div style="font-size:12px; color:var(--text-light);">🟢 Presente | 🔴 Ausente | ⚪ Pendiente</div>
+            </div>
+            <div class="matrix-container">
+                <table class="matrix-table" id="matrixTable">
+                    <thead>
+                        <tr id="matrixHeader">
+                            <th class="cell-tutor">Tutor / Alumno</th>
+                            <!-- Semanas 1-23 se inyectan acá -->
+                        </tr>
+                    </thead>
+                    <tbody id="matrixBody">
+                        <!-- Filas se inyectan acá -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Logs Card -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Bitácoras Detalladas</h2>
+                <button class="btn-action btn-csv" onclick="exportToCSV()">Descargar Excel (CSV)</button>
+            </div>
+
+            <div class="controls">
+                <input type="text" id="searchInput" class="input-search" placeholder="Buscar por tutor o alumno..."
+                    onkeyup="filterData()">
+            </div>
+
+            <div class="table-responsive">
+                <table class="table-log">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Tutor / Alumno</th>
+                            <th>Estado</th>
+                            <th>Nota</th>
+                            <th>Bitácora</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Logs se inyectan acá -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/supabase-config.js"></script>
+    <script>
+        const START_DATE = new Date('2026-04-13');
+
+        // Listado de lunes con clase (extraído del calendario oficial)
+        const CLASS_WEEKS = [
+            '2026-04-13', '2026-04-20', '2026-04-27',
+            '2026-05-04', '2026-05-11', '2026-05-25',
+            '2026-06-01', '2026-06-08',
+            '2026-08-10', '2026-08-17', '2026-08-24', '2026-08-31',
+            '2026-09-14', '2026-09-21',
+            '2026-10-05', '2026-10-12', '2026-10-19', '2026-10-26',
+            '2026-11-02', '2026-11-09', '2026-11-16', '2026-11-23'
+        ];
+
+        let allData = [];
+        let allTutors = [];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const session = await AppAuth.checkSession(true);
+            if (!session) return;
+
+            const { data: profile } = await supabaseClient.from('perfiles').select('*').eq('id', session.user.id).single();
+            if (!profile || profile.rol !== 'admin') {
+                window.location.href = 'portal-tutor.html';
+                return;
+            }
+
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('mainLayout').style.display = 'block';
+
+            await initDashboard();
         });
 
-        // Generar filas por tutor
-        body.innerHTML = allTutors.map(tutor => {
-            const tutorClasses = allData.filter(c => c.tutor_id === tutor.id);
-            let rowHtml = `<tr><td class="cell-tutor">${tutor.nombre_completo}<br><span style="font-size:9px; color:#999;">${tutor.nombre_atutorado}</span></td>`;
-            
-            CLASS_WEEKS.forEach((mondayStr, wIdx) => {
-                const session = tutorClasses.find(c => getWeekIndex(c.fecha) === wIdx);
-                let cls = 's-m';
-                let icon = '-';
-                if(session) {
-                    cls = session.asistencia === 'Presente' ? 's-p' : 's-a';
-                    icon = session.asistencia === 'Presente' ? 'P' : 'A';
-                }
-                rowHtml += `<td class="${cls}">${icon}</td>`;
-            });
-            rowHtml += '</tr>';
-            return rowHtml;
-        }).join('');
-    }
+        async function initDashboard() {
+            // 1. Cargar datos
+            const { data: classes } = await supabaseClient
+                .from('sesiones_clases')
+                .select('*, perfiles(nombre_completo, nombre_atutorado)')
+                .order('fecha', { ascending: false });
 
-    function renderTable(data) {
-        const tbody = document.getElementById('tableBody');
-        tbody.innerHTML = data.map(c => `
+            const { data: tutors } = await supabaseClient
+                .from('perfiles')
+                .select('*')
+                .eq('rol', 'tutor')
+                .order('nombre_completo', { ascending: true });
+
+            allData = classes || [];
+            allTutors = tutors || [];
+
+            // 2. Renderizar KPIs
+            renderKPIs();
+
+            // 3. Renderizar Matriz
+            renderMatrix();
+
+            // 4. Renderizar Tabla
+            renderTable(allData);
+        }
+
+        function renderKPIs() {
+            const total = allData.length;
+            const presents = allData.filter(d => d.asistencia === 'Presente').length;
+            const avgAss = total > 0 ? Math.round((presents / total) * 100) : 0;
+
+            const grades = allData.filter(d => d.calificacion > 0).map(d => d.calificacion);
+            const avgGrade = grades.length > 0 ? (grades.reduce((a, b) => a + b, 0) / grades.length).toFixed(1) : '0.0';
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-ass').textContent = `${avgAss}%`;
+            document.getElementById('stat-rating').textContent = avgGrade;
+            document.getElementById('stat-tutors').textContent = allTutors.length;
+        }
+
+        function getWeekIndex(dateStr) {
+            // Evitamos problemas de zona horaria parseando manualmente y usando componentes locales
+            const parts = dateStr.split('-');
+            if (parts.length < 3) return -1;
+            const [y, m, d] = parts.map(Number);
+            const date = new Date(y, m - 1, d);
+
+            const day = date.getDay(); // 0 (dom) a 6 (sab)
+            const diff = date.getDate() - (day === 0 ? 6 : day - 1); // lunes es 1
+            const monday = new Date(y, m - 1, diff);
+
+            const y2 = monday.getFullYear();
+            const m2 = String(monday.getMonth() + 1).padStart(2, '0');
+            const d2 = String(monday.getDate()).padStart(2, '0');
+            const mondayStr = `${y2}-${m2}-${d2}`;
+
+            return CLASS_WEEKS.indexOf(mondayStr);
+        }
+
+        function renderMatrix() {
+            const header = document.getElementById('matrixHeader');
+            const body = document.getElementById('matrixBody');
+
+            // Limpiar cabeceras dinámicas si existen
+            header.innerHTML = '<th class="cell-tutor">Tutor / Alumno</th>';
+
+            // Generar cabeceras basadas en CLASS_WEEKS
+            CLASS_WEEKS.forEach((mondayStr, index) => {
+                const [y, m, d] = mondayStr.split('-');
+                const th = document.createElement('th');
+                th.className = 'cell-s';
+                th.textContent = `${parseInt(d)}/${parseInt(m)}`;
+                th.title = `Semana ${index + 1}: ${mondayStr}`;
+                header.appendChild(th);
+            });
+
+            // Generar filas por tutor
+            body.innerHTML = allTutors.map(tutor => {
+                const tutorClasses = allData.filter(c => c.tutor_id === tutor.id);
+                let rowHtml = `<tr><td class="cell-tutor">${tutor.nombre_completo}<br><span style="font-size:9px; color:#999;">${tutor.nombre_atutorado}</span></td>`;
+
+                CLASS_WEEKS.forEach((mondayStr, wIdx) => {
+                    const session = tutorClasses.find(c => getWeekIndex(c.fecha) === wIdx);
+                    let cls = 's-m';
+                    let icon = '-';
+                    if (session) {
+                        cls = session.asistencia === 'Presente' ? 's-p' : 's-a';
+                        icon = session.asistencia === 'Presente' ? 'P' : 'A';
+                    }
+                    rowHtml += `<td class="${cls}">${icon}</td>`;
+                });
+                rowHtml += '</tr>';
+                return rowHtml;
+            }).join('');
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = data.map(c => `
             <tr>
                 <td>${c.fecha}</td>
                 <td>
@@ -318,46 +695,48 @@
                 <td class="notes-col">${c.notas_desempeno || '<i style="color:#aaa;">Sin notas</i>'}</td>
             </tr>
         `).join('');
-    }
+        }
 
-    function filterData() {
-        const search = document.getElementById('searchInput').value.toLowerCase();
-        const filtered = allData.filter(c => 
-            (c.perfiles?.nombre_completo || '').toLowerCase().includes(search) ||
-            (c.perfiles?.nombre_atutorado || '').toLowerCase().includes(search)
-        );
-        renderTable(filtered);
-    }
+        function filterData() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allData.filter(c =>
+                (c.perfiles?.nombre_completo || '').toLowerCase().includes(search) ||
+                (c.perfiles?.nombre_atutorado || '').toLowerCase().includes(search)
+            );
+            renderTable(filtered);
+        }
 
-    function exportToCSV() {
-        if(allData.length === 0) return alert('No hay datos para exportar');
-        
-        let csvContent = "data:text/csv;charset=utf-8,";
-        csvContent += "Fecha,Tutor,Alumno,Asistencia,Nota,Bitacora\n";
-        
-        allData.forEach(c => {
-            const row = [
-                c.fecha,
-                `"${c.perfiles?.nombre_completo || ''}"`,
-                `"${c.perfiles?.nombre_atutorado || ''}"`,
-                c.asistencia,
-                c.calificacion || '',
-                `"${(c.notas_desempeno || '').replace(/"/g, '""')}"`
-            ];
-            csvContent += row.join(",") + "\n";
-        });
-        
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `reporte_tutorias_${new Date().toISOString().split('T')[0]}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-</script>
-<div class="footer-banner">
-    <p>&copy; La Obra UC 2026. Todos los derechos reservados. Diseñada por Jefes de Tutorías 2026, Antonia Loehnert y Bruno Nattino.</p>
-</div>
+        function exportToCSV() {
+            if (allData.length === 0) return alert('No hay datos para exportar');
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Fecha,Tutor,Alumno,Asistencia,Nota,Bitacora\n";
+
+            allData.forEach(c => {
+                const row = [
+                    c.fecha,
+                    `"${c.perfiles?.nombre_completo || ''}"`,
+                    `"${c.perfiles?.nombre_atutorado || ''}"`,
+                    c.asistencia,
+                    c.calificacion || '',
+                    `"${(c.notas_desempeno || '').replace(/"/g, '""')}"`
+                ];
+                csvContent += row.join(",") + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `reporte_tutorias_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+    <div class="footer-banner">
+        <p>&copy; La Obra UC 2026. Todos los derechos reservados. Diseñada por Jefes de Tutorías 2026, Antonia Loehnert
+            y Bruno Nattino.</p>
+    </div>
 </body>
+
 </html>

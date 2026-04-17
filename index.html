@@ -2078,6 +2078,93 @@
                 padding: 14px;
             }
         }
+
+        /* ─── MOBILE VIEW (iPHONE / ANDROID) ONLY ──────────────── */
+        @media(max-width: 768px) {
+            header {
+                padding: 0 12px;
+            }
+            .h-brand .main {
+                font-size: 14px;
+                letter-spacing: 1px;
+            }
+            .h-tutorias {
+                display: none; /* Hide to save space on very small screens */
+            }
+            .h-logo {
+                width: 48px;
+                height: 48px;
+            }
+            .h-logo img, .h-logo svg {
+                width: 48px;
+                height: 48px;
+            }
+            .top-nav-btn {
+                font-size: 11px;
+                padding: 8px 12px;
+                min-height: 36px;
+            }
+            
+            .main {
+                padding: 24px 16px 40px;
+            }
+            
+            .welcome-intro {
+                flex-direction: column;
+                min-height: auto;
+            }
+            .welcome-intro-image {
+                position: relative;
+                width: 100%;
+                height: 200px;
+                order: -1; /* Move image to top */
+            }
+            .welcome-intro-text {
+                padding: 30px 20px;
+            }
+            .welcome-intro-text h2 {
+                font-size: 32px;
+            }
+            
+            .mod-preview-grid {
+                grid-template-columns: 1fr;
+                padding: 0 10px;
+            }
+            
+            .about-container, .contact-container {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+            .about-text, .contact-text {
+                padding: 30px 20px;
+            }
+            .about-text h2, .contact-text h2 {
+                font-size: 32px;
+            }
+            .about-carousel {
+                height: 250px;
+                order: -1;
+            }
+            .contact-image {
+                height: 250px;
+                order: -1;
+            }
+            
+            #bitacoraDrawer {
+                width: 100%;
+                right: -100%;
+            }
+            #bitacoraDrawer.open {
+                right: 0;
+            }
+            
+            .welcome-section-header {
+                padding: 0 10px;
+            }
+            .welcome-section-header h2 {
+                font-size: 26px;
+            }
+        }
     </style>
 </head>
 
