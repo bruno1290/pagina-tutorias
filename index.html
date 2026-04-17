@@ -2091,7 +2091,7 @@
             }
 
             .h-tutorias {
-                height: 24px;
+                height: 36px;
             }
 
             .h-logo {
@@ -2113,6 +2113,20 @@
 
             .main {
                 padding: 24px 16px 40px;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            #home, #topic-view, #diagnostic-view, #locked-view {
+                order: 1;
+            }
+            #about-view {
+                order: 2;
+                margin-top: 50px;
+            }
+            #contact-view {
+                order: 3;
+                margin-top: 50px;
             }
 
             .welcome-intro-text {
@@ -2229,6 +2243,9 @@
         <main class="main" id="main">
 
             <section id="about-view" class="about-view">
+                <div class="welcome-section-header" style="text-align: center; margin-bottom: 30px;">
+                    <h2>Quiénes Somos</h2>
+                </div>
                 <div class="about-container">
                     <div class="about-text">
                         <div class="about-kicker">Nuestra Misión</div>
@@ -2257,6 +2274,9 @@
             </section>
 
             <section id="contact-view" class="contact-view">
+                <div class="welcome-section-header" style="text-align: center; margin-bottom: 30px;">
+                    <h2>Contacto</h2>
+                </div>
                 <div class="contact-container">
                     <div class="contact-text">
                         <h2>Ponte en contacto con nosotros.</h2>
