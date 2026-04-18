@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Resta</title>
+    <title>Suma y resta 3</title>
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
 :root {
@@ -211,29 +211,29 @@ body {
     min-height: 88px;
 }
 .unit {
-    width: 12px;
-    height: 12px;
-    border-radius: 2px;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
     background: var(--fill, #9DDEFF);
-    border: 1px solid rgba(0,0,0,0.3);
+    border: 2px solid rgba(0,0,0,0.18);
 }
 .rod {
-    width: 12px;
-    height: 120px;
-    border-radius: 2px;
+    width: 30px;
+    height: 108px;
+    border-radius: 8px;
     background: var(--fill, #9DE3BD);
-    border: 1px solid rgba(0,0,0,0.3);
-    background-image: repeating-linear-gradient(to bottom, transparent, transparent 11px, rgba(0,0,0,0.3) 11px, rgba(0,0,0,0.3) 12px);
+    border: 2px solid rgba(0,0,0,0.18);
 }
 .flat {
-    width: 120px;
-    height: 120px;
-    border-radius: 2px;
-    background: var(--fill, #FFB74D);
-    border: 1px solid rgba(0,0,0,0.3);
-    background-image: 
-        repeating-linear-gradient(to bottom, transparent, transparent 11px, rgba(0,0,0,0.3) 11px, rgba(0,0,0,0.3) 12px),
-        repeating-linear-gradient(to right, transparent, transparent 11px, rgba(0,0,0,0.3) 11px, rgba(0,0,0,0.3) 12px);
+    width: 94px;
+    height: 94px;
+    border-radius: 12px;
+    background:
+        linear-gradient(rgba(255,255,255,0.42), rgba(255,255,255,0.42)),
+        repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(0,0,0,0.08) 18px, rgba(0,0,0,0.08) 20px),
+        repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(0,0,0,0.08) 18px, rgba(0,0,0,0.08) 20px),
+        var(--fill, #FFE082);
+    border: 2px solid rgba(0,0,0,0.18);
 }
 .number-tag {
     margin-top: 10px;
@@ -512,8 +512,8 @@ body {
     <div class="dk">
         <div class="sl">
         <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-            <h1 class="hero-title">Resta</h1>
-            <p class="hero-sub">Restas de 1, 2 y 3 dígitos con desagrupación en unidades, decenas y centenas.</p>
+            <h1 class="hero-title">¡Suma y resta 3!</h1>
+            <p class="hero-sub">Restas de 1, 2 y 3 dígitos con desagrupación. ¡Y nos enfrentamos a los 4 dígitos!</p>
             <div class="hero-emoji">➖</div>
         </div>
         </div><div class="sl">
@@ -522,71 +522,102 @@ body {
         <div class="count-board">
             <div class="count-card" style="border-color:#FFE082; background:linear-gradient(180deg,#fffdf1 0%,#ffffff 100%);">
                 <h3>Tengo 9 cubitos</h3>
-                <div class="emoji-pack"><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span></div>
+                <div class="emoji-pack"><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span></div>
             </div>
             <div class="math-eq" style="font-size:60px;">−</div>
             <div class="count-card" style="border-color:#FF9D9D; background:linear-gradient(180deg,#f4fff7 0%,#ffffff 100%);">
                 <h3>Quito 5</h3>
-                <div class="emoji-pack"><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span></div>
+                <div class="emoji-pack"><span class="unit" style="--fill:#FF9D9D;"></span><span class="unit" style="--fill:#FF9D9D;"></span><span class="unit" style="--fill:#FF9D9D;"></span><span class="unit" style="--fill:#FF9D9D;"></span><span class="unit" style="--fill:#FF9D9D;"></span></div>
             </div>
         </div>
         <div class="stp math-eq" style="border-color:#9DE3BD; background:#faf4ff;">9 − 5 = 4</div>
         <div class="stp mini-chip">Quitamos cinco y observamos cuántos quedan.</div>
         </div><div class="sl">
-            <div class="head-title">Resta de 2 dígitos sin desagrupar</div>
-            <p class="sub-text">Si las unidades alcanzan, restamos normal.</p>
-            <div class="two-col">
-                <div class="pnl-border">
-                    <div class="math-eq">67 − 4</div>
-                    <div class="stp step-box">Unidades: 7 − 4 = 3.</div>
-                    <div class="stp step-box">Decenas: 6 − 0 = 6.</div>
-                    <div class="stp math-eq">63</div>
-                </div>
-                <div class="base-card stp" style="border-color:#9DE3BD;">
-                    <h3>67</h3>
-                    <div class="block-stack"><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span></div>
-                    <p style="font-size:22px; margin-top:14px; text-align:center;">Quitamos 4 unidades y quedan 3 unidades.</p>
-                </div>
+        <div class="head-title">Elementos de la resta</div>
+        <div class="pnl-border" style="background:#f8fbff;">
+            <div class="formula-row" style="margin-bottom:16px;">
+                <div class="label-pill stp">Minuendo</div>
+                <div class="label-pill stp">Sustraendo</div>
+                <div class="label-pill stp">Diferencia</div>
             </div>
-            </div><div class="sl">
-        <div class="head-title">Restas sin desagrupar</div>
-        <p class="sub-text">Primero practicamos casos donde las unidades alcanzan.</p>
-        <div class="card-row">
-            <div class="idea-card" style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🍎</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">74 − 2</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#FFE082; margin:0;">= 72</div>
+            <div class="math-eq" style="font-size:62px;">15 − 6 = 9</div>
+            <div class="stp chip-row">
+                <div class="mini-chip">15 es el <b>minuendo</b>: la cantidad inicial.</div>
+                <div class="mini-chip">6 es el <b>sustraendo</b>: lo que quito.</div>
+                <div class="mini-chip">9 es la <b>diferencia</b>: lo que queda.</div>
+            </div>
+        </div></div><div class="sl">
+        <div class="head-title">Ideas importantes de la resta</div>
+        <p class="sub-text">Estas reglas ayudan a entender mejor lo que hacemos al restar.</p>
+        <div class="fact-grid">
+            <div class="fact-box" style="border-color:#FFE082;">
+                <h4>0 no cambia</h4>
+                <p>Si resto <b>0</b>, el número queda igual.</p>
             </div>
             
-            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">⚽</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">86 − 5</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 81</div>
+            <div class="fact-box" style="border-color:#FFB74D;">
+                <h4>El orden importa</h4>
+                <p><b>9 − 4</b> no es lo mismo que <b>4 − 9</b>.</p>
             </div>
             
-            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🧸</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">93 − 1</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 92</div>
+            <div class="fact-box" style="border-color:#E1BEE7;">
+                <h4>Comprobación</h4>
+                <p>Si sumo <b>diferencia + sustraendo</b>, vuelvo al minuendo.</p>
             </div>
             </div>
         </div><div class="sl">
-            <div class="head-title">Cuando no alcanza en unidades</div>
-            <p class="sub-text">Si no puedo restar en las unidades, <b class="hl">desagrupo</b> una decena.</p>
-            <div class="decomp-flow">
-                <div class="decomp-box">42 − 19</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">4D 2U</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">3D 12U</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">23</div>
+        <div class="head-title">Primera resta en columna (sin desagrupar)</div>
+        <p class="sub-text">Si las unidades alcanzan, restamos primero ahí y luego seguimos con las decenas.</p>
+        <div class="two-col">
+            <div class="pnl-border">
+                <div class="math-eq">58 − 3</div>
+                <div class="stp step-box">Unidades: 8 − 3 = 5.</div>
+                <div class="stp step-box">Decenas: 5 − 0 = 5.</div>
+                <div class="stp math-eq">55</div>
             </div>
-            <div class="stp warn-card" style="margin-top:18px;">Una decena vale <b>10 unidades</b>. Por eso 42 puede transformarse en <b>3 decenas y 12 unidades</b>.</div>
-            </div><div class="sl">
-            <div class="head-title">Resta en columna con desagrupación</div>
-            <p class="sub-text">Primero resolvemos las unidades, luego las decenas.</p>
+            <div class="warn-card stp">El sustraendo tiene 0 decenas. Por eso solo quitamos unidades.</div>
+        </div></div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Resuelve: <b class="hl">89 − 5</b>.</p>
+        
+        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">Unidades: 9 − 5 = 4</div><div class="stp decomp-box">Decenas: 8 − 0 = 8</div><div class="stp decomp-box">Resultado: 84</div></div>
+        </div><div class="sl">
+        <div class="head-title">Restas simples para practicar</div>
+        <p class="sub-text">Aquí todavía no necesitamos desagrupar.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🍪</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">67 − 5</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFE082; margin:0;">= 62</div>
+            </div>
             
+            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🧸</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">74 − 2</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 72</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">⚽</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">93 − 4</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 89</div>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title">Cuando no alcanza en unidades</div>
+        <p class="sub-text">Si no puedo restar en las unidades, <b class="hl">desagrupo</b> una decena.</p>
+        <div class="decomp-flow">
+            <div class="decomp-box">42 − 19</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">4D 2U</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">3D 12U</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">23</div>
+        </div>
+        <div class="stp warn-card" style="margin-top:18px;">Una decena vale <b>10 unidades</b>. Por eso 42 puede transformarse en <b>3 decenas y 12 unidades</b>.</div></div><div class="sl">
+        <div class="head-title">Resta en columna con desagrupación</div>
+        <p class="sub-text">Primero resolvemos las unidades, luego las decenas.</p>
     <div class="column-wrap">
         <div class="alg-board">
             <div class="alg-grid long">
@@ -599,26 +630,31 @@ body {
             <p class="stp" style="margin-bottom:12px;">Como <b>2 − 9</b> no se puede, desagrupo una decena. Ahora tengo <b>12 unidades</b> y <b>3 decenas</b>.</p><p class="stp" style="margin-bottom:12px;">Unidades: <b>12 − 9 = 3</b>.</p><p class="stp" style="margin-bottom:12px;">Decenas: <b>3 − 1 = 2</b>. Resultado: <b>23</b>.</p>
         </div>
     </div>
-    
-            </div><div class="sl">
-            <div class="head-title">Otro caso: una decena completa</div>
-            <p class="sub-text">Si el número termina en 0, la decena se convierte en 10 unidades.</p>
-            <div class="decomp-flow">
-                <div class="decomp-box">50 − 23</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">4D 10U</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">10 − 3 = 7</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">4 − 2 = 2</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">27</div>
-            </div>
-            </div><div class="sl">
+    </div><div class="sl">
+        <div class="head-title">Otro caso: una decena completa</div>
+        <p class="sub-text">Si el número termina en 0, la decena se convierte en 10 unidades.</p>
+        <div class="decomp-flow">
+            <div class="decomp-box">50 − 23</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">4D 10U</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">10 − 3 = 7</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">4 − 2 = 2</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">27</div>
+        </div></div><div class="sl">
         <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
         <p class="sub-text">Resuelve en tu cuaderno: <b class="hl">81 − 37</b>.</p>
         
         <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">No alcanza en unidades: 1 − 7</div><div class="stp decomp-box">Desagrupo: 8D 1U = 7D 11U</div><div class="stp decomp-box">11 − 7 = 4</div><div class="stp decomp-box">7 − 3 = 4</div><div class="stp decomp-box">Resultado: 44</div></div>
+        </div><div class="sl">
+        <div class="head-title">Desafío rápido</div>
+        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">¿Cuál es el resultado de <b>42 − 19</b>?</p>
+            <div class="quiz-row"><button class="btn" onclick="chkAns(this, false, &quot;Despu\u00e9s de desagrupar una decena, queda 23.&quot;)">21</button><button class="btn" onclick="chkAns(this, true, &quot;Despu\u00e9s de desagrupar una decena, queda 23.&quot;)">23</button><button class="btn" onclick="chkAns(this, false, &quot;Despu\u00e9s de desagrupar una decena, queda 23.&quot;)">33</button></div>
+            <div class="msg-area"></div>
+        </div>
         </div><div class="sl">
         <div class="head-title">Práctica con desagrupación</div>
         <p class="sub-text">Ahora sí necesitamos pedir prestada una decena.</p>
@@ -642,42 +678,35 @@ body {
             </div>
             </div>
         </div><div class="sl">
-            <div class="head-title">Miremos otro ejemplo</div>
-            <p class="sub-text">Observa cómo cambia el número cuando desagrupamos una decena.</p>
-            <div class="decomp-flow">
-                <div class="decomp-box">72 − 38</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">6D 12U</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">12 − 8 = 4</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">6 − 3 = 3</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">34</div>
+        <div class="head-title">Resta de 3 dígitos sin desagrupar</div>
+        <p class="sub-text">No siempre hace falta pedir prestado: a veces cada columna alcanza.</p>
+        <div class="count-board">
+            <div class="count-card" style="border-color:#FFE082; background:linear-gradient(180deg,#fffdf1 0%,#ffffff 100%);">
+                <h3>864</h3>
+                <div class="emoji-pack"><span class="flat" style="--fill:#FFE082;"></span><span class="flat" style="--fill:#FFE082;"></span><span class="flat" style="--fill:#FFE082;"></span><span class="flat" style="--fill:#FFE082;"></span><span class="flat" style="--fill:#FFE082;"></span><span class="flat" style="--fill:#FFE082;"></span><span class="flat" style="--fill:#FFE082;"></span><span class="flat" style="--fill:#FFE082;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span><span class="unit" style="--fill:#E1BEE7;"></span></div>
             </div>
-            </div><div class="sl">
-        <div class="head-title">Desafío rápido</div>
-        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
-            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">¿Cuál es el resultado de <b>42 − 19</b>?</p>
-            <div class="quiz-row"><button class="btn" onclick="chkAns(this, false, &quot;Despu\u00e9s de desagrupar, queda 23.&quot;)">21</button><button class="btn" onclick="chkAns(this, true, &quot;Despu\u00e9s de desagrupar, queda 23.&quot;)">23</button><button class="btn" onclick="chkAns(this, false, &quot;Despu\u00e9s de desagrupar, queda 23.&quot;)">33</button></div>
-            <div class="msg-area"></div>
+            <div class="math-eq" style="font-size:60px;">−</div>
+            <div class="count-card" style="border-color:#FFB74D; background:linear-gradient(180deg,#f4fff7 0%,#ffffff 100%);">
+                <h3>321</h3>
+                <div class="emoji-pack"><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="unit" style="--fill:#FF9D9D;"></span></div>
+            </div>
         </div>
+        <div class="stp math-eq" style="border-color:#9DE3BD; background:#faf4ff;">864 − 321 = 543</div>
+        <div class="stp mini-chip">Como 4−1, 6−2 y 8−3 sí se pueden, no necesitamos desagrupar.</div>
         </div><div class="sl">
-            <div class="head-title">Resta de 3 dígitos</div>
-            <p class="sub-text">En 3 dígitos seguimos el mismo orden: <b class="hl">unidades, decenas y centenas</b>.</p>
-            <div class="two-col">
-                <div class="pnl-border">
-                    <div class="math-eq">521 − 143</div>
-                    <div class="stp step-box">Unidades: 1 − 3 no alcanza. Desagrupo 1 decena y quedan 11 − 3 = 8.</div>
-                    <div class="stp step-box">Decenas: ahora quedó 1 − 4. Desagrupo 1 centena y quedan 11 − 4 = 7.</div>
-                    <div class="stp step-box">Centenas: 4 − 1 = 3.</div>
-                    <div class="stp math-eq">378</div>
-                </div>
-                <div class="warn-card stp">A veces necesitamos desagrupar dos veces: primero una decena y luego una centena.</div>
+        <div class="head-title">Resta de 3 dígitos con desagrupación</div>
+        <p class="sub-text">En 3 dígitos seguimos el mismo orden: <b class="hl">unidades, decenas y centenas</b>.</p>
+        <div class="two-col">
+            <div class="pnl-border">
+                <div class="math-eq">521 − 143</div>
+                <div class="stp step-box">Unidades: 1 − 3 no alcanza. Desagrupo 1 decena → quedan 11 − 3 = 8.</div>
+                <div class="stp step-box">Decenas: ahora quedó 1 − 4. Desagrupo 1 centena → quedan 11 − 4 = 7.</div>
+                <div class="stp step-box">Centenas: 4 − 1 = 3.</div>
+                <div class="stp math-eq">378</div>
             </div>
-            </div><div class="sl">
-            <div class="head-title">Resta de 3 dígitos en columna</div>
-            
+            <div class="warn-card stp">¡A veces hay que desagrupar <b>dos veces</b>: primero una decena y luego una centena!</div>
+        </div></div><div class="sl">
+        <div class="head-title">En columna (3 dígitos con desagrupación)</div>
     <div class="column-wrap">
         <div class="alg-board">
             <div class="alg-grid">
@@ -687,61 +716,29 @@ body {
         </div>
         <div class="side-panel">
             <h3>Qué ocurrió</h3>
-            <p class="stp" style="margin-bottom:12px;">Primero, 1 unidad no alcanza para quitar 3. Desagrupo y quedan <b>11 unidades</b>.</p><p class="stp" style="margin-bottom:12px;">Luego, 1 decena no alcanza para quitar 4. Desagrupo una centena y quedan <b>11 decenas</b>.</p><p class="stp" style="margin-bottom:12px;">Finalmente obtengo <b>378</b>.</p>
+            <p class="stp" style="margin-bottom:12px;">Primero: 1 unidad no alcanza para quitar 3. Desagrupo → <b>11 unidades</b>.</p><p class="stp" style="margin-bottom:12px;">Luego: 1 decena no alcanza para quitar 4. Desagrupo una centena → <b>11 decenas</b>.</p><p class="stp" style="margin-bottom:12px;">Finalmente obtengo <b>378</b>.</p>
         </div>
     </div>
-    
-            </div><div class="sl">
-        <div class="head-title">Resta de 3 dígitos sin desagrupar</div>
-        <p class="sub-text">No siempre hace falta pedir prestado: a veces cada columna alcanza.</p>
-        <div class="count-board">
-            <div class="count-card" style="border-color:#FFE082; background:linear-gradient(180deg,#fffdf1 0%,#ffffff 100%);">
-                <h3>864</h3>
-                <div class="emoji-pack"><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#9DDEFF;"></span></div>
-            </div>
-            <div class="math-eq" style="font-size:60px;">−</div>
-            <div class="count-card" style="border-color:#FFB74D; background:linear-gradient(180deg,#f4fff7 0%,#ffffff 100%);">
-                <h3>321</h3>
-                <div class="emoji-pack"><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="flat" style="--fill:#FFB74D;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DE3BD;"></span><span class="unit" style="--fill:#9DDEFF;"></span></div>
-            </div>
+    </div><div class="sl">
+        <div class="head-title">Desagrupación desde centenas</div>
+        <p class="sub-text">Si las decenas son 0, primero desagrupo una centena y después una decena.</p>
+        <div class="decomp-flow">
+            <div class="decomp-box">400 − 175</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">3C 10D 0U</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">3C 9D 10U</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">225</div>
         </div>
-        <div class="stp math-eq" style="border-color:#9DE3BD; background:#faf4ff;">864 − 321 = 543</div>
-        <div class="stp mini-chip">Como 4−1, 6−2 y 8−3 sí se pueden, no necesitamos desagrupar.</div>
-        </div><div class="sl">
-            <div class="head-title">Desagrupación desde centenas</div>
-            <p class="sub-text">Si las decenas son 0, primero desagrupo una centena y después una decena.</p>
-            <div class="decomp-flow">
-                <div class="decomp-box">400 − 175</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">3C 10D 0U</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">3C 9D 10U</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">225</div>
-            </div>
-            <div class="stp warn-card" style="margin-top:18px;">Primero una centena se transforma en 10 decenas. Luego una de esas decenas se transforma en 10 unidades.</div>
-            </div><div class="sl">
+        <div class="stp warn-card" style="margin-top:18px;">Primero una centena se transforma en 10 decenas. Luego una de esas decenas se transforma en 10 unidades.</div></div><div class="sl">
         <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
         <p class="sub-text">Ahora intenta: <b class="hl">600 − 248</b>.</p>
         
         <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">6C 0D 0U</div><div class="stp decomp-box">5C 10D 0U</div><div class="stp decomp-box">5C 9D 10U</div><div class="stp decomp-box">10 − 8 = 2</div><div class="stp decomp-box">9 − 4 = 5</div><div class="stp decomp-box">5 − 2 = 3</div><div class="stp decomp-box">Resultado: 352</div></div>
         </div><div class="sl">
-            <div class="head-title">Otro caso con ceros</div>
-            <p class="sub-text">Cuando una columna tiene 0, debemos mirar a la izquierda para desagrupar.</p>
-            <div class="decomp-flow">
-                <div class="decomp-box">902 − 458</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">8C 9D 12U</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">12 − 8 = 4</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">9 − 5 = 4</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">8 − 4 = 4</div>
-            </div>
-            </div><div class="sl">
-        <div class="head-title">Restas de 3 dígitos con desagrupación</div>
-        <p class="sub-text">Ahora practica varios casos más.</p>
+        <div class="head-title">Restas de 3 dígitos</div>
+        <p class="sub-text">Practica con desagrupación en distintos lugares.</p>
         <div class="card-row">
             <div class="idea-card" style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
                 <div style="font-size:60px; text-align:center; margin-bottom:10px;">🎯</div>
@@ -762,93 +759,142 @@ body {
             </div>
             </div>
         </div><div class="sl">
-        <div class="head-title">Restas con ceros</div>
-        <p class="sub-text">Aquí la desagrupación viene desde las centenas.</p>
-        <div class="card-row">
-            <div class="idea-card" style="border-color:#FFB74D; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🟠</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">400 − 175</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#FFB74D; margin:0;">= 225</div>
-            </div>
-            
-            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🔵</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">600 − 248</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 352</div>
-            </div>
-            
-            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
-                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🟣</div>
-                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">902 − 458</div>
-                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 444</div>
-            </div>
-            </div>
-        </div><div class="sl">
-        <div class="head-title">Qué revisar antes de restar</div>
-        <p class="sub-text">Haz estas preguntas antes de empezar.</p>
-        <div class="fact-grid">
-            <div class="fact-box" style="border-color:#FFE082;">
-                <h4>1. Unidades</h4>
-                <p>¿La unidad del minuendo alcanza para restar la del sustraendo?</p>
-            </div>
-            
-            <div class="fact-box" style="border-color:#9DE3BD;">
-                <h4>2. Decenas</h4>
-                <p>Si no alcanza, ¿debo desagrupar una decena?</p>
-            </div>
-            
-            <div class="fact-box" style="border-color:#E1BEE7;">
-                <h4>3. Centenas</h4>
-                <p>Si las decenas son 0, ¿debo desagrupar una centena primero?</p>
-            </div>
-            </div>
-        </div><div class="sl">
-            <div class="head-title">Restar descomponiendo</div>
-            <p class="sub-text">También puedo restar por partes: primero decenas y luego unidades.</p>
-            <div class="decomp-flow">
-                <div class="decomp-box">94 − 72</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">94 − 70 = 24</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">24 − 2 = 22</div>
-            </div>
-            <div class="stp mini-chip">Descomponer también ayuda a pensar y comprobar resultados.</div>
-            </div><div class="sl">
-            <div class="head-title">Estimar una resta</div>
-            <p class="sub-text">Para estimar, redondeamos y obtenemos un resultado cercano.</p>
-            <div class="decomp-flow">
-                <div class="decomp-box">447 − 182</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">400 − 200</div>
-                <div class="arrow stp">→</div>
-                <div class="decomp-box stp">≈ 200</div>
-            </div>
-            <div class="stp warn-card" style="margin-top:18px;">La estimación no reemplaza el cálculo exacto, pero nos ayuda a revisar si la respuesta tiene sentido.</div>
-            </div><div class="sl">
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Resuelve en tu cuaderno: <b class="hl">450 − 319</b>.</p>
-        
-        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">450 = 4C 5D 0U</div><div class="stp decomp-box">4C 4D 10U</div><div class="stp decomp-box">10 − 9 = 1</div><div class="stp decomp-box">4 − 1 = 3</div><div class="stp decomp-box">4 − 3 = 1</div><div class="stp decomp-box">Resultado: 131</div></div>
-        </div><div class="sl">
-        <div class="head-title">Desafío de 3 dígitos</div>
+        <div class="head-title">¿Cuál es correcto?</div>
         <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
-            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">Calcula mentalmente: <b>100 − 50</b></p>
-            <div class="quiz-row"><button class="btn" onclick="chkAns(this, false, &quot;La resta correcta es 50.&quot;)">40</button><button class="btn" onclick="chkAns(this, true, &quot;La resta correcta es 50.&quot;)">50</button><button class="btn" onclick="chkAns(this, false, &quot;La resta correcta es 50.&quot;)">60</button></div>
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">¿Cuál es el resultado de <b>521 − 143</b>?</p>
+            <div class="quiz-row"><button class="btn" onclick="chkAns(this, false, &quot;La resta correcta es 378. Hubo dos desagrupaciones.&quot;)">368</button><button class="btn" onclick="chkAns(this, true, &quot;La resta correcta es 378. Hubo dos desagrupaciones.&quot;)">378</button><button class="btn" onclick="chkAns(this, false, &quot;La resta correcta es 378. Hubo dos desagrupaciones.&quot;)">388</button></div>
             <div class="msg-area"></div>
         </div>
         </div><div class="sl">
-        <div class="head-title">Problemas Situacionales</div>
-        <div class="story-card" style="background:#E3F2FD; border:5px solid #1976D2;">
-            <div class="story-emoji">🔵</div>
-            <div>
-                <h2 style="color:#1976D2;">Canicas del recreo</h2>
-                <p>Tomás tenía <b>42 canicas</b> y perdió <b>19</b>. ¿Cuántas le quedaron?</p>
-                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #1976D2; border-radius:18px; padding:18px 20px;">
-                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
-                    <div style="font-size:28px; font-weight:900; line-height:1.4;">42 − 19 = 23<br><span style='color:var(--base);'>Le quedaron 23 canicas.</span></div>
-                </div>
+        <style>
+.cube {
+    width:58px;height:58px;border-radius:10px;
+    background:linear-gradient(135deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 100%),var(--fill,#FF9D9D);
+    border:2px solid rgba(0,0,0,.18);
+    box-shadow:inset 3px 3px 6px rgba(255,255,255,.4),inset -3px -3px 6px rgba(0,0,0,.08);
+}
+</style>
+        <div class="head-title">¡Llegamos a los Miles! Resta de 4 dígitos</div>
+        <p class="sub-text">La lógica es la misma de siempre, pero ahora tenemos una columna más: las <b class="hl">Unidades de Mil</b>.</p>
+        <div class="fact-grid">
+            <div class="fact-box" style="border-color:#9DDEFF;">
+                <h4>Mismo orden</h4>
+                <p>Siempre de derecha a izquierda: U → D → C → UM.</p>
+            </div>
+            <div class="fact-box stp" style="border-color:#9DE3BD;">
+                <h4>Misma regla</h4>
+                <p>Si no alcanza, pido prestado de la columna de la izquierda.</p>
+            </div>
+            <div class="fact-box stp" style="border-color:#FF9D9D;">
+                <h4>Hasta 4 veces</h4>
+                <p>¡La cadena puede ser U → D → C → UM! Hay que tener paciencia.</p>
+            </div>
+        </div></div><div class="sl">
+        <style>
+.cube {
+    width:58px;height:58px;border-radius:10px;
+    background:linear-gradient(135deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 100%),var(--fill,#FF9D9D);
+    border:2px solid rgba(0,0,0,.18);
+    box-shadow:inset 3px 3px 6px rgba(255,255,255,.4),inset -3px -3px 6px rgba(0,0,0,.08);
+}
+</style>
+        <div class="head-title">Resta de 4 dígitos (sin desagrupar)</div>
+        <p class="sub-text">Cuando cada columna alcanza, es directo.</p>
+        <div class="decomp-flow">
+            <div class="decomp-box">7 894 − 3 251</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">U: 4 − 1 = 3</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">D: 9 − 5 = 4</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">C: 8 − 2 = 6</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">UM: 7 − 3 = 4</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">4 643</div>
+        </div></div><div class="sl">
+        <style>
+.cube {
+    width:58px;height:58px;border-radius:10px;
+    background:linear-gradient(135deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 100%),var(--fill,#FF9D9D);
+    border:2px solid rgba(0,0,0,.18);
+    box-shadow:inset 3px 3px 6px rgba(255,255,255,.4),inset -3px -3px 6px rgba(0,0,0,.08);
+}
+</style>
+        <div class="head-title">En columna (4 dígitos, sin desagrupar)</div>
+    <div class="column-wrap">
+        <div class="alg-board">
+            <div class="alg-grid" style="grid-template-columns:80px repeat(4,64px);">
+                <div class="alg-label"></div><div class="alg-digit dim"></div><div class="alg-digit dim"></div><div class="alg-digit dim"></div><div class="alg-digit dim"></div><div class="alg-label">UM C D U</div><div class="alg-digit">7</div><div class="alg-digit">8</div><div class="alg-digit">9</div><div class="alg-digit">4</div><div class="alg-label">−</div><div class="alg-digit">3</div><div class="alg-digit">2</div><div class="alg-digit">5</div><div class="alg-digit">1</div><div class="alg-label"></div><div class="alg-digit">4</div><div class="alg-digit">6</div><div class="alg-digit">4</div><div class="alg-digit">3</div>
+                <div class="alg-line" style="grid-column:2/span 4;"></div>
             </div>
         </div>
+        <div class="side-panel"><h3>Columna por columna</h3><p class="stp" style="margin-bottom:12px;">U: 4 − 1 = 3.</p><p class="stp" style="margin-bottom:12px;">D: 9 − 5 = 4.</p><p class="stp" style="margin-bottom:12px;">C: 8 − 2 = 6.</p><p class="stp" style="margin-bottom:12px;">UM: 7 − 3 = 4.</p><p class="stp" style="margin-bottom:12px;">Resultado: <b>4 643</b>.</p></div>
+    </div></div><div class="sl">
+        <style>
+.cube {
+    width:58px;height:58px;border-radius:10px;
+    background:linear-gradient(135deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 100%),var(--fill,#FF9D9D);
+    border:2px solid rgba(0,0,0,.18);
+    box-shadow:inset 3px 3px 6px rgba(255,255,255,.4),inset -3px -3px 6px rgba(0,0,0,.08);
+}
+</style>
+        <div class="head-title">El Monstruo de los Ceros 😱</div>
+        <p class="sub-text">¿Qué pasa cuando hay muchos ceros? ¡Hay que desagrupar en cadena!</p>
+        <div class="decomp-flow">
+            <div class="decomp-box">5 000 − 2 438</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">4UM 10C 0D 0U</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">4UM 9C 10D 0U</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">4UM 9C 9D 10U</div>
+        </div>
+        <div class="stp warn-card" style="margin-top:18px;">El 5000 se convierte en <b>4 mil, 9 centenas, 9 decenas y 10 unidades</b> antes de poder restar. ¡La cadena completa!</div></div><div class="sl">
+        <style>
+.cube {
+    width:58px;height:58px;border-radius:10px;
+    background:linear-gradient(135deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 100%),var(--fill,#FF9D9D);
+    border:2px solid rgba(0,0,0,.18);
+    box-shadow:inset 3px 3px 6px rgba(255,255,255,.4),inset -3px -3px 6px rgba(0,0,0,.08);
+}
+</style>
+        <div class="head-title">En columna (4 dígitos, desagrupación en cadena)</div>
+    <div class="column-wrap">
+        <div class="alg-board">
+            <div class="alg-grid" style="grid-template-columns:80px repeat(4,64px);">
+                <div class="alg-label"></div><div class="alg-digit">4</div><div class="alg-digit">9</div><div class="alg-digit">9</div><div class="alg-digit">10</div><div class="alg-label">UM C D U</div><div class="alg-digit">5</div><div class="alg-digit">0</div><div class="alg-digit">0</div><div class="alg-digit">0</div><div class="alg-label">−</div><div class="alg-digit">2</div><div class="alg-digit">4</div><div class="alg-digit">3</div><div class="alg-digit">8</div><div class="alg-label"></div><div class="alg-digit">2</div><div class="alg-digit">5</div><div class="alg-digit">6</div><div class="alg-digit">2</div>
+                <div class="alg-line" style="grid-column:2/span 4;"></div>
+            </div>
+        </div>
+        <div class="side-panel"><h3>La cadena completa</h3><p class="stp" style="margin-bottom:12px;">U: 0 no alcanza. Pido a D pero D es 0, pido a C pero C es 0, pido a UM → quedan <b>4 UM, 9 C, 9 D, 10 U</b>.</p><p class="stp" style="margin-bottom:12px;">U: 10 − 8 = 2.</p><p class="stp" style="margin-bottom:12px;">D: 9 − 3 = 6.</p><p class="stp" style="margin-bottom:12px;">C: 9 − 4 = 5.</p><p class="stp" style="margin-bottom:12px;">UM: 4 − 2 = 2. Resultado: <b>2 562</b>.</p></div>
+    </div></div><div class="sl">
+        <div class="head-title">Restas de 4 dígitos</div>
+        <p class="sub-text">Decide si necesitas desagrupar y en qué columna.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFB74D; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🔥</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">8 752 − 3 410</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFB74D; margin:0;">= 5 342</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DDEFF; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">⚡</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">6 000 − 2 347</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DDEFF; margin:0;">= 3 653</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🚀</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">9 020 − 4 685</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 4 335</div>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Resuelve con paciencia en tu cuaderno: <b class="hl">8 000 − 3 456</b>.</p>
+        
+        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">8000 = 7UM 10C 0D 0U</div><div class="stp decomp-box">→ 7UM 9C 10D 0U</div><div class="stp decomp-box">→ 7UM 9C 9D 10U</div><div class="stp decomp-box">10 − 6 = 4</div><div class="stp decomp-box">9 − 5 = 4</div><div class="stp decomp-box">9 − 4 = 5</div><div class="stp decomp-box">7 − 3 = 4</div><div class="stp decomp-box">Resultado: 4 544</div></div>
         </div><div class="sl">
         <div class="head-title">Problemas Situacionales</div>
         <div class="story-card" style="background:#FCE4EC; border:5px solid #C2185B;">
@@ -865,68 +911,24 @@ body {
         </div><div class="sl">
         <div class="head-title">Problemas Situacionales</div>
         <div class="story-card" style="background:#E8F5E9; border:5px solid #2E7D32;">
-            <div class="story-emoji">📘</div>
+            <div class="story-emoji">✈️</div>
             <div>
-                <h2 style="color:#2E7D32;">Cuadernos en la sala</h2>
-                <p>Había <b>400 cuadernos</b> y se repartieron <b>175</b>. ¿Cuántos cuadernos quedaron?</p>
+                <h2 style="color:#2E7D32;">Viaje en avión</h2>
+                <p>Un avión tiene capacidad para <b>8 500 pasajeros</b> por mes. Si ya viajaron <b>3 785</b>, ¿cuántos asientos quedan?</p>
                 <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #2E7D32; border-radius:18px; padding:18px 20px;">
                     <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
-                    <div style="font-size:28px; font-weight:900; line-height:1.4;">400 − 175 = 225<br><span style='color:var(--base);'>Quedaron 225 cuadernos.</span></div>
-                </div>
-            </div>
-        </div>
-        </div><div class="sl">
-        <div class="head-title">Problemas Situacionales</div>
-        <div class="story-card" style="background:#FFF8E1; border:5px solid #F9A825;">
-            <div class="story-emoji">🌈</div>
-            <div>
-                <h2 style="color:#F9A825;">Pegatinas ordenadas</h2>
-                <p>Una caja tenía <b>902 pegatinas</b> y se usaron <b>458</b>. ¿Cuántas quedaron?</p>
-                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #F9A825; border-radius:18px; padding:18px 20px;">
-                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
-                    <div style="font-size:28px; font-weight:900; line-height:1.4;">902 − 458 = 444<br><span style='color:var(--base);'>Quedaron 444 pegatinas.</span></div>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">8 500 − 3 785 = 4 715<br><span style='color:var(--base);'>Quedan 4 715 asientos disponibles.</span></div>
                 </div>
             </div>
         </div>
         </div><div class="sl">
         <div class="head-title">Resumen</div>
-        <div class="summary-list"><div class="stp summary-item"><b>Si las unidades alcanzan</b>, resto normal de derecha a izquierda.</div><div class="stp summary-item"><b>Si no alcanzan</b>, desagrupo: 1 decena = 10 unidades.</div><div class="stp summary-item"><b>En 3 dígitos</b>, también puedo desagrupar una centena en 10 decenas.</div><div class="stp summary-item"><b>Descomponer y estimar</b> ayudan a pensar y comprobar la resta.</div></div>
-        </div><div class="sl">
-        <div class="head-title" style="background:#047857;">Cierre</div>
-        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
-            <p style="font-size:38px; font-weight:800; line-height:1.45; max-width:780px;">Ya puedes resolver restas con desagrupación en unidades, decenas y centenas siguiendo un orden claro.</p>
-            <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">🏁</div>
+        <div class="summary-list"><div class="stp summary-item"><b>Si las unidades alcanzan:</b> Resto normal de derecha a izquierda.</div><div class="stp summary-item"><b>Si no alcanzan:</b> Desagrupo: 1 decena = 10 unidades (o 1 centena = 10 decenas).</div><div class="stp summary-item"><b>Ceros en cadena:</b> El número 5000 se convierte en 4UM 9C 9D 10U antes de restar.</div><div class="stp summary-item"><b>En 4 dígitos:</b> El mismo proceso, pero con una columna más de Unidades de Mil.</div></div>
         </div>
-        </div>
-    <div class="sl">
-        <div class="head-title">Desafío Relámpago ⚡ 1</div>
-        <div class="pnl-border" style="width:100%; border-color:#FF9D9D;">
-            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:40px;">En <b>12 − 5</b>, como a <b>2</b> no le puedo quitar <b>5</b>, ¿necesito pedir prestado (desagrupar)?</p>
-            <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; width:100%;">
-                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, true, "¡Sí! Siempre que el número de arriba es menor, pedimos prestado.")'>Sí</button>
-                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>No</button>
-            </div>
-            <div class="msg-area" style="font-size:26px; font-weight:900; height:40px; margin-top:40px; text-align:center;"></div>
-        </div>
-    </div><div class="sl">
-        <div class="head-title">Desafío Relámpago ⚡ 2</div>
-        <div class="pnl-border" style="width:100%; border-color:#FF9D9D;">
-            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:40px;">Calcula rápidamente: <b>100 − 1</b></p>
-            <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; width:100%;">
-                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>90</button>
-                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, true)'>99</button>
-                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>101</button>
-            </div>
-            <div class="msg-area" style="font-size:26px; font-weight:900; height:40px; margin-top:40px; text-align:center;"></div>
-        </div>
-    </div>
     </div>
     <div class="nv">
         <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
-        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
-            <div class="sc" id="sc"></div>
-            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="10" value="1" oninput="goToSlide(this.value)">
-        </div>
+        <div class="sc" id="sc">1 / 30</div>
         <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
     </div>
     <script>
@@ -942,17 +944,7 @@ function ui() {
     document.getElementById('sc').textContent=`${c+1} / ${T}`;
     document.getElementById('pv').disabled=c===0;
     document.getElementById('nx').disabled=c===T-1;
-            let sl = document.getElementById('slide-slider');
-            if(sl) { sl.max = T; sl.value = c + 1; }
 }
-
-        function goToSlide(n) {
-            let index = parseInt(n) - 1;
-            if (index >= 0 && index < T) {
-                c = index;
-                ui();
-            }
-        }
 function go(d) {
     if(d>0) {
         const hid = S[c].querySelectorAll('.stp:not(.shwn)');
