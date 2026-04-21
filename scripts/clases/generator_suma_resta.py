@@ -216,29 +216,30 @@ body {
     min-height: 88px;
 }
 .unit {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-    background: var(--fill, #9DDEFF);
-    border: 2px solid rgba(0,0,0,0.18);
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: var(--fill, #FFE082);
+    border: 1px solid rgba(0,0,0,0.25);
 }
 .rod {
-    width: 30px;
-    height: 108px;
-    border-radius: 8px;
-    background: var(--fill, #9DE3BD);
-    border: 2px solid rgba(0,0,0,0.18);
+    width: 12px;
+    height: 120px;
+    border-radius: 3px;
+    background: 
+        repeating-linear-gradient(0deg, transparent, transparent 11px, rgba(0,0,0,0.2) 11px, rgba(0,0,0,0.2) 12px),
+        var(--fill, #9DDEFF);
+    border: 1px solid rgba(0,0,0,0.25);
 }
 .flat {
-    width: 94px;
-    height: 94px;
-    border-radius: 12px;
+    width: 120px;
+    height: 120px;
+    border-radius: 4px;
     background:
-        linear-gradient(rgba(255,255,255,0.42), rgba(255,255,255,0.42)),
-        repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(0,0,0,0.08) 18px, rgba(0,0,0,0.08) 20px),
-        repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(0,0,0,0.08) 18px, rgba(0,0,0,0.08) 20px),
-        var(--fill, #FFE082);
-    border: 2px solid rgba(0,0,0,0.18);
+        repeating-linear-gradient(0deg, transparent, transparent 11px, rgba(0,0,0,0.15) 11px, rgba(0,0,0,0.15) 12px),
+        repeating-linear-gradient(90deg, transparent, transparent 11px, rgba(0,0,0,0.15) 11px, rgba(0,0,0,0.15) 12px),
+        var(--fill, #9DE3BD);
+    border: 1px solid rgba(0,0,0,0.25);
 }
 .number-tag {
     margin-top: 10px;
@@ -526,6 +527,15 @@ function ui() {
     document.getElementById('sc').textContent=`${c+1} / ${T}`;
     document.getElementById('pv').disabled=c===0;
     document.getElementById('nx').disabled=c===T-1;
+    let sl = document.getElementById('slide-slider');
+    if(sl) { sl.max = T; sl.value = c + 1; }
+}
+function goToSlide(n) {
+    let val = parseInt(n) - 1;
+    if (val >= 0 && val < T) {
+        c = val;
+        ui();
+    }
 }
 function go(d) {
     if(d>0) {
@@ -586,45 +596,72 @@ def intro_slide(title: str, subtitle: str, emoji: str) -> str:
     )
 
 
-def unit_blocks(count: int, color: str = "#9DDEFF") -> str:
+def unit_blocks(count: int, color: str = "#FFE082") -> str:
     return "".join(f'<span class="unit" style="--fill:{color};"></span>' for _ in range(count))
 
 
-def rods(count: int, color: str = "#9DE3BD") -> str:
+def rods(count: int, color: str = "#9DDEFF") -> str:
     return "".join(f'<span class="rod" style="--fill:{color};"></span>' for _ in range(count))
 
 
-def flats(count: int, color: str = "#FFE082") -> str:
+def flats(count: int, color: str = "#9DE3BD") -> str:
     return "".join(f'<span class="flat" style="--fill:{color};"></span>' for _ in range(count))
 
 
-def base_ten_card(number: int, title: str, colors: tuple[str, str, str] = ("#FFE082", "#9DE3BD", "#9DDEFF")) -> str:
-    hundreds = number // 100
+
+def cube_3d(count: int, color: str = "#E1BEE7") -> str:
+    return "".join(
+        f'<div style="display:inline-block; position:relative; width:80px; height:100px; margin:4px; background:{color}; border:2px solid rgba(0,0,0,0.25); border-radius:6px; box-shadow: 8px -8px 0 rgba(0,0,0,0.1); transform: translateY(8px) translateX(-4px);">'
+        f'<div style="position:absolute; inset:0; background:repeating-linear-gradient(0deg, transparent, transparent 9px, rgba(0,0,0,0.1) 9px, rgba(0,0,0,0.1) 10px), repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(0,0,0,0.1) 15px, rgba(0,0,0,0.1) 16px);"></div>'
+        f'</div>'
+        for _ in range(count)
+    )
+
+
+def base_ten_card(number: int, title: str, colors: tuple[str, str, str, str] = ("#E1BEE7", "#9DE3BD", "#9DDEFF", "#FFE082")) -> str:
+    thousands = number // 1000
+    hundreds = (number % 1000) // 100
     tens = (number % 100) // 10
     units = number % 10
-    return f"""
-    <div class="base-card">
-        <h3>{esc(title)}</h3>
-        <div class="place-grid">
+    
+    grid_cols = "repeat(4, 1fr)" if thousands > 0 else "repeat(3, 1fr)"
+    
+    html = f'<div class="base-card"><h3>{esc(title)}</h3><div class="place-grid" style="grid-template-columns:{grid_cols};">'
+    
+    if thousands > 0:
+        html += f'''
             <div class="place-box">
-                <div class="place-title">Centenas</div>
-                <div class="block-stack">{flats(hundreds, colors[0])}</div>
+                <div class="place-title" style="color:#7B1FA2;">U. Mil</div>
+                <div class="block-stack">{cube_3d(thousands, colors[0])}</div>
+                <div class="number-tag">{thousands}</div>
+            </div>
+        '''
+        
+    if thousands > 0 or hundreds > 0:
+        html += f'''
+            <div class="place-box">
+                <div class="place-title" style="color:#388E3C;">Centenas</div>
+                <div class="block-stack">{flats(hundreds, colors[1])}</div>
                 <div class="number-tag">{hundreds}</div>
             </div>
+        '''
+        
+    html += f'''
             <div class="place-box">
-                <div class="place-title">Decenas</div>
-                <div class="block-stack">{rods(tens, colors[1])}</div>
+                <div class="place-title" style="color:#1976D2;">Decenas</div>
+                <div class="block-stack">{rods(tens, colors[2])}</div>
                 <div class="number-tag">{tens}</div>
             </div>
             <div class="place-box">
-                <div class="place-title">Unidades</div>
-                <div class="block-stack">{unit_blocks(units, colors[2])}</div>
+                <div class="place-title" style="color:#F57F17;">Unidades</div>
+                <div class="block-stack">{unit_blocks(units, colors[3])}</div>
                 <div class="number-tag">{units}</div>
             </div>
         </div>
         <div class="math-eq" style="font-size:34px;">{number}</div>
     </div>
-    """
+    '''
+    return html
 
 
 def notebook_slide(prompt: str, hidden_steps: list[str], visual: str = "") -> str:
@@ -705,7 +742,7 @@ def fact_boxes_slide(title: str, subtitle: str, items: list[tuple[str, str, str]
         boxes.append(
             f"""
             <div class="fact-box" style="border-color:{border};">
-                <h4>{heading}</h4>
+                <h4 style="color:{border};">{heading}</h4>
                 <p>{text}</p>
             </div>
             """
@@ -718,6 +755,33 @@ def fact_boxes_slide(title: str, subtitle: str, items: list[tuple[str, str, str]
         """
     )
 
+
+def ejercicios_propuestos(titulo: str, subtitulo: str, ejercicios: list[str]) -> str:
+    html = f'<div class="head-title">{esc(titulo)}</div>'
+    html += f'<p class="sub-text">{esc(subtitulo)}</p>'
+    html += '<div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">'
+    for i, ej in enumerate(ejercicios):
+        html += f'''
+        <div class="pnl-border" style="display:flex; justify-content:space-between; align-items:center; padding:16px;">
+            <div style="font-size:26px; font-weight:900; color:var(--base);">{ej} =</div>
+            <div class="stp" style="font-size:26px; font-weight:900; color:#059669; border-bottom:3px solid #059669; width:100px; text-align:center;">?</div>
+        </div>
+        '''
+    html += '</div>'
+    return slide(html)
+
+def ejercicios_respuestas(titulo: str, respuestas: list[str]) -> str:
+    html = f'<div class="head-title">{esc(titulo)}</div>'
+    html += '<p class="sub-text">Revisa tus respuestas:</p>'
+    html += '<div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">'
+    for resp in respuestas:
+        html += f'''
+        <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; padding:16px; background:#D1FAE5; border-color:#059669;">
+            <div style="font-size:28px; font-weight:900; color:#059669;">{resp}</div>
+        </div>
+        '''
+    html += '</div>'
+    return slide(html)
 
 def quiz_slide(title: str, question: str, options: list[str], ok: int, exp: str) -> str:
     buttons = []
@@ -781,7 +845,13 @@ def finish_slide(message: str, emoji: str) -> str:
 
 def alg_board(rows: list[list[str]], side_title: str, side_notes: list[str], long: bool = False) -> str:
     grid_rows = []
-    for row in rows:
+    max_cols = max(len(r) for r in rows)
+    grid_style = f"grid-template-columns: 80px repeat({max_cols - 1}, 76px);"
+    
+    for i, row in enumerate(rows):
+        if i == len(rows) - 1:
+            grid_rows.append(f'<div class="alg-line" style="grid-column: 2 / span {max_cols - 1};"></div>')
+            
         label, *cells = row
         grid_rows.append(f'<div class="alg-label">{label}</div>')
         for cell in cells:
@@ -794,14 +864,14 @@ def alg_board(rows: list[list[str]], side_title: str, side_notes: list[str], lon
                 classes.append("dim")
                 text = ""
             grid_rows.append(f'<div class="{" ".join(classes)}">{esc(text)}</div>')
-    lines_html = '<div class="alg-line"></div>'
+    
     notes_html = "".join(f'<p class="stp" style="margin-bottom:12px;">{note}</p>' for note in side_notes)
+    
     return f"""
     <div class="column-wrap">
         <div class="alg-board">
-            <div class="alg-grid{' long' if long else ''}">
+            <div class="alg-grid" style="{grid_style}">
                 {''.join(grid_rows)}
-                {lines_html}
             </div>
         </div>
         <div class="side-panel">
@@ -810,6 +880,7 @@ def alg_board(rows: list[list[str]], side_title: str, side_notes: list[str], lon
         </div>
     </div>
     """
+
 
 
 def html_doc(title: str, slides: list[str]) -> str:
@@ -828,7 +899,10 @@ def html_doc(title: str, slides: list[str]) -> str:
     </div>
     <div class="nv">
         <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
-        <div class="sc" id="sc">1 / {len(slides)}</div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <span class="sc" id="sc">1 / {len(slides)}</span>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="{len(slides)}" value="1" oninput="goToSlide(this.value)">
+        </div>
         <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
     </div>
     <script>{JS}</script>

@@ -2655,42 +2655,42 @@
                 ticket: {
                     title: 'Ticket de salida – Suma',
                     questions: [
-                        { emoji: '🧱', q: '¿Cuál es el resultado de 7 + 2?', opts: ['8', '9', '10', '11'], ok: 1, exp: '7 + 2 = 9 ✓' },
-                        { emoji: '🔄', q: '¿Qué suma vale lo mismo que 4 + 3?', opts: ['4 + 4', '3 + 4', '3 + 3', '5 + 3'], ok: 1, exp: 'Por la conmutativa, 4 + 3 = 3 + 4 ✓' },
-                        { emoji: '➕', q: '¿Cuánto es 23 + 5?', opts: ['27', '28', '29', '35'], ok: 1, exp: '23 + 5 = 28 ✓' },
-                        { emoji: '🎯', q: 'Si descompones 18 + 6 para llegar a la decena siguiente, el resultado es...', opts: ['22', '23', '24', '25'], ok: 2, exp: '18 + 6 = 24 ✓' },
+                        { emoji: '🔄', q: '¿Qué suma tiene exactamente el mismo resultado que 345 + 128?', opts: ['128 + 340', '128 + 345', '300 + 128', '345 + 100'], ok: 1, exp: 'Por la propiedad conmutativa, 345 + 128 = 128 + 345 ✓' },
+                        { emoji: '🧱', q: 'Al sumar 258 + 136, en las unidades tenemos 8 + 6 = 14. ¿Qué hacemos?', opts: ['Ponemos 14 abajo', 'Ponemos 1 y reservamos 4', 'Ponemos 4 y pasamos 1 decena de reserva', 'No se puede sumar'], ok: 2, exp: 'Agrupamos 10 unidades en 1 decena de reserva, y dejamos 4 unidades sueltas ✓' },
+                        { emoji: '➕', q: '¿Cuánto es 450 + 230?', opts: ['670', '680', '690', '780'], ok: 1, exp: '400+200=600 y 50+30=80. En total 680 ✓' },
+                        { emoji: '📚', q: 'Un libro tiene 245 páginas y otro tiene 180. ¿Cuántas páginas hay en total?', opts: ['325', '415', '425', '435'], ok: 2, exp: '245 + 180 = 425 páginas en total ✓' },
                     ]
                 }
             },
             {
-                id: 8, serial: 2, cat: 'num', topic: 'suma_resta', title: 'Suma y resta', dur: '50 min',
-                objectives: ['Usar centenas y decenas en sumas de 3 dígitos', 'Sumar en columna con reserva', 'Introducir la resta y sus elementos'],
+                id: 8, serial: 2, cat: 'num', topic: 'suma_resta', title: 'Resta', dur: '50 min',
+                objectives: ['Restar números de hasta 3 dígitos', 'Desagrupar decenas y centenas', 'Restar con ceros en el minuendo'],
                 htmlSlide: 'clases/suma-resta/suma-resta-2.html',
                 mentoreo: { pdf: 'https://drive.google.com/file/d/1qKuZ3xPGNCA_p9MK4MaQrr8BiinCe-fG/preview', title: 'Clase 3 – Resta' },
                 activities: [],
                 ticket: {
-                    title: 'Ticket de salida – Suma y resta',
+                    title: 'Ticket de salida – Resta',
                     questions: [
-                        { emoji: '🏗️', q: 'En el número 248, el 2 representa...', opts: ['2 unidades', '2 decenas', '2 centenas', '2 millares'], ok: 2, exp: 'El 2 está en las centenas ✓' },
-                        { emoji: '➕', q: '¿Cuánto es 326 + 157?', opts: ['473', '483', '493', '513'], ok: 1, exp: '326 + 157 = 483 ✓' },
-                        { emoji: '➖', q: 'En 15 − 6 = 9, el 15 es el...', opts: ['sustraendo', 'minuendo', 'diferencia', 'sumando'], ok: 1, exp: '15 es el minuendo ✓' },
-                        { emoji: '🍪', q: '¿Cuánto es 58 − 3?', opts: ['45', '53', '55', '61'], ok: 2, exp: '58 − 3 = 55 ✓' },
+                        { emoji: '➖', q: 'En la resta 500 − 124 = 376, ¿qué nombre recibe el número 500?', opts: ['Diferencia', 'Sustraendo', 'Minuendo', 'Reserva'], ok: 2, exp: 'El número mayor del que restamos es el minuendo ✓' },
+                        { emoji: '✂️', q: 'En 342 − 185, a 2 unidades no le podemos quitar 5. ¿Qué hacemos?', opts: ['Restamos al revés 5 - 2', 'Desagrupamos 1 decena para tener 12 unidades', 'Ponemos un 0', 'Pedimos a la centena'], ok: 1, exp: 'Rompemos 1 decena y la convertimos en 10 unidades sueltas, teniendo 12 en total ✓' },
+                        { emoji: '🍪', q: '¿Cuánto es 400 − 156?', opts: ['244', '254', '344', '356'], ok: 0, exp: 'Al pedir prestado a los ceros en cadena: 400 − 156 = 244 ✓' },
+                        { emoji: '🎯', q: 'Si sabemos que 630 − 215 = 415, ¿cómo lo podemos comprobar?', opts: ['Sumando 630 + 215', 'Sumando 415 + 215', 'Restando 630 - 415', 'Restando al revés'], ok: 1, exp: 'Diferencia + Sustraendo = Minuendo. 415 + 215 = 630 ✓' },
                     ]
                 }
             },
             {
-                id: 9, serial: 3, cat: 'num', topic: 'suma_resta', title: 'Resta', dur: '55 min',
-                objectives: ['Restar números de 1 y 2 dígitos', 'Dominar la desagrupación en unidades', 'Resolver restas de 3 dígitos con centenas y decenas'],
+                id: 9, serial: 3, cat: 'num', topic: 'suma_resta', title: 'Suma y Resta', dur: '55 min',
+                objectives: ['Conocer la Unidad de Mil', 'Sumar y restar números de 4 dígitos', 'Resolver operaciones combinadas'],
                 htmlSlide: 'clases/suma-resta/suma-resta-3.html',
                 mentoreo: { pdf: 'https://drive.google.com/file/d/1QEaioGu9tJO5_F86HsQKo6fni0n-Okqb/preview', title: 'Clase 5 – Redondeo y Estimación' },
                 activities: [],
                 ticket: {
-                    title: 'Ticket de salida – Resta',
+                    title: 'Ticket de salida – Suma y Resta',
                     questions: [
-                        { emoji: '➖', q: '¿Cuánto es 42 − 19?', opts: ['21', '22', '23', '24'], ok: 2, exp: '42 − 19 = 23 ✓' },
-                        { emoji: '🧱', q: '¿Cuánto es 50 − 23?', opts: ['17', '27', '33', '37'], ok: 1, exp: '50 − 23 = 27 ✓' },
-                        { emoji: '📘', q: '¿Cuánto es 521 − 121?', opts: ['368', '378', '400', '478'], ok: 1, exp: '521 − 121 = 400 ✓' },
-                        { emoji: '🏁', q: '¿Cuánto es 400 − 175?', opts: ['215', '225', '235', '245'], ok: 1, exp: '400 − 175 = 225 ✓' },
+                        { emoji: '🌟', q: 'Si tengo 3 Unidades de Mil, 4 Centenas y 5 Unidades, ¿qué número formo?', opts: ['3.450', '3.045', '3.405', '4.305'], ok: 2, exp: 'Al no haber decenas, ponemos un cero: 3.405 ✓' },
+                        { emoji: '➕', q: '¿Cuánto es 2.850 + 1.340?', opts: ['3.190', '4.090', '4.190', '4.290'], ok: 2, exp: '2.850 + 1.340 = 4.190 ✓' },
+                        { emoji: '➖', q: '¿Cuánto es 5.000 − 2.450?', opts: ['2.450', '2.550', '2.650', '3.550'], ok: 1, exp: '5.000 − 2.450 = 2.550 ✓' },
+                        { emoji: '⚖️', q: '¿Cuál es el resultado de 1.500 − 500 + 300?', opts: ['700', '1.300', '1.700', '2.300'], ok: 1, exp: 'Primero 1.500 − 500 = 1.000. Luego 1.000 + 300 = 1.300 ✓' },
                     ]
                 }
             },

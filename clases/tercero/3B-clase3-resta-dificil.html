@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Resta: Casos Difíciles — 3° Básico</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root {
+    --base: #1C4A82;
+    --bg: #f5f6f8;
+    --tx: #333;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--tx);
+}
+.dk { position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex; }
+.sl {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 36px 40px 82px;
+    opacity: 0;
+    transform: scale(.96);
+    transition: opacity .4s, transform .4s;
+    pointer-events: none;
+    z-index: 1;
+}
+.sl.on { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
+.sl.pv { opacity: 0; transform: translateX(-50px) scale(.95); }
+.sl.nx { opacity: 0; transform: translateX(50px) scale(.95); }
+.head-title {
+    background: var(--base);
+    color: white;
+    padding: 10px 40px;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    display: inline-block;
+    border-radius: 12px;
+    text-align: center;
+}
+.sub-text {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+    line-height: 1.4;
+}
+.pb { position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100; }
+.nv {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 100;
+}
+.nb {
+    background: #eee;
+    color: var(--base);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all .2s;
+}
+.nb:hover { background: #ddd; }
+.nb:disabled { opacity: 0.3; cursor: not-allowed; }
+.sc { color: #888; font-size: 16px; font-weight: 900; }
+.stp {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+.stp.shwn { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.pnl {
+    background: #fff;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 3px solid #eaeaea;
+    width: 100%;
+}
+.pnl-border {
+    background: #fff;
+    border: 4px solid var(--base);
+    border-radius: 20px;
+    padding: 24px;
+    width: 100%;
+}
+.hl { color: var(--base); font-weight: 900; }
+.btn {
+    background: var(--base);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .2s;
+    font-family: 'Nunito', sans-serif;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3); }
+.math-eq {
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--base);
+    background: #fff;
+    padding: 12px 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border: 3px dashed #bbdefb;
+    margin: 12px;
+    text-align: center;
+}
+.chip-row, .card-row, .base-row, .quiz-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.mini-chip {
+    background: #eef5ff;
+    border: 2px solid #b6d4f3;
+    border-radius: 999px;
+    padding: 12px 18px;
+    font-size: 20px;
+    font-weight: 800;
+}
+.idea-card {
+    flex: 1 1 220px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+    border-radius: 18px;
+    padding: 18px;
+    border: 3px solid #d7e7f7;
+    min-height: 220px;
+}
+.idea-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    margin-bottom: 10px;
+}
+.idea-card p {
+    font-size: 21px;
+    line-height: 1.45;
+}
+.base-card {
+    flex: 1 1 320px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 18px;
+    border: 4px solid #d9e7f6;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+}
+.base-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    text-align: center;
+    margin-bottom: 14px;
+}
+.place-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+.place-box {
+    background: #f8fbff;
+    border: 2px dashed #c6d9ef;
+    border-radius: 16px;
+    padding: 12px;
+    min-height: 184px;
+}
+.place-title {
+    text-align: center;
+    font-size: 19px;
+    font-weight: 900;
+    color: #315c8d;
+    margin-bottom: 10px;
+}
+.block-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 88px;
+}
+.unit {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: var(--fill, #9DDEFF);
+    border: 2px solid rgba(0,0,0,0.18);
+}
+.rod {
+    width: 30px;
+    height: 108px;
+    border-radius: 8px;
+    background: var(--fill, #9DE3BD);
+    border: 2px solid rgba(0,0,0,0.18);
+}
+.flat {
+    width: 94px;
+    height: 94px;
+    border-radius: 12px;
+    background:
+        linear-gradient(rgba(255,255,255,0.42), rgba(255,255,255,0.42)),
+        repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(0,0,0,0.08) 18px, rgba(0,0,0,0.08) 20px),
+        repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(0,0,0,0.08) 18px, rgba(0,0,0,0.08) 20px),
+        var(--fill, #FFE082);
+    border: 2px solid rgba(0,0,0,0.18);
+}
+.number-tag {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 900;
+}
+.two-col {
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 18px;
+    width: 100%;
+    align-items: stretch;
+}
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.step-box {
+    background: #f7fbff;
+    border-left: 8px solid var(--base);
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+.column-wrap {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 18px;
+    width: 100%;
+    align-items: start;
+}
+.alg-board {
+    background: #fff;
+    border: 4px solid var(--base);
+    border-radius: 20px;
+    padding: 22px 26px;
+}
+.alg-grid {
+    display: grid;
+    grid-template-columns: 68px repeat(3, 76px);
+    grid-auto-rows: 58px;
+    align-items: center;
+    justify-items: center;
+    margin: 0 auto;
+    width: max-content;
+}
+.alg-grid.long {
+    grid-template-columns: 68px repeat(3, 76px);
+}
+.alg-label {
+    font-size: 20px;
+    font-weight: 900;
+    color: #57779d;
+}
+.alg-digit {
+    width: 60px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #f7fbff;
+    font-size: 34px;
+    font-weight: 900;
+    color: #173b67;
+    border: 2px solid #d4e5f8;
+}
+.alg-digit.dim { color: #b6c6d8; }
+.alg-digit.reserve {
+    height: 38px;
+    background: #fff7df;
+    border-color: #f0cf67;
+    color: #9f6200;
+    font-size: 24px;
+}
+.alg-line {
+    grid-column: 2 / span 3;
+    width: 100%;
+    height: 4px;
+    background: #395f90;
+    border-radius: 999px;
+}
+.alg-sign {
+    font-size: 30px;
+    font-weight: 900;
+    color: #c94d2a;
+}
+.side-panel {
+    background: linear-gradient(180deg, #fefefe 0%, #f4f9ff 100%);
+    border: 3px solid #d5e4f5;
+    border-radius: 18px;
+    padding: 18px;
+    min-height: 290px;
+}
+.side-panel h3 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 12px;
+}
+.side-panel p {
+    font-size: 20px;
+    line-height: 1.45;
+}
+.story-card {
+    width: 100%;
+    border-radius: 28px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: center;
+}
+.story-emoji {
+    font-size: 114px;
+    text-align: center;
+    animation: bob 2.8s infinite;
+}
+.story-card h2 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+.story-card p {
+    font-size: 24px;
+    line-height: 1.45;
+}
+.summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+.summary-item {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 18px;
+    border: 3px solid #dbe7f4;
+    font-size: 23px;
+    line-height: 1.45;
+}
+.count-board {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.count-card {
+    flex: 1 1 260px;
+    background: linear-gradient(180deg, #ffffff 0%, #f6fbff 100%);
+    border-radius: 22px;
+    padding: 20px;
+    border: 4px solid #d6e8f8;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+    text-align: center;
+}
+.count-card h3 {
+    font-size: 28px;
+    margin-bottom: 12px;
+    color: var(--base);
+}
+.emoji-pack {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    min-height: 86px;
+    margin-bottom: 12px;
+}
+.fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+.fact-box {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 18px;
+    padding: 16px;
+    border: 3px solid #d8e7f6;
+    min-height: 170px;
+}
+.fact-box h4 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 10px;
+    text-align: center;
+}
+.fact-box p {
+    font-size: 21px;
+    line-height: 1.45;
+    text-align: center;
+}
+.msg-area {
+    font-size: 24px;
+    font-weight: 900;
+    height: 40px;
+    text-align: center;
+    margin-top: 20px;
+}
+.hero-title {
+    font-size: 68px;
+    color: var(--base);
+    margin-bottom: 18px;
+    text-align: center;
+    line-height: 1;
+}
+.hero-sub {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    max-width: 720px;
+}
+.hero-emoji {
+    font-size: 108px;
+    margin-top: 28px;
+    animation: bounce 2s infinite;
+}
+.formula-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.label-pill {
+    background: #eef5ff;
+    border: 2px solid #c5dcf5;
+    border-radius: 14px;
+    padding: 10px 16px;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--base);
+}
+.warn-card {
+    background: #fff8e5;
+    border: 4px solid #f0ca59;
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 22px;
+    line-height: 1.45;
+    width: 100%;
+}
+.decomp-flow {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+}
+.decomp-box {
+    background: #fff;
+    border: 3px solid #d4e6f7;
+    border-radius: 18px;
+    padding: 14px 18px;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--base);
+}
+.arrow {
+    font-size: 34px;
+    font-weight: 900;
+    color: #4d6d94;
+}
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+</style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
+        <div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 class="hero-title">Resta: ¡Los casos difíciles! 💪</h1>
+            <p class="hero-sub">Dominamos la doble desagrupación, los ceros en cadena y las operaciones combinadas.</p>
+            <div class="hero-emoji">🧠</div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Repaso: Regla de oro</div>
+        <p class="sub-text">Antes de empezar, recordemos la regla más importante de la resta.</p>
+        <div class="fact-grid">
+            <div class="fact-box" style="border-color:#9DE3BD;">
+                <h4>✅ Si U alcanza</h4>
+                <p>Resto directo: U − U, luego D − D, luego C − C.</p>
+            </div>
+            <div class="fact-box stp" style="border-color:#FF9D9D;">
+                <h4>⚠️ Si U no alcanza</h4>
+                <p>Pido 1 decena prestada → tengo 10 unidades más.</p>
+            </div>
+            <div class="fact-box stp" style="border-color:#FFB74D;">
+                <h4>🔥 Si D tampoco alcanza</h4>
+                <p>Pido 1 centena prestada → tengo 10 decenas más.</p>
+            </div>
+        </div></div><div class="sl">
+        <div class="head-title">Doble desagrupación</div>
+        <p class="sub-text">A veces hay que pedir prestado <b class="hl">dos veces</b>: a las decenas Y a las centenas.</p>
+        <div class="decomp-flow">
+            <div class="decomp-box">423 − 185</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">U: 3 − 5 no alcanza → pido a D</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">→ 3D 13U → 13 − 5 = 8</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">D: 1 − 8 no alcanza → pido a C</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">→ 3C 11D → 11 − 8 = 3. C: 3 − 1 = 2</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">Resultado: 238</div>
+        </div></div><div class="sl">
+        <div class="head-title">En columna (doble desagrupación)</div>
+    <div class="column-wrap">
+        <div class="alg-board">
+            <div class="alg-grid" style="grid-template-columns:80px repeat(3,64px);">
+                <div class="alg-label"></div><div class="alg-digit reserve">3</div><div class="alg-digit reserve">11</div><div class="alg-digit reserve">13</div><div class="alg-label">C D U</div><div class="alg-digit">4</div><div class="alg-digit">2</div><div class="alg-digit">3</div><div class="alg-label">−</div><div class="alg-digit">1</div><div class="alg-digit">8</div><div class="alg-digit">5</div><div class="alg-label"></div><div class="alg-digit">2</div><div class="alg-digit">3</div><div class="alg-digit">8</div>
+                <div class="alg-line" style="grid-column:2/span 3;"></div>
+            </div>
+        </div>
+        <div class="side-panel"><h3>Dos pedidos prestados</h3><p class="stp" style="margin-bottom:12px;">U: 3−5 no alcanza. Pido a D. Ahora <b>3D 13U</b>. 13−5=8.</p><p class="stp" style="margin-bottom:12px;">D: 1−8 no alcanza. Pido a C. Ahora <b>3C 11D</b>. 11−8=3.</p><p class="stp" style="margin-bottom:12px;">C: <b>3−1=2</b>. Resultado: <b>238</b> ✅</p></div>
+    </div></div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Resuelve: <b class="hl">534 − 276</b></p>
+        
+        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">U: 4−6 no alcanza → 2D 14U → 14−6=8</div><div class="stp decomp-box">D: 2−7 no alcanza → 4C 12D → 12−7=5... espera, 12D</div><div class="stp decomp-box">C: 4−2=2. Resultado: 258</div></div>
+        </div><div class="sl">
+        <div class="head-title">🧨 El caso más difícil: el 0 doble</div>
+        <p class="sub-text">Cuando hay <b class="hl">ceros</b> en decenas y unidades, pedimos prestado en cadena.</p>
+        <div class="decomp-flow">
+            <div class="decomp-box">400 − 163</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">4C 0D 0U</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">3C 10D 0U</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">3C 9D 10U</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">10−3=7, 9−6=3, 3−1=2</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">= 237 ✅</div>
+        </div></div><div class="sl">
+        <div class="head-title">En columna (con ceros en cadena)</div>
+    <div class="column-wrap">
+        <div class="alg-board">
+            <div class="alg-grid" style="grid-template-columns:80px repeat(3,64px);">
+                <div class="alg-label"></div><div class="alg-digit reserve">3</div><div class="alg-digit reserve">9</div><div class="alg-digit reserve">10</div><div class="alg-label">C D U</div><div class="alg-digit">4</div><div class="alg-digit">0</div><div class="alg-digit">0</div><div class="alg-label">−</div><div class="alg-digit">1</div><div class="alg-digit">6</div><div class="alg-digit">3</div><div class="alg-label"></div><div class="alg-digit">2</div><div class="alg-digit">3</div><div class="alg-digit">7</div>
+                <div class="alg-line" style="grid-column:2/span 3;"></div>
+            </div>
+        </div>
+        <div class="side-panel"><h3>La cadena completa</h3><p class="stp" style="margin-bottom:12px;">U: 0−3 no alcanza. Voy a D, pero D=0.</p><p class="stp" style="margin-bottom:12px;">Primero pido a C: 3C 10D 0U.</p><p class="stp" style="margin-bottom:12px;">Luego pido a D: 3C 9D 10U.</p><p class="stp" style="margin-bottom:12px;">10−3=7. 9−6=3. 3−1=2. Resultado: <b>237</b> ✅</p></div>
+    </div></div><div class="sl">
+        <div class="head-title">Los casos más difíciles — ¡tú puedes!</div>
+        <p class="sub-text">Doble desagrupación y ceros en cadena.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFB74D; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">💪</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">300 − 147</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFB74D; margin:0;">= 153</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DDEFF; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🔥</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">600 − 283</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DDEFF; margin:0;">= 317</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">⚡</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">504 − 267</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 237</div>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title">Desafío difícil</div>
+        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">¿Cuánto es <b>700 − 348</b>?</p>
+            <div class="quiz-row"><button class="btn" onclick="chkAns(this, true, &quot;7C 0D 0U \u2192 6C 10D 0U \u2192 6C 9D 10U. Luego: 10\u22128=2, 9\u22124=5, 6\u22123=3. Resultado: 352.&quot;)">352</button><button class="btn" onclick="chkAns(this, false, &quot;7C 0D 0U \u2192 6C 10D 0U \u2192 6C 9D 10U. Luego: 10\u22128=2, 9\u22124=5, 6\u22123=3. Resultado: 352.&quot;)">362</button><button class="btn" onclick="chkAns(this, false, &quot;7C 0D 0U \u2192 6C 10D 0U \u2192 6C 9D 10U. Luego: 10\u22128=2, 9\u22124=5, 6\u22123=3. Resultado: 352.&quot;)">452</button></div>
+            <div class="msg-area"></div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Estrategia Pro: Verificar siempre</div>
+        <p class="sub-text">Después de restar, <b class="hl">suma la diferencia + el sustraendo</b> para verificar.</p>
+        <div class="two-col">
+            <div class="pnl-border">
+                <div class="math-eq">423 − 185 = 238</div>
+                <div class="stp step-box">Verifico: 238 + 185 = ?</div>
+                <div class="stp step-box">238 + 185 = 423 ✅</div>
+                <div class="stp warn-card">¡Perfecto! La resta es correcta.</div>
+            </div>
+            <div class="pnl-border stp">
+                <div class="math-eq">700 − 348 = 352</div>
+                <div class="stp step-box">Verifico: 352 + 348 = ?</div>
+                <div class="stp math-eq">= 700 ✅</div>
+            </div>
+        </div></div><div class="sl">
+        <div class="head-title">Operaciones combinadas (+  y  −)</div>
+        <p class="sub-text">A veces un problema tiene <b class="hl">suma Y resta</b> juntas. ¿En qué orden las resolvemos?</p>
+        <div class="fact-grid">
+            <div class="fact-box" style="border-color:#9DDEFF;">
+                <h4>Sin paréntesis</h4>
+                <p>Resolvemos <b>de izquierda a derecha</b>.</p>
+                <p class="stp"><b>20 + 5 − 8 = 25 − 8 = 17</b></p>
+            </div>
+            <div class="fact-box stp" style="border-color:#FFE082;">
+                <h4>Con paréntesis</h4>
+                <p>Primero lo que está <b>dentro del paréntesis</b>.</p>
+                <p class="stp"><b>20 + (5 − 8)</b> ← primero el paréntesis</p>
+            </div>
+        </div></div><div class="sl">
+        <div class="head-title">Ejemplo: operación combinada</div>
+        <p class="sub-text">Resolvemos paso a paso, de izquierda a derecha.</p>
+        <div class="decomp-flow">
+            <div class="decomp-box">35 + 48 − 27</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">Primero: 35 + 48 = 83</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">Luego: 83 − 27 = 56</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">Resultado: 56</div>
+        </div></div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Resuelve: <b class="hl">250 + 130 − 75</b></p>
+        
+        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">Primero: 250 + 130 = 380</div><div class="stp decomp-box">Luego: 380 − 75 = 305</div><div class="stp decomp-box">Resultado: 305</div></div>
+        </div><div class="sl">
+        <div class="head-title">Operaciones combinadas</div>
+        <p class="sub-text">Recuerda: de izquierda a derecha.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFE082; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🌟</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">64 + 28 − 35</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFE082; margin:0;">= 57</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">⚽</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">200 − 83 + 47</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DE3BD; margin:0;">= 164</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">📚</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">150 + 75 − 98</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 127</div>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title">Estrategia mental: Compensación</div>
+        <p class="sub-text">Para restar números cercanos a 10, 100, etc., podemos <b class="hl">redondear y ajustar</b>.</p>
+        <div class="decomp-flow">
+            <div class="decomp-box">83 − 29</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">29 ≈ 30</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">83 − 30 = 53</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">+ 1 (porque restamos 1 de más)</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">53 + 1 = 54 ✅</div>
+        </div></div><div class="sl">
+        <div class="head-title">Estrategia: Contar hacia arriba</div>
+        <p class="sub-text">Para restar, a veces es más fácil <b class="hl">contar cuánto le falta</b> al número pequeño para llegar al grande.</p>
+        <div class="decomp-flow">
+            <div class="decomp-box">72 − 45</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">45 + 5 = 50</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">50 + 22 = 72</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">5 + 22 = 27 ✅</div>
+        </div>
+        <div class="stp warn-card" style="margin-top:16px;">Esta técnica se llama "complemento". En vez de restar, sumamos hacia arriba.</div></div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Usa la estrategia que prefieras: <b class="hl">93 − 48</b></p>
+        
+        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">Opción 1 — Columna: 3−8 no alcanza, pido: 13−8=5, 8−4=4 → 45</div><div class="stp decomp-box">Opción 2 — Complemento: 48+2=50, 50+43=93 → 2+43=45</div><div class="stp decomp-box">Opción 3 — Compensar: 93−50=43, +2=45</div><div class="stp decomp-box">Resultado: 45 ✅</div></div>
+        </div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#FFF8E1; border:5px solid #F57F17;">
+            <div class="story-emoji">🏃</div>
+            <div>
+                <h2 style="color:#F57F17;">La maratón escolar</h2>
+                <p>Los estudiantes de 3° deben correr <b>500 metros</b>. Ya corrieron <b>237 metros</b>. ¿Cuántos metros les faltan?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #F57F17; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">500 − 237 = 263<br><span style='color:var(--base);'>Les faltan 263 metros.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#E8F5E9; border:5px solid #2E7D32;">
+            <div class="story-emoji">🎮</div>
+            <div>
+                <h2 style="color:#2E7D32;">La juguetería de Valeria</h2>
+                <p>Valeria tenía <b>$650</b>, gastó <b>$283</b> en un juego y luego su mamá le dio <b>$100</b> más. ¿Cuánto tiene ahora?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #2E7D32; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">650 − 283 = 367. Luego 367 + 100 = 467.<br><span style='color:var(--base);'>Valeria tiene $467.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#E3F2FD; border:5px solid #1565C0;">
+            <div class="story-emoji">📓</div>
+            <div>
+                <h2 style="color:#1565C0;">Los cuadernos del colegio</h2>
+                <p>La bodega tiene <b>800 cuadernos</b>. Repartieron <b>345</b> en 3° básico y <b>228</b> en 4° básico. ¿Cuántos cuadernos quedan?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #1565C0; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">345 + 228 = 573 (cuadernos entregados).<br>800 − 573 = 227.<br><span style='color:var(--base);'>Quedan 227 cuadernos en bodega.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Operación combinada</div>
+        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">¿Cuál es el resultado de <b>400 − 158 + 75</b>?</p>
+            <div class="quiz-row"><button class="btn" onclick="chkAns(this, true, &quot;Primero: 400 \u2212 158 = 242. Luego: 242 + 75 = 317.&quot;)">317</button><button class="btn" onclick="chkAns(this, false, &quot;Primero: 400 \u2212 158 = 242. Luego: 242 + 75 = 317.&quot;)">327</button><button class="btn" onclick="chkAns(this, false, &quot;Primero: 400 \u2212 158 = 242. Luego: 242 + 75 = 317.&quot;)">307</button></div>
+            <div class="msg-area"></div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Desafío combinado</div>
+        <p class="sub-text">Mezcla de suma, resta y casos difíciles.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFB74D; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🧩</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">600 − 247 + 83</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFB74D; margin:0;">= 436</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DDEFF; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🏆</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">450 + 275 − 368</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DDEFF; margin:0;">= 357</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🎯</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">800 − 463 − 125</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 212</div>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title">¿Cuál tiene error? — Corrígelo</div>
+        <p class="sub-text">Detecta el error y explica qué falló.</p>
+        <div class="two-col">
+            <div class="pnl-border" style="border-color:#FF9D9D;">
+                <div style="font-size:20px; font-weight:800; color:#e53935;">¿Correcto o incorrecto?</div>
+                <div class="math-eq">302 − 145 = 257</div>
+                <div class="stp" style="font-size:20px; margin-top:10px; color:#e53935;">❌ Incorrecto: 302−145=157</div>
+            </div>
+            <div class="pnl-border stp" style="border-color:#9DE3BD;">
+                <div style="font-size:20px; font-weight:800; color:#2e7d32;">¿Correcto o incorrecto?</div>
+                <div class="math-eq">500 − 237 = 263</div>
+                <div class="stp" style="font-size:20px; margin-top:10px; color:#2e7d32;">✅ Correcto</div>
+            </div>
+        </div></div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Crea un problema que se resuelva con: <b class="hl">700 − 245 + 68</b></p>
+        
+        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">Ejemplo: El estadio tiene 700 asientos.</div><div class="stp decomp-box">Se vendieron 245 entradas.</div><div class="stp decomp-box">Luego se vendieron 68 más.</div><div class="stp decomp-box">700 − 245 + 68 = 523 asientos vendidos total.</div></div>
+        </div><div class="sl">
+        <div class="head-title">Estimación para verificar</div>
+        <p class="sub-text">Antes de calcular, <b class="hl">redondea</b> para saber si tu resultado "tiene sentido".</p>
+        <div class="decomp-flow">
+            <div class="decomp-box">487 − 263</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">≈ 500 − 260 = 240</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">Resultado real: 224</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">224 ≈ 240 ✅ ¡Tiene sentido!</div>
+        </div>
+        <div class="stp warn-card" style="margin-top:16px;">Si hubiera dado 724, sabríamos que algo salió mal.</div></div><div class="sl">
+        <div class="head-title">Ejercicios finales — ¡Sin rendirse!</div>
+        <p class="sub-text">Los casos más difíciles para dominar.</p>
+        <div class="card-row">
+            <div class="idea-card" style="border-color:#FFB74D; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🔥</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">1000 − 348</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#FFB74D; margin:0;">= 652</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#9DDEFF; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">⚡</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">703 − 456</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#9DDEFF; margin:0;">= 247</div>
+            </div>
+            
+            <div class="idea-card" style="border-color:#E1BEE7; background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);">
+                <div style="font-size:60px; text-align:center; margin-bottom:10px;">🚀</div>
+                <div style="font-size:34px; font-weight:900; text-align:center; color:#234c7c; margin-bottom:10px;">900 − 528 + 143</div>
+                <div class="stp math-eq" style="font-size:38px; border-color:#E1BEE7; margin:0;">= 515</div>
+            </div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title">Quiz avanzado</div>
+        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">Una tienda tenía <b>500 lápices</b>, vendió <b>237</b> en la mañana y <b>148</b> en la tarde. ¿Cuántos le quedan?</p>
+            <div class="quiz-row"><button class="btn" onclick="chkAns(this, true, &quot;237 + 148 = 385 l\u00e1pices vendidos. 500 \u2212 385 = 115 l\u00e1pices quedan.&quot;)">115</button><button class="btn" onclick="chkAns(this, false, &quot;237 + 148 = 385 l\u00e1pices vendidos. 500 \u2212 385 = 115 l\u00e1pices quedan.&quot;)">125</button><button class="btn" onclick="chkAns(this, false, &quot;237 + 148 = 385 l\u00e1pices vendidos. 500 \u2212 385 = 115 l\u00e1pices quedan.&quot;)">215</button></div>
+            <div class="msg-area"></div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#FCE4EC; border:5px solid #C2185B;">
+            <div class="story-emoji">🌱</div>
+            <div>
+                <h2 style="color:#C2185B;">El huerto del colegio</h2>
+                <p>El huerto tenía <b>350 plantas</b>. Se secaron <b>87</b> en julio. En agosto sembraron <b>124 nuevas</b>. ¿Cuántas plantas hay ahora?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #C2185B; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">350 − 87 = 263. Luego 263 + 124 = 387.<br><span style='color:var(--base);'>El huerto tiene 387 plantas.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#E8F5E9; border:5px solid #2E7D32;">
+            <div class="story-emoji">📖</div>
+            <div>
+                <h2 style="color:#2E7D32;">El campeonato de lectura</h2>
+                <p>La meta del curso es leer <b>1000 páginas</b>. En abril leyeron <b>287</b>, en mayo <b>334</b> y en junio <b>256</b>. ¿Cuántas páginas les faltan para la meta?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #2E7D32; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">287 + 334 + 256 = 877 páginas leídas.<br>1000 − 877 = 123.<br><span style='color:var(--base);'>Les faltan 123 páginas para la meta.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Resumen</div>
+        <div class="summary-list"><div class="stp summary-item"><b>Doble desagrupación:</b> Pido a D, luego a C si también falta.</div><div class="stp summary-item"><b>Ceros en cadena:</b> Paso por las columnas hasta encontrar dónde pedir prestado.</div><div class="stp summary-item"><b>Operaciones combinadas:</b> Sin paréntesis → de izquierda a derecha.</div><div class="stp summary-item"><b>Comprobación:</b> diferencia + sustraendo = minuendo siempre.</div><div class="stp summary-item"><b>Estrategias mentales:</b> complemento (contar hacia arriba) y compensación (redondear y ajustar).</div></div>
+        </div>
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div class="sc" id="sc">1 / 30</div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>
+const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+function ui() {
+    S.forEach((s,i)=>{
+        s.classList.remove('on','pv','nx');
+        if(i===c) s.classList.add('on');
+        else if(i<c) s.classList.add('pv');
+        else s.classList.add('nx');
+    });
+    document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+    document.getElementById('sc').textContent=`${c+1} / ${T}`;
+    document.getElementById('pv').disabled=c===0;
+    document.getElementById('nx').disabled=c===T-1;
+}
+function go(d) {
+    if(d>0) {
+        const hid = S[c].querySelectorAll('.stp:not(.shwn)');
+        if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+    } else {
+        const shw = S[c].querySelectorAll('.stp.shwn');
+        if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+    }
+    const n=c+d;
+    if(n>=0 && n<T) { c=n; ui(); }
+}
+document.addEventListener('keydown', e => {
+    if(e.key==='ArrowRight' || e.key===' ') go(1);
+    if(e.key==='ArrowLeft') go(-1);
+});
+function chkAns(btn, correct, exp) {
+    const wrap = btn.closest('.sl');
+    const buttons = btn.parentElement.querySelectorAll('.btn');
+    const msg = wrap.querySelector('.msg-area');
+    buttons.forEach(b => {
+        b.disabled = false;
+        b.style.background = 'var(--base)';
+        b.style.transform = 'scale(1)';
+    });
+    if (correct) {
+        btn.style.background = '#047857';
+        btn.style.transform = 'scale(1.06)';
+        msg.textContent = `¡Muy bien! ${exp}`;
+        msg.style.color = '#047857';
+    } else {
+        btn.style.background = '#b91c1c';
+        msg.textContent = 'Revisa las unidades primero y vuelve a intentarlo.';
+        msg.style.color = '#b91c1c';
+    }
+}
+ui();
+</script>
+</body>
+</html>
