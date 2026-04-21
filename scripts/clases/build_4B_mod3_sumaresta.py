@@ -184,6 +184,9 @@ def module() -> str:
     s.append(G.problem_slide("Pasajeros del tren", "🚂", "El tren llevaba 1.250 pasajeros. Bajaron 300 en la primera estación y subieron 150. ¿Cuántos pasajeros hay ahora?", "1.250 - 300 = 950.<br>950 + 150 = 1.100.<br><span style='color:var(--base);'>Hay 1.100 pasajeros.</span>", "#E8F5E9", "#2E7D32"))
     s.append(G.problem_slide("Cosecha de manzanas", "🍎", "Recolectamos 3.500 manzanas, pero 250 estaban malas. Luego recolectamos 1.000 más. ¿Cuántas buenas tenemos?", "3.500 - 250 = 3.250.<br>3.250 + 1.000 = 4.250.<br><span style='color:var(--base);'>Tenemos 4.250 manzanas buenas.</span>", "#E3F2FD", "#1565C0"))
     
+    s.append(G.challenge_slide("ObraCraft", "⛏️", "Eres un explorador en ObraCraft. Empiezas con 2.500 minerales. En un cofre ganas 1.200 minerales, pero para cruzar el puente de lava le pagas al dragón 850 minerales. Al final, compras un pico por 300 minerales. ¿Con cuántos terminas?", "2.500 + 1.200 = 3.700.<br>3.700 - 850 = 2.850.<br>2.850 - 300 = 2.550.<br><span style='color:#16a34a;'>Terminas con 2.550 minerales.</span>", "#DCFCE7", "#16A34A"))
+    s.append(G.challenge_slide("El Juego del Blanco", "🎯", "¡Llega al 3.000! Tienes 3 cartas mágicas: '1.500', '500' y '2.000'. Debes usar TODAS las cartas, sumando o restando, para que el resultado final sea exactamente 3.000. ¿Cómo lo haces?", "1.500 + 2.000 = 3.500.<br>3.500 - 500 = 3.000.<br><span style='color:#e11d48;'>¡1.500 + 2.000 - 500 = 3.000!</span>", "#FFE4E6", "#E11D48"))
+    
     s.append(G.summary_slide([
         "<b>Unidades de Mil:</b> Equivalen a 10 centenas. Forman números de 4 dígitos.",
         "<b>Sumar y restar miles:</b> Agregamos una columna, pero las reglas de reserva y desagrupación son las mismas.",

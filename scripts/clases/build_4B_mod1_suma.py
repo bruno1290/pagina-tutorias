@@ -154,6 +154,9 @@ def module() -> str:
     s.append(G.problem_slide("Los puntos del juego", "🎮", "Lucas hizo 589 puntos en la primera ronda y 274 en la segunda. ¿Cuál es su puntaje total?", "589 + 274 = 863.<br><span style='color:var(--base);'>El puntaje total es 863.</span>", "#E8F5E9", "#2E7D32"))
     s.append(G.problem_slide("Ahorros de la familia", "💰", "Papá ahorró $450, mamá $320 y el hijo $185. ¿Cuánto ahorraron en total?", "450 + 320 + 185 = 955.<br><span style='color:var(--base);'>Ahorraron $955 en total.</span>", "#E3F2FD", "#1565C0"))
     
+    s.append(G.challenge_slide("El Cofre Secreto", "🗝️", "Soy un número de 3 dígitos. Mis centenas son el doble de 2. Mis decenas son la mitad de 6. Y mis unidades son un 8. Si descubres quién soy y me sumas 120, la caja fuerte se abrirá. ¿Qué código abre la caja?", "438 + 120 = 558.<br><span style='color:#db2777;'>El código es 558.</span>", "#FDF2F8", "#DB2777"))
+    s.append(G.challenge_slide("El Ticket Roto", "🧾", "Sofía compró dos cosas. Se le rompió la boleta por la mitad y solo puede leer: 'Cuaderno: $340' y abajo dice 'Total a pagar: $590'. ¿Cuánto costó el otro artículo?", "Si el total es 590 y una parte es 340, la otra parte es 250.<br><span style='color:#9333ea;'>El otro artículo costó $250.</span>", "#F3E8FF", "#9333EA"))
+    
     s.append(G.summary_slide([
         "<b>Suma en columna:</b> Alineamos U con U, D con D, C con C.",
         "<b>Reserva:</b> Si sumo 10 o más, agrupo y paso la decena/centena a la columna de la izquierda.",

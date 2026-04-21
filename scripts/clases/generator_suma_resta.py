@@ -821,6 +821,25 @@ def problem_slide(title: str, emoji: str, body: str, answer: str, bg: str, borde
     )
 
 
+def challenge_slide(title: str, emoji: str, body: str, answer: str, bg: str = "#fdf2f8", border: str = "#db2777") -> str:
+    return slide(
+        f"""
+        <div class="head-title" style="background: linear-gradient(90deg, #9333EA 0%, #db2777 100%);">Desafío Supremo</div>
+        <div class="story-card" style="background:{bg}; border:5px solid {border}; box-shadow: 0 10px 25px rgba(219, 39, 119, 0.2);">
+            <div class="story-emoji" style="font-size:100px; animation:bounce 2s infinite;">{emoji}</div>
+            <div>
+                <h2 style="color:{border}; font-size:38px;">{esc(title)}</h2>
+                <p style="font-size:24px; font-weight:600;">{body}</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid {border}; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta descubierta:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">{answer}</div>
+                </div>
+            </div>
+        </div>
+        """
+    )
+
+
 def summary_slide(items: list[str]) -> str:
     body = "".join(f'<div class="stp summary-item">{item}</div>' for item in items)
     return slide(

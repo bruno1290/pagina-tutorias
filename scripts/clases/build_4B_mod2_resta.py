@@ -157,6 +157,9 @@ def module() -> str:
     s.append(G.problem_slide("Árboles en el parque", "🌳", "El parque tiene espacio para 500 árboles. Ya plantaron 234. ¿Cuántos faltan?", "500 − 234 = 266.<br><span style='color:var(--base);'>Faltan 266 árboles.</span>", "#E8F5E9", "#2E7D32"))
     s.append(G.problem_slide("Páginas del libro", "📖", "El libro tiene 412 páginas y he leído 187. ¿Cuántas me faltan?", "412 − 187 = 225.<br><span style='color:var(--base);'>Me faltan 225 páginas.</span>", "#E3F2FD", "#1565C0"))
     
+    s.append(G.challenge_slide("El Misterio del Vuelto", "🍬", "Fuiste al almacén con una moneda de $500. Compraste un jugo de $200 y galletas de $150. Justo antes de pagar, te dicen: '¡Te haré un descuento de $50 en las galletas!'. ¿Cuánto vuelto exacto te deben dar?", "El jugo ($200) y las galletas con descuento ($100) suman $300 en total.<br>Pagando con $500: 500 - 300 = 200.<br><span style='color:#0284c7;'>El vuelto es $200.</span>", "#E0F2FE", "#0284C7"))
+    s.append(G.challenge_slide("El Viaje en el Tiempo", "⏳", "El abuelo de Lucas tiene 68 años. El papá de Lucas tiene 35 años menos que el abuelo. Y Lucas tiene 23 años menos que su papá. ¿Cuántos años tiene Lucas?", "Papá: 68 - 35 = 33 años.<br>Lucas: 33 - 23 = 10 años.<br><span style='color:#d97706;'>Lucas tiene 10 años.</span>", "#FEF3C7", "#D97706"))
+    
     s.append(G.summary_slide([
         "<b>Resta en columna:</b> Siempre U con U, D con D, C con C.",
         "<b>Desagrupar:</b> Si el número de arriba es menor, pido prestado 10 al de la izquierda.",
