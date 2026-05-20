@@ -747,7 +747,11 @@
         }
 
         function getCurso(tutor) {
-            // Si en el futuro agregan una columna "curso" a la base de datos:
+            // Si en Supabase escribieron el número 3 o 4:
+            if (tutor.curso == 3 || tutor.curso === '3') return '3ro Básico';
+            if (tutor.curso == 4 || tutor.curso === '4') return '4to Básico';
+            
+            // Legacy por si alguna vez escribieron el texto completo:
             if (tutor.curso) return tutor.curso;
             
             const name = (tutor.nombre_completo || '').toLowerCase();
