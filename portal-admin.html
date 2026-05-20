@@ -375,6 +375,42 @@
             font-size: 18px;
         }
 
+        /* Botones de Selección de Curso */
+        .curso-selection {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .btn-curso {
+            background: white;
+            border: 2px solid #dde8f5;
+            padding: 30px;
+            border-radius: 16px;
+            font-family: var(--font-titles);
+            text-transform: uppercase;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--navy);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            text-align: center;
+        }
+
+        .btn-curso:hover, .btn-curso.active {
+            border-color: var(--teal);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.2);
+        }
+
+        .section-title {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
         /* ─── MOBILE VIEW (iPHONE / ANDROID) ONLY ──────────────── */
         @media(max-width: 768px) {
             header {
@@ -405,6 +441,14 @@
             .layout {
                 padding-inline: 10px;
                 padding-top: calc(var(--header-h) + 15px);
+            }
+            .curso-selection {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .btn-curso {
+                font-size: 18px;
+                padding: 20px;
             }
             .stats-grid {
                 grid-template-columns: 1fr 1fr;
@@ -479,28 +523,61 @@
     <div id="loadingScreen" class="loader" style="padding-top:100px;">Generando Dashboard...</div>
 
     <div class="layout" id="mainLayout" style="display: none;">
-        <!-- Stats Row -->
+        
+        <h2 class="section-title">ESTADÍSTICAS GLOBALES (AMBOS CURSOS)</h2>
+        <!-- Global Stats Row -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="label">Total Sesiones</div>
-                <div class="value" id="stat-total">0</div>
+                <div class="value" id="global-total">0</div>
             </div>
             <div class="stat-card">
                 <div class="label">Asistencia Global</div>
-                <div class="value" id="stat-ass">0%</div>
+                <div class="value" id="global-ass">0%</div>
             </div>
             <div class="stat-card">
                 <div class="label">Nota Promedio</div>
-                <div class="value" id="stat-rating">0.0</div>
+                <div class="value" id="global-rating">0.0</div>
             </div>
             <div class="stat-card">
-                <div class="label">Tutores Activos</div>
-                <div class="value" id="stat-tutors">0</div>
+                <div class="label">Tutores Totales</div>
+                <div class="value" id="global-tutors">0</div>
             </div>
         </div>
 
-        <!-- Matrix Card -->
-        <div class="card">
+        <!-- Selección de Curso -->
+        <div class="curso-selection">
+            <button class="btn-curso" onclick="selectCurso('3ro Básico')">3ro Básico</button>
+            <button class="btn-curso" onclick="selectCurso('4to Básico')">4to Básico</button>
+        </div>
+
+        <!-- Contenedor del Curso Seleccionado -->
+        <div id="cursoContainer" style="display: none;">
+            
+            <h2 class="section-title" id="cursoTitle" style="color: var(--navy); font-size: 18px; margin-top: 10px;"></h2>
+            
+            <!-- Course Stats Row -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="label">Total Sesiones</div>
+                    <div class="value" id="curso-total">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Asistencia Curso</div>
+                    <div class="value" id="curso-ass">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Nota Curso</div>
+                    <div class="value" id="curso-rating">0.0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Tutores Curso</div>
+                    <div class="value" id="curso-tutors">0</div>
+                </div>
+            </div>
+
+            <!-- Matrix Card -->
+            <div class="card">
             <div class="card-header">
                 <h2>Matriz de Seguimiento (22 Semanas)</h2>
                 <div style="font-size:12px; color:var(--text-light);">🟢 Presente | 🔴 Ausente | ⚪ Pendiente</div>
@@ -538,6 +615,8 @@
                         <tr>
                             <th>Fecha</th>
                             <th>Tutor / Alumno</th>
+                            <th>Curso</th>
+                            <th>Presentación</th>
                             <th>Estado</th>
                             <th>Nota</th>
                             <th>Bitácora</th>
@@ -549,6 +628,8 @@
                 </table>
             </div>
         </div>
+        
+        </div> <!-- End cursoContainer -->
     </div>
 
     <script src="scripts/supabase-config.js"></script>
@@ -568,6 +649,7 @@
 
         let allData = [];
         let allTutors = [];
+        let currentCursoFilter = '';
 
         document.addEventListener('DOMContentLoaded', async () => {
             const session = await AppAuth.checkSession(true);
@@ -601,17 +683,11 @@
             allData = classes || [];
             allTutors = tutors || [];
 
-            // 2. Renderizar KPIs
-            renderKPIs();
-
-            // 3. Renderizar Matriz
-            renderMatrix();
-
-            // 4. Renderizar Tabla
-            renderTable(allData);
+            // Render Global KPIs always at the top
+            renderGlobalKPIs();
         }
 
-        function renderKPIs() {
+        function renderGlobalKPIs() {
             const total = allData.length;
             const presents = allData.filter(d => d.asistencia === 'Presente').length;
             const avgAss = total > 0 ? Math.round((presents / total) * 100) : 0;
@@ -619,10 +695,66 @@
             const grades = allData.filter(d => d.calificacion > 0).map(d => d.calificacion);
             const avgGrade = grades.length > 0 ? (grades.reduce((a, b) => a + b, 0) / grades.length).toFixed(1) : '0.0';
 
-            document.getElementById('stat-total').textContent = total;
-            document.getElementById('stat-ass').textContent = `${avgAss}%`;
-            document.getElementById('stat-rating').textContent = avgGrade;
-            document.getElementById('stat-tutors').textContent = allTutors.length;
+            document.getElementById('global-total').textContent = total;
+            document.getElementById('global-ass').textContent = `${avgAss}%`;
+            document.getElementById('global-rating').textContent = avgGrade;
+            document.getElementById('global-tutors').textContent = allTutors.length;
+        }
+
+        function selectCurso(curso) {
+            currentCursoFilter = curso;
+            document.getElementById('cursoContainer').style.display = 'block';
+            document.getElementById('cursoTitle').textContent = `DETALLE DE ${curso.toUpperCase()}`;
+
+            // Highlight button
+            document.querySelectorAll('.btn-curso').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes(curso)) {
+                    btn.classList.add('active');
+                }
+            });
+
+            renderCourseKPIs();
+            renderMatrix();
+            filterData();
+        }
+
+        function getFilteredTutors() {
+            return allTutors.filter(t => getCurso(t) === currentCursoFilter);
+        }
+
+        function getFilteredData() {
+            const filteredTutors = getFilteredTutors();
+            const tutorIds = filteredTutors.map(t => t.id);
+            return allData.filter(d => tutorIds.includes(d.tutor_id));
+        }
+
+        function renderCourseKPIs() {
+            const dataToUse = getFilteredData();
+            const tutorsToUse = getFilteredTutors();
+
+            const total = dataToUse.length;
+            const presents = dataToUse.filter(d => d.asistencia === 'Presente').length;
+            const avgAss = total > 0 ? Math.round((presents / total) * 100) : '-';
+
+            const grades = dataToUse.filter(d => d.calificacion > 0).map(d => d.calificacion);
+            const avgGrade = grades.length > 0 ? (grades.reduce((a, b) => a + b, 0) / grades.length).toFixed(1) : '-';
+
+            document.getElementById('curso-total').textContent = total;
+            document.getElementById('curso-ass').textContent = total > 0 ? `${avgAss}%` : '-';
+            document.getElementById('curso-rating').textContent = avgGrade;
+            document.getElementById('curso-tutors').textContent = tutorsToUse.length;
+        }
+
+        function getCurso(tutor) {
+            // Si en el futuro agregan una columna "curso" a la base de datos:
+            if (tutor.curso) return tutor.curso;
+            
+            const name = (tutor.nombre_completo || '').toLowerCase();
+            const tutores3ro = ['valentina silva', 'camila gallar']; // "gallar" cubre gallardo y gallarod
+            
+            const esDeTercero = tutores3ro.some(t3 => name.includes(t3));
+            return esDeTercero ? '3ro Básico' : '4to Básico';
         }
 
         function getWeekIndex(dateStr) {
@@ -649,7 +781,7 @@
             const body = document.getElementById('matrixBody');
 
             // Limpiar cabeceras dinámicas si existen
-            header.innerHTML = '<th class="cell-tutor">Tutor / Alumno</th>';
+            header.innerHTML = '<th class="cell-tutor">Tutor / Alumno</th><th class="cell-tutor" style="width:100px;">Clase Actual</th>';
 
             // Generar cabeceras basadas en CLASS_WEEKS
             CLASS_WEEKS.forEach((mondayStr, index) => {
@@ -661,10 +793,20 @@
                 header.appendChild(th);
             });
 
-            // Generar filas por tutor
-            body.innerHTML = allTutors.map(tutor => {
+            // Generar filas solo para los tutores del curso seleccionado
+            const tutorsToUse = getFilteredTutors();
+
+            body.innerHTML = tutorsToUse.map(tutor => {
                 const tutorClasses = allData.filter(c => c.tutor_id === tutor.id);
-                let rowHtml = `<tr><td class="cell-tutor">${tutor.nombre_completo}<br><span style="font-size:9px; color:#999;">${tutor.nombre_atutorado}</span></td>`;
+                
+                let claseActual = '-';
+                if (tutorClasses.length > 0) {
+                    const latestNotes = tutorClasses[0].notas_desempeno || '';
+                    const match = latestNotes.match(/^\[Tema: (.*?)\]\n/);
+                    if (match) claseActual = match[1];
+                }
+
+                let rowHtml = `<tr><td class="cell-tutor">${tutor.nombre_completo}<br><span style="font-size:9px; color:#999;">${tutor.nombre_atutorado}</span></td><td class="cell-tutor" style="font-size:11px; color:var(--teal); font-weight:normal;">${claseActual}</td>`;
 
                 CLASS_WEEKS.forEach((mondayStr, wIdx) => {
                     const session = tutorClasses.find(c => getWeekIndex(c.fecha) === wIdx);
@@ -679,27 +821,47 @@
                 rowHtml += '</tr>';
                 return rowHtml;
             }).join('');
+
+            if (tutorsToUse.length === 0) {
+                const colspan = CLASS_WEEKS.length + 1;
+                body.innerHTML = `<tr><td colspan="${colspan}" style="padding: 20px; text-align: center; color: var(--text-light);">Aún no hay tutores registrados en este curso.</td></tr>`;
+            }
         }
 
         function renderTable(data) {
             const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = data.map(c => `
+            tbody.innerHTML = data.map(c => {
+                const tutorInfo = allTutors.find(t => t.id === c.tutor_id);
+                const curso = tutorInfo ? getCurso(tutorInfo) : (c.perfiles ? getCurso(c.perfiles) : '4to Básico');
+
+                let notes = c.notas_desempeno || '';
+                let tema = '-';
+                const match = notes.match(/^\[Tema: (.*?)\]\n/);
+                if (match) {
+                    tema = match[1];
+                    notes = notes.replace(/^\[Tema: .*?\]\n/, '');
+                }
+
+                return `
             <tr>
                 <td>${c.fecha}</td>
                 <td>
                     <div class="tutor-name">${c.perfiles ? c.perfiles.nombre_completo : 'Desconocido'}</div>
                     <div class="student-name">🧑‍🎓 ${c.perfiles ? c.perfiles.nombre_atutorado : ''}</div>
                 </td>
+                <td><span style="font-size: 11px; font-weight: bold; color: var(--navy); background: #dde8f5; padding: 4px 8px; border-radius: 8px;">${curso}</span></td>
+                <td><span style="font-size: 11px; font-weight: bold; color: var(--teal); border: 1px solid #dde8f5; padding: 4px 8px; border-radius: 8px; white-space:nowrap;">${tema}</span></td>
                 <td><span class="ass-badge ${c.asistencia}">${c.asistencia}</span></td>
                 <td style="font-weight:bold; color:var(--navy);">${c.calificacion || '-'}</td>
-                <td class="notes-col">${c.notas_desempeno || '<i style="color:#aaa;">Sin notas</i>'}</td>
+                <td class="notes-col">${notes || '<i style="color:#aaa;">Sin notas</i>'}</td>
             </tr>
-        `).join('');
+        `}).join('');
         }
 
         function filterData() {
             const search = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = allData.filter(c =>
+            const baseData = getFilteredData();
+            const filtered = baseData.filter(c =>
                 (c.perfiles?.nombre_completo || '').toLowerCase().includes(search) ||
                 (c.perfiles?.nombre_atutorado || '').toLowerCase().includes(search)
             );
@@ -707,19 +869,33 @@
         }
 
         function exportToCSV() {
-            if (allData.length === 0) return alert('No hay datos para exportar');
+            const dataToExport = getFilteredData();
+            if (dataToExport.length === 0) return alert('No hay datos para exportar');
 
             let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Fecha,Tutor,Alumno,Asistencia,Nota,Bitacora\n";
+            csvContent += "Fecha,Tutor,Alumno,Curso,Presentacion,Asistencia,Nota,Bitacora\n";
 
-            allData.forEach(c => {
+            dataToExport.forEach(c => {
+                const tutorInfo = allTutors.find(t => t.id === c.tutor_id);
+                const curso = tutorInfo ? getCurso(tutorInfo) : (c.perfiles ? getCurso(c.perfiles) : '4to Básico');
+                
+                let notes = c.notas_desempeno || '';
+                let tema = '';
+                const match = notes.match(/^\[Tema: (.*?)\]\n/);
+                if (match) {
+                    tema = match[1];
+                    notes = notes.replace(/^\[Tema: .*?\]\n/, '');
+                }
+
                 const row = [
                     c.fecha,
                     `"${c.perfiles?.nombre_completo || ''}"`,
                     `"${c.perfiles?.nombre_atutorado || ''}"`,
+                    `"${curso}"`,
+                    `"${tema}"`,
                     c.asistencia,
                     c.calificacion || '',
-                    `"${(c.notas_desempeno || '').replace(/"/g, '""')}"`
+                    `"${notes.replace(/"/g, '""')}"`
                 ];
                 csvContent += row.join(",") + "\n";
             });

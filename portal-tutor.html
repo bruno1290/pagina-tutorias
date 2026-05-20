@@ -256,16 +256,28 @@
             document.getElementById('stat-rating').textContent = avgGrade;
         }
 
-        listContainer.innerHTML = classes.map(c => `
+        listContainer.innerHTML = classes.map(c => {
+            let notes = c.notas_desempeno || '';
+            let tema = '';
+            const match = notes.match(/^\[Tema: (.*?)\]\n/);
+            if (match) {
+                tema = match[1];
+                notes = notes.replace(/^\[Tema: .*?\]\n/, '');
+            }
+            return `
             <div class="history-item">
-                <div class="history-date">${c.fecha}</div>
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <div class="history-date">${c.fecha}</div>
+                    ${tema ? `<div style="font-size:12px; font-weight:bold; color:var(--teal); background:var(--white); border:1px solid #dde8f5; padding:4px 8px; border-radius:6px;">${tema}</div>` : ''}
+                </div>
                 <div style="display:flex; gap:10px; align-items:center;">
                     <div class="history-ass ${c.asistencia}">${c.asistencia}</div>
                     ${c.calificacion ? `<div class="history-ass" style="background:#eee; color:#333;">Nota: ${c.calificacion}</div>` : ''}
                 </div>
-                <div class="history-notes">${c.notas_desempeno ? c.notas_desempeno : '<i>Sin bitácora registrada.</i>'}</div>
+                <div class="history-notes">${notes ? notes : '<i>Sin bitácora registrada.</i>'}</div>
             </div>
-        `).join('');
+            `;
+        }).join('');
     }
 </script>
 <div class="footer-banner">

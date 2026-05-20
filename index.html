@@ -2407,6 +2407,20 @@
                         style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;" required>
                 </div>
                 <div style="margin-bottom:15px;">
+                    <label style="display:block; font-size:13px; font-weight:bold; margin-bottom:5px;">Curso del Alumno</label>
+                    <select id="drCurso" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; font-family:inherit;" required onchange="updateTemaDropdown()">
+                        <option value="">Selecciona el curso...</option>
+                        <option value="3">3ro Básico</option>
+                        <option value="4">4to Básico</option>
+                    </select>
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; font-size:13px; font-weight:bold; margin-bottom:5px;">Presentación Actual</label>
+                    <select id="drTema" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; font-family:inherit;" required>
+                        <option value="">Selecciona la presentación dictada...</option>
+                    </select>
+                </div>
+                <div style="margin-bottom:15px;">
                     <label
                         style="display:block; font-size:13px; font-weight:bold; margin-bottom:5px;">Asistencia</label>
                     <div class="att-toggle">
@@ -2552,7 +2566,9 @@
             const date = document.getElementById('drDate').value;
             const att = document.querySelector('input[name="drAtt"]:checked').value;
             const rating = document.querySelector('input[name="drRating"]:checked').value;
-            const notes = document.getElementById('drNotes').value;
+            const tema = document.getElementById('drTema').value;
+            const rawNotes = document.getElementById('drNotes').value;
+            const notes = `[Tema: ${tema}]\n${rawNotes}`;
 
             btn.disabled = true;
             btn.textContent = 'Guardando...';
@@ -2932,6 +2948,46 @@
                 ticket: { title: 'Ticket de salida – Talento', questions: [] }
             }
         ];
+
+        // Poblar el dropdown de tema en la bitácora
+        function updateTemaDropdown() {
+            const curso = document.getElementById('drCurso').value;
+            const select = document.getElementById('drTema');
+            if (!select) return;
+            
+            // Limpiar opciones
+            select.innerHTML = '<option value="">Selecciona la presentación dictada...</option>';
+            
+            if (curso === "4") {
+                // Clases de 4to básico
+                MODULES.forEach(m => {
+                    const opt = document.createElement('option');
+                    opt.value = m.title;
+                    opt.textContent = m.title;
+                    select.appendChild(opt);
+                });
+            } else if (curso === "3") {
+                // Clases de 3ro básico (Placeholder hasta que se agreguen a MODULES)
+                const optPlaceholder = document.createElement('option');
+                optPlaceholder.value = 'Próximamente material 3ro';
+                optPlaceholder.textContent = 'Próximamente material 3ro...';
+                select.appendChild(optPlaceholder);
+                
+                // Si en el futuro agregas clases de 3ro a MODULES, puedes filtrarlas aquí, 
+                // por ejemplo agregando un campo "curso: 3" a cada objeto y haciendo:
+                // MODULES.filter(m => m.curso === 3).forEach(...)
+            }
+            
+            if (curso !== "") {
+                const optOther = document.createElement('option');
+                optOther.value = 'Repaso / Otra';
+                optOther.textContent = 'Repaso / Otra';
+                select.appendChild(optOther);
+            }
+        }
+        // Ya no lo llamamos al inicio porque requiere que seleccionen el curso primero
+        // window.addEventListener('DOMContentLoaded', updateTemaDropdown);
+
         const DIAGNOSTIC_SECTIONS = [
             {
                 id: 'num',

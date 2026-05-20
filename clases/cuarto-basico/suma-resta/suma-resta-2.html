@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Módulo 2: Resta</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root {
+    --base: #1C4A82;
+    --bg: #f5f6f8;
+    --tx: #333;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--tx);
+}
+.dk { position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex; }
+.sl {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 36px 40px 82px;
+    opacity: 0;
+    transform: scale(.96);
+    transition: opacity .4s, transform .4s;
+    pointer-events: none;
+    z-index: 1;
+}
+.sl.on { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
+.sl.pv { opacity: 0; transform: translateX(-50px) scale(.95); }
+.sl.nx { opacity: 0; transform: translateX(50px) scale(.95); }
+.head-title {
+    background: var(--base);
+    color: white;
+    padding: 10px 40px;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    display: inline-block;
+    border-radius: 12px;
+    text-align: center;
+}
+.sub-text {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+    line-height: 1.4;
+}
+.pb { position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100; }
+.nv {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 100;
+}
+.nb {
+    background: #eee;
+    color: var(--base);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all .2s;
+}
+.nb:hover { background: #ddd; }
+.nb:disabled { opacity: 0.3; cursor: not-allowed; }
+.sc { color: #888; font-size: 16px; font-weight: 900; }
+.stp {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+.stp.shwn { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.pnl {
+    background: #fff;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 3px solid #eaeaea;
+    width: 100%;
+}
+.pnl-border {
+    background: #fff;
+    border: 4px solid var(--base);
+    border-radius: 20px;
+    padding: 24px;
+    width: 100%;
+}
+.hl { color: var(--base); font-weight: 900; }
+.btn {
+    background: var(--base);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .2s;
+    font-family: 'Nunito', sans-serif;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3); }
+.math-eq {
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--base);
+    background: #fff;
+    padding: 12px 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border: 3px dashed #bbdefb;
+    margin: 12px;
+    text-align: center;
+}
+.chip-row, .card-row, .base-row, .quiz-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.mini-chip {
+    background: #eef5ff;
+    border: 2px solid #b6d4f3;
+    border-radius: 999px;
+    padding: 12px 18px;
+    font-size: 20px;
+    font-weight: 800;
+}
+.idea-card {
+    flex: 1 1 220px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+    border-radius: 18px;
+    padding: 18px;
+    border: 3px solid #d7e7f7;
+    min-height: 220px;
+}
+.idea-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    margin-bottom: 10px;
+}
+.idea-card p {
+    font-size: 21px;
+    line-height: 1.45;
+}
+.base-card {
+    flex: 1 1 320px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 18px;
+    border: 4px solid #d9e7f6;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+}
+.base-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    text-align: center;
+    margin-bottom: 14px;
+}
+.place-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+.place-box {
+    background: #f8fbff;
+    border: 2px dashed #c6d9ef;
+    border-radius: 16px;
+    padding: 12px;
+    min-height: 184px;
+}
+.place-title {
+    text-align: center;
+    font-size: 19px;
+    font-weight: 900;
+    color: #315c8d;
+    margin-bottom: 10px;
+}
+.block-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 88px;
+}
+.unit {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: var(--fill, #FFE082);
+    border: 1px solid rgba(0,0,0,0.25);
+}
+.rod {
+    width: 12px;
+    height: 120px;
+    border-radius: 3px;
+    background: 
+        repeating-linear-gradient(0deg, transparent, transparent 11px, rgba(0,0,0,0.2) 11px, rgba(0,0,0,0.2) 12px),
+        var(--fill, #9DDEFF);
+    border: 1px solid rgba(0,0,0,0.25);
+}
+.flat {
+    width: 120px;
+    height: 120px;
+    border-radius: 4px;
+    background:
+        repeating-linear-gradient(0deg, transparent, transparent 11px, rgba(0,0,0,0.15) 11px, rgba(0,0,0,0.15) 12px),
+        repeating-linear-gradient(90deg, transparent, transparent 11px, rgba(0,0,0,0.15) 11px, rgba(0,0,0,0.15) 12px),
+        var(--fill, #9DE3BD);
+    border: 1px solid rgba(0,0,0,0.25);
+}
+.number-tag {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 900;
+}
+.two-col {
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 18px;
+    width: 100%;
+    align-items: stretch;
+}
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.step-box {
+    background: #f7fbff;
+    border-left: 8px solid var(--base);
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+.column-wrap {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 18px;
+    width: 100%;
+    align-items: start;
+}
+.alg-board {
+    background: #fff;
+    border: 4px solid var(--base);
+    border-radius: 20px;
+    padding: 22px 26px;
+}
+.alg-grid {
+    display: grid;
+    grid-template-columns: 68px repeat(3, 76px);
+    grid-auto-rows: 58px;
+    align-items: center;
+    justify-items: center;
+    margin: 0 auto;
+    width: max-content;
+}
+.alg-grid.long {
+    grid-template-columns: 68px repeat(3, 76px);
+}
+.alg-label {
+    font-size: 20px;
+    font-weight: 900;
+    color: #57779d;
+}
+.alg-digit {
+    width: 60px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #f7fbff;
+    font-size: 34px;
+    font-weight: 900;
+    color: #173b67;
+    border: 2px solid #d4e5f8;
+}
+.alg-digit.dim { color: #b6c6d8; }
+.alg-digit.reserve {
+    height: 38px;
+    background: #fff7df;
+    border-color: #f0cf67;
+    color: #9f6200;
+    font-size: 24px;
+}
+.alg-line {
+    grid-column: 2 / span 3;
+    width: 100%;
+    height: 4px;
+    background: #395f90;
+    border-radius: 999px;
+}
+.alg-sign {
+    font-size: 30px;
+    font-weight: 900;
+    color: #c94d2a;
+}
+.side-panel {
+    background: linear-gradient(180deg, #fefefe 0%, #f4f9ff 100%);
+    border: 3px solid #d5e4f5;
+    border-radius: 18px;
+    padding: 18px;
+    min-height: 290px;
+}
+.side-panel h3 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 12px;
+}
+.side-panel p {
+    font-size: 20px;
+    line-height: 1.45;
+}
+.story-card {
+    width: 100%;
+    border-radius: 28px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: center;
+}
+.story-emoji {
+    font-size: 114px;
+    text-align: center;
+    animation: bob 2.8s infinite;
+}
+.story-card h2 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+.story-card p {
+    font-size: 24px;
+    line-height: 1.45;
+}
+.summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+.summary-item {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 18px;
+    border: 3px solid #dbe7f4;
+    font-size: 23px;
+    line-height: 1.45;
+}
+.count-board {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.count-card {
+    flex: 1 1 260px;
+    background: linear-gradient(180deg, #ffffff 0%, #f6fbff 100%);
+    border-radius: 22px;
+    padding: 20px;
+    border: 4px solid #d6e8f8;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+    text-align: center;
+}
+.count-card h3 {
+    font-size: 28px;
+    margin-bottom: 12px;
+    color: var(--base);
+}
+.emoji-pack {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    min-height: 86px;
+    margin-bottom: 12px;
+}
+.fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+.fact-box {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 18px;
+    padding: 16px;
+    border: 3px solid #d8e7f6;
+    min-height: 170px;
+}
+.fact-box h4 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 10px;
+    text-align: center;
+}
+.fact-box p {
+    font-size: 21px;
+    line-height: 1.45;
+    text-align: center;
+}
+.msg-area {
+    font-size: 24px;
+    font-weight: 900;
+    height: 40px;
+    text-align: center;
+    margin-top: 20px;
+}
+.hero-title {
+    font-size: 68px;
+    color: var(--base);
+    margin-bottom: 18px;
+    text-align: center;
+    line-height: 1;
+}
+.hero-sub {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    max-width: 720px;
+}
+.hero-emoji {
+    font-size: 108px;
+    margin-top: 28px;
+    animation: bounce 2s infinite;
+}
+.formula-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.label-pill {
+    background: #eef5ff;
+    border: 2px solid #c5dcf5;
+    border-radius: 14px;
+    padding: 10px 16px;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--base);
+}
+.warn-card {
+    background: #fff8e5;
+    border: 4px solid #f0ca59;
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 22px;
+    line-height: 1.45;
+    width: 100%;
+}
+.decomp-flow {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+}
+.decomp-box {
+    background: #fff;
+    border: 3px solid #d4e6f7;
+    border-radius: 18px;
+    padding: 14px 18px;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--base);
+}
+.arrow {
+    font-size: 34px;
+    font-weight: 900;
+    color: #4d6d94;
+}
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+</style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
+        <div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 class="hero-title">Presentación 2: Resta</h1>
+            <p class="hero-sub">Módulo de resta hasta 3 dígitos.</p>
+            <div class="hero-emoji">➖</div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">¿Qué es restar?</div>
+        <p class="sub-text">Restar es <b class="hl">quitar</b> o saber la diferencia entre dos cantidades.</p>
+        <div class="count-board">
+            <div class="count-card" style="border-color:#FFE082; background:linear-gradient(180deg,#fffdf1 0%,#ffffff 100%);">
+                <h3>Tengo 7</h3>
+                <div class="emoji-pack"><span style="font-size:54px; line-height:1;">🟨</span><span style="font-size:54px; line-height:1;">🟨</span><span style="font-size:54px; line-height:1;">🟨</span><span style="font-size:54px; line-height:1;">🟨</span><span style="font-size:54px; line-height:1;">🟨</span><span style="font-size:54px; line-height:1;">🟨</span><span style="font-size:54px; line-height:1;">🟨</span></div>
+            </div>
+            <div class="math-eq" style="font-size:60px;">−</div>
+            <div class="count-card" style="border-color:#FF9D9D; background:linear-gradient(180deg,#f4fff7 0%,#ffffff 100%);">
+                <h3>Quito 3</h3>
+                <div class="emoji-pack"><span style="font-size:54px; line-height:1;">⬜</span><span style="font-size:54px; line-height:1;">⬜</span><span style="font-size:54px; line-height:1;">⬜</span></div>
+            </div>
+        </div>
+        <div class="stp math-eq" style="border-color:#9DE3BD; background:#faf4ff;">7 − 3 = 4</div>
+        <div class="stp mini-chip">Observamos lo que teníamos y quitamos la cantidad indicada.</div>
+        </div><div class="sl">
+        <div class="head-title">Elementos de la Resta</div>
+        <div class="pnl-border" style="background:#f8fbff;">
+            <div class="math-eq" style="font-size:62px;">25 − 14 = 11</div>
+            <div class="stp chip-row">
+                <div class="mini-chip">25 es el <b>minuendo</b> (lo que tengo).</div>
+                <div class="mini-chip">14 es el <b>sustraendo</b> (lo que quito).</div>
+                <div class="mini-chip">11 es la <b>diferencia</b> (lo que queda).</div>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">Resta sin pedir prestado</div>
+        <p class="sub-text">Cuando el minuendo es mayor en todas las posiciones, restamos directo.</p>
+        <div class="count-board">
+            <div class="count-card" style="border-color:#9DE3BD; background:linear-gradient(180deg,#fffdf1 0%,#ffffff 100%);">
+                <h3>345</h3>
+                <div class="emoji-pack"><span class="flat" style="--fill:#9DE3BD;"></span><span class="flat" style="--fill:#9DE3BD;"></span><span class="flat" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DDEFF;"></span><span class="rod" style="--fill:#9DDEFF;"></span><span class="rod" style="--fill:#9DDEFF;"></span><span class="rod" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span></div>
+            </div>
+            <div class="math-eq" style="font-size:60px;">−</div>
+            <div class="count-card" style="border-color:#FF9D9D; background:linear-gradient(180deg,#f4fff7 0%,#ffffff 100%);">
+                <h3>123</h3>
+                <div class="emoji-pack"><span class="flat" style="--fill:#9DE3BD;"></span><span class="rod" style="--fill:#9DDEFF;"></span><span class="rod" style="--fill:#9DDEFF;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span><span class="unit" style="--fill:#FFE082;"></span></div>
+            </div>
+        </div>
+        <div class="stp math-eq" style="border-color:#FFE082; background:#faf4ff;">345 − 123 = 222</div>
+        <div class="stp mini-chip">Unidades: 5−3=2. Decenas: 4−2=2. Centenas: 3−1=2.</div>
+        </div><div class="sl">
+        <div class="head-title">En columna (sin desagrupar)</div>
+        <p class="sub-text">Alineamos los números y restamos de derecha a izquierda: U → D → C.</p>
+        
+    <div class="column-wrap">
+        <div class="alg-board">
+            <div class="alg-grid" style="grid-template-columns: 80px repeat(3, 76px);">
+                <div class="alg-label"></div><div class="alg-digit dim"></div><div class="alg-digit dim"></div><div class="alg-digit dim"></div><div class="alg-label">C D U</div><div class="alg-digit">5</div><div class="alg-digit">8</div><div class="alg-digit">6</div><div class="alg-label">−</div><div class="alg-digit">2</div><div class="alg-digit">3</div><div class="alg-digit">4</div><div class="alg-line" style="grid-column: 2 / span 3;"></div><div class="alg-label"></div><div class="alg-digit">3</div><div class="alg-digit">5</div><div class="alg-digit">2</div>
+            </div>
+        </div>
+        <div class="side-panel">
+            <h3>Paso a paso</h3>
+            <p class="stp" style="margin-bottom:12px;">U: 6 − 4 = 2</p><p class="stp" style="margin-bottom:12px;">D: 8 − 3 = 5</p><p class="stp" style="margin-bottom:12px;">C: 5 − 2 = 3</p>
+        </div>
+    </div>
+    </div><div class="sl">
+        <div class="head-title">¿Qué pasa si no alcanza?</div>
+        <p class="sub-text">Si las unidades de arriba son menores que las de abajo, <b class="hl">desagrupamos</b>.</p>
+        <div class="decomp-flow">
+            <div class="decomp-box" style="border-color:#9DDEFF; color:#1C4A82;">1 Decena</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp" style="border-color:#FFE082; color:#b08d1e;">10 Unidades sueltas</div>
+        </div>
+        <div class="stp warn-card" style="margin-top:18px;">
+            El número total no cambia, solo rompemos una barra para tener suficientes cubitos.
+        </div>
+    </div><div class="sl">
+        <div class="head-title">Desagrupar una Decena</div>
+        
+    <div class="column-wrap">
+        <div class="alg-board">
+            <div class="alg-grid" style="grid-template-columns: 80px repeat(3, 76px);">
+                <div class="alg-label"></div><div class="alg-digit dim"></div><div class="alg-digit reserve">3</div><div class="alg-digit reserve">12</div><div class="alg-label">C D U</div><div class="alg-digit">2</div><div class="alg-digit">4</div><div class="alg-digit">2</div><div class="alg-label">−</div><div class="alg-digit">1</div><div class="alg-digit">1</div><div class="alg-digit">5</div><div class="alg-line" style="grid-column: 2 / span 3;"></div><div class="alg-label"></div><div class="alg-digit">1</div><div class="alg-digit">2</div><div class="alg-digit">7</div>
+            </div>
+        </div>
+        <div class="side-panel">
+            <h3>Paso a paso</h3>
+            <p class="stp" style="margin-bottom:12px;">U: 2 no alcanza para quitar 5. Desagrupo 1 decena (quedan 3) y obtengo 12 unidades.</p><p class="stp" style="margin-bottom:12px;">U: 12 − 5 = 7.</p><p class="stp" style="margin-bottom:12px;">D: 3 − 1 = 2.</p><p class="stp" style="margin-bottom:12px;">C: 2 − 1 = 1.</p>
+        </div>
+    </div>
+    </div><div class="sl">
+        <div class="head-title">Desagrupar una Centena</div>
+        
+    <div class="column-wrap">
+        <div class="alg-board">
+            <div class="alg-grid" style="grid-template-columns: 80px repeat(3, 76px);">
+                <div class="alg-label"></div><div class="alg-digit reserve">2</div><div class="alg-digit reserve">13</div><div class="alg-digit dim"></div><div class="alg-label">C D U</div><div class="alg-digit">3</div><div class="alg-digit">3</div><div class="alg-digit">6</div><div class="alg-label">−</div><div class="alg-digit">1</div><div class="alg-digit">8</div><div class="alg-digit">4</div><div class="alg-line" style="grid-column: 2 / span 3;"></div><div class="alg-label"></div><div class="alg-digit">1</div><div class="alg-digit">5</div><div class="alg-digit">2</div>
+            </div>
+        </div>
+        <div class="side-panel">
+            <h3>Paso a paso</h3>
+            <p class="stp" style="margin-bottom:12px;">U: 6 − 4 = 2.</p><p class="stp" style="margin-bottom:12px;">D: 3 no alcanza para quitar 8. Desagrupo 1 centena (quedan 2) y obtengo 13 decenas.</p><p class="stp" style="margin-bottom:12px;">D: 13 − 8 = 5.</p><p class="stp" style="margin-bottom:12px;">C: 2 − 1 = 1.</p>
+        </div>
+    </div>
+    </div><div class="sl">
+        <div class="head-title">El caso del Cero</div>
+        <p class="sub-text">Cuando las decenas son 0, tenemos que pedir a las centenas primero.</p>
+        
+    <div class="column-wrap">
+        <div class="alg-board">
+            <div class="alg-grid" style="grid-template-columns: 80px repeat(3, 76px);">
+                <div class="alg-label"></div><div class="alg-digit reserve">4</div><div class="alg-digit reserve">9</div><div class="alg-digit reserve">10</div><div class="alg-label">C D U</div><div class="alg-digit">5</div><div class="alg-digit">0</div><div class="alg-digit">0</div><div class="alg-label">−</div><div class="alg-digit">2</div><div class="alg-digit">3</div><div class="alg-digit">4</div><div class="alg-line" style="grid-column: 2 / span 3;"></div><div class="alg-label"></div><div class="alg-digit">2</div><div class="alg-digit">6</div><div class="alg-digit">6</div>
+            </div>
+        </div>
+        <div class="side-panel">
+            <h3>Cadena de desagrupación</h3>
+            <p class="stp" style="margin-bottom:12px;">U: 0 no alcanza. D es 0, no puede prestar. Pido a C.</p><p class="stp" style="margin-bottom:12px;">C: 5 pasa a 4. D pasa a 10.</p><p class="stp" style="margin-bottom:12px;">Ahora D presta a U: D pasa de 10 a 9. U pasa a 10.</p><p class="stp" style="margin-bottom:12px;">Restamos: 10−4=6, 9−3=6, 4−2=2.</p>
+        </div>
+    </div>
+    </div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Resuelve: <b class="hl">600 − 148</b></p>
+        
+        <div class="decomp-flow" style="margin-top:20px;"><div class="stp decomp-box">6C 0D 0U → 5C 9D 10U</div><div class="stp decomp-box">U: 10 − 8 = 2</div><div class="stp decomp-box">D: 9 − 4 = 5</div><div class="stp decomp-box">C: 5 − 1 = 4</div><div class="stp decomp-box">Resultado: 452</div></div>
+        </div><div class="sl">
+        <div class="head-title">Comprobar con la suma</div>
+        <p class="sub-text">Si sumas la diferencia con el sustraendo, debes obtener el minuendo original.</p>
+        <div class="decomp-flow">
+            <div class="decomp-box">345 − 128 = 217</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">Compruebo: 217 + 128</div>
+            <div class="arrow stp">→</div>
+            <div class="decomp-box stp">= 345 ✅</div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">Quiz rápido</div>
+        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">¿Cuánto es <b>402 − 157</b>?</p>
+            <div class="quiz-row"><button class="btn" onclick="chkAns(this, true, &quot;4C0D2U \u2192 3C9D12U. 12-7=5, 9-5=4, 3-1=2. Total: 245.&quot;)">245</button><button class="btn" onclick="chkAns(this, false, &quot;4C0D2U \u2192 3C9D12U. 12-7=5, 9-5=4, 3-1=2. Total: 245.&quot;)">345</button><button class="btn" onclick="chkAns(this, false, &quot;4C0D2U \u2192 3C9D12U. 12-7=5, 9-5=4, 3-1=2. Total: 245.&quot;)">255</button></div>
+            <div class="msg-area"></div>
+        </div>
+        </div><div class="sl"><div class="head-title">Ejercicios Propuestos</div><p class="sub-text">Copia en tu cuaderno y resuelve en columna. Tómate tu tiempo.</p><div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">
+        <div class="pnl-border" style="display:flex; justify-content:space-between; align-items:center; padding:16px;">
+            <div style="font-size:26px; font-weight:900; color:var(--base);">586 − 342 =</div>
+            <div class="stp" style="font-size:26px; font-weight:900; color:#059669; border-bottom:3px solid #059669; width:100px; text-align:center;">?</div>
+        </div>
+        
+        <div class="pnl-border" style="display:flex; justify-content:space-between; align-items:center; padding:16px;">
+            <div style="font-size:26px; font-weight:900; color:var(--base);">735 − 289 =</div>
+            <div class="stp" style="font-size:26px; font-weight:900; color:#059669; border-bottom:3px solid #059669; width:100px; text-align:center;">?</div>
+        </div>
+        
+        <div class="pnl-border" style="display:flex; justify-content:space-between; align-items:center; padding:16px;">
+            <div style="font-size:26px; font-weight:900; color:var(--base);">500 − 164 =</div>
+            <div class="stp" style="font-size:26px; font-weight:900; color:#059669; border-bottom:3px solid #059669; width:100px; text-align:center;">?</div>
+        </div>
+        
+        <div class="pnl-border" style="display:flex; justify-content:space-between; align-items:center; padding:16px;">
+            <div style="font-size:26px; font-weight:900; color:var(--base);">840 − 315 =</div>
+            <div class="stp" style="font-size:26px; font-weight:900; color:#059669; border-bottom:3px solid #059669; width:100px; text-align:center;">?</div>
+        </div>
+        
+        <div class="pnl-border" style="display:flex; justify-content:space-between; align-items:center; padding:16px;">
+            <div style="font-size:26px; font-weight:900; color:var(--base);">602 − 258 =</div>
+            <div class="stp" style="font-size:26px; font-weight:900; color:#059669; border-bottom:3px solid #059669; width:100px; text-align:center;">?</div>
+        </div>
+        
+        <div class="pnl-border" style="display:flex; justify-content:space-between; align-items:center; padding:16px;">
+            <div style="font-size:26px; font-weight:900; color:var(--base);">911 − 488 =</div>
+            <div class="stp" style="font-size:26px; font-weight:900; color:#059669; border-bottom:3px solid #059669; width:100px; text-align:center;">?</div>
+        </div>
+        </div></div><div class="sl"><div class="head-title">Respuestas</div><p class="sub-text">Revisa tus respuestas:</p><div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">
+        <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; padding:16px; background:#D1FAE5; border-color:#059669;">
+            <div style="font-size:28px; font-weight:900; color:#059669;">586 − 342 = 244</div>
+        </div>
+        
+        <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; padding:16px; background:#D1FAE5; border-color:#059669;">
+            <div style="font-size:28px; font-weight:900; color:#059669;">735 − 289 = 446</div>
+        </div>
+        
+        <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; padding:16px; background:#D1FAE5; border-color:#059669;">
+            <div style="font-size:28px; font-weight:900; color:#059669;">500 − 164 = 336</div>
+        </div>
+        
+        <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; padding:16px; background:#D1FAE5; border-color:#059669;">
+            <div style="font-size:28px; font-weight:900; color:#059669;">840 − 315 = 525</div>
+        </div>
+        
+        <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; padding:16px; background:#D1FAE5; border-color:#059669;">
+            <div style="font-size:28px; font-weight:900; color:#059669;">602 − 258 = 344</div>
+        </div>
+        
+        <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; padding:16px; background:#D1FAE5; border-color:#059669;">
+            <div style="font-size:28px; font-weight:900; color:#059669;">911 − 488 = 423</div>
+        </div>
+        </div></div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#FFF8E1; border:5px solid #F9A825;">
+            <div class="story-emoji">💵</div>
+            <div>
+                <h2 style="color:#F9A825;">Billetes en la billetera</h2>
+                <p>Matías tenía $800 y compró un jugo por $450. ¿Cuánto le sobró?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #F9A825; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">800 − 450 = 350.<br><span style='color:var(--base);'>Le sobraron $350.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#E8F5E9; border:5px solid #2E7D32;">
+            <div class="story-emoji">🌳</div>
+            <div>
+                <h2 style="color:#2E7D32;">Árboles en el parque</h2>
+                <p>El parque tiene espacio para 500 árboles. Ya plantaron 234. ¿Cuántos faltan?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #2E7D32; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">500 − 234 = 266.<br><span style='color:var(--base);'>Faltan 266 árboles.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#E3F2FD; border:5px solid #1565C0;">
+            <div class="story-emoji">📖</div>
+            <div>
+                <h2 style="color:#1565C0;">Páginas del libro</h2>
+                <p>El libro tiene 412 páginas y he leído 187. ¿Cuántas me faltan?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #1565C0; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">412 − 187 = 225.<br><span style='color:var(--base);'>Me faltan 225 páginas.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title" style="background: linear-gradient(90deg, #9333EA 0%, #db2777 100%);">Desafío Supremo</div>
+        <div class="story-card" style="background:#E0F2FE; border:5px solid #0284C7; box-shadow: 0 10px 25px rgba(219, 39, 119, 0.2);">
+            <div class="story-emoji" style="font-size:100px; animation:bounce 2s infinite;">🍬</div>
+            <div>
+                <h2 style="color:#0284C7; font-size:38px;">El Misterio del Vuelto</h2>
+                <p style="font-size:24px; font-weight:600;">Fuiste al almacén con una moneda de $500. Compraste un jugo de $200 y galletas de $150. Justo antes de pagar, te dicen: '¡Te haré un descuento de $50 en las galletas!'. ¿Cuánto vuelto exacto te deben dar?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #0284C7; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta descubierta:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">El jugo ($200) y las galletas con descuento ($100) suman $300 en total.<br>Pagando con $500: 500 - 300 = 200.<br><span style='color:#0284c7;'>El vuelto es $200.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title" style="background: linear-gradient(90deg, #9333EA 0%, #db2777 100%);">Desafío Supremo</div>
+        <div class="story-card" style="background:#FEF3C7; border:5px solid #D97706; box-shadow: 0 10px 25px rgba(219, 39, 119, 0.2);">
+            <div class="story-emoji" style="font-size:100px; animation:bounce 2s infinite;">⏳</div>
+            <div>
+                <h2 style="color:#D97706; font-size:38px;">El Viaje en el Tiempo</h2>
+                <p style="font-size:24px; font-weight:600;">El abuelo de Lucas tiene 68 años. El papá de Lucas tiene 35 años menos que el abuelo. Y Lucas tiene 23 años menos que su papá. ¿Cuántos años tiene Lucas?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #D97706; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta descubierta:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.4;">Papá: 68 - 35 = 33 años.<br>Lucas: 33 - 23 = 10 años.<br><span style='color:#d97706;'>Lucas tiene 10 años.</span></div>
+                </div>
+            </div>
+        </div>
+        </div><div class="sl">
+        <div class="head-title">Resumen</div>
+        <div class="summary-list"><div class="stp summary-item"><b>Resta en columna:</b> Siempre U con U, D con D, C con C.</div><div class="stp summary-item"><b>Desagrupar:</b> Si el número de arriba es menor, pido prestado 10 al de la izquierda.</div><div class="stp summary-item"><b>Ceros:</b> Si la columna es 0, pido prestado a la que sigue, rompiendo la placa 100 en 10 barras de 10.</div><div class="stp summary-item"><b>Comprobar:</b> diferencia + sustraendo = minuendo.</div></div>
+        </div><div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:38px; font-weight:800; line-height:1.45; max-width:780px;">¡Eres un experto restando hasta 3 dígitos!</p>
+            <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">🏆</div>
+        </div>
+        </div>
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <span class="sc" id="sc">1 / 21</span>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="21" value="1" oninput="goToSlide(this.value)">
+        </div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>
+const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+function ui() {
+    S.forEach((s,i)=>{
+        s.classList.remove('on','pv','nx');
+        if(i===c) s.classList.add('on');
+        else if(i<c) s.classList.add('pv');
+        else s.classList.add('nx');
+    });
+    document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+    document.getElementById('sc').textContent=`${c+1} / ${T}`;
+    document.getElementById('pv').disabled=c===0;
+    document.getElementById('nx').disabled=c===T-1;
+    let sl = document.getElementById('slide-slider');
+    if(sl) { sl.max = T; sl.value = c + 1; }
+}
+function goToSlide(n) {
+    let val = parseInt(n) - 1;
+    if (val >= 0 && val < T) {
+        c = val;
+        ui();
+    }
+}
+function go(d) {
+    if(d>0) {
+        const hid = S[c].querySelectorAll('.stp:not(.shwn)');
+        if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+    } else {
+        const shw = S[c].querySelectorAll('.stp.shwn');
+        if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+    }
+    const n=c+d;
+    if(n>=0 && n<T) { c=n; ui(); }
+}
+document.addEventListener('keydown', e => {
+    if(e.key==='ArrowRight' || e.key===' ') go(1);
+    if(e.key==='ArrowLeft') go(-1);
+});
+function chkAns(btn, correct, exp) {
+    const wrap = btn.closest('.sl');
+    const buttons = btn.parentElement.querySelectorAll('.btn');
+    const msg = wrap.querySelector('.msg-area');
+    buttons.forEach(b => {
+        b.disabled = false;
+        b.style.background = 'var(--base)';
+        b.style.transform = 'scale(1)';
+    });
+    if (correct) {
+        btn.style.background = '#047857';
+        btn.style.transform = 'scale(1.06)';
+        msg.textContent = `¡Muy bien! ${exp}`;
+        msg.style.color = '#047857';
+    } else {
+        btn.style.background = '#b91c1c';
+        msg.textContent = 'Revisa las unidades primero y vuelve a intentarlo.';
+        msg.style.color = '#b91c1c';
+    }
+}
+ui();
+</script>
+</body>
+</html>
