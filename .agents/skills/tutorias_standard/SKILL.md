@@ -118,6 +118,7 @@ Cada clase debe lograr tres cosas:
 
 - ❌ No repetir el mismo tipo de ejercicio más de 2 veces seguidas.
 - ❌ No usar "flash cards" de opción múltiple como relleno.
+- ✅ **Slides de Introducción Obligatorias (Rompehielo):** Todo tema general, subtema, propiedad o tipo de ejercicio *debe* tener una slide de introducción antes de presentar el contenido técnico duro. Esta intro debe dar contexto ("¿Por qué aprendemos esto?", "¿Para qué sirve?", "¿Qué pasaría si no supiéramos esto?"). ¡Nunca saltar directo a la regla matemática sin preparar el terreno!
 - ✅ Cada ejercicio debe enseñar algo distinto o aplicar de forma distinta.
 - ✅ Variar los contextos: no todos de "la tienda" ni todos de "el almacén".
 - ✅ Los nombres en los problemas deben ser chilenos/cercanos (Lucas, Sofía, Valentina, etc.).

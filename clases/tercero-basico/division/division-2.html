@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>División 2: Operación Inversa</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root {
+    --base: #1C4A82;
+    --bg: #f5f6f8;
+    --tx: #333;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--tx);
+}
+.dk { position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex; }
+.sl {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 36px 40px 82px;
+    opacity: 0;
+    transform: scale(.96);
+    transition: opacity .4s, transform .4s;
+    pointer-events: none;
+    z-index: 1;
+    overflow-y: auto;
+}
+.sl.on { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
+.sl.pv { opacity: 0; transform: translateX(-50px) scale(.95); }
+.sl.nx { opacity: 0; transform: translateX(50px) scale(.95); }
+.head-title {
+    background: var(--base);
+    color: white;
+    padding: 10px 40px;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    display: inline-block;
+    border-radius: 12px;
+    text-align: center;
+}
+.sub-text {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+    line-height: 1.4;
+}
+.pb { position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100; }
+.nv {
+    position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: white;
+    border-top: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; z-index: 100;
+}
+.nb {
+    background: #eee; color: var(--base); border: none; padding: 10px 20px; border-radius: 8px;
+    font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer; transition: all .2s;
+}
+.nb:hover { background: #ddd; }
+.nb:disabled { opacity: 0.3; cursor: not-allowed; }
+.sc { color: #888; font-size: 16px; font-weight: 900; }
+.stp { opacity: 0; transform: translateY(20px); transition: all 0.4s; pointer-events: none; }
+.stp.shwn { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.pnl { background: #fff; padding: 24px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 3px solid #eaeaea; width: 100%; }
+.hl { color: var(--base); font-weight: 900; }
+
+.pnl-border {
+    background: #fff;
+    border: 4px solid var(--base);
+    border-radius: 20px;
+    padding: 24px;
+    width: 100%;
+}
+.btn {
+    background: var(--base); color: white; border: none; padding: 14px 24px; border-radius: 12px;
+    font-size: 24px; font-weight: 900; cursor: pointer; transition: transform .2s; font-family: 'Nunito', sans-serif;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3); }
+.chip-row, .base-row { display: flex; justify-content: center; gap: 18px; width: 100%; flex-wrap: wrap; }
+.base-card {
+    flex: 1 1 320px; background: #fff; border-radius: 20px; padding: 18px;
+    border: 4px solid #d9e7f6; box-shadow: 0 10px 26px rgba(0,0,0,0.06); text-align: center;
+}
+.step-list { display: flex; flex-direction: column; gap: 14px; }
+.step-box {
+    background: #f7fbff; border-left: 8px solid var(--base); padding: 14px 16px;
+    border-radius: 14px; font-size: 24px; line-height: 1.4; font-weight: 700;
+}
+.hero-title { font-size: 62px; color: var(--base); margin-bottom: 18px; text-align: center; line-height: 1.1; }
+.hero-sub { font-size: 28px; font-weight: 700; text-align: center; max-width: 720px; }
+.hero-emoji { font-size: 108px; margin-top: 28px; animation: bounce 2s infinite; }
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+@keyframes bob {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(4deg); }
+}
+/* Story Cards for Word Problems */
+.story-card {
+    width: 100%; border-radius: 28px; padding: 28px; display: grid;
+    grid-template-columns: 120px 1fr; gap: 24px; align-items: center;
+}
+.story-emoji { font-size: 114px; text-align: center; animation: bob 2.8s infinite; }
+.story-card h2 { font-size: 30px; margin-bottom: 12px; }
+.story-card p { font-size: 24px; line-height: 1.45; }
+
+/* Triangle Family */
+.tri-wrap {
+    position: relative; width: 200px; height: 180px; margin: 20px auto;
+}
+.tri-num {
+    position: absolute; font-size: 36px; font-weight: 900; background: #fff;
+    border: 4px solid var(--base); border-radius: 50%; width: 64px; height: 64px;
+    display: flex; justify-content: center; align-items: center; z-index: 2;
+}
+.tri-top { top: 0; left: 50%; transform: translateX(-50%); border-color: #E65100; color: #E65100; }
+.tri-bl { bottom: 0; left: 0; border-color: #2E7D32; color: #2E7D32; }
+.tri-br { bottom: 0; right: 0; border-color: #1976D2; color: #1976D2; }
+.tri-line {
+    position: absolute; background: #ccc; z-index: 1;
+}
+.line-b { bottom: 30px; left: 30px; width: 140px; height: 4px; }
+.line-l { top: 40px; left: 35px; width: 4px; height: 120px; transform: rotate(30deg); transform-origin: top; }
+.line-r { top: 40px; right: 35px; width: 4px; height: 120px; transform: rotate(-30deg); transform-origin: top; }
+</style>
+</head>
+<body>
+<div class="pb" id="pb"></div>
+<div class="dk" id="dk">
+
+    <!-- SLIDE 1: Portada -->
+    <div class="sl on">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <div class="hero-emoji">🔄</div>
+            <h1 class="hero-title">División:<br>La Inversa de la Multiplicación</h1>
+            <p class="hero-sub">Cómo usar la tabla de multiplicar al revés</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: INTRO El truco -->
+    <div class="sl">
+        <div class="head-title" style="background:#0288D1;">El truco para no dividir</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">¿Te imaginas poder resolver una división sin tener que repartir cosas una por una?</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#0288D1;">¡Existe un atajo secreto!</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">La multiplicación y la división son como hermanas gemelas que hacen lo contrario. ¡Si sabes multiplicar, automáticamente sabes dividir!</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">🕵️‍♀️✨</div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: El puente multiplicativo -->
+    <div class="sl">
+        <div class="head-title">Pensar al revés</div>
+        <p class="sub-text">Para resolver <b style="color:#d32f2f;">24 : 4</b>, nos hacemos una pregunta secreta:</p>
+        <div class="base-card" style="max-width:700px; margin:0 auto; padding:30px;">
+            <p style="font-size:38px; font-weight:900; color:#F57C00;">"¿Qué número multiplicado por 4 da 24?"</p>
+            <div class="stp" style="margin-top:30px;">
+                <div style="font-size:42px; font-weight:900; color:#388E3C;">___ • 4 = 24</div>
+                <p style="font-size:22px; margin-top:10px;">¡Revisa la tabla del 4!</p>
+            </div>
+            <div class="stp" style="margin-top:20px; font-size:36px; font-weight:900; color:var(--base);">
+                Sabemos que <b style="color:#1976D2;">6</b> • 4 = 24<br>
+                ¡Entonces <b style="color:#d32f2f;">24 : 4 = 6</b>!
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: Ejemplos de puente multiplicativo -->
+    <div class="sl">
+        <div class="head-title">¡Aplica el truco!</div>
+        <div class="step-list" style="width:100%; max-width:800px;">
+            <div class="step-box">
+                <span style="font-size:32px;"><b>42 : 7 = ?</b></span>
+                <div class="stp" style="margin-top:10px; color:#1976D2;">
+                    Pienso: ¿Qué número multiplicado por 7 da 42? <br>
+                    <b style="color:#E65100;">6</b> • 7 = 42 &rarr; Entonces <b>42 : 7 = 6</b>
+                </div>
+            </div>
+            <div class="step-box stp">
+                <span style="font-size:32px;"><b>45 : 5 = ?</b></span>
+                <div class="stp" style="margin-top:10px; color:#1976D2;">
+                    Pienso: ¿Qué número multiplicado por 5 da 45? <br>
+                    <b style="color:#E65100;">9</b> • 5 = 45 &rarr; Entonces <b>45 : 5 = 9</b>
+                </div>
+            </div>
+            <div class="step-box stp">
+                <span style="font-size:32px;"><b>80 : 8 = ?</b></span>
+                <div class="stp" style="margin-top:10px; color:#1976D2;">
+                    Pienso: ¿Qué número multiplicado por 8 da 80? <br>
+                    <b style="color:#E65100;">10</b> • 8 = 80 &rarr; Entonces <b>80 : 8 = 10</b>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: Familia de Operaciones INTRO -->
+    <div class="sl">
+        <div class="head-title" style="background:#F57C00;">Otra vez en familia</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">Al igual que la Suma y la Resta forman familias...</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#F57C00;">¡La Multiplicación y División también!</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">Con solo 3 números, podemos armar todo un equipo de 4 operaciones inseparables.</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">👨‍👩‍👧‍👦🔢</div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: Familias de Operaciones -->
+    <div class="sl">
+        <div class="head-title">La Familia de Operaciones</div>
+        <p class="sub-text">Observa cómo estos 3 números juegan juntos.</p>
+        
+        <div class="tri-wrap">
+            <div class="tri-num tri-top">18</div>
+            <div class="tri-num tri-bl">3</div>
+            <div class="tri-num tri-br">6</div>
+            <div class="tri-line line-b"></div>
+            <div class="tri-line line-l"></div>
+            <div class="tri-line line-r"></div>
+        </div>
+
+        <div class="stp" style="display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:600px; margin:20px auto;">
+            <div class="base-card" style="border-color:#1976D2;">
+                <h4 style="color:#1976D2; font-size:22px;">Multiplicaciones</h4>
+                <p style="font-size:28px; font-weight:900;">3 • 6 = 18</p>
+                <p style="font-size:28px; font-weight:900;">6 • 3 = 18</p>
+            </div>
+            <div class="base-card" style="border-color:#d32f2f;">
+                <h4 style="color:#d32f2f; font-size:22px;">Divisiones</h4>
+                <p style="font-size:28px; font-weight:900;">18 : 3 = 6</p>
+                <p style="font-size:28px; font-weight:900;">18 : 6 = 3</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE: Triángulo Explicación Extra 1 -->
+    <div class="sl">
+        <div class="head-title">Más Familias: Familia del 4</div>
+        <p class="sub-text">Observa cómo estos 3 números siempre van juntos.</p>
+        <div class="tri-wrap" style="transform: scale(0.9); margin-top:-10px;">
+            <div class="tri-num tri-top">36</div>
+            <div class="tri-num tri-bl">4</div>
+            <div class="tri-num tri-br">9</div>
+            <div class="tri-line line-b"></div>
+            <div class="tri-line line-l"></div>
+            <div class="tri-line line-r"></div>
+        </div>
+        <div class="stp" style="display:flex; gap:30px; margin-top:10px;">
+            <div class="pnl-border" style="padding:16px; border-color:#9C27B0;">
+                <b style="color:#9C27B0;">Multiplicamos:</b><br>
+                4 • 9 = 36<br>
+                9 • 4 = 36
+            </div>
+            <div class="pnl-border" style="padding:16px; border-color:#009688;">
+                <b style="color:#009688;">Dividimos:</b><br>
+                36 : 4 = 9<br>
+                36 : 9 = 4
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE: Triángulo Explicación Extra 2 -->
+    <div class="sl">
+        <div class="head-title">Familia del 8</div>
+        <p class="sub-text">Intenta encontrar las 4 operaciones antes de presionar siguiente.</p>
+        <div class="tri-wrap" style="transform: scale(0.9); margin-top:-10px;">
+            <div class="tri-num tri-top">56</div>
+            <div class="tri-num tri-bl">8</div>
+            <div class="tri-num tri-br">7</div>
+            <div class="tri-line line-b"></div>
+            <div class="tri-line line-l"></div>
+            <div class="tri-line line-r"></div>
+        </div>
+        <div class="stp" style="display:flex; gap:30px; margin-top:10px;">
+            <div class="pnl-border" style="padding:16px; border-color:#9C27B0;">
+                <b style="color:#9C27B0;">Multiplicamos:</b><br>
+                8 • 7 = 56<br>
+                7 • 8 = 56
+            </div>
+            <div class="pnl-border" style="padding:16px; border-color:#009688;">
+                <b style="color:#009688;">Dividimos:</b><br>
+                56 : 8 = 7<br>
+                56 : 7 = 8
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: Comprobación -->
+    <div class="sl">
+        <div class="head-title">Comprobar con la Inversa</div>
+        <p class="sub-text">Si quieres saber si dividiste bien, ¡usa la multiplicación!</p>
+        <div class="base-card" style="max-width:700px; margin:0 auto;">
+            <h3 style="font-size:32px;">¿Está correcto 72 : 8 = 9?</h3>
+            <div class="stp" style="margin-top:20px;">
+                <p style="font-size:24px;">Para revisarlo, multiplico el resultado por el divisor:</p>
+                <p style="font-size:36px; font-weight:900; color:#388E3C; margin:10px 0;">9 • 8 = 72</p>
+                <p style="font-size:24px; font-weight:800; color:var(--base);">¡Da el dividendo! Entonces la división está correcta ✅.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: ¡Encuentra el error! -->
+    <div class="sl">
+        <div class="head-title" style="background:#d32f2f;">¡Encuentra el error!</div>
+        <p class="sub-text">Sofía calculó <b class="hl">54 : 6 = 8</b>.</p>
+        <div class="base-card" style="border-color:#d32f2f; max-width:600px; margin:0 auto;">
+            <h3 style="color:#d32f2f;">¿Qué hizo mal Sofía?</h3>
+            <div class="stp" style="margin-top:20px;">
+                <p style="font-size:24px; font-weight:800;">¡No comprobó su resultado!</p>
+                <p style="font-size:24px; margin-top:10px;">Si comprobamos con la multiplicación:</p>
+                <p style="font-size:36px; font-weight:900; color:#E65100; margin:10px 0;">8 • 6 = 48</p>
+                <p style="font-size:22px;">(No da 54, así que está mala).<br>El resultado correcto es <b>9</b>, porque 9 • 6 = 54.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: Tablas Difíciles (7 y 9) -->
+    <div class="sl">
+        <div class="head-title">Aplica el truco a tablas difíciles</div>
+        <div class="step-list" style="width:100%; max-width:800px;">
+            <div class="step-box">
+                <span style="font-size:32px;"><b>63 : 7 = ?</b></span>
+                <div class="stp" style="margin-top:10px; color:#1976D2;">
+                    ¿Qué número • 7 da 63?<br>
+                    <b style="color:#E65100;">9</b> • 7 = 63 &rarr; Entonces <b>63 : 7 = 9</b>
+                </div>
+            </div>
+            <div class="step-box stp">
+                <span style="font-size:32px;"><b>81 : 9 = ?</b></span>
+                <div class="stp" style="margin-top:10px; color:#1976D2;">
+                    ¿Qué número • 9 da 81?<br>
+                    <b style="color:#E65100;">9</b> • 9 = 81 &rarr; Entonces <b>81 : 9 = 9</b>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE: Abre tu cuaderno -->
+    <div class="sl">
+        <div class="head-title" style="background:#00ACC1;">Abre tu cuaderno</div>
+        <p class="sub-text">Crea tú mismo el triángulo y las 4 operaciones.</p>
+        <div class="math-eq" style="font-size:36px; padding:20px; text-align:center;">
+            Dibuja la familia del <b>5</b>, el <b>6</b> y el <b>30</b>.<br>
+            <span style="font-size:24px; color:#555;">(Haz una pausa y escribe)</span>
+        </div>
+        <div class="stp" style="margin-top:20px; width:100%; max-width:600px;">
+            <div class="pnl-border" style="text-align:center; background:#FFF8E1; border-color:#FFB300;">
+                <div style="font-size:24px; font-weight:900; color:#F57C00;">¡Revisemos!</div>
+                <div style="font-size:20px; font-weight:800; color:#555; margin-top:10px; line-height:1.6;">
+                    <b style="color:var(--base);">Multiplicación:</b> 5 • 6 = 30  |  6 • 5 = 30 <br>
+                    <b style="color:var(--base);">División:</b> 30 : 5 = 6  |  30 : 6 = 5
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 10: Ejercicios Propuestos -->
+    <div class="sl">
+        <div class="head-title">Ejercicios Propuestos</div>
+        <p class="sub-text">Usa el puente multiplicativo en tu cuaderno.</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">
+            <div class="pnl-border" style="padding:16px;"><div style="font-size:22px; font-weight:900; color:var(--base);"><b>1.</b> 56 : 7 = ___ porque ___ • 7 = 56</div></div>
+            <div class="pnl-border" style="padding:16px;"><div style="font-size:22px; font-weight:900; color:var(--base);"><b>2.</b> 36 : 9 = ___ porque ___ • 9 = 36</div></div>
+            <div class="pnl-border" style="padding:16px;"><div style="font-size:22px; font-weight:900; color:var(--base);"><b>3.</b> Escribe la familia de: 8 • 5 = 40</div></div>
+            <div class="pnl-border" style="padding:16px;"><div style="font-size:22px; font-weight:900; color:var(--base);"><b>4.</b> Escribe la inversa de: 45 : 5 = 9</div></div>
+            <div class="pnl-border" style="padding:16px;"><div style="font-size:22px; font-weight:900; color:var(--base);"><b>5.</b> Comprueba: 49 : 7 = 7</div></div>
+            <div class="pnl-border" style="padding:16px;"><div style="font-size:22px; font-weight:900; color:var(--base);"><b>6.</b> El cociente es 9. Si lo multiplico por el divisor, da 45. ¿Cuál es la división?</div></div>
+        </div>
+    </div>
+
+    <!-- SLIDE 11: Respuestas -->
+    <div class="sl">
+        <div class="head-title">Respuestas</div>
+        <p class="sub-text">Revisa tu cuaderno. Haz un ✔️ si está correcto.</p>
+        <div class="base-card" style="max-width:700px; margin:0 auto; text-align:left;">
+            <ul style="font-size:24px; font-weight:800; line-height:1.6; list-style:none;">
+                <li><span style="color:#388E3C;">✔</span> 1. 56:7 = <b>8</b> porque 8•7=56</li>
+                <li><span style="color:#388E3C;">✔</span> 2. 36:9 = <b>4</b> porque 4•9=36</li>
+                <li><span style="color:#388E3C;">✔</span> 3. Fam: 5•8=40, 8•5=40, 40:8=5, 40:5=8</li>
+                <li><span style="color:#388E3C;">✔</span> 4. 9•5=45 (o 5•9=45)</li>
+                <li><span style="color:#388E3C;">✔</span> 5. 7•7 = 49 (Correcto)</li>
+                <li><span style="color:#388E3C;">✔</span> 6. La división es 45:5=9</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SLIDE 12: Problema de Aplicación 1 -->
+    <div class="sl">
+        <div class="head-title">Problema de Aplicación 1</div>
+        <div class="story-card" style="background:#fff3e0; border:4px solid #ffb74d;">
+            <div class="story-emoji">🎲</div>
+            <div>
+                <h2>Juegos del Recreo</h2>
+                <p>En el recreo hay <b>35 estudiantes</b> y la profesora quiere armar equipos para jugar a la cuerda. Si arma <b>5 equipos</b> con la misma cantidad de niños, ¿cuántos niños hay en cada equipo?</p>
+            </div>
+        </div>
+        <div class="stp" style="margin-top:20px; text-align:center;">
+            <div class="base-card" style="display:inline-block; text-align:left;">
+                <p style="font-size:24px; margin-bottom:10px;"><b>Operación:</b> 35 : 5</p>
+                <p style="font-size:24px; margin-bottom:10px;"><b>Pienso:</b> ¿Qué número • 5 = 35?</p>
+                <p style="font-size:24px; color:#E65100; font-weight:900;">Respuesta: Hay 7 niños en cada equipo (porque 7•5=35).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 13: Problema de Aplicación 2 -->
+    <div class="sl">
+        <div class="head-title">Problema de Aplicación 2</div>
+        <div class="story-card" style="background:#e8f5e9; border:4px solid #81c784;">
+            <div class="story-emoji">🚗</div>
+            <div>
+                <h2>Colección de Autitos</h2>
+                <p>Julián tiene una colección de <b>54 autitos</b> y los quiere guardar en cajitas especiales. En cada cajita caben exactamente <b>6 autitos</b>. ¿Cuántas cajitas necesita?</p>
+            </div>
+        </div>
+        <div class="stp" style="margin-top:20px; text-align:center;">
+            <div class="base-card" style="display:inline-block; text-align:left;">
+                <p style="font-size:24px; margin-bottom:10px;"><b>Operación:</b> 54 : 6</p>
+                <p style="font-size:24px; margin-bottom:10px;"><b>Pienso:</b> ¿Qué número • 6 = 54?</p>
+                <p style="font-size:24px; color:#2E7D32; font-weight:900;">Respuesta: Necesita 9 cajitas (porque 9•6=54).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE: Problema de Aplicación 3 -->
+    <div class="sl">
+        <div class="head-title">Problema de Aplicación 3</div>
+        <div class="story-card" style="background:#E0F2F1; border:4px solid #00897B;">
+            <div class="story-emoji">🍪</div>
+            <div>
+                <h2>Galletas para Amigos</h2>
+                <p>Tienes <b>24 galletas</b> y se las das equitativamente a <b>3 amigos</b>. Si quieres comprobar con una multiplicación, ¿cómo lo haces?</p>
+            </div>
+        </div>
+        <div class="stp" style="margin-top:20px; text-align:center;">
+            <div class="base-card" style="display:inline-block; text-align:left;">
+                <p style="font-size:24px; margin-bottom:10px;"><b>División:</b> 24 : 3 = 8</p>
+                <p style="font-size:24px; margin-bottom:10px;"><b>Comprobación:</b> <b style="color:var(--base);">8 • 3 = 24</b></p>
+                <p style="font-size:24px; color:#00695C; font-weight:900;">Respuesta: 8 • 3 = 24. Está correcto.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 14: Desafío Supremo -->
+    <div class="sl">
+        <div class="head-title" style="background:linear-gradient(90deg, #9333EA, #db2777);">Desafío Supremo</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h2 style="font-size:42px; margin-bottom:20px; color:#9333EA;">🔐 El Cofre Numérico</h2>
+            <p style="font-size:24px; text-align:center; max-width:800px; margin-bottom:30px;">
+                Para abrir este cofre y ganar el oro, debes encontrar los números que faltan en la familia de operaciones. ¡Todos están conectados!
+            </p>
+            <div class="stp" style="width:100%; max-width:700px; background:#222; border:6px solid #B8860B; border-radius:12px; padding:20px; color:white; text-align:center; font-family:monospace;">
+                <p style="font-size:32px; color:#FFD700; margin-bottom:10px;">? • 8 = 72</p>
+                <p style="font-size:32px; color:#FFD700; margin-bottom:10px;">8 • ? = 72</p>
+                <p style="font-size:32px; color:#FFD700; margin-bottom:10px;">72 : 8 = ?</p>
+                <p style="font-size:32px; color:#FFD700; margin-bottom:30px;">72 : ? = 8</p>
+                
+                <div class="stp" style="color:#55FF55; font-size:36px; font-weight:bold;">¡El número secreto es el 9! 🔓</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 15: Resumen -->
+    <div class="sl">
+        <div class="head-title">Resumen</div>
+        <div style="display:flex; flex-direction:column; gap:16px; max-width:800px; margin:0 auto;">
+            <div class="step-box" style="border-left-color:#047857;">
+                <b style="color:var(--base);">La Multiplicación es tu mejor atajo:</b> Si te sabes las tablas, sabes dividir.
+            </div>
+            <div class="step-box" style="border-left-color:#047857;">
+                <b style="color:var(--base);">Puente Multiplicativo:</b> Para dividir 32:4, pregúntate "¿Qué número multiplicado por 4 da 32?".
+            </div>
+            <div class="step-box" style="border-left-color:#047857;">
+                <b style="color:var(--base);">Familia de Operaciones:</b> Con 3 números puedes armar 2 multiplicaciones y 2 divisiones inseparables.
+            </div>
+            <div class="step-box" style="border-left-color:#047857;">
+                <b style="color:var(--base);">Comprobación:</b> Multiplica el resultado de tu división por el divisor. ¡Te debe dar el número inicial!
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 16: Cierre -->
+    <div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <h2 style="font-size:48px; color:#047857; margin-bottom:20px;">¡Gran trabajo!</h2>
+            <p style="font-size:28px; max-width:700px;">Descubriste el secreto más grande de la división: pensar al revés.</p>
+            <div class="hero-emoji">🎯</div>
+        </div>
+    </div>
+
+</div>
+<div class="nv">
+    <button class="nb" id="b-p" onclick="go(-1)">⬅ Anterior</button>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+        <span class="sc" id="st">1 / X</span>
+        <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="100" value="1" oninput="goToSlide(this.value)">
+    </div>
+    <button class="nb" id="b-n" onclick="go(1)">Siguiente ➡</button>
+</div>
+<script>
+const sls = document.querySelectorAll('.sl');
+const st = document.getElementById('st');
+const bp = document.getElementById('b-p');
+const bn = document.getElementById('b-n');
+const pb = document.getElementById('pb');
+let c = 0; const T = sls.length;
+function ui() {
+    sls.forEach((s, i) => {
+        s.className = 'sl ' + (i === c ? 'on' : i < c ? 'pv' : 'nx');
+    });
+    st.textContent = `${c + 1} / ${T}`;
+    pb.style.width = `${((c + 1) / T) * 100}%`;
+    bp.disabled = c === 0;
+    bn.disabled = c === T - 1;
+    let sl = document.getElementById('slide-slider');
+    if(sl) { sl.max = T; sl.value = c + 1; }
+}
+function goToSlide(n) {
+    let val = parseInt(n) - 1;
+    if (val >= 0 && val < T) {
+        c = val;
+        ui();
+    }
+}
+function go(d) {
+    if(d>0) {
+        const hid = sls[c].querySelectorAll('.stp:not(.shwn)');
+        if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+    } else {
+        const shw = sls[c].querySelectorAll('.stp.shwn');
+        if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+    }
+    const n = c + d;
+    if(n >= 0 && n < T) { c = n; ui(); }
+}
+document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') go(1);
+    if (e.key === 'ArrowLeft') go(-1);
+});
+ui();
+</script>
+</body>
+</html>

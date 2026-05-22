@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Multiplicación 3: Problemas Multiplicativos</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root { --base: #1C4A82; --bg: #f5f6f8; --tx: #333; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Nunito', sans-serif; background: var(--bg); overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; color: var(--tx); }
+.dk { position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex; }
+.sl { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 36px 40px 82px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1; overflow-y: auto; }
+.sl.on { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
+.sl.pv { opacity: 0; transform: translateX(-50px) scale(.95); }
+.sl.nx { opacity: 0; transform: translateX(50px) scale(.95); }
+.head-title { background: var(--base); color: white; padding: 10px 40px; font-size: 32px; font-weight: 900; margin-bottom: 24px; display: inline-block; border-radius: 12px; text-align: center; }
+.sub-text { font-size: 24px; font-weight: 600; margin-bottom: 22px; text-align: center; line-height: 1.4; }
+.pb { position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100; }
+.nv { position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: white; border-top: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; z-index: 100; }
+.nb { background: #eee; color: var(--base); border: none; padding: 10px 20px; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer; transition: all .2s; }
+.nb:hover { background: #ddd; } .nb:disabled { opacity: 0.3; cursor: not-allowed; }
+.sc { color: #888; font-size: 16px; font-weight: 900; }
+.stp { opacity: 0; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none; }
+.stp.shwn { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.pnl { background: #fff; padding: 24px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 3px solid #eaeaea; width: 100%; }
+.pnl-border { background: #fff; border: 4px solid var(--base); border-radius: 20px; padding: 24px; width: 100%; }
+.hl { color: var(--base); font-weight: 900; }
+.btn { background: var(--base); color: white; border: none; padding: 14px 24px; border-radius: 12px; font-size: 20px; font-weight: 900; cursor: pointer; transition: transform .2s; font-family: 'Nunito', sans-serif; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3); }
+.math-eq { font-size: 48px; font-weight: 900; color: var(--base); background: #fff; padding: 12px 30px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); border: 3px dashed #bbdefb; margin: 12px; text-align: center; }
+.two-col { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; width: 100%; align-items: stretch; }
+.step-list { display: flex; flex-direction: column; gap: 14px; }
+.step-box { background: #f7fbff; border-left: 8px solid var(--base); padding: 14px 16px; border-radius: 14px; font-size: 22px; line-height: 1.4; font-weight: 700; }
+.side-panel { background: linear-gradient(180deg, #fefefe 0%, #f4f9ff 100%); border: 3px solid #d5e4f5; border-radius: 18px; padding: 18px; }
+.side-panel h3 { font-size: 24px; color: var(--base); margin-bottom: 12px; }
+.side-panel p { font-size: 22px; line-height: 1.45; }
+.story-card { width: 100%; border-radius: 28px; padding: 28px; display: grid; grid-template-columns: 120px 1fr; gap: 24px; align-items: center; }
+.story-emoji { font-size: 100px; text-align: center; animation: bob 2.8s infinite; }
+.story-card h2 { font-size: 30px; margin-bottom: 12px; }
+.story-card p { font-size: 24px; line-height: 1.45; }
+.summary-list { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+.summary-item { background: #fff; border-radius: 16px; padding: 16px 18px; border: 3px solid #dbe7f4; font-size: 23px; line-height: 1.45; }
+.fact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; width: 100%; }
+.fact-box { background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%); border-radius: 18px; padding: 16px; border: 3px solid #d8e7f6; }
+.fact-box h4 { font-size: 24px; color: var(--base); margin-bottom: 10px; text-align: center; }
+.fact-box p { font-size: 22px; line-height: 1.45; text-align: center; }
+.warn-card { background: #fff8e5; border: 4px solid #f0ca59; border-radius: 20px; padding: 20px; font-size: 22px; line-height: 1.45; width: 100%; }
+.msg-area { font-size: 24px; font-weight: 900; height: 40px; text-align: center; margin-top: 20px; }
+.hero-title { font-size: 54px; color: var(--base); margin-bottom: 18px; text-align: center; line-height: 1.1; }
+.hero-sub { font-size: 28px; font-weight: 700; text-align: center; max-width: 720px; }
+.hero-emoji { font-size: 108px; margin-top: 28px; animation: bounce 2s infinite; }
+.quiz-row { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; }
+.group-box { background: #fff; border: 4px solid #FF9D9D; border-radius: 20px; padding: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 32px; flex-wrap: wrap; }
+/* Modelo 4 pasos */
+.model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; max-width: 800px; margin: 0 auto; }
+.model-step { background: #fff; border-radius: 16px; padding: 16px; border-left: 8px solid var(--base); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.model-step h4 { font-size: 20px; margin-bottom: 8px; }
+.model-step p { font-size: 20px; line-height: 1.4; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+</style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 class="hero-title">Problemas<br>Multiplicativos</h1>
+            <p class="hero-sub">Resolvemos problemas de la vida real con multiplicación usando el Modelo de 4 Pasos.</p>
+            <div class="hero-emoji">🧩</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 2: INTRO Modelo 4 Pasos -->
+        <div class="sl">
+        <div class="head-title" style="background:#1976D2;">¿Cómo resolver sin confundirse?</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">Cuando leemos un problema matemático, a veces no sabemos por dónde empezar.</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:28px; font-weight:800; color:#1976D2;">¡Para eso existe una receta secreta!</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">Se llama el <b>Modelo de 4 Pasos</b>. Es como un mapa que te guía desde que lees el problema hasta que encuentras la respuesta correcta.</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">🗺️📍</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 3: Modelo de 4 pasos -->
+        <div class="sl">
+        <div class="head-title">Modelo de 4 Pasos</div>
+        <p class="sub-text">Para resolver cualquier problema, seguimos estos 4 pasos:</p>
+        <div class="model-grid">
+            <div class="stp model-step" style="border-color:#2196F3;">
+                <h4 style="color:#1976D2;">1️⃣ Comprende</h4>
+                <p>Lee el problema. Identifica <b>qué datos tienes</b> y <b>qué te preguntan</b>.</p>
+            </div>
+            <div class="stp model-step" style="border-color:#4CAF50;">
+                <h4 style="color:#388E3C;">2️⃣ Planifica</h4>
+                <p>Decide la operación: ¿Es multiplicación? ¿Hay grupos iguales? ¿Un arreglo?</p>
+            </div>
+            <div class="stp model-step" style="border-color:#FF9800;">
+                <h4 style="color:#F57F17;">3️⃣ Resuelve</h4>
+                <p>Calcula usando la tabla o la estrategia que prefieras.</p>
+            </div>
+            <div class="stp model-step" style="border-color:#9C27B0;">
+                <h4 style="color:#7B1FA2;">4️⃣ Comprueba</h4>
+                <p>Verifica tu respuesta. ¿Tiene sentido? ¿Puedes comprobarlo con suma?</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 4: INTRO Los 3 Tipos -->
+        <div class="sl">
+        <div class="head-title" style="background:#7B1FA2;">Los 3 Disfraces de la Multiplicación</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">En la vida real, los problemas de multiplicación se "disfrazan" de 3 formas distintas.</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#7B1FA2;">¡Es como si tuvieran tres uniformes diferentes!</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">Vamos a conocer cuáles son estos <b>3 tipos</b> de problemas para que aprendas a reconocerlos de inmediato.</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">🕵️‍♂️🎭</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 5: Tipo 1 — Iteración (Grupos iguales) -->
+        <div class="sl">
+        <div class="head-title" style="background:#E65100;">Tipo 1: Grupos Iguales (Iteración)</div>
+        <div class="two-col" style="max-width:900px;">
+            <div class="side-panel" style="border-color:#FFE082;">
+                <h3 style="color:#E65100; font-size:24px;">🎁 Los regalos del aniversario</h3>
+                <p style="font-size:22px;">El curso preparó <b>8 bolsas</b> de sorpresa para el aniversario. En cada bolsa pusieron <b>6 dulces</b>. ¿Cuántos dulces usaron en total?</p>
+            </div>
+            <div class="step-list">
+                <div class="step-box stp" style="border-color:#2196F3;">
+                    <b style="color:#1976D2;">1. Comprende:</b> 8 bolsas, 6 dulces c/u. ¿Total?
+                </div>
+                <div class="step-box stp" style="border-color:#4CAF50;">
+                    <b style="color:#388E3C;">2. Planifica:</b> Grupos iguales → Multiplicar.
+                </div>
+                <div class="step-box stp" style="border-color:#FF9800;">
+                    <b style="color:#F57F17;">3. Resuelve:</b> 8 × 6 = 48.
+                </div>
+                <div class="step-box stp" style="border-color:#9C27B0;">
+                    <b style="color:#7B1FA2;">4. Comprueba:</b> 6+6+6+6+6+6+6+6 = 48 ✅
+                </div>
+            </div>
+        </div>
+        <div class="stp math-eq" style="font-size:32px; border-color:#E65100; margin-top:14px;">
+            Usaron <b style="color:#E65100;">48 dulces</b> en total.
+        </div>
+        </div>
+
+        <!-- SLIDE 4: Tipo 2 — Arreglo Rectangular -->
+        <div class="sl">
+        <div class="head-title" style="background:#1976D2;">Tipo 2: Arreglo Rectangular</div>
+        <div class="two-col" style="max-width:900px;">
+            <div class="side-panel" style="border-color:#bbdefb;">
+                <h3 style="color:#1976D2; font-size:24px;">🎹 Las sillas del acto cívico</h3>
+                <p style="font-size:22px;">La profesora ordenó <b>5 filas</b> de sillas con <b>9 sillas</b> cada fila para el acto del lunes. ¿Cuántas sillas usó?</p>
+            </div>
+            <div class="step-list">
+                <div class="step-box stp" style="border-color:#2196F3;">
+                    <b style="color:#1976D2;">1. Comprende:</b> 5 filas, 9 sillas por fila.
+                </div>
+                <div class="step-box stp" style="border-color:#4CAF50;">
+                    <b style="color:#388E3C;">2. Planifica:</b> Arreglo rectangular → 5 × 9.
+                </div>
+                <div class="step-box stp" style="border-color:#FF9800;">
+                    <b style="color:#F57F17;">3. Resuelve:</b> 5 × 9 = 45.
+                </div>
+                <div class="step-box stp" style="border-color:#9C27B0;">
+                    <b style="color:#7B1FA2;">4. Comprueba:</b> 9×5 = 45 ✅ (Conmutativa)
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 5: Tipo 3 — Correspondencia Múltiple -->
+        <div class="sl">
+        <div class="head-title" style="background:#7B1FA2;">Tipo 3: Correspondencia Múltiple</div>
+        <div class="two-col" style="max-width:900px;">
+            <div class="side-panel" style="border-color:#E1BEE7;">
+                <h3 style="color:#7B1FA2; font-size:24px;">🏀 El torneo de básquet</h3>
+                <p style="font-size:22px;">Cada equipo del torneo tiene <b>7 jugadores</b>. Hay <b>4 equipos</b> inscritos. ¿Cuántos jugadores hay?</p>
+                <p class="stp" style="font-size:20px; margin-top:10px; color:#7B1FA2; font-weight:800;">A cada equipo le corresponden 7 jugadores.</p>
+            </div>
+            <div class="step-list">
+                <div class="step-box stp" style="border-color:#2196F3;">
+                    <b style="color:#1976D2;">1. Comprende:</b> 4 equipos, 7 jugadores c/u.
+                </div>
+                <div class="step-box stp" style="border-color:#4CAF50;">
+                    <b style="color:#388E3C;">2. Planifica:</b> Correspondencia → 4 × 7.
+                </div>
+                <div class="step-box stp" style="border-color:#FF9800;">
+                    <b style="color:#F57F17;">3. Resuelve:</b> 4 × 7 = 28.
+                </div>
+                <div class="step-box stp" style="border-color:#9C27B0;">
+                    <b style="color:#7B1FA2;">4. Comprueba:</b> 7+7+7+7 = 28 ✅
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 6: Abre tu cuaderno — Clasificar tipo de problema -->
+        <div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Lee cada problema y escribe de qué <b>tipo</b> es (Grupos iguales, Arreglo o Correspondencia).</p>
+        <div style="display:flex; flex-direction:column; gap:16px; width:100%; max-width:800px; margin:0 auto;">
+            <div class="pnl" style="border-color:#9DDEFF; font-size:22px;">
+                <b>A.</b> Hay 3 estantes con 10 libros c/u. ¿Cuántos libros hay?
+                <span class="stp" style="color:#047857; font-weight:900; margin-left:8px;">→ Grupos iguales (3 × 10 = 30)</span>
+            </div>
+            <div class="pnl" style="border-color:#FF9D9D; font-size:22px;">
+                <b>B.</b> En el patio hay 6 filas de 8 baldosas. ¿Cuántas baldosas hay?
+                <span class="stp" style="color:#047857; font-weight:900; margin-left:8px;">→ Arreglo (6 × 8 = 48)</span>
+            </div>
+            <div class="pnl" style="border-color:#E1BEE7; font-size:22px;">
+                <b>C.</b> Cada bicicleta tiene 2 ruedas. Hay 9 bicicletas. ¿Cuántas ruedas hay?
+                <span class="stp" style="color:#047857; font-weight:900; margin-left:8px;">→ Correspondencia (9 × 2 = 18)</span>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 7: Quiz interactivo -->
+        <div class="sl">
+        <div class="head-title">Quiz: ¿Multiplicar o No?</div>
+        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb; max-width:700px; margin:0 auto;">
+            <p style="font-size:26px; font-weight:800; text-align:center; margin-bottom:20px;">"En 5 cajas hay 8 lápices cada una. ¿Cuántos lápices en total?"</p>
+            <p style="font-size:22px; text-align:center; margin-bottom:18px;">¿Qué operación corresponde?</p>
+            <div class="quiz-row">
+                <button class="btn" onclick="chkAns(this, true)" style="font-size:22px;">5 × 8 = 40</button>
+                <button class="btn" onclick="chkAns(this, false)" style="font-size:22px;">5 + 8 = 13</button>
+                <button class="btn" onclick="chkAns(this, false)" style="font-size:22px;">8 − 5 = 3</button>
+            </div>
+            <div class="msg-area"></div>
+        </div>
+        </div>
+
+        <!-- SLIDE 8: Problema inverso — Crear problema desde la operación -->
+        <div class="sl">
+        <div class="head-title" style="background:#0277BD;">Problema Inverso</div>
+        <p class="sub-text">Ahora TÚ inventas el problema. Te doy la operación, tú creas la historia.</p>
+        <div class="pnl" style="max-width:750px; margin:0 auto; border-color:#bbdefb;">
+            <div style="text-align:center; margin-bottom:18px;">
+                <div class="math-eq" style="font-size:42px; border-color:#0277BD;">4 × 9 = 36</div>
+            </div>
+            <div class="stp warn-card" style="border-color:#0277BD; background:#e3f2fd;">
+                <p style="font-size:22px; font-weight:800;">📝 Ejemplo de problema inventado:</p>
+                <p style="font-size:22px; margin-top:8px;">"En la feria hay <b>4 puestos</b> de helados. Cada puesto tiene <b>9 sabores</b>. ¿Cuántos sabores puedo probar en total?"</p>
+                <p style="font-size:22px; margin-top:8px;"><b>Respuesta:</b> 4 × 9 = <b>36 sabores</b>.</p>
+            </div>
+            <div class="stp" style="text-align:center; margin-top:16px; font-size:22px; font-weight:800; color:var(--base);">
+                🖊️ Ahora inventa TÚ otro problema distinto para <b>4 × 9 = 36</b> en tu cuaderno.
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 9: Detección de error -->
+        <div class="sl">
+        <div class="head-title" style="background:#d32f2f;">¡Encuentra el error!</div>
+        <p class="sub-text">Felipe resolvió este problema:</p>
+        <div class="pnl" style="max-width:750px; margin:0 auto; border-color:#ffcdd2;">
+            <p style="font-size:22px; margin-bottom:14px;">"Hay 3 bandejas con 5 pasteles y otra con 6 pasteles. ¿Cuántos hay en total?"</p>
+            <div style="text-align:center; font-size:28px; font-weight:900; color:#d32f2f; margin:12px 0;">
+                Felipe escribió: 3 × 5 = 15. Respuesta: 15 pasteles.
+            </div>
+            <div class="stp warn-card" style="text-align:left;">
+                ❌ <b>El error:</b> Las bandejas NO tienen la misma cantidad → ¡no se puede multiplicar directamente!<br>
+                ✅ <b>Correcto:</b> 3 bandejas de 5 = 15, más 1 de 6 = 15 + 6 = <b style="color:#047857;">21 pasteles</b>.<br>
+                <span style="color:#555; font-size:20px;">La multiplicación solo funciona con <b>grupos iguales</b>.</span>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 10: Ejercicios Propuestos -->
+        <div class="sl">
+        <div class="head-title">Ejercicios para tu cuaderno ✏️</div>
+        <p class="sub-text">Resuelve usando el Modelo de 4 Pasos.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; width:100%;">
+            <div class="pnl" style="font-size:21px; font-weight:800; border-color:#9DDEFF;">Lucía compró 3 packs de yogures. Cada pack tiene 4 yogures. ¿Cuántos compró?</div>
+            <div class="pnl" style="font-size:21px; font-weight:800; border-color:#FF9D9D;">En el patio hay un arreglo de 7 filas y 6 columnas de macetas. ¿Cuántas macetas hay?</div>
+            <div class="pnl" style="font-size:21px; font-weight:800; border-color:#9DE3BD;">Cada araña tiene 8 patas. Si hay 5 arañas, ¿cuántas patas hay en total?</div>
+            <div class="pnl" style="font-size:21px; font-weight:800; border-color:#FFE082;">Inventa un problema de la vida real para la multiplicación <b>6 × 3 = 18</b>.</div>
+            <div class="pnl" style="font-size:21px; font-weight:800; border-color:#E1BEE7;">Carlos dice que 4×5 es 25. ¿Tiene razón? Explica por qué.</div>
+            <div class="pnl" style="font-size:21px; font-weight:800; border-color:#FFB74D;">Si tengo 16 yogures y los reparto en 2 packs iguales, ¿cuántos quedan por pack? ¿Qué operación usaste?</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 11: Respuestas -->
+        <div class="sl">
+        <div class="head-title" style="background:#047857;">✅ Respuestas</div>
+        <div class="stp" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; width:100%;">
+            <div class="pnl" style="text-align:center; font-size:22px; font-weight:900; color:#047857; border-color:#9DE3BD;">3 × 4 = <b>12 yogures</b> ✓</div>
+            <div class="pnl" style="text-align:center; font-size:22px; font-weight:900; color:#047857; border-color:#9DE3BD;">7 × 6 = <b>42 macetas</b> ✓</div>
+            <div class="pnl" style="text-align:center; font-size:22px; font-weight:900; color:#047857; border-color:#9DE3BD;">5 × 8 = <b>40 patas</b> ✓</div>
+            <div class="pnl" style="text-align:center; font-size:20px; font-weight:800; color:#047857; border-color:#9DE3BD;">Ejemplo: "6 niños, 3 lápices c/u" ✓</div>
+            <div class="pnl" style="text-align:center; font-size:20px; font-weight:800; color:#047857; border-color:#9DE3BD;">No. 4×5=<b>20</b>, no 25 ✓</div>
+            <div class="pnl" style="text-align:center; font-size:20px; font-weight:800; color:#047857; border-color:#9DE3BD;">16÷2=<b>8</b>. Usé la división ✓</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 12: Problema situacional guiado 1 -->
+        <div class="sl">
+        <div class="head-title">Resolución Paso a Paso</div>
+        <div class="two-col" style="max-width:900px;">
+            <div class="side-panel" style="border-color:#F9A825;">
+                <h3 style="color:#F9A825; font-size:24px;">🎭 El teatro del colegio</h3>
+                <p style="font-size:22px;">Para la obra de teatro compraron <b>8 disfraces</b>. Cada disfraz costó <b>$9</b>. Además compraron <b>3 pelucas</b> a <b>$5</b> cada una. ¿Cuánto gastaron en total?</p>
+            </div>
+            <div class="step-list">
+                <div class="step-box stp" style="border-color:#2196F3;">
+                    <b style="color:#1976D2;">1. Comprende:</b> 8 disfraces a $9 c/u + 3 pelucas a $5 c/u.
+                </div>
+                <div class="step-box stp" style="border-color:#4CAF50;">
+                    <b style="color:#388E3C;">2. Planifica:</b> Dos multiplicaciones + una suma.
+                </div>
+                <div class="step-box stp" style="border-color:#FF9800;">
+                    <b style="color:#F57F17;">3. Resuelve:</b> 8×9=72 + 3×5=15 → 72+15=<b>$87</b>.
+                </div>
+                <div class="step-box stp" style="border-color:#9C27B0;">
+                    <b style="color:#7B1FA2;">4. Comprueba:</b> 72+15=87 ✅
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 13: Problema situacional 2 -->
+        <div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#E8F5E9; border:5px solid #2E7D32;">
+            <div class="story-emoji">🍎</div>
+            <div>
+                <h2 style="color:#2E7D32;">Los fruteros del mercado</h2>
+                <p>En el mercado hay <b>6 puestos</b> de frutas. Cada puesto tiene <b>9 kilos</b> de manzanas. ¿Cuántos kilos de manzanas hay en el mercado?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #2E7D32; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Resolución:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Grupos iguales: 6 × 9 = <b>54</b><br>
+                        <span style="color:var(--base);">Hay 54 kilos de manzanas.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 14: Problema situacional 3 -->
+        <div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#FFF3E0; border:5px solid #E65100;">
+            <div class="story-emoji">📚</div>
+            <div>
+                <h2 style="color:#E65100;">Los cuadernos de la escuela</h2>
+                <p>La escuela compró <b>7 cajas</b> de cuadernos. Cada caja trae <b>8 cuadernos</b>. Si ya repartieron <b>20 cuadernos</b>, ¿cuántos les quedan?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #E65100; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Resolución:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Total: 7 × 8 = 56 cuadernos.<br>
+                        Quedan: 56 − 20 = <b>36</b><br>
+                        <span style="color:var(--base);">Les quedan 36 cuadernos.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 15: Problema situacional 4 — Problema inverso -->
+        <div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#E1F5FE; border:5px solid #0288D1;">
+            <div class="story-emoji">🏅</div>
+            <div>
+                <h2 style="color:#0288D1;">El campeonato de atletismo</h2>
+                <p>El resultado de una multiplicación es <b>45</b>. Si uno de los factores es <b>9</b>, ¿cuál es el otro factor? Inventa un problema deportivo con esa multiplicación.</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #0288D1; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Resolución:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        ? × 9 = 45 → <b>5</b> × 9 = 45.<br>
+                        Problema: "Hay 5 equipos con 9 atletas c/u."<br>
+                        <span style="color:var(--base);">El otro factor es 5.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 16: Desafío Supremo — ObraCraft -->
+        <div class="sl">
+        <div class="head-title" style="background: linear-gradient(90deg, #9333EA 0%, #db2777 100%);">Desafío Supremo ⚡</div>
+        <div class="story-card" style="background:#DCFCE7; border:5px solid #16A34A; box-shadow: 0 10px 25px rgba(22,163,74,0.2);">
+            <div class="story-emoji" style="font-size:90px; animation:bounce 2s infinite;">⛏️</div>
+            <div>
+                <h2 style="color:#16A34A; font-size:30px;">ObraCraft: La Poción de Invisibilidad</h2>
+                <p style="font-size:22px;">Para fabricar <b>1 poción</b> necesitas <b>3 hongos mágicos</b> y <b>2 gotas de lava</b>. Si quieres hacer <b>7 pociones</b>, ¿cuántos hongos y cuántas gotas necesitas? ¿Y cuántos ingredientes en total?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #16A34A; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Solución:</p>
+                    <div style="font-size:22px; font-weight:900; line-height:1.6;">
+                        Hongos: 7 × 3 = <b>21 hongos</b> 🍄<br>
+                        Gotas: 7 × 2 = <b>14 gotas</b> 🔥<br>
+                        Total: 21 + 14 = <span style="color:#16a34a;"><b>35 ingredientes</b></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 17: Desafío Supremo — Encadenado -->
+        <div class="sl">
+        <div class="head-title" style="background: linear-gradient(90deg, #9333EA 0%, #db2777 100%);">Desafío Supremo 🔐</div>
+        <div class="story-card" style="background:#F3E8FF; border:5px solid #9333EA; box-shadow: 0 10px 25px rgba(147,51,234,0.2);">
+            <div class="story-emoji" style="font-size:90px; animation:bounce 2s infinite;">⏳</div>
+            <div>
+                <h2 style="color:#9333EA; font-size:30px;">Viaje en el Tiempo Matemático</h2>
+                <p style="font-size:22px;">Empiezas con el número <b>2</b>. En cada paso multiplicas el resultado anterior por <b>3</b>. ¿A qué número llegas después de <b>4 pasos</b>?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #9333EA; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Solución:</p>
+                    <div style="font-size:22px; font-weight:900; line-height:1.8;">
+                        Paso 1: 2 × 3 = <b>6</b><br>
+                        Paso 2: 6 × 3 = <b>18</b><br>
+                        Paso 3: 18 × 3 = <b>54</b><br>
+                        Paso 4: 54 × 3 = <span style="color:#9333ea;"><b>162</b></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 18: Problema Integrador de Cierre -->
+        <div class="sl">
+        <div class="head-title" style="background:#0277BD;">Problema Integrador de Cierre</div>
+        <div class="pnl" style="max-width:800px; margin:0 auto; border-color:#bbdefb;">
+            <p style="font-size:24px; line-height:1.6; margin-bottom:16px;">
+                En el <b>aniversario del colegio</b>, el 3° básico debe armar <b>48 paquetes</b> de regalos. Hay <b>8 estudiantes</b> en el comité.
+            </p>
+            <div class="stp" style="font-size:22px; line-height:1.6; margin-bottom:10px;">
+                <b>a)</b> Si los estudiantes se reparten el trabajo equitativamente, ¿cuántos paquetes arma cada uno?
+                <span class="stp" style="color:#047857; font-weight:900; display:block; margin-top:4px;">→ 48 ÷ 8 = <b>6 paquetes</b> por estudiante.</span>
+            </div>
+            <div class="stp" style="font-size:22px; line-height:1.6; margin-bottom:10px;">
+                <b>b)</b> Si cada paquete lleva <b>5 dulces</b>, ¿cuántos dulces compraron en total?
+                <span class="stp" style="color:#047857; font-weight:900; display:block; margin-top:4px;">→ 48 × 5 = <b>240 dulces</b>.</span>
+            </div>
+            <div class="stp" style="font-size:22px; line-height:1.6;">
+                <b>c)</b> Inventa una pregunta más sobre esta situación y resuélvela en tu cuaderno.
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 19: Resumen -->
+        <div class="sl">
+        <div class="head-title">Resumen</div>
+        <div class="summary-list">
+            <div class="stp summary-item"><b>📋 Modelo 4 Pasos:</b> Comprende → Planifica → Resuelve → Comprueba.</div>
+            <div class="stp summary-item"><b>🔁 3 Tipos:</b> Grupos iguales (iteración), Arreglo rectangular, Correspondencia múltiple.</div>
+            <div class="stp summary-item"><b>🔄 Problema Inverso:</b> Dada la operación, puedes inventar el problema.</div>
+            <div class="stp summary-item"><b>⚠️ Cuidado:</b> Solo se multiplica si los grupos son <b>iguales</b>. Si no, hay que sumar por partes.</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 20: Cierre -->
+        <div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:34px; font-weight:800; line-height:1.45; max-width:780px;">¡Felicidades! Ya sabes resolver problemas multiplicativos con el Modelo de 4 Pasos. ¡Eres un matemático en acción!</p>
+            <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">🏆</div>
+        </div>
+        </div>
+
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <span class="sc" id="sc">1 / 20</span>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="20" value="1" oninput="goToSlide(this.value)">
+        </div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>
+const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+function ui() {
+    S.forEach((s,i)=>{ s.classList.remove('on','pv','nx'); if(i===c) s.classList.add('on'); else if(i<c) s.classList.add('pv'); else s.classList.add('nx'); });
+    document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+    document.getElementById('sc').textContent=`${c+1} / ${T}`;
+    document.getElementById('pv').disabled=c===0;
+    document.getElementById('nx').disabled=c===T-1;
+    let sl = document.getElementById('slide-slider'); if(sl) { sl.max = T; sl.value = c + 1; }
+}
+function goToSlide(n) { let index = parseInt(n) - 1; if (index >= 0 && index < T) { c = index; ui(); } }
+function go(d) {
+    if(d>0) { const hid = S[c].querySelectorAll('.stp:not(.shwn)'); if(hid.length > 0) { hid[0].classList.add('shwn'); return; } }
+    else { const shw = S[c].querySelectorAll('.stp.shwn'); if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; } }
+    const n=c+d; if(n>=0 && n<T) { c=n; ui(); }
+}
+document.addEventListener('keydown', e => { if(e.key==='ArrowRight' || e.key===' ') go(1); if(e.key==='ArrowLeft') go(-1); });
+ui();
+function chkAns(btn, correct) {
+    let p = btn.parentElement; let msg = btn.closest('.sl').querySelector('.msg-area');
+    for (let b of p.children) { b.style.background = 'var(--base)'; b.style.transform = 'scale(1)'; }
+    if (correct) { btn.style.background = '#047857'; btn.style.transform = 'scale(1.1)'; msg.innerHTML = '¡Correcto! ✅ 5 × 8 = 40'; msg.style.color = '#047857'; }
+    else { btn.style.background = '#b91c1c'; msg.innerHTML = ["¡Piensa en grupos! 💪","¿Hay grupos iguales? 🧐","¡Casi! 🚀"][Math.floor(Math.random()*3)]; msg.style.color = '#b91c1c'; }
+}
+    </script>
+</body>
+</html>

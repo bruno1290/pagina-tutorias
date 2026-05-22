@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>División 3: Problemas y Decisiones</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root {
+    --base: #1C4A82;
+    --bg: #f5f6f8;
+    --tx: #333;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--tx);
+}
+.dk { position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex; }
+.sl {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 36px 40px 82px;
+    opacity: 0;
+    transform: scale(.96);
+    transition: opacity .4s, transform .4s;
+    pointer-events: none;
+    z-index: 1;
+    overflow-y: auto;
+}
+.sl.on { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
+.sl.pv { opacity: 0; transform: translateX(-50px) scale(.95); }
+.sl.nx { opacity: 0; transform: translateX(50px) scale(.95); }
+.head-title {
+    background: var(--base);
+    color: white;
+    padding: 10px 40px;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    display: inline-block;
+    border-radius: 12px;
+    text-align: center;
+}
+.sub-text {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+    line-height: 1.4;
+}
+.pb { position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100; }
+.nv {
+    position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: white;
+    border-top: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; z-index: 100;
+}
+.nb {
+    background: #eee; color: var(--base); border: none; padding: 10px 20px; border-radius: 8px;
+    font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer; transition: all .2s;
+}
+.nb:hover { background: #ddd; }
+.nb:disabled { opacity: 0.3; cursor: not-allowed; }
+.sc { color: #888; font-size: 16px; font-weight: 900; }
+.stp { opacity: 0; transform: translateY(20px); transition: all 0.4s; pointer-events: none; }
+.stp.shwn { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.pnl { background: #fff; padding: 24px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 3px solid #eaeaea; width: 100%; }
+.hl { color: var(--base); font-weight: 900; }
+
+.pnl-border {
+    background: #fff;
+    border: 4px solid var(--base);
+    border-radius: 20px;
+    padding: 24px;
+    width: 100%;
+}
+.btn {
+    background: var(--base); color: white; border: none; padding: 14px 24px; border-radius: 12px;
+    font-size: 24px; font-weight: 900; cursor: pointer; transition: transform .2s; font-family: 'Nunito', sans-serif;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3); }
+.chip-row, .base-row { display: flex; justify-content: center; gap: 18px; width: 100%; flex-wrap: wrap; }
+.base-card {
+    flex: 1 1 320px; background: #fff; border-radius: 20px; padding: 18px;
+    border: 4px solid #d9e7f6; box-shadow: 0 10px 26px rgba(0,0,0,0.06); text-align: center;
+}
+.step-list { display: flex; flex-direction: column; gap: 14px; }
+.step-box {
+    background: #f7fbff; border-left: 8px solid var(--base); padding: 14px 16px;
+    border-radius: 14px; font-size: 24px; line-height: 1.4; font-weight: 700;
+}
+.hero-title { font-size: 62px; color: var(--base); margin-bottom: 18px; text-align: center; line-height: 1.1; }
+.hero-sub { font-size: 28px; font-weight: 700; text-align: center; max-width: 720px; }
+.hero-emoji { font-size: 108px; margin-top: 28px; animation: bounce 2s infinite; }
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+@keyframes bob {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(4deg); }
+}
+/* Story Cards for Word Problems */
+.story-card {
+    width: 100%; border-radius: 28px; padding: 28px; display: grid;
+    grid-template-columns: 120px 1fr; gap: 24px; align-items: center;
+}
+.story-emoji { font-size: 114px; text-align: center; animation: bob 2.8s infinite; }
+.story-card h2 { font-size: 30px; margin-bottom: 12px; }
+.story-card p { font-size: 24px; line-height: 1.45; }
+
+/* 4 Pasos */
+.paso-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; max-width: 850px;
+}
+.paso-card {
+    background: #fff; border: 4px solid var(--base); border-radius: 20px; padding: 16px;
+}
+.paso-title {
+    font-size: 26px; font-weight: 900; color: var(--base); border-bottom: 2px dashed #ccc;
+    padding-bottom: 8px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+}
+.paso-content {
+    font-size: 22px; font-weight: 700; line-height: 1.4; color: #444;
+}
+.dec-btn {
+    padding: 16px; font-size: 24px; font-weight: 900; border-radius: 12px; cursor: pointer;
+    border: 3px solid transparent; background: #eef5ff; color: var(--base); transition: transform 0.2s;
+}
+.dec-btn:hover { transform: scale(1.05); }
+.dec-correct { background: #E8F5E9; border-color: #4CAF50; color: #2E7D32; }
+.dec-wrong { background: #FFEBEE; border-color: #EF5350; color: #C62828; }
+</style>
+</head>
+<body>
+<div class="pb" id="pb"></div>
+<div class="dk" id="dk">
+
+    <!-- SLIDE 1: Portada -->
+    <div class="sl on">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <div class="hero-emoji">🔍</div>
+            <h1 class="hero-title">División:<br>Problemas y Decisiones</h1>
+            <p class="hero-sub">Cómo ser un detective matemático</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: INTRO El detective -->
+    <div class="sl">
+        <div class="head-title" style="background:#0288D1;">El detective de palabras</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">Cuando lees un problema, ¿cómo sabes si tienes que multiplicar o dividir?</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#0288D1;">¡Las palabras esconden pistas!</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">Hoy usaremos nuestra lupa de detectives para encontrar el total, los grupos, y decidir cuál operación nos llevará a la respuesta.</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">🕵️‍♂️📝</div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: Modelo 4 pasos -->
+    <div class="sl">
+        <div class="head-title">Los 4 Pasos del Detective</div>
+        <p class="sub-text">Siempre que leas un problema, sigue esta ruta:</p>
+        <div class="paso-grid" style="margin-top:10px;">
+            <div class="paso-card stp">
+                <div class="paso-title">1. Comprende 🧠</div>
+                <div class="paso-content">¿Qué me dice el problema? Identifica el <b style="color:#d32f2f;">Total</b>, los <b style="color:#1976D2;">Grupos</b> y lo que está escondido (?).</div>
+            </div>
+            <div class="paso-card stp">
+                <div class="paso-title">2. Planifica 🗺️</div>
+                <div class="paso-content">¿Qué operación usaré? Si busco repartir el total: <b>DIVIDO</b>. Si busco un total más grande: <b>MULTIPLICO</b>.</div>
+            </div>
+            <div class="paso-card stp">
+                <div class="paso-title">3. Resuelve ✍️</div>
+                <div class="paso-content">Escribe la operación y cálculala usando tus estrategias (trucos, tablas, puente multiplicativo).</div>
+            </div>
+            <div class="paso-card stp">
+                <div class="paso-title">4. Comprueba ✅</div>
+                <div class="paso-content">Revisa si tu respuesta tiene sentido. Si dividiste, usa la multiplicación para revisar.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: Decisión Crítica INTRO -->
+    <div class="sl">
+        <div class="head-title" style="background:#F57C00;">La decisión más importante</div>
+        <p class="sub-text">¿Multiplicar o Dividir?</p>
+        <div style="display:flex; gap:20px; justify-content:center; align-items:center; width:100%; max-width:850px; margin-top:10px;">
+            <div class="base-card" style="border-color:#1976D2; border-width:6px;">
+                <h3 style="font-size:32px; color:#1976D2;">MULTIPLICAR (•)</h3>
+                <p style="font-size:24px; margin-bottom:10px;"><b>Tenemos:</b> Tamaño del grupo y cantidad de grupos.</p>
+                <p style="font-size:24px; color:#d32f2f; font-weight:800;"><b>Buscamos:</b> El TOTAL grande.</p>
+                <p style="font-size:22px; color:#666; margin-top:10px;">"Cada bolsa tiene 5 dulces. Tengo 4 bolsas. ¿Cuántos dulces hay?"</p>
+            </div>
+            <div class="stp base-card" style="border-color:#388E3C; border-width:6px;">
+                <h3 style="font-size:32px; color:#388E3C;">DIVIDIR (:)</h3>
+                <p style="font-size:24px; margin-bottom:10px;"><b>Tenemos:</b> El TOTAL grande y lo queremos separar.</p>
+                <p style="font-size:24px; color:#d32f2f; font-weight:800;"><b>Buscamos:</b> Grupos o cantidad por grupo.</p>
+                <p style="font-size:22px; color:#666; margin-top:10px;">"Tengo 20 dulces y quiero repartirlos en 4 bolsas."</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: Juego de Decisión -->
+    <div class="sl">
+        <div class="head-title" style="background:#0277BD;">¿Qué operación usarías?</div>
+        <p class="sub-text">Lee la situación y haz clic en la operación correcta.</p>
+        
+        <div class="base-card" style="max-width:800px; margin:0 auto; padding:30px;">
+            <p style="font-size:28px; font-weight:800; margin-bottom:30px; line-height:1.4;">"En 5 cajas hay 8 lápices en cada una. ¿Cuántos lápices hay en total?"</p>
+            <div style="display:flex; justify-content:center; gap:20px;">
+                <button class="dec-btn" onclick="checkDec(this, 1, true)">Multiplicación (5 • 8)</button>
+                <button class="dec-btn" onclick="checkDec(this, 1, false)">División (40 : 5)</button>
+            </div>
+            <p id="msg-1" style="font-size:24px; font-weight:800; margin-top:20px; height:30px;"></p>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: Juego de Decisión 2 -->
+    <div class="sl">
+        <div class="head-title" style="background:#0277BD;">¿Qué operación usarías?</div>
+        <div class="base-card" style="max-width:800px; margin:0 auto; padding:30px;">
+            <p style="font-size:28px; font-weight:800; margin-bottom:30px; line-height:1.4;">"Tengo 40 lápices y quiero repartirlos equitativamente en 5 estuches. ¿Cuántos lápices van en cada estuche?"</p>
+            <div style="display:flex; justify-content:center; gap:20px;">
+                <button class="dec-btn" onclick="checkDec(this, 2, false)">Multiplicación (40 • 5)</button>
+                <button class="dec-btn" onclick="checkDec(this, 2, true)">División (40 : 5)</button>
+            </div>
+            <p id="msg-2" style="font-size:24px; font-weight:800; margin-top:20px; height:30px;"></p>
+        </div>
+    </div>
+
+    <!-- SLIDE: Juego de Decisión 3 -->
+    <div class="sl">
+        <div class="head-title">Juego de Decisión</div>
+        <p class="sub-text">¿Multiplicar o Dividir?</p>
+        <div class="pnl-border" style="border-color:#1976D2; padding:30px; text-align:center;">
+            <div style="font-size:32px; font-weight:900; color:#333;">
+                "Tengo 40 dulces y quiero armar sorpresas poniendo 5 dulces en cada bolsa."
+            </div>
+            <div style="font-size:24px; color:#555; margin-top:20px;">
+                ¿Qué operación necesito para saber cuántas bolsas necesito?
+            </div>
+            <div style="display:flex; justify-content:center; gap:20px; margin-top:30px;">
+                <button class="dec-btn" onclick="checkDec(this, 10, false)">Multiplicación</button>
+                <button class="dec-btn" onclick="checkDec(this, 10, true)">División</button>
+            </div>
+            <div id="msg-10" style="margin-top:20px; font-size:24px; font-weight:900; min-height:30px;"></div>
+        </div>
+    </div>
+
+    <!-- SLIDE: Juego de Decisión 4 -->
+    <div class="sl">
+        <div class="head-title">Juego de Decisión</div>
+        <p class="sub-text">¿Multiplicar o Dividir?</p>
+        <div class="pnl-border" style="border-color:#1976D2; padding:30px; text-align:center;">
+            <div style="font-size:32px; font-weight:900; color:#333;">
+                "Para la fiesta, cada niño debe pagar 4 dólares. Si van 6 niños a la fiesta..."
+            </div>
+            <div style="font-size:24px; color:#555; margin-top:20px;">
+                ¿Qué operación necesito para saber el total de dinero recaudado?
+            </div>
+            <div style="display:flex; justify-content:center; gap:20px; margin-top:30px;">
+                <button class="dec-btn" onclick="checkDec(this, 11, true)">Multiplicación</button>
+                <button class="dec-btn" onclick="checkDec(this, 11, false)">División</button>
+            </div>
+            <div id="msg-11" style="margin-top:20px; font-size:24px; font-weight:900; min-height:30px;"></div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: Problema Inverso -->
+    <div class="sl">
+        <div class="head-title" style="background:#8E24AA;">Inventa tú el problema</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">Ya eres experto resolviendo. ¡Ahora te toca crear!</p>
+            <div class="stp" style="margin-top:24px; max-width:800px;">
+                <p style="font-size:26px; font-weight:800; margin-bottom:20px;">Operación: <b style="color:#8E24AA; font-size:36px;">24 : 3</b></p>
+                <div class="base-card" style="text-align:left;">
+                    <p style="font-size:24px; margin-bottom:10px;">Piensa en:</p>
+                    <ul style="font-size:22px; padding-left:20px; line-height:1.6; margin-bottom:20px;">
+                        <li>Un objeto que te guste (ej. dulces, cromos, manzanas).</li>
+                        <li>Un total grande (24).</li>
+                        <li>Personas o cajas donde repartirlos (3).</li>
+                    </ul>
+                    <p class="stp" style="font-size:26px; font-weight:800; color:#8E24AA; border-top:2px dashed #ccc; padding-top:20px;">
+                        Ejemplo: "Tengo 24 manzanas y las guardo en 3 canastas en partes iguales. ¿Cuántas manzanas hay en cada canasta?"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE: Abre tu cuaderno -->
+    <div class="sl">
+        <div class="head-title">Abre tu cuaderno</div>
+        <p class="sub-text">Usa el modelo de 4 pasos para resolver este problema.</p>
+        <div class="math-eq" style="font-size:28px; padding:20px; text-align:center;">
+            En una fábrica se produjeron 48 juguetes en 6 horas. <br>
+            Si se fabrica la misma cantidad cada hora, ¿cuántos juguetes se fabrican por hora?<br>
+            <span style="font-size:20px; color:#555;">(Copia en tu cuaderno: Comprende, Planifica, Resuelve, Comprueba)</span>
+        </div>
+        <div class="stp" style="margin-top:20px; width:100%; max-width:800px;">
+            <div class="pnl-border" style="text-align:left; background:#FFF8E1; border-color:#FFB300;">
+                <div style="font-size:24px; font-weight:900; color:#F57C00; text-align:center;">¡Revisemos!</div>
+                <div style="font-size:20px; font-weight:800; color:#555; margin-top:10px; line-height:1.4;">
+                    <b style="color:var(--base);">C:</b> Total=48 juguetes. Horas=6. Busco juguetes por hora.<br>
+                    <b style="color:var(--base);">P:</b> Debo repartir el total de juguetes en las 6 horas. Dividir.<br>
+                    <b style="color:var(--base);">R:</b> 48 : 6 = 8.<br>
+                    <b style="color:var(--base);">C:</b> Compruebo: 8 • 6 = 48. La respuesta es 8 juguetes por hora.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: Ejercicios Propuestos -->
+    <div class="sl">
+        <div class="head-title">Ejercicios Propuestos</div>
+        <p class="sub-text">Aplica lo aprendido en tu cuaderno.</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">
+            <div class="pnl-border" style="padding:16px;"><div style="font-size:22px; font-weight:900; color:var(--base);"><b>1.</b> Escribe si usarías multiplicación o división: "Hay 6 cajas con 5 juguetes cada una".</div></div>
+            <div class="pnl-border" style="padding:16px;"><div style="font-size:22px; font-weight:900; color:var(--base);"><b>2.</b> Escribe si usarías multiplicación o división: "Tengo 30 galletas para 6 niños".</div></div>
+            <div class="pnl-border" style="padding:16px; grid-column: span 2;"><div style="font-size:22px; font-weight:900; color:var(--base);"><b>3.</b> Inventa un problema de reparto para la división: <b>72 : 8</b></div></div>
+            <div class="pnl-border" style="padding:16px; grid-column: span 2;"><div style="font-size:22px; font-weight:900; color:var(--base);"><b>4.</b> Inventa un problema de agrupación para la división: <b>20 : 5</b></div></div>
+        </div>
+    </div>
+
+    <!-- SLIDE: Respuestas -->
+    <div class="sl">
+        <div class="head-title">Respuestas</div>
+        <p class="sub-text">Revisa tus respuestas creativas.</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr; gap:20px; width:100%; max-width:800px;">
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">1. Hay 6 cajas con 5 juguetes... &rarr; <b>Multiplicación</b> (6 • 5)</div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">2. Tengo 30 galletas para 6 niños... &rarr; <b>División</b> (30 : 6)</div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">3. 72 : 8 (Reparto) &rarr; <i>Ej: Tengo 72 dulces y los reparto entre 8 niños.</i></div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">4. 20 : 5 (Agrupación) &rarr; <i>Ej: Tengo 20 libros y los agrupo en torres de 5 libros.</i></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: Problema de Aplicación 1 -->
+    <div class="sl">
+        <div class="head-title">Problema de Aplicación 1</div>
+        <div class="story-card" style="background:#fff3e0; border:4px solid #ffb74d;">
+            <div class="story-emoji">🍅</div>
+            <div>
+                <h2>La Cosecha de Peumos</h2>
+                <p>Pedro recolectó <b>63 frutos de peumo</b> y los quiere repartir equitativamente entre sus <b>7 amigos</b>. ¿Cuántos frutos le corresponden a cada uno?</p>
+            </div>
+        </div>
+        <div class="stp paso-grid" style="margin-top:20px;">
+            <div class="paso-card"><div class="paso-title">1. Comprende</div><div class="paso-content">Total: 63. Grupos: 7 amigos. Busco: cantidad por amigo.</div></div>
+            <div class="paso-card"><div class="paso-title">2. Planifica</div><div class="paso-content">Debo repartir el total, así que DIVIDO. Operación: 63 : 7.</div></div>
+            <div class="paso-card"><div class="paso-title">3. Resuelve</div><div class="paso-content">¿Qué número • 7 = 63? Es 9. 63 : 7 = 9.</div></div>
+            <div class="paso-card"><div class="paso-title">4. Comprueba</div><div class="paso-content">9 frutos • 7 amigos = 63 frutos en total. ¡Correcto!</div></div>
+        </div>
+    </div>
+
+    <!-- SLIDE 10: Problema de Aplicación 2 -->
+    <div class="sl">
+        <div class="head-title">Problema de Aplicación 2</div>
+        <div class="story-card" style="background:#e8f5e9; border:4px solid #81c784;">
+            <div class="story-emoji">🥚</div>
+            <div>
+                <h2>Guardando Huevos</h2>
+                <p>Lucía tiene que guardar <b>48 huevos</b>. En cada caja caben exactamente <b>6 huevos</b>. ¿Cuántas cajas usará en total?</p>
+            </div>
+        </div>
+        <div class="stp paso-grid" style="margin-top:20px;">
+            <div class="paso-card"><div class="paso-title">1. Comprende</div><div class="paso-content">Total: 48. En cada caja van 6. Busco: cuántas cajas formo.</div></div>
+            <div class="paso-card"><div class="paso-title">2. Planifica</div><div class="paso-content">Debo agrupar el total de a 6. Uso DIVISIÓN: 48 : 6.</div></div>
+            <div class="paso-card"><div class="paso-title">3. Resuelve</div><div class="paso-content">¿Qué número • 6 = 48? Es 8. 48 : 6 = 8.</div></div>
+            <div class="paso-card"><div class="paso-title">4. Comprueba</div><div class="paso-content">8 cajas • 6 huevos = 48 huevos en total. ¡Correcto!</div></div>
+        </div>
+    </div>
+
+    <!-- SLIDE 11: Problema Integrado -->
+    <div class="sl">
+        <div class="head-title" style="background:#0277BD;">Problema de Aplicación 3</div>
+        <div class="story-card" style="background:#e3f2fd; border:4px solid #64b5f6;">
+            <div class="story-emoji">🍓</div>
+            <div>
+                <h2>Mermelada Casera</h2>
+                <p>Para hacer mermelada se necesitan <b>3 kilos</b> de fresas por frasco. Si una familia preparó <b>27 frascos</b> de mermelada en total, ¿cuántos kilos de fresas usaron?</p>
+            </div>
+        </div>
+        <div class="stp paso-grid" style="margin-top:20px;">
+            <div class="paso-card"><div class="paso-title">1. Comprende</div><div class="paso-content">Tengo 27 frascos (grupos) y cada uno necesita 3 kg. Busco: el total de kilos.</div></div>
+            <div class="paso-card"><div class="paso-title">2. Planifica</div><div class="paso-content"><span style="color:#d32f2f; font-weight:900;">¡Cuidado!</span> Busco el total grande. Debo MULTIPLICAR: 27 • 3.</div></div>
+            <div class="paso-card" style="grid-column:span 2;"><div class="paso-title">3 y 4. Resuelve y Comprueba</div><div class="paso-content">27 • 3 = (20•3) + (7•3) = 60 + 21 = 81 kilos. Compruebo con división si quiero: 81 : 3 = 27.</div></div>
+        </div>
+    </div>
+
+    <!-- SLIDE 12: Desafío Supremo -->
+    <div class="sl">
+        <div class="head-title" style="background:linear-gradient(90deg, #9333EA, #db2777);">Desafío Supremo</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h2 style="font-size:42px; margin-bottom:20px; color:#9333EA;">🏰 ObraCraft: La Muralla del Castillo</h2>
+            <p style="font-size:24px; text-align:center; max-width:800px; margin-bottom:30px;">
+                Debes construir una muralla defensiva en el servidor. La muralla tendrá <b>7 bloques de alto</b> y necesitas <b>63 bloques en total</b>. ¿Cuántos bloques de <b>largo</b> (filas) tendrá la muralla?
+            </p>
+            <div class="stp" style="width:100%; max-width:700px; background:#222; border:6px solid #555; border-radius:12px; padding:20px; color:white; text-align:center; font-family:monospace;">
+                <p style="font-size:24px; color:#55FF55; margin-bottom:20px;">> SELECCIONAR COMANDO DEL SERVIDOR:</p>
+                <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
+                    <button class="dec-btn" style="background:#444; color:#fff;" onclick="checkDec(this, 3, false)">/multiplicar 63 7</button>
+                    <button class="dec-btn" style="background:#444; color:#fff;" onclick="checkDec(this, 3, true)">/dividir 63 7</button>
+                </div>
+                <p id="msg-3" style="font-size:24px; font-weight:bold; color:#FFD700; height:30px;"></p>
+                <div class="stp" style="margin-top:20px; font-size:20px; color:#aaa;">
+                    (63 bloques en total : 7 de alto = 9 de largo).
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 13: Resumen -->
+    <div class="sl">
+        <div class="head-title">Resumen del Módulo</div>
+        <div style="display:flex; flex-direction:column; gap:16px; max-width:800px; margin:0 auto;">
+            <div class="step-box" style="border-left-color:#047857;">
+                <b style="color:var(--base);">El Modelo de 4 Pasos:</b> Comprende, Planifica, Resuelve, Comprueba. ¡Es tu mapa!
+            </div>
+            <div class="step-box" style="border-left-color:#047857;">
+                <b style="color:var(--base);">Palabras Clave:</b> Repartir, equitativo, distribuir significan DIVIDIR.
+            </div>
+            <div class="step-box" style="border-left-color:#047857;">
+                <b style="color:var(--base);">La decisión:</b> Si tienes las partes y buscas el Total Gigante, Multiplicas. Si tienes el Total Gigante y buscas las partes, Divides.
+            </div>
+            <div class="step-box" style="border-left-color:#047857;">
+                <b style="color:var(--base);">Operación Inversa:</b> La mejor forma de dividir rápido es saberte muy bien las tablas de multiplicar.
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 14: Cierre -->
+    <div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <h2 style="font-size:48px; color:#047857; margin-bottom:20px;">¡Completaste el módulo!</h2>
+            <p style="font-size:28px; max-width:700px;">Eres oficialmente un experto en multiplicaciones y divisiones. ¡Estás listo para cualquier desafío!</p>
+            <div class="hero-emoji">🎓</div>
+        </div>
+    </div>
+
+</div>
+<div class="nv">
+    <button class="nb" id="b-p" onclick="go(-1)">⬅ Anterior</button>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+        <span class="sc" id="st">1 / X</span>
+        <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="100" value="1" oninput="goToSlide(this.value)">
+    </div>
+    <button class="nb" id="b-n" onclick="go(1)">Siguiente ➡</button>
+</div>
+<script>
+function checkDec(btn, id, isCorrect) {
+    const parent = btn.parentElement;
+    const btns = parent.querySelectorAll('button');
+    const msg = document.getElementById('msg-' + id);
+    btns.forEach(b => {
+        b.classList.remove('dec-correct', 'dec-wrong');
+    });
+    if(isCorrect) {
+        btn.classList.add('dec-correct');
+        msg.textContent = id===3 ? "¡Código aceptado! Construyendo..." : "¡Excelente decisión!";
+        msg.style.color = id===3 ? "#55FF55" : "#4CAF50";
+    } else {
+        btn.classList.add('dec-wrong');
+        msg.textContent = "¡Cuidado! Lee bien qué estás buscando.";
+        msg.style.color = "#EF5350";
+    }
+}
+
+const sls = document.querySelectorAll('.sl');
+const st = document.getElementById('st');
+const bp = document.getElementById('b-p');
+const bn = document.getElementById('b-n');
+const pb = document.getElementById('pb');
+let c = 0; const T = sls.length;
+function ui() {
+    sls.forEach((s, i) => {
+        s.className = 'sl ' + (i === c ? 'on' : i < c ? 'pv' : 'nx');
+    });
+    st.textContent = `${c + 1} / ${T}`;
+    pb.style.width = `${((c + 1) / T) * 100}%`;
+    bp.disabled = c === 0;
+    bn.disabled = c === T - 1;
+    let sl = document.getElementById('slide-slider');
+    if(sl) { sl.max = T; sl.value = c + 1; }
+}
+function goToSlide(n) {
+    let val = parseInt(n) - 1;
+    if (val >= 0 && val < T) {
+        c = val;
+        ui();
+    }
+}
+function go(d) {
+    if(d>0) {
+        const hid = sls[c].querySelectorAll('.stp:not(.shwn)');
+        if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+    } else {
+        const shw = sls[c].querySelectorAll('.stp.shwn');
+        if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+    }
+    const n = c + d;
+    if(n >= 0 && n < T) { c = n; ui(); }
+}
+document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') go(1);
+    if (e.key === 'ArrowLeft') go(-1);
+});
+ui();
+</script>
+</body>
+</html>

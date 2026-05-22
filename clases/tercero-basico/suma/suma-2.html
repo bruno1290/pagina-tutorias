@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Suma 2: Algoritmo con Reserva</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root {
+    --base: #1C4A82;
+    --bg: #f5f6f8;
+    --tx: #333;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--tx);
+}
+.dk { position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex; }
+.sl {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 36px 40px 82px;
+    opacity: 0;
+    transform: scale(.96);
+    transition: opacity .4s, transform .4s;
+    pointer-events: none;
+    z-index: 1;
+    overflow-y: auto;
+}
+.sl.on { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
+.sl.pv { opacity: 0; transform: translateX(-50px) scale(.95); }
+.sl.nx { opacity: 0; transform: translateX(50px) scale(.95); }
+.head-title {
+    background: var(--base);
+    color: white;
+    padding: 10px 40px;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    display: inline-block;
+    border-radius: 12px;
+    text-align: center;
+}
+.sub-text {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+    line-height: 1.4;
+}
+.pb { position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100; }
+.nv {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 100;
+}
+.nb {
+    background: #eee;
+    color: var(--base);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all .2s;
+}
+.nb:hover { background: #ddd; }
+.nb:disabled { opacity: 0.3; cursor: not-allowed; }
+.sc { color: #888; font-size: 16px; font-weight: 900; }
+.stp {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+.stp.shwn { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.pnl {
+    background: #fff;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 3px solid #eaeaea;
+    width: 100%;
+}
+.pnl-border {
+    background: #fff;
+    border: 4px solid var(--base);
+    border-radius: 20px;
+    padding: 24px;
+    width: 100%;
+}
+.hl { color: var(--base); font-weight: 900; }
+.btn {
+    background: var(--base);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 24px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .2s;
+    font-family: 'Nunito', sans-serif;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3); }
+.chip-row, .card-row, .base-row, .quiz-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.mini-chip {
+    background: #eef5ff;
+    border: 2px solid #b6d4f3;
+    border-radius: 999px;
+    padding: 12px 18px;
+    font-size: 24px;
+    font-weight: 800;
+}
+.base-card {
+    flex: 1 1 320px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 18px;
+    border: 4px solid #d9e7f6;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+}
+.base-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    text-align: center;
+    margin-bottom: 14px;
+}
+.two-col {
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 18px;
+    width: 100%;
+    align-items: stretch;
+}
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.step-box {
+    background: #f7fbff;
+    border-left: 8px solid var(--base);
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 24px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+.side-panel {
+    background: linear-gradient(180deg, #fefefe 0%, #f4f9ff 100%);
+    border: 3px solid #d5e4f5;
+    border-radius: 18px;
+    padding: 18px;
+    min-height: 200px;
+}
+.side-panel h3 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 12px;
+}
+.side-panel p {
+    font-size: 24px;
+    line-height: 1.45;
+}
+.story-card {
+    width: 100%;
+    border-radius: 28px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: center;
+}
+.story-emoji {
+    font-size: 114px;
+    text-align: center;
+    animation: bob 2.8s infinite;
+}
+.story-card h2 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+.story-card p {
+    font-size: 24px;
+    line-height: 1.45;
+}
+.summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+.summary-item {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 18px;
+    border: 3px solid #dbe7f4;
+    font-size: 23px;
+    line-height: 1.45;
+}
+.fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+.fact-box {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 18px;
+    padding: 16px;
+    border: 3px solid #d8e7f6;
+    min-height: 140px;
+}
+.warn-card {
+    background: #fff8e5;
+    border: 4px solid #f0ca59;
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 24px;
+    line-height: 1.45;
+    width: 100%;
+}
+.msg-area {
+    font-size: 24px;
+    font-weight: 900;
+    height: 40px;
+    text-align: center;
+    margin-top: 20px;
+}
+.hero-title {
+    font-size: 62px;
+    color: var(--base);
+    margin-bottom: 18px;
+    text-align: center;
+    line-height: 1.1;
+}
+.hero-sub {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    max-width: 720px;
+}
+.hero-emoji {
+    font-size: 108px;
+    margin-top: 28px;
+    animation: bounce 2s infinite;
+}
+
+/* Bloques multibase CSS puros con textura */
+.mb-c {
+    --bg-color: #9DE3BD;
+    --border-color: #388E3C;
+    width: 140px; height: 140px;
+    background:
+        repeating-linear-gradient(0deg, transparent, transparent 13px, rgba(0,0,0,0.15) 13px, rgba(0,0,0,0.15) 14px),
+        repeating-linear-gradient(90deg, transparent, transparent 13px, rgba(0,0,0,0.15) 13px, rgba(0,0,0,0.15) 14px),
+        var(--bg-color);
+    border: 1px solid var(--border-color);
+    display: inline-block; margin: 2px; border-radius: 3px;
+}
+.mb-d {
+    --bg-color: #9DDEFF;
+    --border-color: #1976D2;
+    width: 14px; height: 140px;
+    background: 
+        repeating-linear-gradient(0deg, transparent, transparent 13px, rgba(0,0,0,0.2) 13px, rgba(0,0,0,0.2) 14px),
+        var(--bg-color);
+    border: 1px solid var(--border-color);
+    display: inline-block; margin: 2px; border-radius: 2px;
+}
+.mb-u {
+    --bg-color: #FFE082;
+    --border-color: #F57F17;
+    width: 14px; height: 14px;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    display: inline-block; margin: 2px; border-radius: 2px;
+}
+.mb-group {
+    display: flex; align-items: flex-end; justify-content: center; gap: 8px;
+    padding: 10px; background: #fff; border-radius: 12px; border: 2px dashed #ccc;
+    flex-wrap: wrap;
+}
+
+/* Algoritmo Vertical */
+.algo-wrap {
+    display: inline-block;
+    font-size: 46px;
+    font-weight: 900;
+    font-family: 'Courier New', Courier, monospace;
+    background: #fff;
+    padding: 24px 46px;
+    border-radius: 20px;
+    border: 4px solid #d4e6f7;
+    text-align: right;
+    line-height: 1.2;
+    position: relative;
+}
+.algo-row span[class^="col-"] { width: 36px; text-align: center; display: inline-block; position: relative; }
+.algo-row { display: flex; justify-content: flex-end; position: relative; gap: 8px; }
+.algo-line { border-bottom: 5px solid var(--base); margin: 10px 0; }
+.algo-sym { position: absolute; left: 20px; color: var(--base); bottom: 20px;}
+.algo-res { 
+    font-size: 28px; 
+    font-weight: 900;
+    color: #E65100;
+    background: #FFF3E0;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute; 
+    top: -36px; 
+    letter-spacing: normal;
+    border: 2px solid #FFB74D;
+    box-shadow: 0 4px 8px rgba(230, 81, 0, 0.2);
+}
+.res-u { right: 18px; }
+.res-d { right: 54px; }
+.res-c { right: 90px; }
+
+.col-c { color: #388E3C; }
+.col-d { color: #1976D2; }
+.col-u { color: #F57F17; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes highlight { 0%, 100% { background: transparent; } 50% { background: #fff9c4; } }
+.hl-box { animation: highlight 2s infinite; border-radius: 8px; padding: 0 4px; }
+</style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 class="hero-title">Suma: Algoritmo con Reserva</h1>
+            <p class="hero-sub">¿Qué hacemos cuando juntamos más de 9 en una columna?</p>
+            <div class="hero-emoji">🎒</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 2: El problema -->
+        <div class="sl">
+        <div class="head-title">¿Qué pasa si nos pasamos de 9?</div>
+        <p class="sub-text">Intenta sumar las unidades de <b class="hl">238 + 145</b>.</p>
+        <div class="base-card" style="max-width:500px; margin:0 auto; text-align:center;">
+            <div class="algo-wrap">
+                <span class="algo-sym" style="bottom: 24px;">+</span>
+                <div class="algo-row"><span class="col-c">2</span><span class="col-d">3</span><span class="hl-box"><span class="col-u">8</span></span></div>
+                <div class="algo-row"><span class="col-c">1</span><span class="col-d">4</span><span class="hl-box"><span class="col-u">5</span></span></div>
+                <div class="algo-line"></div>
+                <div class="algo-row stp"><span class="col-c">3</span><span class="col-d">7</span><span class="col-u hl-box">13</span></div>
+            </div>
+        </div>
+        <div class="stp warn-card" style="margin-top:20px; border-color:#d32f2f; background:#ffcdd2;">
+            🛑 ¡Alto ahí! <b>8 + 5 = 13</b>. No podemos escribir "13" en la columna de las unidades. ¡Solo cabe un dígito por columna!
+        </div>
+        </div>
+
+        <!-- SLIDE 3: INTRO a la Reserva -->
+        <div class="sl">
+        <div class="head-title" style="background:#F57F17;">El límite de nuestra casa</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">Imagina que tu pieza solo tiene espacio para 9 juguetes.</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#F57F17;">¿Qué pasa si te regalan el décimo juguete?</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">¡Ya no cabe! Tienes que meter esos 10 juguetes en una caja (una decena) y guardarla en la bodega (la columna de al lado). A esto le llamamos "Reserva".</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">🏠📦</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 4: La Reserva con bloques -->
+        <div class="sl">
+        <div class="head-title">El poder del Canje (La Reserva)</div>
+        <p class="sub-text">10 cubitos sueltos se pueden "pegar" para formar <b class="hl">1 decena</b>.</p>
+        <div class="fact-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="fact-box">
+                <h4 style="color:#F57F17;">Teníamos 13 unidades...</h4>
+                <div class="mb-group" style="margin-top:14px; min-height:100px;">
+                    <div class="mb-u"></div><div class="mb-u"></div><div class="mb-u"></div><div class="mb-u"></div><div class="mb-u"></div>
+                    <div class="mb-u"></div><div class="mb-u"></div><div class="mb-u"></div><div class="mb-u"></div><div class="mb-u"></div>
+                    <div class="mb-u"></div><div class="mb-u"></div><div class="mb-u"></div>
+                </div>
+            </div>
+            <div class="fact-box stp">
+                <h4 style="color:#1976D2;">...las reagrupamos</h4>
+                <p>Juntamos 10 U para hacer <b>1 D</b>, y sobran 3 U sueltas.</p>
+                <div class="mb-group" style="margin-top:10px; min-height:100px;">
+                    <div class="mb-d"></div>
+                    <span style="font-size:24px; font-weight:900; margin:0 10px;">y</span>
+                    <div class="mb-u"></div><div class="mb-u"></div><div class="mb-u"></div>
+                </div>
+            </div>
+        </div>
+        <div class="stp mini-chip" style="margin-top:14px;">
+            Esa nueva Decena es la famosa <b>"reserva"</b>. ¡Se va a vivir a la columna de al lado!
+        </div>
+        </div>
+
+        <!-- SLIDE 4: El Algoritmo Correcto -->
+        <div class="sl">
+        <div class="head-title">Reserva en las Unidades</div>
+        <p class="sub-text">Resolvamos <b class="hl">238 + 145</b> paso a paso.</p>
+        <div class="two-col">
+            <div style="display:flex; justify-content:center; align-items:center;">
+                <div class="algo-wrap" style="margin-top:20px;">
+                    <div class="algo-res res-d stp" id="res1" style="font-size:24px; font-weight:900;">1</div>
+                    <span class="algo-sym" style="bottom:24px;">+</span>
+                    <div class="algo-row"><span class="col-c">2</span><span class="col-d">3</span><span class="col-u">8</span></div>
+                    <div class="algo-row"><span class="col-c">1</span><span class="col-d">4</span><span class="col-u">5</span></div>
+                    <div class="algo-line"></div>
+                    <div class="algo-row"><span class="col-c stp">3</span><span class="col-d stp">8</span><span class="col-u stp">3</span></div>
+                </div>
+            </div>
+            <div class="side-panel">
+                <h3>Pasos:</h3>
+                <p class="stp" style="margin-bottom:12px;">1️⃣ <b>Unidades:</b> 8 + 5 = 13. Anoto el <b>3</b> abajo y guardo <b>1</b> decena de reserva arriba.</p>
+                <p class="stp" style="margin-bottom:12px;">2️⃣ <b>Decenas:</b> Sumo 3 + 4 = 7. ¡Y le agrego el 1 de reserva! 7 + 1 = <b>8</b>.</p>
+                <p class="stp">3️⃣ <b>Centenas:</b> 2 + 1 = <b>3</b>.</p>
+                <p class="stp" style="margin-top:12px; font-weight:900; color:#2E7D32;">Resultado: 383 ✅</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 5: Reserva en las Decenas -->
+        <div class="sl">
+        <div class="head-title">Reserva en las Decenas</div>
+        <p class="sub-text">Si 10 decenas se juntan, ¡forman <b class="hl">1 centena</b>! Resolvamos <b class="hl">385 + 142</b>.</p>
+        <div class="two-col">
+            <div style="display:flex; justify-content:center; align-items:center;">
+                <div class="algo-wrap" style="margin-top:20px;">
+                    <div class="algo-res res-c stp" id="res2" style="font-size:24px; font-weight:900;">1</div>
+                    <span class="algo-sym" style="bottom:24px;">+</span>
+                    <div class="algo-row"><span class="col-c">3</span><span class="col-d">8</span><span class="col-u">5</span></div>
+                    <div class="algo-row"><span class="col-c">1</span><span class="col-d">4</span><span class="col-u">2</span></div>
+                    <div class="algo-line"></div>
+                    <div class="algo-row"><span class="col-c stp">5</span><span class="col-d stp">2</span><span class="col-u stp">7</span></div>
+                </div>
+            </div>
+            <div class="side-panel">
+                <h3>Pasos:</h3>
+                <p class="stp" style="margin-bottom:12px;">1️⃣ <b>Unidades:</b> 5 + 2 = <b>7</b> (sin reserva).</p>
+                <p class="stp" style="margin-bottom:12px;">2️⃣ <b>Decenas:</b> 8 + 4 = 12. Anoto <b>2</b> abajo y guardo <b>1</b> centena de reserva arriba.</p>
+                <p class="stp">3️⃣ <b>Centenas:</b> 3 + 1 = 4. ¡Más el 1 de reserva! 4 + 1 = <b>5</b>.</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 6: Origen de la reserva en Decenas -->
+        <div class="sl">
+        <div class="head-title">El porqué de la reserva en Decenas</div>
+        <p class="sub-text">Veámoslo con descomposición posicional:</p>
+        <div class="base-card" style="max-width:700px; margin:0 auto; text-align:center;">
+            <p style="font-size:28px; font-weight:900; margin-bottom:14px;">En <b style="color:#1976D2;">385</b> + <b style="color:#1976D2;">142</b>...</p>
+            <div class="decomp-flow">
+                <div class="decomp-box" style="border-color:#9DDEFF; color:#1976D2;">80</div>
+                <div class="arrow">+</div>
+                <div class="decomp-box" style="border-color:#9DDEFF; color:#1976D2;">40</div>
+                <div class="arrow">=</div>
+                <div class="decomp-box stp" style="border-color:#d32f2f; color:#d32f2f;">120</div>
+            </div>
+            <div class="stp" style="margin-top:20px;">
+                <p style="font-size:24px; font-weight:800;">El <b>120</b> está compuesto por:</p>
+                <p style="font-size:32px; font-weight:900; color:var(--base); margin-top:10px;">
+                    <span style="color:#388E3C;">100</span> + <span style="color:#1976D2;">20</span>
+                </p>
+                <p style="font-size:20px; color:#555; margin-top:10px;">¡Ese "100" es la centena nueva (reserva) que mandamos a la izquierda!</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 8: INTRO Doble Reserva -->
+        <div class="sl">
+        <div class="head-title" style="background:#9333EA;">A veces la fiesta es enorme</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">Ya vimos cómo hacer una caja de 10 unidades y pasarla a las decenas.</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#9333EA;">¿Pero qué pasa si las decenas también se llenan?</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">¡Hacemos una caja más grande! Juntamos 10 decenas para formar una Centena y la pasamos a la siguiente columna. A esto le llamamos "Doble Reserva".</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">🎉📦📦</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 9: Doble Reserva -->
+        <div class="sl">
+        <div class="head-title" style="background:#F57C00;">Doble Reserva</div>
+        <p class="sub-text">A veces hay reserva en las unidades <b class="hl">Y</b> en las decenas: <b class="hl">478 + 365</b></p>
+        <div class="two-col">
+            <div style="display:flex; justify-content:center; align-items:center;">
+                <div class="algo-wrap" style="margin-top:20px;">
+                    <div class="algo-res res-c stp" style="font-size:24px; font-weight:900;">1</div>
+                    <div class="algo-res res-d stp" style="font-size:24px; font-weight:900;">1</div>
+                    <span class="algo-sym" style="bottom:24px;">+</span>
+                    <div class="algo-row"><span class="col-c">4</span><span class="col-d">7</span><span class="col-u">8</span></div>
+                    <div class="algo-row"><span class="col-c">3</span><span class="col-d">6</span><span class="col-u">5</span></div>
+                    <div class="algo-line"></div>
+                    <div class="algo-row"><span class="col-c stp">8</span><span class="col-d stp">4</span><span class="col-u stp">3</span></div>
+                </div>
+            </div>
+            <div class="side-panel">
+                <h3>¡Con cuidado!</h3>
+                <p class="stp" style="margin-bottom:12px;">1️⃣ <b>U:</b> 8 + 5 = 13. Pongo 3, reservo 1 D.</p>
+                <p class="stp" style="margin-bottom:12px;">2️⃣ <b>D:</b> 7 + 6 = 13. ¡Más la reserva (1)! 13 + 1 = 14. Pongo 4, reservo 1 C.</p>
+                <p class="stp">3️⃣ <b>C:</b> 4 + 3 = 7. ¡Más la reserva (1)! 7 + 1 = 8.</p>
+                <p class="stp" style="margin-top:12px; font-weight:900; color:#2E7D32;">¡Es fácil si no te olvidas de sumar las reservas!</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 8: 3 Sumandos con reserva -->
+        <div class="sl">
+        <div class="head-title">Suma de 3 números con reserva</div>
+        <p class="sub-text">¡Podemos tener reservas que valen <b>2</b>!</p>
+        <div class="base-card" style="max-width:550px; margin:0 auto;">
+            <h3 style="font-size:24px;">345 + 175 + 185</h3>
+            <div style="display:flex; justify-content:center; margin-top:20px;">
+                <div class="algo-wrap">
+                    <div class="algo-res res-c stp" style="font-size:22px; font-weight:900;">2</div>
+                    <div class="algo-res res-d stp" style="font-size:22px; font-weight:900;">1</div>
+                    <span class="algo-sym" style="bottom:24px;">+</span>
+                    <div class="algo-row"><span class="col-c">3</span><span class="col-d">4</span><span class="col-u">5</span></div>
+                    <div class="algo-row"><span class="col-c">1</span><span class="col-d">7</span><span class="col-u">5</span></div>
+                    <div class="algo-row"><span class="col-c">1</span><span class="col-d">8</span><span class="col-u">5</span></div>
+                    <div class="algo-line"></div>
+                    <div class="algo-row stp"><span class="col-c">7</span><span class="col-d">0</span><span class="col-u">5</span></div>
+                </div>
+            </div>
+            <div class="stp" style="text-align:center; margin-top:30px; font-size:24px; font-weight:800; color:#555;">
+                En las decenas: 4+7+8+1 = 20. Pongo el 0 y paso <b>2</b> centenas de reserva.
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 9: Abre tu cuaderno -->
+        <div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Copia, ordena en vertical y resuelve (¡no olvides las reservas!):</p>
+        <div class="step-list" style="max-width:700px; width:100%;">
+            <div class="step-box" style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:32px;">694 + 237 =</span>
+                <span class="stp" style="font-size:36px; color:#059669; font-weight:900;">931</span>
+            </div>
+            <div class="step-box stp" style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:32px;">274 + 583 =</span>
+                <span class="stp" style="font-size:36px; color:#059669; font-weight:900;">857</span>
+            </div>
+            <div class="step-box stp" style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:32px;">321 + 105 + 397 =</span>
+                <span class="stp" style="font-size:36px; color:#059669; font-weight:900;">823</span>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 10: Detección de error -->
+        <div class="sl">
+        <div class="head-title" style="background:#d32f2f;">¡Encuentra el error!</div>
+        <p class="sub-text">Un personaje resolvió <b class="hl">256 + 178</b> así. ¿Qué olvidó hacer?</p>
+        <div class="base-card" style="max-width:500px; margin:0 auto; text-align:center;">
+            <div class="algo-wrap" style="border-color:#ffcdd2;">
+                <div class="algo-res res-d" style="font-size:24px; font-weight:900; color:#333;">1</div>
+                <span class="algo-sym" style="bottom:24px;">+</span>
+                <div class="algo-row"><span class="col-c">2</span><span class="col-d">5</span><span class="col-u">6</span></div>
+                <div class="algo-row"><span class="col-c">1</span><span class="col-d">7</span><span class="col-u">8</span></div>
+                <div class="algo-line"></div>
+                <div class="algo-row"><span class="col-c" style="color:#d32f2f;">3</span><span class="col-d" style="color:#d32f2f;">2</span><span class="col-u">4</span></div>
+            </div>
+            <div class="stp warn-card" style="margin-top:20px; font-size:22px; text-align:left;">
+                ❌ Olvidó sumar las reservas.<br>
+                En decenas: 5+7 = 12, más la reserva (1) = <b>13</b> (pone 3, reserva 1).<br>
+                En centenas: 2+1 = 3, más la reserva (1) = <b>4</b>.<br>
+                Total correcto: <b>434</b>.
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 11: Quiz interactivo -->
+        <div class="sl">
+        <div class="head-title">Quiz de Reserva</div>
+        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+            <p style="font-size:28px; font-weight:800; text-align:center; margin-bottom:24px;">Al sumar 367 + 215, en las unidades tenemos 7 + 5 = 12.<br>¿Qué hacemos con ese 12?</p>
+            <div class="quiz-row">
+                <button class="btn" style="flex:1;" onclick="chkAns(this, false, 'Solo se anota la unidad (2) abajo. La decena (1) pasa como reserva.')">Escribimos "12" abajo en las unidades</button>
+                <button class="btn" style="flex:1;" onclick="chkAns(this, true, 'El 2 se queda en las unidades y el 1 pasa como decena de reserva.')">Ponemos "2" abajo y pasamos "1" a la reserva</button>
+            </div>
+            <div class="msg-area"></div>
+        </div>
+        </div>
+
+        <!-- SLIDE 12: Ejercicios Propuestos -->
+        <div class="sl">
+        <div class="head-title">Ejercicios Propuestos</div>
+        <p class="sub-text">Resuelve en tu cuaderno aplicando el algoritmo.</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Resuelve: 156 + 128</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Resuelve: 385 + 142</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Reserva doble: 587 + 245</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Dígito faltante: __5 + 328 = 643</div>
+            </div>
+            <div class="pnl-border" style="padding:16px; grid-column: span 2;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Un panadero hizo 256 hallullas en la mañana y 178 en la tarde. ¿Cuántas hallullas hizo en total?</div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 13: Respuestas -->
+        <div class="sl">
+        <div class="head-title">Respuestas</div>
+        <p class="sub-text">Revisa tus respuestas:</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">156 + 128 = <b>284</b></div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">385 + 142 = <b>527</b></div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">587 + 245 = <b>832</b></div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">El dígito es <b>3</b>. (315 + 328 = 643)</div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669; grid-column: span 2;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">256 + 178 = <b>434</b>. Hizo 434 hallullas en total.</div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 14: Problema situacional 1 -->
+        <div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#FFF8E1; border:5px solid #F9A825;">
+            <div class="story-emoji">🧑‍🌾</div>
+            <div>
+                <h2 style="color:#F9A825;">La cosecha de frutas</h2>
+                <p>En el campo cosecharon <b>485</b> manzanas y <b>365</b> peras. ¿Cuántas frutas cosecharon en total?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #F9A825; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Operación: 485 + 365 (Doble reserva)<br>
+                        <span style="color:var(--base);">Cosecharon 850 frutas en total.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 15: Problema de 2 pasos -->
+        <div class="sl">
+        <div class="head-title" style="background: linear-gradient(90deg, #9333EA 0%, #db2777 100%);">Desafío Supremo</div>
+        <div class="story-card" style="background:#F3E8FF; border:5px solid #9333EA; box-shadow: 0 10px 25px rgba(147, 51, 234, 0.2);">
+            <div class="story-emoji" style="font-size:100px; animation:bounce 2s infinite;">🐷</div>
+            <div>
+                <h2 style="color:#9333EA; font-size:36px;">La alcancía de Sofía</h2>
+                <p style="font-size:22px; font-weight:600;">Sofía tiene <b>$345</b> en su alcancía. Su abuela le regala <b>$268</b> y su tío <b>$95</b>. ¿Cuánto dinero tiene ahora en total?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #9333EA; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta descubierta:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Suma de 3 sumandos: 345 + 268 + 95<br>
+                        Reservas en U y D. Total: <b>$708</b>.
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 16: Problema Integrador Inverso -->
+        <div class="sl">
+        <div class="head-title" style="background:#0277BD;">Problema Integrador</div>
+        <div class="story-card" style="background:#E1F5FE; border:5px solid #0277BD;">
+            <div class="story-emoji" style="font-size:100px;">✍️</div>
+            <div>
+                <h2 style="color:#0277BD;">¡Inventa un problema!</h2>
+                <p style="font-size:22px; font-weight:600;">Dada la suma <b>278 + 156</b>, inventa un problema real del barrio usando las palabras "juntó" o "recolectó". Resuélvelo aplicando el algoritmo con reserva.</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #0277BD; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:18px; font-weight:800; color:#555; margin-bottom:8px;">Ejemplo guiado:</p>
+                    <div style="font-size:20px; font-weight:900; line-height:1.6;">
+                        "En la campaña, 3° básico recolectó 278 latas y 4° básico juntó 156. ¿Cuántas latas recolectaron en total?"<br>
+                        <span style="color:var(--base);">278 + 156 = 434 latas. (Reserva en U y D).</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        
+        <!-- SLIDE: Metodología -->
+        <div class="sl">
+        <div class="head-title">Resolución con Reagrupación</div>
+        <div class="two-col" style="max-width:900px;">
+            <div class="side-panel" style="border-color:#F9A825;">
+                <h3 style="color:#F9A825; font-size:28px;">El viaje escolar</h3>
+                <p style="font-size:24px;">En el primer bus viajan <b>185</b> alumnos y en el segundo bus viajan <b>137</b> alumnos. ¿Cuántos alumnos van de viaje en <b>total</b>?</p>
+            </div>
+            <div class="step-list">
+                <div class="step-box stp" style="border-color:#2196F3; font-size:22px;">
+                    <b style="color:#1976D2;">Paso 1: Palabra Clave</b><br>
+                    "Total" = Juntar = <b style="background:#e3f2fd; padding:2px 8px; border-radius:8px;">SUMAR</b>.
+                </div>
+                <div class="step-box stp" style="border-color:#4CAF50; font-size:22px;">
+                    <b style="color:#388E3C;">Paso 2: Alinear y Reagrupar</b><br>
+                    Debemos sumar 185 + 137 ordenados hacia abajo, cuidando las <b>reservas</b> en decenas y centenas.
+                </div>
+                <div class="step-box stp" style="border-color:#FF9800; font-size:22px;">
+                    <b style="color:#F57F17;">Paso 3: Resolver</b><br>
+                    185 + 137 = <b>322</b>.<br>
+                    <i>Van 322 alumnos de viaje en total.</i>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE: Problema 1 -->
+        <div class="sl">
+        <div class="head-title">Problema de Aplicación 1</div>
+        <div class="story-card" style="background:#E8F5E9; border:5px solid #2E7D32;">
+            <div class="story-emoji">🌲</div>
+            <div>
+                <h2 style="color:#2E7D32;">Reforestando el bosque</h2>
+                <p>Los vecinos plantaron <b>284</b> pinos el sábado y <b>158</b> robles el domingo. ¿Cuántos árboles plantaron durante el fin de semana?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #2E7D32; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Resolución:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Operación: 284 + 158 (requiere reagrupar U y D)<br>
+                        284 + 158 = <b>442</b><br>
+                        <span style="color:var(--base);">Plantaron 442 árboles.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE: Problema 2 -->
+        <div class="sl">
+        <div class="head-title">Problema de Aplicación 2</div>
+        <div class="story-card" style="background:#FCE4EC; border:5px solid #C2185B;">
+            <div class="story-emoji">🏃‍♀️</div>
+            <div>
+                <h2 style="color:#C2185B;">La maratón solidaria</h2>
+                <p>En una carrera solidaria se inscribieron <b>376</b> niños y <b>295</b> adultos. ¿Cuántas personas participaron en <b>total</b>?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #C2185B; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Resolución:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Operación: 376 + 295 (doble reserva)<br>
+                        376 + 295 = <b>671</b><br>
+                        <span style="color:var(--base);">Participaron 671 personas.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE: Problema 3 -->
+        <div class="sl">
+        <div class="head-title">Problema de Aplicación 3</div>
+        <div class="story-card" style="background:#FFF8E1; border:5px solid #FBC02D;">
+            <div class="story-emoji">🧱</div>
+            <div>
+                <h2 style="color:#FBC02D;">Construyendo el muro</h2>
+                <p>Un albañil usó <b>485</b> ladrillos ayer y hoy necesita <b>365</b> ladrillos <b>más</b> para terminar el muro. ¿Cuántos ladrillos usará en toda la obra?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #FBC02D; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Resolución:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Palabra clave: "más" (Sumar)<br>
+                        Operación: 485 + 365 = <b>850</b><br>
+                        <span style="color:var(--base);">Usará 850 ladrillos en la obra.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    
+        <!-- SLIDE 17: Resumen -->
+        <div class="sl">
+        <div class="head-title">Resumen</div>
+        <div class="summary-list">
+            <div class="stp summary-item"><b>🔄 Canje:</b> 10 unidades forman 1 decena. 10 decenas forman 1 centena.</div>
+            <div class="stp summary-item"><b>🎒 Reserva:</b> Cuando una columna suma 10 o más, anotamos el dígito de las unidades abajo y mandamos la decena como reserva a la siguiente columna.</div>
+            <div class="stp summary-item"><b>⚠️ ¡No la olvides!:</b> El error más común es olvidar sumar la reserva que guardaste arriba.</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 18: Cierre -->
+        <div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:38px; font-weight:800; line-height:1.45; max-width:780px;">¡Excelente! Dominas el algoritmo de suma con reserva, la herramienta matemática más útil de todas.</p>
+            <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">🎒</div>
+        </div>
+        </div>
+
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <span class="sc" id="sc">1 / 22</span>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="22" value="1" oninput="goToSlide(this.value)">
+        </div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>
+const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+function ui() {
+    S.forEach((s,i)=>{
+        s.classList.remove('on','pv','nx');
+        if(i===c) s.classList.add('on');
+        else if(i<c) s.classList.add('pv');
+        else s.classList.add('nx');
+    });
+    document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+    document.getElementById('sc').textContent=`${c+1} / ${T}`;
+    document.getElementById('pv').disabled=c===0;
+    document.getElementById('nx').disabled=c===T-1;
+    let sl = document.getElementById('slide-slider');
+    if(sl) { sl.max = T; sl.value = c + 1; }
+}
+function goToSlide(n) {
+    let val = parseInt(n) - 1;
+    if (val >= 0 && val < T) {
+        c = val;
+        ui();
+    }
+}
+function go(d) {
+    if(d>0) {
+        const hid = S[c].querySelectorAll('.stp:not(.shwn)');
+        if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+    } else {
+        const shw = S[c].querySelectorAll('.stp.shwn');
+        if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+    }
+    const n=c+d;
+    if(n>=0 && n<T) { c=n; ui(); }
+}
+document.addEventListener('keydown', e => {
+    if(e.key==='ArrowRight' || e.key===' ') go(1);
+    if(e.key==='ArrowLeft') go(-1);
+});
+function chkAns(btn, correct, exp) {
+    const wrap = btn.closest('.sl');
+    const buttons = btn.parentElement.querySelectorAll('.btn');
+    const msg = wrap.querySelector('.msg-area');
+    buttons.forEach(b => {
+        b.disabled = false;
+        b.style.background = 'var(--base)';
+        b.style.transform = 'scale(1)';
+    });
+    if (correct) {
+        btn.style.background = '#047857';
+        btn.style.transform = 'scale(1.06)';
+        msg.textContent = `¡Muy bien! ${exp}`;
+        msg.style.color = '#047857';
+    } else {
+        btn.style.background = '#b91c1c';
+        msg.textContent = '¡Cuidado! Solo cabe un dígito por columna abajo. ¡Inténtalo de nuevo!';
+        msg.style.color = '#b91c1c';
+    }
+}
+ui();
+</script>
+</body>
+</html>

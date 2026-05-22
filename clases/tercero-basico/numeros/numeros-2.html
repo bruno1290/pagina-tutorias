@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Números 2: Valor Posicional y Descomposición</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root {
+    --base: #1C4A82;
+    --bg: #f5f6f8;
+    --tx: #333;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--tx);
+}
+.dk { position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex; }
+.sl {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 36px 40px 82px;
+    opacity: 0;
+    transform: scale(.96);
+    transition: opacity .4s, transform .4s;
+    pointer-events: none;
+    z-index: 1;
+    overflow-y: auto;
+}
+.sl.on { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
+.sl.pv { opacity: 0; transform: translateX(-50px) scale(.95); }
+.sl.nx { opacity: 0; transform: translateX(50px) scale(.95); }
+.head-title {
+    background: var(--base);
+    color: white;
+    padding: 10px 40px;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    display: inline-block;
+    border-radius: 12px;
+    text-align: center;
+}
+.sub-text {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+    line-height: 1.4;
+}
+.pb { position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100; }
+.nv {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 100;
+}
+.nb {
+    background: #eee;
+    color: var(--base);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all .2s;
+}
+.nb:hover { background: #ddd; }
+.nb:disabled { opacity: 0.3; cursor: not-allowed; }
+.sc { color: #888; font-size: 16px; font-weight: 900; }
+.stp {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+.stp.shwn { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.pnl {
+    background: #fff;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 3px solid #eaeaea;
+    width: 100%;
+}
+.pnl-border {
+    background: #fff;
+    border: 4px solid var(--base);
+    border-radius: 20px;
+    padding: 24px;
+    width: 100%;
+}
+.hl { color: var(--base); font-weight: 900; }
+.btn {
+    background: var(--base);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .2s;
+    font-family: 'Nunito', sans-serif;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3); }
+.math-eq {
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--base);
+    background: #fff;
+    padding: 12px 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border: 3px dashed #bbdefb;
+    margin: 12px;
+    text-align: center;
+}
+.chip-row, .card-row, .base-row, .quiz-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.mini-chip {
+    background: #eef5ff;
+    border: 2px solid #b6d4f3;
+    border-radius: 999px;
+    padding: 12px 18px;
+    font-size: 20px;
+    font-weight: 800;
+}
+.idea-card {
+    flex: 1 1 220px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+    border-radius: 18px;
+    padding: 18px;
+    border: 3px solid #d7e7f7;
+    min-height: 180px;
+}
+.idea-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    margin-bottom: 10px;
+}
+.idea-card p {
+    font-size: 21px;
+    line-height: 1.45;
+}
+.base-card {
+    flex: 1 1 320px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 18px;
+    border: 4px solid #d9e7f6;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+}
+.base-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    text-align: center;
+    margin-bottom: 14px;
+}
+.place-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+.place-box {
+    background: #f8fbff;
+    border: 2px dashed #c6d9ef;
+    border-radius: 16px;
+    padding: 12px;
+    min-height: 140px;
+}
+.place-title {
+    text-align: center;
+    font-size: 19px;
+    font-weight: 900;
+    color: #315c8d;
+    margin-bottom: 10px;
+}
+.block-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 60px;
+}
+.unit {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: var(--fill, #FFE082);
+    border: 1px solid rgba(0,0,0,0.25);
+}
+.rod {
+    width: 12px;
+    height: 80px;
+    border-radius: 3px;
+    background: 
+        repeating-linear-gradient(0deg, transparent, transparent 11px, rgba(0,0,0,0.2) 11px, rgba(0,0,0,0.2) 12px),
+        var(--fill, #9DDEFF);
+    border: 1px solid rgba(0,0,0,0.25);
+}
+.flat {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    background:
+        repeating-linear-gradient(0deg, transparent, transparent 11px, rgba(0,0,0,0.15) 11px, rgba(0,0,0,0.15) 12px),
+        repeating-linear-gradient(90deg, transparent, transparent 11px, rgba(0,0,0,0.15) 11px, rgba(0,0,0,0.15) 12px),
+        var(--fill, #9DE3BD);
+    border: 1px solid rgba(0,0,0,0.25);
+}
+.number-tag {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 900;
+}
+.two-col {
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 18px;
+    width: 100%;
+    align-items: stretch;
+}
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.step-box {
+    background: #f7fbff;
+    border-left: 8px solid var(--base);
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+.column-wrap {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 18px;
+    width: 100%;
+    align-items: start;
+}
+.side-panel {
+    background: linear-gradient(180deg, #fefefe 0%, #f4f9ff 100%);
+    border: 3px solid #d5e4f5;
+    border-radius: 18px;
+    padding: 18px;
+    min-height: 200px;
+}
+.side-panel h3 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 12px;
+}
+.side-panel p {
+    font-size: 20px;
+    line-height: 1.45;
+}
+.story-card {
+    width: 100%;
+    border-radius: 28px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: center;
+}
+.story-emoji {
+    font-size: 114px;
+    text-align: center;
+    animation: bob 2.8s infinite;
+}
+.story-card h2 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+.story-card p {
+    font-size: 24px;
+    line-height: 1.45;
+}
+.summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+.summary-item {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 18px;
+    border: 3px solid #dbe7f4;
+    font-size: 23px;
+    line-height: 1.45;
+}
+.fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+.fact-box {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 18px;
+    padding: 16px;
+    border: 3px solid #d8e7f6;
+    min-height: 140px;
+}
+.fact-box h4 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 10px;
+    text-align: center;
+}
+.fact-box p {
+    font-size: 21px;
+    line-height: 1.45;
+    text-align: center;
+}
+.decomp-flow {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+}
+.decomp-box {
+    background: #fff;
+    border: 3px solid #d4e6f7;
+    border-radius: 18px;
+    padding: 14px 18px;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--base);
+}
+.arrow {
+    font-size: 34px;
+    font-weight: 900;
+    color: #4d6d94;
+}
+.warn-card {
+    background: #fff8e5;
+    border: 4px solid #f0ca59;
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 22px;
+    line-height: 1.45;
+    width: 100%;
+}
+.msg-area {
+    font-size: 24px;
+    font-weight: 900;
+    height: 40px;
+    text-align: center;
+    margin-top: 20px;
+}
+.hero-title {
+    font-size: 62px;
+    color: var(--base);
+    margin-bottom: 18px;
+    text-align: center;
+    line-height: 1;
+}
+.hero-sub {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    max-width: 720px;
+}
+.hero-emoji {
+    font-size: 108px;
+    margin-top: 28px;
+    animation: bounce 2s infinite;
+}
+.label-pill {
+    background: #eef5ff;
+    border: 2px solid #c5dcf5;
+    border-radius: 14px;
+    padding: 10px 16px;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--base);
+}
+/* CDU Table */
+.cdu-table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 28px;
+    font-weight: 900;
+}
+.cdu-table th {
+    padding: 10px 28px;
+    border-radius: 12px 12px 0 0;
+    color: white;
+    font-size: 22px;
+}
+.cdu-table td {
+    padding: 14px 28px;
+    text-align: center;
+    border: 2px solid #e0e8f2;
+    font-size: 36px;
+    background: #fff;
+}
+.th-c { background: #388E3C; }
+.th-d { background: #1976D2; }
+.th-u { background: #F57F17; }
+/* Posición vs Valor visual */
+.pv-card {
+    background: #fff;
+    border: 3px solid #d4e6f7;
+    border-radius: 18px;
+    padding: 18px;
+    text-align: center;
+}
+.pv-digit {
+    font-size: 56px;
+    font-weight: 900;
+    margin-bottom: 6px;
+}
+.pv-pos {
+    font-size: 18px;
+    font-weight: 800;
+    color: #888;
+    margin-bottom: 4px;
+}
+.pv-val {
+    font-size: 24px;
+    font-weight: 900;
+}
+/* Equivalence cards */
+.equiv-card {
+    background: #fff;
+    border: 3px solid #d4e6f7;
+    border-radius: 18px;
+    padding: 16px 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--base);
+}
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+/* Bloques multibase CSS puros con textura */
+.mb-c {
+    --bg-color: #9DE3BD;
+    --border-color: #388E3C;
+    width: 140px; height: 140px;
+    background:
+        repeating-linear-gradient(0deg, transparent, transparent 13px, rgba(0,0,0,0.15) 13px, rgba(0,0,0,0.15) 14px),
+        repeating-linear-gradient(90deg, transparent, transparent 13px, rgba(0,0,0,0.15) 13px, rgba(0,0,0,0.15) 14px),
+        var(--bg-color);
+    border: 1px solid var(--border-color);
+    display: inline-block; margin: 2px; border-radius: 3px;
+}
+.mb-d {
+    --bg-color: #9DDEFF;
+    --border-color: #1976D2;
+    width: 14px; height: 140px;
+    background: 
+        repeating-linear-gradient(0deg, transparent, transparent 13px, rgba(0,0,0,0.2) 13px, rgba(0,0,0,0.2) 14px),
+        var(--bg-color);
+    border: 1px solid var(--border-color);
+    display: inline-block; margin: 2px; border-radius: 2px;
+}
+.mb-u {
+    --bg-color: #FFE082;
+    --border-color: #F57F17;
+    width: 14px; height: 14px;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    display: inline-block; margin: 2px; border-radius: 2px;
+}
+.mb-group {
+    display: flex; align-items: flex-end; justify-content: center; gap: 8px;
+    padding: 10px; background: #fff; border-radius: 12px; border: 2px dashed #ccc;
+    flex-wrap: wrap;
+}
+
+</style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 class="hero-title">Números: Valor Posicional y Descomposición</h1>
+            <p class="hero-sub">¿Cuánto vale cada dígito según su posición?</p>
+            <div class="hero-emoji">🧩</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 2: INTRO El juego de las sillas -->
+        <div class="sl">
+        <div class="head-title" style="background:#F57F17;">El juego de las sillas musicales</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">Imagina que eres el número 3 y estás jugando a las sillas musicales.</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#F57F17;">¡No es lo mismo sentarse en la silla dorada que en la de madera!</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">Con los números pasa igual. El "3" vale muy poquito si se sienta en las Unidades, pero vale muchísimo si se sienta en las Centenas.</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">🪑🎵</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 3: Posición vs Valor -->
+        <div class="sl">
+        <div class="head-title">Posición vs. Valor Posicional</div>
+        <p class="sub-text">No es lo mismo <b class="hl">dónde está</b> un dígito que <b class="hl">cuánto vale</b>.</p>
+        <div class="base-card" style="max-width:700px; margin:0 auto;">
+            <h3 style="font-size:24px;">Ejemplo: el número 371</h3>
+            <div style="display:flex; justify-content:center; gap:24px; margin:18px 0;">
+                <div class="pv-card" style="border-color:#9DE3BD;">
+                    <div class="pv-digit" style="color:#388E3C;">3</div>
+                    <div class="pv-pos">Posición: <b>Centena</b></div>
+                    <div class="stp pv-val" style="color:#388E3C;">Vale: <b>300</b></div>
+                </div>
+                <div class="pv-card" style="border-color:#9DDEFF;">
+                    <div class="pv-digit" style="color:#1976D2;">7</div>
+                    <div class="pv-pos">Posición: <b>Decena</b></div>
+                    <div class="stp pv-val" style="color:#1976D2;">Vale: <b>70</b></div>
+                </div>
+                <div class="pv-card" style="border-color:#FFE082;">
+                    <div class="pv-digit" style="color:#F57F17;">1</div>
+                    <div class="pv-pos">Posición: <b>Unidad</b></div>
+                    <div class="stp pv-val" style="color:#F57F17;">Vale: <b>1</b></div>
+                </div>
+            </div>
+        </div>
+        <div class="stp warn-card" style="margin-top:14px; max-width:700px;">
+            ⚠️ El dígito <b>3</b> en 371 no vale "3". ¡Vale <b>300</b> porque está en la posición de las centenas!
+        </div>
+        </div>
+
+        <!-- SLIDE 3: Otro ejemplo con tabla -->
+        <div class="sl">
+        <div class="head-title">¿Cuánto vale cada dígito?</div>
+        <p class="sub-text">Veamos el número <b class="hl">862</b> en nuestra tabla C–D–U.</p>
+        <div class="two-col">
+            <div class="base-card">
+                <h3 style="font-size:24px;">862</h3>
+                <table class="cdu-table">
+                    <tr>
+                        <th class="th-c">C</th>
+                        <th class="th-d">D</th>
+                        <th class="th-u">U</th>
+                    </tr>
+                    <tr>
+                        <td style="color:#388E3C;">8</td>
+                        <td style="color:#1976D2;">6</td>
+                        <td style="color:#F57F17;">2</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="side-panel">
+                <h3>Valor posicional</h3>
+                <p class="stp" style="margin-bottom:12px;"><b style="color:#388E3C;">8</b> → vale <b>800</b> (8 centenas)</p>
+                <p class="stp" style="margin-bottom:12px;"><b style="color:#1976D2;">6</b> → vale <b>60</b> (6 decenas)</p>
+                <p class="stp" style="margin-bottom:12px;"><b style="color:#F57F17;">2</b> → vale <b>2</b> (2 unidades)</p>
+                <p class="stp" style="margin-top:16px; font-size:22px; font-weight:900; color:var(--base);">800 + 60 + 2 = 862 ✅</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 4: El cero como marcador -->
+        <div class="sl">
+        <div class="head-title" style="background:#d32f2f;">El cero guarda su lugar</div>
+        <p class="sub-text">El <b style="color:#d32f2f;">cero</b> no aporta cantidad, pero <b class="hl">ocupa una posición</b> y cambia todo.</p>
+        <div class="fact-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="fact-box" style="border-color:#ffcdd2;">
+                <h4 style="color:#d32f2f; font-size:32px;">305</h4>
+                <p>C:3 D:<b style="color:#d32f2f;">0</b> U:5</p>
+                <p class="stp" style="font-weight:900; color:#059669; font-size:18px;">= 300 + 0 + 5</p>
+            </div>
+            <div class="fact-box stp" style="border-color:#ffcdd2;">
+                <h4 style="color:#d32f2f; font-size:32px;">603</h4>
+                <p>C:6 D:<b style="color:#d32f2f;">0</b> U:3</p>
+                <p class="stp" style="font-weight:900; color:#059669; font-size:18px;">= 600 + 0 + 3</p>
+            </div>
+            <div class="fact-box stp" style="border-color:#ffcdd2;">
+                <h4 style="color:#d32f2f; font-size:32px;">630</h4>
+                <p>C:6 D:3 U:<b style="color:#d32f2f;">0</b></p>
+                <p class="stp" style="font-weight:900; color:#059669; font-size:18px;">= 600 + 30 + 0</p>
+            </div>
+        </div>
+        <div class="stp warn-card" style="margin-top:14px;">
+            ⚠️ ¡<b>603</b> y <b>630</b> NO son iguales! El cero está en diferente posición y cambia el valor completo.
+        </div>
+        </div>
+
+        <!-- SLIDE 6: INTRO Armando Lego -->
+        <div class="sl">
+        <div class="head-title" style="background:#388E3C;">Armando y desarmando Lego</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">¿Alguna vez has desarmado una figura de Lego para ver de qué piezas estaba hecha?</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#388E3C;">¡Descomponer un número es exactamente lo mismo!</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">Lo separamos en sus piezas más simples (centenas completas, decenas completas y unidades sueltas) para entender cómo fue construido.</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">🧱🔧</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 7: Descomposición aditiva -->
+        <div class="sl">
+        <div class="head-title">Descomposición Aditiva</div>
+        <p class="sub-text">Descomponer un número es <b class="hl">separarlo según el valor</b> de cada dígito.</p>
+        <div class="base-card" style="max-width:750px; margin:0 auto;">
+            <h3 style="font-size:24px;">Ejemplo: 432</h3>
+            <div class="decomp-flow" style="margin:16px 0;">
+                <div class="decomp-box" style="border-color:#9DE3BD; color:#388E3C;">400</div>
+                <div class="arrow">+</div>
+                <div class="decomp-box" style="border-color:#9DDEFF; color:#1976D2;">30</div>
+                <div class="arrow">+</div>
+                <div class="decomp-box" style="border-color:#FFE082; color:#F57F17;">2</div>
+                <div class="stp arrow">=</div>
+                <div class="stp decomp-box">432</div>
+            </div>
+            <div class="stp" style="text-align:center; font-size:22px; font-weight:700; color:#555;">
+                También se escribe: <b style="color:var(--base);">4 C + 3 D + 2 U</b>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 6: Descomposición con cero intermedio -->
+        <div class="sl">
+        <div class="head-title">Descomposición con cero</div>
+        <p class="sub-text">¿Qué pasa cuando hay un cero? ¡Hay que mantenerlo!</p>
+        <div class="fact-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="base-card">
+                <h3 style="font-size:22px;">506</h3>
+                <div class="decomp-flow" style="margin:12px 0;">
+                    <div class="decomp-box" style="border-color:#9DE3BD; color:#388E3C; font-size:24px;">500</div>
+                    <div class="arrow" style="font-size:28px;">+</div>
+                    <div class="decomp-box" style="border-color:#FFE082; color:#F57F17; font-size:24px;">6</div>
+                </div>
+                <div class="stp" style="text-align:center; font-size:20px; font-weight:800; color:var(--base);">5 C + 0 D + 6 U</div>
+            </div>
+            <div class="base-card stp">
+                <h3 style="font-size:22px;">740</h3>
+                <div class="decomp-flow" style="margin:12px 0;">
+                    <div class="decomp-box" style="border-color:#9DE3BD; color:#388E3C; font-size:24px;">700</div>
+                    <div class="arrow" style="font-size:28px;">+</div>
+                    <div class="decomp-box" style="border-color:#9DDEFF; color:#1976D2; font-size:24px;">40</div>
+                </div>
+                <div class="stp" style="text-align:center; font-size:20px; font-weight:800; color:var(--base);">7 C + 4 D + 0 U</div>
+            </div>
+        </div>
+        <div class="stp warn-card" style="margin-top:14px;">
+            🧠 En 506 no hay decenas (0 decenas). ¡Pero el cero está ahí para que no confundamos 506 con 56!
+        </div>
+        </div>
+
+        <!-- SLIDE 7: Composición (inverso) -->
+        <div class="sl">
+        <div class="head-title">Composición: del revés</div>
+        <p class="sub-text">Ahora hacemos lo opuesto: nos dan las partes y <b class="hl">armamos el número</b>.</p>
+        <div class="step-list" style="max-width:700px; width:100%;">
+            <div class="step-box">
+                600 + 50 + 9 = <span class="stp" style="color:#059669; display:inline;"><b>659</b></span>
+            </div>
+            <div class="step-box stp">
+                8 C + 4 U = <span class="stp" style="color:#059669; display:inline;"><b>804</b></span> <span class="stp" style="color:#d32f2f; font-size:16px; display:inline;">(¡Ojo! 0 decenas = cero en el medio)</span>
+            </div>
+            <div class="step-box stp">
+                900 + 30 + 5 = <span class="stp" style="color:#059669; display:inline;"><b>935</b></span>
+            </div>
+            <div class="step-box stp">
+                200 + 90 = <span class="stp" style="color:#059669; display:inline;"><b>290</b></span> <span class="stp" style="color:#d32f2f; font-size:16px; display:inline;">(0 unidades)</span>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 8: Equivalencias -->
+        <div class="sl">
+        <div class="head-title">Equivalencias entre posiciones</div>
+        <p class="sub-text">Las unidades, decenas y centenas están <b class="hl">conectadas</b> entre sí.</p>
+        <div class="fact-grid" style="grid-template-columns: repeat(2, 1fr);">
+            <div class="equiv-card" style="border-color:#9DDEFF;">
+                <p>5 Decenas = <span class="stp" style="display:inline; color:#059669;"><b>50 Unidades</b></span></p>
+            </div>
+            <div class="equiv-card stp" style="border-color:#9DE3BD;">
+                <p>400 Unidades = <span class="stp" style="display:inline; color:#059669;"><b>4 Centenas</b></span></p>
+            </div>
+            <div class="equiv-card stp" style="border-color:#9DDEFF;">
+                <p>700 Unidades = <span class="stp" style="display:inline; color:#059669;"><b>70 Decenas</b></span></p>
+            </div>
+            <div class="equiv-card stp" style="border-color:#9DE3BD;">
+                <p>6 Centenas = <span class="stp" style="display:inline; color:#059669;"><b>60 Decenas</b></span></p>
+            </div>
+        </div>
+        <div class="stp mini-chip" style="margin-top:16px;">
+            Regla: 1 C = 10 D = 100 U · 1 D = 10 U
+        </div>
+        </div>
+
+        <!-- SLIDE 9: Abre tu cuaderno -->
+        <div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Descompón estos números según su valor posicional:</p>
+        <div class="step-list" style="max-width:700px; width:100%;">
+            <div class="step-box">
+                342 = <span class="stp" style="color:#059669; display:inline;"><b>300 + 40 + 2</b> (3C + 4D + 2U)</span>
+            </div>
+            <div class="step-box stp">
+                508 = <span class="stp" style="color:#059669; display:inline;"><b>500 + 0 + 8</b> (5C + 0D + 8U)</span>
+            </div>
+            <div class="step-box stp">
+                670 = <span class="stp" style="color:#059669; display:inline;"><b>600 + 70 + 0</b> (6C + 7D + 0U)</span>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 10: Detección de error -->
+        <div class="sl">
+        <div class="head-title" style="background:#d32f2f;">¿Quién tiene razón?</div>
+        <p class="sub-text">Dos niños descompusieron el número <b class="hl">183</b>. ¿Quién está correcto?</p>
+        <div class="fact-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="fact-box" style="border-color:#9DE3BD;">
+                <h4 style="color:#388E3C;">Niño A</h4>
+                <p style="font-size:24px; font-weight:900;">"1 C, 8 D y 3 U es 183"</p>
+                <p style="font-size:20px;">100 + 80 + 3 = 183</p>
+            </div>
+            <div class="fact-box" style="border-color:#ffcdd2;">
+                <h4 style="color:#d32f2f;">Niño B</h4>
+                <p style="font-size:24px; font-weight:900;">"1 C, 8 D y 3 U equivalen a 100 + 80 + 30"</p>
+                <p style="font-size:20px;">¿Será correcto?</p>
+            </div>
+        </div>
+        <div class="stp warn-card" style="margin-top:14px;">
+            ✅ <b>Niño A tiene razón.</b> Niño B se equivocó: dijo que 3 unidades valen 30, pero 3 unidades valen <b>3</b>. Confundió unidades con decenas.
+        </div>
+        </div>
+
+        <!-- SLIDE 11: Quiz interactivo -->
+        <div class="sl">
+        <div class="head-title">Quiz de valor posicional</div>
+        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">En el número <b>526</b>, ¿cuál es el valor posicional del dígito <b>2</b>?</p>
+            <div class="quiz-row">
+                <button class="btn" onclick="chkAns(this, false, 'El 2 está en la posición de las decenas, por lo que vale 20.')">2</button>
+                <button class="btn" onclick="chkAns(this, true, 'El 2 está en la posición de las decenas, por lo que vale 20.')">20</button>
+                <button class="btn" onclick="chkAns(this, false, 'El 2 está en la posición de las decenas, por lo que vale 20.')">200</button>
+            </div>
+            <div class="msg-area"></div>
+        </div>
+        </div>
+
+        <!-- SLIDE 12: Ejercicios Propuestos -->
+        <div class="sl">
+        <div class="head-title">Ejercicios Propuestos</div>
+        <p class="sub-text">Copia en tu cuaderno y resuelve.</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">En 862, ¿cuánto vale el 6?</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Descompón 453</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Compón: 8C + 4U = ?</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Completa: 5D = ___ U</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Escribe 4 números donde el 3 valga 300</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Compón: 200 + 90 = ?</div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 13: Respuestas -->
+        <div class="sl">
+        <div class="head-title">Respuestas</div>
+        <p class="sub-text">Revisa tus respuestas:</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">En 862, el 6 vale <b>60</b></div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">453 = 400 + 50 + 3</div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">8C + 4U = <b>804</b></div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">5D = <b>50</b> U</div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">Ej: 300, 315, 342, 389...</div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">200 + 90 = <b>290</b></div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 14: Problema situacional 1 -->
+        <div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#FFF8E1; border:5px solid #F9A825;">
+            <div class="story-emoji">🐷</div>
+            <div>
+                <h2 style="color:#F9A825;">La alcancía de Marisol</h2>
+                <p>Marisol guardó en su alcancía: <b>3 billetes de $100</b>, ningún billete de $10 y <b>5 monedas de $1</b>. ¿Cuánto dinero juntó? Escríbelo con cifras y en palabras.</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #F9A825; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        3 C + 0 D + 5 U = <b>305</b><br>
+                        <span style="color:var(--base);">Trescientos cinco</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 15: Problema situacional 2 -->
+        <div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#E8F5E9; border:5px solid #2E7D32;">
+            <div class="story-emoji">🧠</div>
+            <div>
+                <h2 style="color:#2E7D32;">El número misterioso</h2>
+                <p>"La suma de los dígitos de un número de 3 cifras es <b>5</b>. Si el valor posicional de uno de sus dígitos es <b>400</b>, ¿cuál es el número?"</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #2E7D32; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Si un dígito vale 400, entonces hay un <b>4</b> en la centena.<br>
+                        La suma de dígitos es 5, entonces: 4 + ___ + ___ = 5.<br>
+                        Los otros dígitos suman 1. Podría ser <b>410</b> o <b>401</b>.
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 16: Desafío Supremo 1 -->
+        <div class="sl">
+        <div class="head-title" style="background: linear-gradient(90deg, #9333EA 0%, #db2777 100%);">Desafío Supremo</div>
+        <div class="story-card" style="background:#F3E8FF; border:5px solid #9333EA; box-shadow: 0 10px 25px rgba(147, 51, 234, 0.2);">
+            <div class="story-emoji" style="font-size:100px; animation:bounce 2s infinite;">🔐</div>
+            <div>
+                <h2 style="color:#9333EA; font-size:38px;">El Candado del Tesoro</h2>
+                <p style="font-size:24px; font-weight:600;">Un candado se abre con un número de 3 cifras. Pistas:<br>• Su dígito de las centenas vale <b>700</b><br>• Su dígito de las decenas vale <b>0</b><br>• Su dígito de las unidades es el triple de 3</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #9333EA; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta descubierta:</p>
+                    <div style="font-size:28px; font-weight:900; line-height:1.6;">
+                        C: 7 (vale 700) · D: 0 · U: 9 (triple de 3)<br>
+                        <span style="color:#9333ea;">El código es <b>709</b></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 17: Desafío Supremo 2 — ObraCraft -->
+        <div class="sl">
+        <div class="head-title" style="background: linear-gradient(90deg, #9333EA 0%, #db2777 100%);">Desafío Supremo</div>
+        <div class="story-card" style="background:#FDF2F8; border:5px solid #DB2777; box-shadow: 0 10px 25px rgba(219, 39, 119, 0.2);">
+            <div class="story-emoji" style="font-size:100px; animation:bounce 2s infinite;">⛏️</div>
+            <div>
+                <h2 style="color:#DB2777; font-size:36px;">ObraCraft: La Fábrica de Pociones</h2>
+                <p style="font-size:22px; font-weight:600;">En tu laboratorio mágico tienes estos ingredientes:<br>• <b>700 cristales</b> de energía + <b>40 polvos</b> lunares + <b>6 gotas</b> de dragón.<br>¿Cuántos ingredientes hay en total? Descompón el número y escribe su nombre en palabras.</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #DB2777; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta descubierta:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        700 + 40 + 6 = <b>746</b><br>
+                        <span style="color:#db2777;">setecientos cuarenta y seis</span><br>
+                        7 C + 4 D + 6 U
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 18: Problema integrador de cierre -->
+        <div class="sl">
+        <div class="head-title" style="background:#0277BD;">Problema Integrador</div>
+        <div class="story-card" style="background:#E1F5FE; border:5px solid #0277BD;">
+            <div class="story-emoji" style="font-size:100px;">📋</div>
+            <div>
+                <h2 style="color:#0277BD;">Las tres descomposiciones</h2>
+                <p style="font-size:22px; font-weight:600;">Compón cada número, escríbelo con palabras y represéntalo en tabla C–D–U:<br>(a) 700 + 40 + 6<br>(b) 5 C + 0 D + 8 U<br>(c) 200 + 90</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #0277BD; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:18px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:20px; font-weight:900; line-height:1.8;">
+                        (a) <b>746</b> → setecientos cuarenta y seis<br>
+                        (b) <b>508</b> → quinientos ocho (¡no 58!)<br>
+                        (c) <b>290</b> → doscientos noventa
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 19: Resumen -->
+        <div class="sl">
+        <div class="head-title">Resumen</div>
+        <div class="summary-list">
+            <div class="stp summary-item"><b>📍 Posición vs. Valor:</b> El dígito 3 en 371 está en la centena y vale 300, no "3".</div>
+            <div class="stp summary-item"><b>🧩 Descomposición:</b> 432 = 400 + 30 + 2 = 4C + 3D + 2U.</div>
+            <div class="stp summary-item"><b>🔄 Composición:</b> Dado 600 + 50 + 9, el número es 659.</div>
+            <div class="stp summary-item"><b>⚠️ Cero intermedio:</b> 8C + 4U = 804 (no 84). ¡El cero ocupa la posición de las decenas!</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 20: Cierre -->
+        <div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:38px; font-weight:800; line-height:1.45; max-width:780px;">¡Ya dominas el valor posicional y la descomposición!</p>
+            <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">🧩</div>
+        </div>
+        </div>
+
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <span class="sc" id="sc">1 / 20</span>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="20" value="1" oninput="goToSlide(this.value)">
+        </div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>
+const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+function ui() {
+    S.forEach((s,i)=>{
+        s.classList.remove('on','pv','nx');
+        if(i===c) s.classList.add('on');
+        else if(i<c) s.classList.add('pv');
+        else s.classList.add('nx');
+    });
+    document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+    document.getElementById('sc').textContent=`${c+1} / ${T}`;
+    document.getElementById('pv').disabled=c===0;
+    document.getElementById('nx').disabled=c===T-1;
+    let sl = document.getElementById('slide-slider');
+    if(sl) { sl.max = T; sl.value = c + 1; }
+}
+function goToSlide(n) {
+    let val = parseInt(n) - 1;
+    if (val >= 0 && val < T) {
+        c = val;
+        ui();
+    }
+}
+function go(d) {
+    if(d>0) {
+        const hid = S[c].querySelectorAll('.stp:not(.shwn)');
+        if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+    } else {
+        const shw = S[c].querySelectorAll('.stp.shwn');
+        if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+    }
+    const n=c+d;
+    if(n>=0 && n<T) { c=n; ui(); }
+}
+document.addEventListener('keydown', e => {
+    if(e.key==='ArrowRight' || e.key===' ') go(1);
+    if(e.key==='ArrowLeft') go(-1);
+});
+function chkAns(btn, correct, exp) {
+    const wrap = btn.closest('.sl');
+    const buttons = btn.parentElement.querySelectorAll('.btn');
+    const msg = wrap.querySelector('.msg-area');
+    buttons.forEach(b => {
+        b.disabled = false;
+        b.style.background = 'var(--base)';
+        b.style.transform = 'scale(1)';
+    });
+    if (correct) {
+        btn.style.background = '#047857';
+        btn.style.transform = 'scale(1.06)';
+        msg.textContent = `¡Muy bien! ${exp}`;
+        msg.style.color = '#047857';
+    } else {
+        btn.style.background = '#b91c1c';
+        msg.textContent = 'Recuerda: el valor depende de la posición. ¡Inténtalo de nuevo!';
+        msg.style.color = '#b91c1c';
+    }
+}
+ui();
+</script>
+</body>
+</html>

@@ -1,0 +1,822 @@
+Plan de 3 módulos × 3 clases
+Matemática 3° Básico · Casa Azul · Clases online de 60 min · Referencia: Texto del Estudiante
+Santillana (2017), Unidad 1
+Este documento reorganiza el contenido de la Unidad 1 del libro de Santillana en tres módulos didácticos
+pensados para clases online de 60 minutos. Está diseñado como insumo para que una IA genere las 9 clases
+(presentaciones + ejercicios) manteniendo consistencia metodológica.
+PRIORIDAD TRANSVERSAL EN EL MÓDULO NÚMEROS — LECTURA Y PRONUNCIACIÓN. Los
+alumnos presentan dificultades de lectura oral desde el rango 20–99 (no solo en 3 cifras): pronuncian mal
+irregularidades léxicas ("cincocientos", "nuevecientos"), saltan el cero intermedio (305 → "treinta y cinco") y
+confunden cifras al oído (60/70, 80/18). El módulo Números integra este foco en sus 3 clases. El libro de
+Santillana asume que la lectura fluye desde la representación visual y le dedica espacio limitado, por lo que
+hay que reforzarlo explícitamente.
+Estructura general
+3 módulos × 3 clases = 9 clases en total. Cada clase 60 min.
+Módulo 1 — Números
+Combina Tema 1 (Números hasta 1 000) + Tema 2 (Orden y comparación) del
+libro. Foco: lectura/pronunciación, valor posicional, comparación y orden.
+Módulo 2 — Suma
+Adición de números hasta 1 000. Foco: descomposición C/D/U, algoritmo vertical
+con reserva, propiedades, técnica de descomposición para cálculo facilitado,
+vocabulario de la suma, problemas directos e inversos.
+Módulo 3 — Resta
+Sustracción de números hasta 1 000. Foco: descomposición C/D/U, algoritmo
+vertical con canje, propiedades, técnica de descomposición para cálculo
+facilitado, vocabulario de la resta, problemas directos e inversos.
+OAs MINEDUC
+OA1, OA2, OA3, OA4 (Módulo Números) · OA9 (Módulos Suma y Resta) · OA6
+cálculo mental (Módulos Suma y Resta).
+Modalidad
+Online. Sin actividades colaborativas presenciales (trabajos en pareja, juegos
+de tablero, recortables). Si una idea del libro es colaborativa, se adapta a trabajo
+individual o se reemplaza.
+Estructura interna de cada clase (60 min)
+Todas las clases siguen los mismos 4 momentos. Esto permite que el alumno reconozca el ritmo y que la IA
+replique la plantilla. Aproximadamente 32–40 minutos quedan en manos del alumno (práctica guiada +
+práctica independiente), lo que asegura el peso de la ejercitación y la resolución de problemas en cada
+sesión.
+Momento
+Min
+Qué hacer
+1. 
+Modelaje 
+del
+concepto
+15–18
+Definición clara + 2 o 3 ejemplos resueltos paso a paso, con doble
+representación: material multibase (cubos, barras, placas) y simbólico
+(tabla C–D–U, algoritmo, expresión numérica). Verbalizar lo que se hace,
+especialmente en Módulo Números.
+
+---PAGE---
+Momento
+Min
+Qué hacer
+2. Práctica guiada
+12–15
+4–6 ejercicios breves de aplicación directa. El alumno imita el procedimiento
+modelado. Se hacen juntos con el profesor mostrando el primero, luego el
+alumno trabaja con apoyo. Incluir al menos un ejercicio de detección de
+error ("¿qué hizo mal este personaje?").
+3. 
+Práctica
+independiente
+20–25
+Batería de ejercicios variados que mezcla: aplicación del algoritmo,
+problemas verbales contextualizados (mínimo 2 por clase), ejercicios con
+dígitos faltantes o multirespuesta, y un ejercicio de razonamiento. Este es el
+bloque más importante. El alumno trabaja solo.
+4. 
+Cierre 
+con
+problema
+integrador
+5–8
+Un problema más exigente o un ejercicio inverso: dado un resultado o una
+operación, crear un problema que la represente. Sirve para verificar
+comprensión y conectar con la clase siguiente.
+Recursos visuales obligatorios: tabla posicional C–D–U, material multibase (cubos = unidades, barras =
+decenas, placas = centenas), monedas chilenas de $10 y $100, recta numérica. La doble representación
+(concreta + simbólica) es la característica metodológica más fuerte del libro de Santillana y debe mantenerse
+en cada clase.
+
+---PAGE---
+MÓDULO 1 — Números
+Combina Tema 1 (Números hasta el 1 000, pp. 14–37) y Tema 2 (Orden y comparación, pp. 38–51) del libro.
+Es el módulo más largo en términos de páginas del texto base porque cubre dos temas, y es donde la
+lectura/pronunciación se trabaja explícitamente.
+Objetivos del módulo
+(1) Leer y pronunciar correctamente números entre 11 y 999, superando
+irregularidades léxicas y cero intermedio. (2) Comprender el valor posicional (qué
+representa cada U, D, C). (3) Componer y descomponer números aditivamente.
+(4) Comparar y ordenar números usando tabla posicional y recta numérica.
+OAs
+OA1 (contar hasta 1 000), OA2 (leer/escribir números hasta 1 000), OA3
+(comparar y ordenar), OA4 (descomponer y componer aditivamente).
+Páginas del libro de
+referencia
+Tema 1 completo (lecciones 1.1, 1.2, 1.3) + Tema 2 completo (lecciones 2.1, 2.2)
+= pp. 14–51.
+Clase 1 — Lectura, pronunciación y construcción del número
+Foco principal: leer y pronunciar bien los números. Construye primero el rango 11–99 (los alumnos fallan
+ahí) y luego extiende al rango 100–999 introduciendo la centena. Diferencia explícitamente U, D y C.
+Contenidos
+•
+Repaso de lectura del rango 11–99: irregularidades "once, doce, trece… veinte, veintiuno…" y nombres
+correctos de las decenas (treinta, cuarenta, cincuenta, sesenta, setenta, ochenta, noventa).
+•
+Construcción de la centena: 10 D = 1 C = 100 U.
+•
+Lectura del rango 100–999 con foco en las irregularidades léxicas: quinientos (no "cincocientos"),
+setecientos (no "sietecientos"), novecientos (no "nuevecientos").
+•
+Diferenciación clara de qué representa cada U, D y C con material multibase y monedas ($1, $10, $100).
+•
+Representación de un número de 3 cifras en tabla C–D–U.
+•
+Escritura: de cifra a palabra y de palabra a cifra.
+Foco en lectura oral (transversal a la clase)
+•
+Pronunciar en voz alta cada número que aparezca, separándolo en 3 bloques: doscientos – cuarenta y
+tres. Esto rompe la tendencia a decir todo pegado.
+•
+Contrastar pares confusos al oído: 60/70, 80/18, 16/60, 300/30, 800/80.
+•
+Tarjetas con cifra → el alumno la lee en voz alta. Tarjetas con palabra → el alumno la escribe en cifras.
+
+---PAGE---
+Tipos de ejercicio (basados en el libro)
+Lectura oral
+Mostrar 5 números (ej.: 47, 152, 305, 580, 716) y pedir leerlos en voz alta. El
+profesor corrige pronunciación.
+Cifra → palabra
+Escribir en palabras: 248, 506, 470, 819 (incluir uno con cero intermedio).
+Palabra → cifra
+Escribir con cifras: "ochocientos cuarenta y nueve", "trescientos veintiuno",
+"quinientos siete", "novecientos".
+Representación
+multibase
+Dado un dibujo de placas/barras/cubos, escribir el número.
+Tabla C–D–U
+Completar una tabla a partir de la representación pictórica.
+Combinatoria
+Con los dígitos 2, 5, 9: escribir todos los números de 3 cifras distintas posibles y
+leerlos en voz alta.
+Detección de error
+Un personaje lee 305 como "treinta y cinco". ¿Qué error cometió? Corregirlo.
+Problema contextual
+En la feria del barrio venden un álbum a $785 y una pelota a $608. Leer ambos
+precios y representarlos con monedas de $100 y $10.
+Problema integrador de cierre
+Mostrar 3 boletas de compra del barrio (ej.: $305, $580, $716). Pedir al alumno: (a) leer cada total en voz alta,
+(b) representar uno con monedas, (c) escribir con palabras el más caro.
+Errores típicos a anticipar
+•
+"Cincocientos" en vez de "quinientos".
+•
+Lectura del cero intermedio: 305 leído como "treinta y cinco" o "trescientos cinco" pegado sin pausa.
+•
+Confusión auditiva 60/70, 80/18 cuando el profesor dicta.
+•
+Inversión de cifras al escribir desde la palabra: "ochocientos cuarenta y nueve" escrito como 489.
+
+---PAGE---
+Clase 2 — Valor posicional y descomposición
+Es el contenido conceptualmente más exigente del módulo. Distingue posición (centena, decena, unidad) de
+valor posicional (el aporte numérico del dígito según su posición). Introduce descomposición y composición
+aditiva.
+Contenidos
+•
+Posición vs. valor posicional: en 371, el 3 está en posición de centena y vale 300; el 7 está en posición de
+decena y vale 70.
+•
+Rol del cero como marcador de posición: 305 ≠ 35; 603 ≠ 630; 408 ≠ 48.
+•
+Lectura cuidadosa de números con cero intermedio (mantiene el foco de pronunciación de la Clase 1).
+•
+Descomposición aditiva por valor: 432 = 400 + 30 + 2.
+•
+Descomposición por nombre de la posición: 432 = 4 C + 3 D + 2 U.
+•
+Composición inversa: dada la descomposición, escribir el número.
+•
+Equivalencias entre unidades de orden: 5 D = 50 U; 6 C = 60 D; 700 U = 7 C.
+Tipos de ejercicio (basados en el libro)
+Identificar 
+valor
+posicional
+En 371, ¿cuál es el valor posicional del dígito 3? (300). Variar el dígito destacado:
+862, 286, 628.
+Equivalencias
+Completar: 5 D = ___ U; 400 U = ___ C; 700 U = ___ D; 6 C = ___ D.
+Descomposición
+Descomponer 342, 740, 506 según valor posicional y según nombre de posición.
+Composición
+Componer: 600 + 50 + 9 = ___; 8 C + 4 U = ___ (¡atención al cero!); 900 + 30 + 5 =
+___.
+Múltiples respuestas
+Escribir 4 números distintos donde el valor posicional del dígito 3 sea 300.
+Detección de error
+Niño A dice: "1 C, 8 D y 3 U es 183". Niño B dice: "1 C, 8 D y 3 U equivalen a 100
++ 80 + 30". ¿Quién está en lo correcto y qué error cometió el otro?
+Problema 
+con 
+cero
+intermedio
+Marisol guardó dinero en una alcancía: 3 billetes de $100, ningún billete de $10 y 5
+monedas de $1. ¿Cuánto dinero juntó? Escribirlo con cifras y en palabras.
+Problema integrado
+"La suma de los dígitos de un número es 5. Si el valor posicional de uno de sus
+dígitos es 4, ¿cuál es el número?"
+Problema integrador de cierre
+Dar al alumno tres descomposiciones: (a) 700 + 40 + 6, (b) 5 C + 0 D + 8 U, (c) 200 + 90. Pedir: componer
+cada número, escribirlo con palabras y representarlo en tabla C–D–U. El caso (b) es la prueba clave: si el
+alumno escribe 58 en vez de 508, hay que reforzar.
+Errores típicos a anticipar
+•
+Confundir 603 con 630 al componer o descomponer.
+•
+Decir que el valor posicional del 3 en 371 es "3" en vez de 300.
+•
+Componer mal cuando hay cero intermedio: 8 C + 4 U → "84" en vez de 804.
+
+---PAGE---
+•
+Descomponer omitiendo el cero: 506 → "500 + 6" sin escribir el 0 del medio (esto está bien
+matemáticamente pero confunde si después no entiende por qué el resultado lleva un cero).
+
+---PAGE---
+Clase 3 — Comparación, orden y recta numérica
+Cierra el módulo aplicando el valor posicional para comparar y ordenar números. Introduce dos herramientas:
+tabla posicional (comparación posición por posición) y recta numérica (visualización del orden).
+Contenidos
+•
+Símbolos: < (menor que), > (mayor que), = (igual).
+•
+Estrategia de comparación con tabla posicional: comparar primero centenas, luego decenas, luego
+unidades (de izquierda a derecha).
+•
+Comparación de 2 y 3 números simultáneamente.
+•
+Justificación verbal: "675 es mayor que 657 porque tienen las mismas centenas, pero 7 decenas es más
+que 5 decenas".
+•
+Recta numérica: izquierda = menor, derecha = mayor.
+•
+Distintas escalas en la recta (de 1 en 1, de 5 en 5, de 10 en 10, de 25 en 25).
+•
+Ubicación de un número entre dos referencias.
+•
+Números "cercanos": decenas y centenas más cercanas (anticipa redondeo, sin nombrarlo todavía).
+Tipos de ejercicio (basados en el libro)
+Aplicación directa
+Completar con <, > o =: 351 ___ 513; 296 ___ 269; 460 ___ 604; 151 ___ 151.
+Atajo estratégico
+"Para comparar 257 y 161, ¿es necesario comparar las decenas? ¿Por qué?"
+Filtrado
+Dada una tabla con números entre 505 y 575, encerrar los mayores que 542 y los
+menores que 542.
+Reordenar dígitos
+Con los dígitos 3, 8, 5: formar el mayor y el menor número de 3 cifras posibles.
+Ubicar en la recta
+Ubicar 250, 175, 125, 200, 150, 225 en una recta marcada cada 25. Avisar al
+alumno que la escala cambió.
+Cercanía
+¿Cuáles son las decenas más cercanas a 679? (670 y 680). ¿Las centenas más
+cercanas a 841? (800 y 900).
+Problema 
+verbal 
+—
+comparación
+Francisca tiene $970 ahorrados y quiere un álbum que cuesta $790. ¿Le sobra o
+le falta? Justificar.
+Problema 
+verbal 
+—
+ranking
+En la campaña de reciclaje: 1° básico reunió 412 latas, 2° básico 421, 3° básico
+415, 4° básico 425. Los dos cursos con más latas reciben premio. ¿Quiénes son?
+Cantidad de números
+intermedios
+¿Cuántos números mayores que 798 y menores que 806 hay? Escribirlos.
+Problema integrador de cierre
+Dar 4 cantidades (ej.: masas de animales del zoológico: león 198 kg, tigre 215 kg, jaguar 102 kg, leopardo 89
+kg). Pedir: (a) leer en voz alta cada cantidad, (b) ordenarlas de menor a mayor, (c) ubicarlas en una recta
+numérica con escala de 25 en 25, (d) armar un podio con los 3 más pesados.
+Errores típicos a anticipar
+
+---PAGE---
+•
+Comparar solo "qué número se ve más grande" sin razonamiento posicional (creer que 296 > 269 "porque
+96 es más grande", razonamiento parcialmente correcto pero sin formalizar).
+•
+Cuando la recta numérica cambia de escala, seguir contando mentalmente de 1 en 1.
+•
+Confundir < y >: confundir la dirección del símbolo.
+•
+Al ordenar números con misma centena, no descender ordenadamente por decenas y unidades.
+
+---PAGE---
+MÓDULO 2 — Suma (adición)
+Cubre el contenido de las lecciones 3.1, 3.3 y partes de 3.4 del libro (pp. 54–75). Apoya el dominio del
+algoritmo formal con reserva, las propiedades, la técnica de descomposición para facilitar cálculos mentales,
+y el modelado de problemas verbales en ambas direcciones (problema → operación y operación → problema
+inventado).
+Objetivos del módulo
+(1) Entender la suma como descomposición C/D/U. (2) Dominar el algoritmo
+vertical con reserva. (3) Conocer las propiedades (conmutativa y asociativa) y
+usarlas para facilitar cálculos. (4) Usar la técnica de descomponer un sumando
+(ej.: 13 = 10 + 3) para llegar a decenas redondas. (5) Asociar vocabulario real
+(regalar, agregar, ganar, juntar) con la suma. (6) Modelar problemas verbales
+directos y crear problemas a partir de operaciones (inversos).
+OAs
+OA9 (algoritmo de adición), OA6 (estrategias de cálculo mental).
+Páginas del libro de
+referencia
+Lección 3.1 (Algoritmos de la adición, pp. 54–59), Lección 3.3 (Propiedades, pp.
+66–71), y elementos de Lección 3.4 (operaciones combinadas, pp. 72–75)
+reorganizados.
+Clase 1 — Sentido de la suma y descomposición C/D/U
+Construye el significado de la suma desde el lenguaje cotidiano y desde la descomposición por valor
+posicional. Trabaja casos sin reserva (la reserva se introduce en la Clase 2). Conecta directamente con lo
+aprendido en el Módulo Números.
+Contenidos
+•
+Vocabulario de la suma y su conexión con la realidad: regalar, agregar, aumentar, ganar, juntar, recibir,
+recolectar, ahorrar, recibir de regalo, sumar. El alumno debe reconocer que estas acciones se modelan con
+una suma.
+•
+La suma como acción de "juntar" representada con multibase (juntar dos colecciones de bloques).
+•
+Descomposición de los sumandos por valor posicional: 435 + 132 = (400+100) + (30+30) + (5+2) = 567.
+•
+Algoritmo vertical sin reserva (preparación para la Clase 2).
+•
+Suma de 2 y 3 sumandos sin reserva.
+•
+Modelado de problemas verbales sencillos: identificar las palabras clave que indican suma.
+
+---PAGE---
+Tipos de ejercicio (basados en el libro)
+Identificar 
+el
+vocabulario
+Marcar la palabra que indica suma en cada enunciado: "Juan tenía 120 láminas y
+le regalaron 35 más"; "En la mañana entraron 240 personas y en la tarde se
+sumaron 158 más".
+Descomposición
+C/D/U
+Resolver 658 + 140 separando en (600+100) + (50+40) + (8+0). Practicar con 423
++ 245; 712 + 86; 305 + 234.
+Algoritmo vertical sin
+reserva
+Resolver en columna 456 + 523; 164 + 315; 201 + 478. Empezar siempre por la
+columna de las unidades.
+3 
+sumandos 
+sin
+reserva
+312 + 401 + 232; 263 + 513 + 123.
+Problema 
+verbal
+directo
+Diana ahorró $245 en marzo y $324 en abril. ¿Cuánto ahorró en los dos meses?
+Problema verbal con
+comparación
+Luis recorre 350 m de su casa al colegio. Laura recorre 125 m más que Luis.
+¿Cuántos metros recorre Laura?
+Problema verbal con 3
+datos
+Juan reunió dinero en 3 semanas: $300, $250 y $445. ¿Cuánto reunió en total?
+Detección de error
+Un personaje resolvió 245 + 132 escribiendo 377 pero en la columna de las
+decenas puso 8 en vez de 7. ¿Dónde está el error?
+Problema integrador de cierre
+Ejercicio inverso: dar al alumno la suma 435 + 132 y pedir que invente un problema real que se pueda
+resolver con esa operación. El alumno debe escribir el enunciado y luego resolverlo. Esto integra vocabulario
+y procedimiento.
+
+---PAGE---
+Clase 2 — Algoritmo vertical con reserva
+Introduce el caso difícil: cuando una columna suma más de 9, hay que reagrupar ("me llevo una"). Es el
+punto crítico del módulo. Trabaja la reserva en unidades, en decenas, y los casos de doble reserva.
+Contenidos
+•
+Concepto de reserva: cuando una columna suma 10 o más, ese 10 se convierte en 1 unidad de la posición
+siguiente a la izquierda (10 U = 1 D; 10 D = 1 C).
+•
+Reserva en la columna de las unidades.
+•
+Reserva en la columna de las decenas.
+•
+Doble reserva: cuando hay reserva en unidades y también en decenas.
+•
+Verificación pictórica con multibase: agrupar 10 cubos forma 1 barra; agrupar 10 barras forma 1 placa.
+•
+Conexión con descomposición: 80 + 50 = 130 = 100 + 30 (es decir, 1 nueva centena + 3 decenas).
+Tipos de ejercicio (basados en el libro)
+Por 
+descomposición
+primero
+Resolver 581 + 354 separando por valor posicional: 80 + 50 = 130 → se
+transforma en 1 C + 3 D. Hacer visible el origen de la reserva.
+Algoritmo con reserva
+en unidades
+694 + 237; 156 + 128; 367 + 215.
+Algoritmo con reserva
+en decenas
+385 + 142; 274 + 583.
+Doble reserva
+478 + 365; 587 + 245; 296 + 158.
+3 
+sumandos 
+con
+reserva
+321 + 105 + 397; 745 + 175 + 75.
+Sumas 
+con 
+dígitos
+faltantes
+Completar los dígitos que faltan en una suma parcialmente escrita (ej.: __5 + 3_8
+= 6__, sabiendo algunos resultados).
+Problema verbal con
+reserva
+Un panadero hizo 256 hallullas en la mañana y 178 en la tarde. ¿Cuántas hallullas
+hizo en total?
+Problema verbal de 2
+pasos
+Sofía tiene $345 en su alcancía. Su abuela le regala $268 y su tío $95. ¿Cuánto
+dinero tiene ahora?
+Detección de error
+Un personaje resolvió 256 + 178 = 324. ¿Qué error cometió? (Olvidó sumar la
+reserva en las decenas).
+Problema integrador de cierre
+Ejercicio inverso: dar la suma 278 + 156 y pedir crear un problema real del barrio. Pista: usar vocabulario
+aprendido (regaló, ahorró, recolectó, juntó). El alumno escribe el problema, lo resuelve aplicando el algoritmo
+con reserva, y verifica con descomposición.
+Errores típicos a anticipar
+•
+Escribir el total de la columna sin reagrupar: en 5 + 6 escribir 11 directo bajo las unidades.
+•
+Olvidar sumar la reserva en la columna siguiente (la suman pero después "se les olvida").
+
+---PAGE---
+•
+Reservar siempre, incluso cuando la columna no supera 9.
+•
+Doble reserva: hacer la primera reserva pero olvidar que la segunda columna también requiere reservar.
+
+---PAGE---
+Clase 3 — Propiedades, técnica de descomposición y problemas inversos
+Cierra el módulo con tres herramientas que potencian el cálculo: (1) las propiedades de la suma, (2) la técnica
+de descomponer un sumando para llegar a decena redonda, y (3) el modelado de problemas verbales en
+ambas direcciones, con énfasis en el ejercicio inverso (operación → problema).
+Contenidos
+•
+Conmutatividad: a + b = b + a. No importa el orden de los sumandos. Verificar con recta numérica y con
+algoritmo.
+•
+Asociatividad: (a + b) + c = a + (b + c). Agrupar los sumandos más convenientes para facilitar el cálculo.
+•
+Técnica de descomposición de un sumando para facilitar cálculo mental: 27 + 8 = 27 + 3 + 5 = 30 + 5 =
+35. O bien: 13 = 10 + 3, entonces 47 + 13 = 47 + 10 + 3 = 57 + 3 = 60.
+•
+Buscar pares que sumen "decena redonda" (ej.: 7 + 3, 6 + 4, 8 + 2) y usar la asociativa para reagrupar.
+•
+Problemas verbales directos (problema → operación → resultado).
+•
+Problemas inversos (operación → inventar problema real).
+Tipos de ejercicio (basados en el libro)
+Verificar
+conmutatividad
+Comprobar que 135 + 214 = 214 + 135 calculando ambos lados.
+Agrupamiento
+estratégico
+Resolver 125 + 84 + 568 buscando el orden más cómodo. ¿Convenía sumar
+primero 125 + 568 o primero 84 + 568? Justificar.
+Técnica 
+de
+descomposición
+Resolver mentalmente 47 + 28 descomponiendo el 28 como 20 + 8 o como 3 + 25
+(para llegar a 50). Practicar 36 + 15; 72 + 19; 65 + 27.
+Suma 
+con 
+dato
+anterior
+Sabiendo que 100 + 50 = 150, ¿cómo calcularías 122 + 50? (usar descomposición
+de 122 en 100 + 22).
+Problema directo
+En el festival de títeres del barrio asistieron 138 personas el sábado y 118 el
+domingo. ¿Cuántas personas asistieron en total?
+Problema inverso 1
+Dada la suma 435 + 30, inventar un problema real que se resuelva con ella.
+Resolverlo después.
+Problema inverso 2
+Dada la suma 250 + 175 + 80, inventar un problema con 3 sumandos (pista:
+pensar en compras, ahorros semanales, o asistentes a un evento en varios días).
+Análisis 
+de
+estrategias
+Antonia resuelve 270 + 115 + 15 sumando primero 270 + 115. Ignacio suma
+primero 115 + 15. ¿Quién eligió la estrategia más fácil? ¿Por qué?
+Problema integrador de cierre
+Dar al alumno tres operaciones: (a) 380 + 245, (b) 156 + 78 + 22, (c) 419 + 200. Para cada una: (1) calcular,
+(2) inventar un problema real del barrio, (3) explicar qué estrategia se usó (algoritmo vertical, descomposición,
+asociativa). El caso (b) debe resolverse aplicando la asociativa para juntar 78 + 22 = 100 primero.
+
+---PAGE---
+MÓDULO 3 — Resta (sustracción)
+Paralelo al Módulo Suma, cubre las lecciones 3.2 y partes de 3.3–3.4 (pp. 60–75). Trabaja el algoritmo formal
+con canje, la propiedad de que la resta no es conmutativa, la familia de operaciones inversas, la técnica de
+descomposición para facilitar restas, el vocabulario asociado, y el modelado de problemas en ambas
+direcciones.
+Objetivos del módulo
+(1) Entender la resta como descomposición C/D/U. (2) Dominar el algoritmo
+vertical con canje. (3) Entender que la resta no es conmutativa y conocer la
+familia de operaciones (suma↔resta). (4) Usar la técnica de descomponer para
+facilitar restas (ej.: 13 = 10 + 3 para restar más fácil). (5) Asociar vocabulario real
+(prestar, quitar, perder, vender, dar, gastar, faltar) con la resta. (6) Modelar
+problemas directos y crear problemas a partir de operaciones.
+OAs
+OA9 (algoritmo de sustracción), OA6 (estrategias de cálculo mental).
+Páginas del libro de
+referencia
+Lección 3.2 (Algoritmos de la sustracción, pp. 60–65), elementos de Lección 3.3
+(Familia de operaciones, pp. 66–71) y Lección 3.4 (pp. 72–75) reorganizados.
+Clase 1 — Sentido de la resta y descomposición C/D/U
+Construye el significado de la resta desde el lenguaje cotidiano y la descomposición por valor posicional.
+Trabaja casos sin canje (el canje se introduce en la Clase 2).
+Contenidos
+•
+Vocabulario de la resta y su conexión con la realidad: prestar, quitar, perder, vender, dar, regalar, sacar,
+faltar, gastar, restar, sobrar, diferencia entre, cuánto menos. El alumno debe reconocer que estas acciones
+se modelan con una resta.
+•
+La resta como acción de "quitar" representada con multibase (quitar bloques de una colección).
+•
+Descomposición por valor posicional: 567 − 234 = (500−200) + (60−30) + (7−4) = 333.
+•
+Algoritmo vertical sin canje, columna por columna desde las unidades.
+•
+Importancia del orden de los términos: el minuendo (primero) debe ser mayor o igual al sustraendo
+(segundo).
+•
+Modelado de problemas verbales sencillos: identificar palabras clave que indican resta.
+
+---PAGE---
+Tipos de ejercicio (basados en el libro)
+Identificar vocabulario
+Marcar la palabra que indica resta: "Ana tenía $500 y gastó $120"; "María tenía
+240 láminas y perdió 50"; "Hay 350 libros, ¿cuántos faltan para llegar a 500?"
+Descomposición
+C/D/U
+Resolver 584 − 152 separando: (500−100) + (80−50) + (4−2). Practicar con 798 −
+365; 724 − 401; 967 − 234.
+Algoritmo vertical sin
+canje
+789 − 487; 543 − 216 (cuidado: este pide canje en unidades, moverlo a Clase 2);
+usar mejor 789 − 564, 658 − 325.
+Resta de comparación
+Camila tiene 358 láminas y Pedro 245. ¿Cuántas láminas más tiene Camila?
+Resta de "quitar"
+Un agricultor tenía 556 sacos de maíz y vendió 325. ¿Cuántos le quedan?
+Resta de "faltar"
+Para llenar el álbum se necesitan 450 láminas. Pablo ya tiene 230. ¿Cuántas le
+faltan?
+Detección de error
+Un personaje resolvió 358 − 124 = 234 pero al verificar le dio mal. ¿Qué pudo
+equivocarse?
+Problema integrador de cierre
+Ejercicio inverso: dar la resta 435 − 30 y pedir que el alumno invente un problema real que se pueda
+resolver con ella. Pista: pensar en el barrio (alguien gastó dinero, alguien vendió productos, alguien perdió
+fichas). El alumno escribe el problema, lo resuelve, y verifica con descomposición.
+
+---PAGE---
+Clase 2 — Algoritmo vertical con canje ("pedir prestado")
+Es el punto más difícil de los 3 módulos. Cuando el dígito de arriba es menor que el de abajo en una
+columna, hay que desagrupar una unidad del orden inmediatamente superior (pedir prestado). Incluye el caso
+particularmente difícil del canje cruzando ceros.
+Contenidos
+•
+Concepto de canje: cuando no se puede restar directamente en una columna, se desagrupa 1 unidad de la
+posición superior izquierda (1 C = 10 D; 1 D = 10 U).
+•
+Canje simple en las unidades.
+•
+Canje en las decenas.
+•
+Doble canje: requerir canje en unidades y en decenas en la misma resta.
+•
+Canje con cero intermedio: cuando hay que pedir prestado pero la columna intermedia es 0 (ej.: 705 − 367),
+hay que canjear desde la centena y luego desde la decena recién formada.
+•
+Verificación pictórica con multibase: "romper" una placa para formar 10 barras, o una barra para formar 10
+cubos.
+•
+Comprobación con suma: 556 − 325 = 231, entonces 231 + 325 debe dar 556 (anticipa familia de
+operaciones de la Clase 3).
+Tipos de ejercicio (basados en el libro)
+Canje 
+simple 
+en
+unidades
+543 − 216; 798 − 359; 624 − 318. La columna de las unidades requiere canje, las
+otras no.
+Canje en decenas
+456 − 173; 528 − 264; 715 − 342.
+Doble canje
+634 − 287; 712 − 458; 825 − 367.
+Canje 
+con 
+cero
+intermedio (difícil)
+907 − 558; 705 − 367; 800 − 245.
+Resta 
+con 
+dígitos
+faltantes
+Completar dígitos faltantes en una resta parcialmente escrita.
+Problema verbal con
+canje
+Ángela tenía $567 en su alcancía y sacó $384. ¿Cuánto le queda?
+Problema verbal con
+cero
+La biblioteca del barrio tiene 700 libros. Si prestaron 358, ¿cuántos quedan?
+Problema 
+de
+comparación
+En los contenedores de reciclaje hay 357 kg de vidrio y 240 kg de papel. ¿Cuántos
+kg más de vidrio que de papel hay?
+Detección de error
+Un personaje resuelve 73 − 28 y escribe 55, porque hizo 8−3 en las unidades en
+vez de 13−8. ¿Cuál es el error?
+Problema integrador de cierre
+Ejercicio inverso: dar la resta 700 − 245 (canje con cero) y pedir crear un problema del barrio. El alumno
+escribe el problema, lo resuelve aplicando canje, y verifica con una suma (245 + 455 = 700).
+Errores típicos a anticipar
+
+---PAGE---
+•
+Restar siempre el menor al mayor en cada columna sin canjear (ej.: 73 − 28 = 55 porque hicieron 8−3 en las
+unidades).
+•
+Olvidar reducir en 1 la cifra de la que se pidió prestado.
+•
+En el canje con cero intermedio, no entender que primero hay que canjear desde la centena hacia la
+decena, y luego desde la decena hacia la unidad (dos pasos).
+•
+Confundir el orden de los términos: restar el minuendo al sustraendo.
+
+---PAGE---
+Clase 3 — Propiedades, técnica de descomposición y problemas inversos
+Cierra el módulo (y la unidad) con tres herramientas: (1) entender que la resta no es conmutativa y conocer la
+familia de operaciones (resta como inversa de la suma), (2) la técnica de descomponer para restar más fácil,
+y (3) modelado de problemas verbales directos e inversos.
+Contenidos
+•
+La resta NO es conmutativa: 8 − 5 ≠ 5 − 8. Contraste explícito con la suma (donde sí es conmutativa).
+•
+Familia de operaciones: dados 3 números relacionados (ej.: 274, 387, 661) se pueden escribir 4
+operaciones: 2 sumas y 2 restas. Una suma comprueba una resta, y viceversa.
+•
+Comprobación de una resta: si a − b = c, entonces c + b debe dar a.
+•
+Técnica de descomposición del sustraendo para facilitar la resta mental: 45 − 8 = 45 − 5 − 3 = 40 − 3 =
+37. O usar que 13 = 10 + 3 para hacer 56 − 13 = 56 − 10 − 3 = 46 − 3 = 43.
+•
+Decidir cuándo usar suma y cuándo resta según el vocabulario del problema (cierre integrador con el
+Módulo Suma).
+Tipos de ejercicio (basados en el libro)
+Contraste
+conmutatividad
+Calcular 8 + 5 y 5 + 8. Luego 8 − 5 y 5 − 8. ¿Qué notas? Justificar.
+Familia 
+de
+operaciones
+Con los números 587, 700 y 113: escribir las 4 operaciones de la familia (587 +
+113, 113 + 587, 700 − 587, 700 − 113).
+Familia con números
+nuevos
+Con 618, 926 y 308: escribir la familia.
+Verificar con suma
+Resolver 534 − 167 y comprobar sumando el resultado con 167.
+Técnica 
+de
+descomposición
+Calcular mentalmente: 52 − 17 (descomponer 17 como 10 + 7); 84 − 28; 73 − 26;
+95 − 19.
+Problema directo de
+"cuánto falta"
+Lucía y Nicolás resuelven: en una caja hay 360 lápices y un vendedor agrega
+algunos. Ahora hay 470 lápices. ¿Cuántos agregó? (El alumno puede resolver con
+470 − 360 o con 360 + ___ = 470).
+Problema inverso 1
+Dada la resta 435 − 30, inventar un problema real del barrio.
+Problema inverso 2
+Dada la resta 700 − 245, inventar un problema (pista: el 700 sugiere una cantidad
+redonda, como un total inicial de un evento o de un ahorro objetivo).
+¿Suma o resta?
+Decidir qué operación se necesita: "Le faltan $", "Recolectó $", "Le sobran $",
+"Ahorró $ más". Justificar con vocabulario.
+Problema integrador de cierre
+Dar al alumno una situación abierta: "En el kiosco del barrio tienes $500. Cada producto cuesta entre $50 y
+$200." Pedir que: (a) elija 3 productos y calcule cuánto gasta (suma), (b) calcule el vuelto (resta), (c) verifique
+que vuelto + gasto = $500 (familia de operaciones). Esto cierra los tres módulos integradamente.
+
+---PAGE---
+Resumen general de las 9 clases
+Clase
+Foco
+Contenido clave
+Páginas
+libro
+N1
+Lectura, pronunciación y
+construcción
+Repaso 
+11–99. 
+Centena. 
+Lectura 
+100–999.
+Irregularidades. U / D / C. Tabla C–D–U.
+14–21
+N2
+Valor 
+posicional 
+y
+descomposición
+Posición vs. valor. Cero intermedio. Descomposición y
+composición aditiva. Equivalencias.
+28–35
+N3
+Comparación, orden y recta
+numérica
+Símbolos <, >, =. Estrategia posicional. Recta con
+escalas. Números cercanos.
+38–51
+S1
+Sentido de la suma y
+descomposición
+Vocabulario (regalar, ganar). Descomposición C/D/U.
+Algoritmo sin reserva. Problemas directos.
+54–55
+S2
+Algoritmo con reserva
+Reserva en U, en D, doble reserva. Verificación con
+multibase. Problemas con reserva.
+56–59
+S3
+Propiedades 
+y
+descomposición facilitadora
+Conmutativa, asociativa. Descomposición para llegar a
+decena redonda. Problemas inversos.
+66–71
+R1
+Sentido 
+de 
+la 
+resta 
+y
+descomposición
+Vocabulario (perder, quitar, faltar). Descomposición
+C/D/U. Algoritmo sin canje. Problemas directos.
+60–61
+R2
+Algoritmo con canje
+Canje simple, doble, con cero intermedio. Verificación
+con suma. Problemas con canje.
+62–65
+R3
+Propiedades 
+y
+descomposición facilitadora
+Resta no conmutativa. Familia de operaciones.
+Descomposición para restas mentales. Problemas
+inversos.
+66–71
+Notas para el diseño de clases con IA
+Al pedir a la IA del editor que genere cada clase a partir de pantallazos del libro, anclar las indicaciones en lo
+siguiente:
+•
+Estructura de 4 momentos en cada clase: Modelaje (15–18 min) → Práctica guiada (12–15 min) →
+Práctica independiente (20–25 min) → Cierre con problema integrador (5–8 min). Este patrón se repite en
+las 9 clases.
+•
+Doble representación obligatoria: cada concepto debe mostrarse con (a) tabla posicional o expresión
+simbólica y (b) material multibase, monedas chilenas o recta numérica. El libro nunca presenta un registro
+solo.
+•
+Mínimo 2 problemas verbales contextualizados por clase, en el bloque de práctica independiente. Es lo
+más importante del módulo.
+•
+Al menos un "problema inverso" por clase de Suma y Resta: dada una operación, inventar un problema
+real. Este tipo de ejercicio consolida vocabulario y comprensión.
+
+---PAGE---
+•
+Contextos chilenos del barrio: feria, panadería, organillero, kiosco, almacén, biblioteca, contenedores de
+reciclaje, festival cultural. Evitar contextos foráneos.
+•
+Pesos en CLP y monedas reales: $1, $10, $50, $100, $500. Nunca decimales ni centavos.
+•
+Detección de error como recurso pedagógico: cada clase debe incluir al menos un ejercicio donde el
+alumno encuentre y corrija el error de un personaje ficticio. Es uno de los recursos más fuertes del libro.
+•
+En el Módulo Números, lectura oral integrada: cualquier número que aparezca debe leerse en voz alta
+separado en bloques (dos-cientos / cuarenta y tres). Reforzar quinientos, setecientos, novecientos.
+Trabajar contraste auditivo 60/70, 80/18.
+•
+Sin actividades colaborativas presenciales: si el libro propone trabajo en parejas, juegos de tablero o
+recortables compartidos, adaptarlos a trabajo individual o reemplazarlos por ejercicios de razonamiento
+individual.
+•
+Tres niveles de dificultad en cada práctica independiente: (1) aplicación directa, (2) ejercicio con
+razonamiento o problema verbal sencillo, (3) problema verbal contextualizado o inverso.
+•
+OAs explícitos al inicio de cada clase: ej.: "Hoy vamos a leer y representar números hasta el 1 000"
+(OA2).
+Documento generado a partir del análisis del Texto del Estudiante Matemática 3° Básico (Santillana, 2017), Unidad 1, páginas
+14–77.
+
+---PAGE---

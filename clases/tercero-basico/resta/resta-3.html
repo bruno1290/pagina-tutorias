@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Resta 3: Relación con la Suma</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root {
+    --base: #1C4A82;
+    --bg: #f5f6f8;
+    --tx: #333;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--tx);
+}
+.dk { position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex; }
+.sl {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 36px 40px 82px;
+    opacity: 0;
+    transform: scale(.96);
+    transition: opacity .4s, transform .4s;
+    pointer-events: none;
+    z-index: 1;
+    overflow-y: auto;
+}
+.sl.on { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
+.sl.pv { opacity: 0; transform: translateX(-50px) scale(.95); }
+.sl.nx { opacity: 0; transform: translateX(50px) scale(.95); }
+.head-title {
+    background: var(--base);
+    color: white;
+    padding: 10px 40px;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    display: inline-block;
+    border-radius: 12px;
+    text-align: center;
+}
+.sub-text {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+    line-height: 1.4;
+}
+.pb { position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100; }
+.nv {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 100;
+}
+.nb {
+    background: #eee;
+    color: var(--base);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all .2s;
+}
+.nb:hover { background: #ddd; }
+.nb:disabled { opacity: 0.3; cursor: not-allowed; }
+.sc { color: #888; font-size: 16px; font-weight: 900; }
+.stp {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+.stp.shwn { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.pnl {
+    background: #fff;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 3px solid #eaeaea;
+    width: 100%;
+}
+.pnl-border {
+    background: #fff;
+    border: 4px solid var(--base);
+    border-radius: 20px;
+    padding: 24px;
+    width: 100%;
+}
+.hl { color: var(--base); font-weight: 900; }
+.btn {
+    background: var(--base);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 24px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .2s;
+    font-family: 'Nunito', sans-serif;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3); }
+.chip-row, .card-row, .base-row, .quiz-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.mini-chip {
+    background: #eef5ff;
+    border: 2px solid #b6d4f3;
+    border-radius: 999px;
+    padding: 12px 18px;
+    font-size: 24px;
+    font-weight: 800;
+}
+.base-card {
+    flex: 1 1 320px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 18px;
+    border: 4px solid #d9e7f6;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+}
+.base-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    text-align: center;
+    margin-bottom: 14px;
+}
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    width: 100%;
+    align-items: stretch;
+}
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.step-box {
+    background: #f7fbff;
+    border-left: 8px solid var(--base);
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 24px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+.side-panel {
+    background: linear-gradient(180deg, #fefefe 0%, #f4f9ff 100%);
+    border: 3px solid #d5e4f5;
+    border-radius: 18px;
+    padding: 18px;
+    min-height: 200px;
+}
+.side-panel h3 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 12px;
+}
+.side-panel p {
+    font-size: 24px;
+    line-height: 1.45;
+}
+.story-card {
+    width: 100%;
+    border-radius: 28px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: center;
+}
+.story-emoji {
+    font-size: 114px;
+    text-align: center;
+    animation: bob 2.8s infinite;
+}
+.story-card h2 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+.story-card p {
+    font-size: 24px;
+    line-height: 1.45;
+}
+.summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+.summary-item {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 18px;
+    border: 3px solid #dbe7f4;
+    font-size: 23px;
+    line-height: 1.45;
+}
+.fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+.fact-box {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 18px;
+    padding: 16px;
+    border: 3px solid #d8e7f6;
+    min-height: 140px;
+}
+.warn-card {
+    background: #fff8e5;
+    border: 4px solid #f0ca59;
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 24px;
+    line-height: 1.45;
+    width: 100%;
+}
+.msg-area {
+    font-size: 24px;
+    font-weight: 900;
+    height: 40px;
+    text-align: center;
+    margin-top: 20px;
+}
+.hero-title {
+    font-size: 62px;
+    color: var(--base);
+    margin-bottom: 18px;
+    text-align: center;
+    line-height: 1.1;
+}
+.hero-sub {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    max-width: 720px;
+}
+.hero-emoji {
+    font-size: 108px;
+    margin-top: 28px;
+    animation: bounce 2s infinite;
+}
+/* Ecuación */
+.eq-box {
+    display: inline-block;
+    font-size: 48px;
+    font-weight: 900;
+    background: #fff;
+    padding: 20px 40px;
+    border-radius: 20px;
+    border: 4px dashed #90caf9;
+    color: var(--base);
+}
+.square {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border: 4px solid #F57C00;
+    border-radius: 8px;
+    background: #FFF3E0;
+    vertical-align: middle;
+    margin: 0 10px;
+}
+
+/* Familias de operaciones */
+.tri-wrap {
+    position: relative;
+    width: 300px;
+    height: 260px;
+    margin: 0 auto;
+}
+.tri {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 0;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-bottom: 260px solid #e3f2fd;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
+}
+.tri-num {
+    position: absolute;
+    font-size: 42px;
+    font-weight: 900;
+    z-index: 2;
+}
+.tri-top { top: 30px; left: 50%; transform: translateX(-50%); color: #d32f2f; }
+.tri-bl { bottom: 20px; left: 30px; color: #388E3C; }
+.tri-br { bottom: 20px; right: 30px; color: #1976D2; }
+
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+</style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 class="hero-title">Relación entre Suma y Resta</h1>
+            <p class="hero-sub">Son como el día y la noche. ¡Lo que una hace, la otra lo deshace!</p>
+            <div class="hero-emoji">☯️</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 2: INTRO Familias -->
+        <div class="sl">
+        <div class="head-title" style="background:#1976D2;">Primos inseparables</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">¿Te has dado cuenta que la suma y la resta son como dos caras de la misma moneda?</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#1976D2;">¡Son familia!</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">Si sabes que 2 + 3 = 5, entonces automáticamente sabes que 5 - 3 = 2. A este grupo de números que siempre juegan juntos le llamamos "Familia de Operaciones".</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">👨‍👩‍👧‍👦🔢</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 3: Familias de Operaciones -->
+        <div class="sl">
+        <div class="head-title">Familias de Operaciones</div>
+        <p class="sub-text">Con solo <b class="hl">3 números</b> podemos armar 4 operaciones diferentes (2 sumas y 2 restas).</p>
+        <div class="two-col" style="align-items:center;">
+            <div class="tri-wrap">
+                <div class="tri"></div>
+                <div class="tri-num tri-top">15</div>
+                <div class="tri-num tri-bl">8</div>
+                <div class="tri-num tri-br">7</div>
+            </div>
+            <div class="side-panel" style="display:flex; flex-direction:column; justify-content:center;">
+                <div class="stp" style="font-size:28px; font-weight:900; color:#388E3C; margin-bottom:10px;">8 + 7 = 15</div>
+                <div class="stp" style="font-size:28px; font-weight:900; color:#1976D2; margin-bottom:20px;">7 + 8 = 15</div>
+                <div class="stp" style="font-size:28px; font-weight:900; color:#d32f2f; margin-bottom:10px;">15 − 8 = 7</div>
+                <div class="stp" style="font-size:28px; font-weight:900; color:#c62828;">15 − 7 = 8</div>
+            </div>
+        </div>
+        <div class="stp mini-chip" style="margin-top:20px;">
+            ¡El número mayor siempre es el resultado de la suma y el principio de la resta!
+        </div>
+        </div>
+
+        <!-- SLIDE 4: Otro triángulo -->
+        <div class="sl">
+        <div class="head-title">Forma tú la familia</div>
+        <p class="sub-text">Piensa en los números <b class="hl">20, 50 y 70</b>.</p>
+        <div class="two-col" style="align-items:center;">
+            <div class="tri-wrap">
+                <div class="tri"></div>
+                <div class="tri-num tri-top">70</div>
+                <div class="tri-num tri-bl">20</div>
+                <div class="tri-num tri-br">50</div>
+            </div>
+            <div class="side-panel" style="display:flex; flex-direction:column; justify-content:center;">
+                <div class="stp" style="font-size:28px; font-weight:900; color:#388E3C; margin-bottom:10px;">20 + 50 = 70</div>
+                <div class="stp" style="font-size:28px; font-weight:900; color:#1976D2; margin-bottom:20px;">50 + 20 = 70</div>
+                <div class="stp" style="font-size:28px; font-weight:900; color:#d32f2f; margin-bottom:10px;">70 − 20 = 50</div>
+                <div class="stp" style="font-size:28px; font-weight:900; color:#c62828;">70 − 50 = 20</div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 6: INTRO Comprobación -->
+        <div class="sl">
+        <div class="head-title" style="background:#388E3C;">El detector de mentiras</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">Hiciste una resta larguísima, pero... ¿cómo sabes si está buena?</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#388E3C;">¡Usa la magia de la familia!</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">Como la suma y la resta están conectadas, puedes usar una suma para revisar si tu resta quedó perfecta. ¡Es como tener un detector de errores matemático!</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">🕵️‍♂️✅</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 7: Comprobar -->
+        <div class="sl">
+        <div class="head-title">El Truco para comprobar la Resta</div>
+        <p class="sub-text">Si quieres saber si hiciste bien una resta, ¡usa la suma!</p>
+        <div class="base-card" style="max-width:700px; margin:0 auto; text-align:center;">
+            <div style="font-size:36px; font-weight:900; color:var(--base); margin-bottom:20px;">
+                <span style="color:#388E3C;">54</span> − <span style="color:#d32f2f;">21</span> = <span style="color:#1976D2;">33</span>
+            </div>
+            <div class="stp warn-card" style="margin-bottom:20px; font-size:24px; text-align:center;">
+                Para comprobar si <b>33</b> está correcto, sumamos el resultado con el número que quitamos:
+            </div>
+            <div class="stp" style="font-size:42px; font-weight:900; color:var(--base);">
+                <span style="color:#1976D2;">33</span> + <span style="color:#d32f2f;">21</span> = <span style="color:#388E3C;">54</span>
+            </div>
+            <div class="stp" style="font-size:22px; color:#047857; font-weight:800; margin-top:14px;">
+                ✅ ¡Si llegas al número inicial, tu resta está perfecta!
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 9: INTRO Número Escondido -->
+        <div class="sl">
+        <div class="head-title" style="background:#F57C00;">Jugando al detective</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">A veces en una operación se nos borra un número y queda un espacio en blanco.</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#F57C00;">¡Hora de investigar!</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">No tienes que adivinar. Usando lo que sabemos de las Familias de Operaciones, podemos descubrir exactamente cuál es el número que se escondió.</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">🔍❓</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 10: Número escondido 1 -->
+        <div class="sl">
+        <div class="head-title" style="background:#F57C00;">El número escondido</div>
+        <p class="sub-text">A veces en un problema nos falta un dato y debemos averiguarlo.</p>
+        <div class="base-card" style="max-width:700px; margin:0 auto; text-align:center;">
+            <div class="eq-box">
+                <span class="square"></span> + 15 = 40
+            </div>
+            <div class="stp warn-card" style="margin-top:20px; border-color:#F57C00; background:#FFF3E0; font-size:22px; text-align:left;">
+                🤔 <b>Historia:</b> "Tenía unas láminas, me regalaron 15 y ahora tengo 40. ¿Cuántas tenía al principio?"
+            </div>
+            <div class="stp" style="margin-top:20px;">
+                <p style="font-size:24px; font-weight:800; margin-bottom:10px;">¡Usa la operación inversa!</p>
+                <div class="eq-box" style="border-color:#d32f2f;">
+                    40 − 15 = 25
+                </div>
+            </div>
+            <div class="stp mini-chip" style="margin-top:20px; border-color:#388E3C; background:#E8F5E9; color:#2E7D32;">
+                El número escondido en el cuadro es <b>25</b>. (25 + 15 = 40)
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 11: Otro número escondido -->
+        <div class="sl">
+        <div class="head-title" style="background:#F57C00;">Otro número escondido</div>
+        <p class="sub-text">¿Qué pasa si la operación inicial es una resta?</p>
+        <div class="base-card" style="max-width:700px; margin:0 auto; text-align:center;">
+            <div class="eq-box" style="border-color:#d32f2f;">
+                <span class="square"></span> − 20 = 50
+            </div>
+            <div class="stp warn-card" style="margin-top:20px; border-color:#F57C00; background:#FFF3E0; font-size:22px; text-align:left;">
+                🤔 <b>Historia:</b> "Tenía dinero, gasté $20 y me sobraron $50. ¿Cuánto tenía al principio?"
+            </div>
+            <div class="stp" style="margin-top:20px;">
+                <p style="font-size:24px; font-weight:800; margin-bottom:10px;">¡Usa la operación inversa (suma)!</p>
+                <div class="eq-box" style="border-color:#388E3C;">
+                    50 + 20 = 70
+                </div>
+            </div>
+            <div class="stp mini-chip" style="margin-top:20px; border-color:#388E3C; background:#E8F5E9; color:#2E7D32;">
+                El número escondido en el cuadro es <b>70</b>. (70 − 20 = 50)
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 7: Abre tu cuaderno -->
+        <div class="sl">
+        <div class="head-title">Abre tu cuaderno</div>
+        <p class="sub-text">Copia en tu cuaderno y encuentra el número escondido:</p>
+        <div class="step-list" style="max-width:700px; width:100%;">
+            <div class="step-box" style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:32px;"><span class="square" style="width:40px;height:40px;"></span> + 30 = 80</span>
+                <span class="stp" style="font-size:30px; color:#059669; font-weight:900;">Hago: 80 - 30 = 50</span>
+            </div>
+            <div class="step-box stp" style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:32px;"><span class="square" style="width:40px;height:40px;"></span> − 40 = 60</span>
+                <span class="stp" style="font-size:30px; color:#059669; font-weight:900;">Hago: 60 + 40 = 100</span>
+            </div>
+            <div class="step-box stp" style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:32px;">25 + <span class="square" style="width:40px;height:40px;"></span> = 45</span>
+                <span class="stp" style="font-size:30px; color:#059669; font-weight:900;">Hago: 45 - 25 = 20</span>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 8: Detección de error -->
+        <div class="sl">
+        <div class="head-title" style="background:#d32f2f;">¡Encuentra el error!</div>
+        <p class="sub-text">Un compañero quiso comprobar si <b class="hl">85 − 30 = 55</b> estaba correcto. Hizo esto:</p>
+        <div class="base-card" style="max-width:500px; margin:0 auto; text-align:center;">
+            <div class="eq-box" style="border-color:#ffcdd2;">
+                85 + 55 = 140
+            </div>
+            <div class="stp warn-card" style="margin-top:20px; font-size:22px; text-align:left;">
+                ❌ ¡Se equivocó de números! Sumó el resultado con el número grande (el minuendo).<br>
+                Para comprobar, debe sumar el resultado con el número pequeño que restó:<br>
+                <b>55 + 30 = 85</b>. ¡Ahora sí da el número inicial!
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 9: Quiz interactivo -->
+        <div class="sl">
+        <div class="head-title">Quiz de Relación</div>
+        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+            <p style="font-size:28px; font-weight:800; text-align:center; margin-bottom:24px;">Para encontrar el número escondido en la ecuación <b>☐ + 20 = 100</b>, ¿qué operación debes hacer?</p>
+            <div class="quiz-row">
+                <button class="btn" style="flex:1;" onclick="chkAns(this, false, 'Si sumas 100 + 20 te da 120. ¡Y 120 + 20 no es 100!')">100 + 20</button>
+                <button class="btn" style="flex:1;" onclick="chkAns(this, true, '¡Correcto! Usas la operación inversa (resta) para encontrar lo que falta.')">100 − 20</button>
+            </div>
+            <div class="msg-area"></div>
+        </div>
+        </div>
+
+        <!-- SLIDE 10: Ejercicios Propuestos -->
+        <div class="sl">
+        <div class="head-title">Ejercicios Propuestos</div>
+        <p class="sub-text">Resuelve y comprueba en tu cuaderno.</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:20px; font-weight:900; color:var(--base);">Escribe las 4 operaciones de la familia: 12, 15, 27</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:20px; font-weight:900; color:var(--base);">Resuelve y comprueba con suma: 546 − 231</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:20px; font-weight:900; color:var(--base);">Encuentra: ☐ + 120 = 350</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:20px; font-weight:900; color:var(--base);">Encuentra: ☐ − 50 = 150</div>
+            </div>
+            <div class="pnl-border" style="padding:16px; grid-column: span 2;">
+                <div style="font-size:20px; font-weight:900; color:var(--base);">Juan tenía dinero ahorrado. Le dieron $250 y ahora tiene $600. ¿Cuánto tenía ahorrado al principio?</div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 11: Respuestas -->
+        <div class="sl">
+        <div class="head-title">Respuestas</div>
+        <p class="sub-text">Revisa tus respuestas:</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:18px; font-weight:900; color:#059669;">12+15=27, 15+12=27<br>27−12=15, 27−15=12</div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:18px; font-weight:900; color:#059669;">546−231 = <b>315</b>.<br>Compruebo: 315+231 = 546</div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:18px; font-weight:900; color:#059669;">350 − 120 = <b>230</b></div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:18px; font-weight:900; color:#059669;">150 + 50 = <b>200</b></div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669; grid-column: span 2;">
+                <div style="font-size:18px; font-weight:900; color:#059669;">☐ + 250 = 600. Hago 600 − 250 = <b>350</b>. Tenía $350.</div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 12: Problema Integrador de Cierre -->
+        <div class="sl">
+        <div class="head-title" style="background:#0277BD;">Problema Integrador</div>
+        <div class="story-card" style="background:#E1F5FE; border:5px solid #0277BD;">
+            <div class="story-emoji" style="font-size:100px;">✍️</div>
+            <div>
+                <h2 style="color:#0277BD;">El detective matemático</h2>
+                <p style="font-size:22px; font-weight:600;">Encuentra el número escondido en la ecuación: <b>☐ − 145 = 210</b>. Luego inventa un problema de la vida real para esa ecuación.</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #0277BD; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:18px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta descubierta:</p>
+                    <div style="font-size:20px; font-weight:900; line-height:1.6;">
+                        Operación inversa: 210 + 145 = <b>355</b>.<br>
+                        Ejemplo de problema: "Tenía láminas, regalé 145 y me quedaron 210. ¿Cuántas láminas tenía al principio?"
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        
+        <!-- SLIDE: Metodología -->
+        <div class="sl">
+        <div class="head-title">Resolviendo como Detectives</div>
+        <div class="two-col" style="max-width:900px;">
+            <div class="side-panel" style="border-color:#F9A825;">
+                <h3 style="color:#F9A825; font-size:28px;">Las cartas perdidas</h3>
+                <p style="font-size:24px;">Tenía <b>150</b> cartas en mi mazo. Un amigo me regaló algunas y ahora tengo <b>220</b>. ¿Cuántas cartas me regaló?</p>
+            </div>
+            <div class="step-list">
+                <div class="step-box stp" style="border-color:#2196F3; font-size:22px;">
+                    <b style="color:#1976D2;">Paso 1: Escribir la Ecuación</b><br>
+                    150 + <b>?</b> = 220
+                </div>
+                <div class="step-box stp" style="border-color:#4CAF50; font-size:22px;">
+                    <b style="color:#388E3C;">Paso 2: Usar la Familia de Operaciones</b><br>
+                    Si me falta una parte de la suma, uso la <b style="background:#e3f2fd; padding:2px 8px; border-radius:8px;">RESTA</b>.<br>
+                    Total (220) - Parte (150) = Parte que falta (?)
+                </div>
+                <div class="step-box stp" style="border-color:#FF9800; font-size:22px;">
+                    <b style="color:#F57F17;">Paso 3: Resolver</b><br>
+                    220 - 150 = <b>70</b>.<br>
+                    <i>Mi amigo me regaló 70 cartas.</i>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE: Problema 1 -->
+        <div class="sl">
+        <div class="head-title">Problema de Aplicación 1</div>
+        <div class="story-card" style="background:#E8F5E9; border:5px solid #2E7D32;">
+            <div class="story-emoji">🍩</div>
+            <div>
+                <h2 style="color:#2E7D32;">Los pasteles misteriosos</h2>
+                <p>En la bandeja había muchos pasteles. Durante el recreo nos comimos <b>140</b> y sobraron <b>60</b>. ¿Cuántos pasteles había al principio?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #2E7D32; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Resolución:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Ecuación: <b>?</b> - 140 = 60<br>
+                        Falta el TODO. Para encontrar el total sumamos las partes: 140 + 60 = <b>200</b>.<br>
+                        <span style="color:var(--base);">Había 200 pasteles al principio.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE: Problema 2 -->
+        <div class="sl">
+        <div class="head-title">Problema de Aplicación 2</div>
+        <div class="story-card" style="background:#E1F5FE; border:5px solid #0288D1;">
+            <div class="story-emoji">🏃‍♂️</div>
+            <div>
+                <h2 style="color:#0288D1;">Corriendo en la pista</h2>
+                <p>La pista completa tiene <b>400</b> metros. Luis empezó a correr y se detuvo. Le faltan <b>120</b> metros para terminar. ¿Cuántos metros ya corrió Luis?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #0288D1; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Resolución:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Ecuación: <b>?</b> + 120 = 400<br>
+                        Falta una PARTE. Restamos: 400 - 120 = <b>280</b>.<br>
+                        <span style="color:var(--base);">Luis ya corrió 280 metros.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE: Problema 3 -->
+        <div class="sl">
+        <div class="head-title">Problema de Aplicación 3</div>
+        <div class="story-card" style="background:#FFF3E0; border:5px solid #E65100;">
+            <div class="story-emoji">💸</div>
+            <div>
+                <h2 style="color:#E65100;">La billetera de Tomás</h2>
+                <p>Tomás tenía <b>$800</b>. Compró un sándwich y el vendedor le devolvió <b>$350</b> de vuelto. ¿Cuánto costó el sándwich?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #E65100; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Resolución:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Ecuación: 800 - <b>?</b> = 350<br>
+                        Falta la parte que gastó. Restamos: 800 - 350 = <b>450</b>.<br>
+                        <span style="color:var(--base);">El sándwich costó $450.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    
+        <!-- SLIDE 13: Resumen -->
+        <div class="sl">
+        <div class="head-title">Resumen</div>
+        <div class="summary-list">
+            <div class="stp summary-item"><b>🏠 Familia de números:</b> Con 3 números puedes hacer 2 sumas y 2 restas asociadas.</div>
+            <div class="stp summary-item"><b>✅ Comprobar:</b> Para revisar una resta, suma el resultado con el número que restaste. ¡Debe darte el número mayor!</div>
+            <div class="stp summary-item"><b>🕵️ Operación Inversa:</b> Si te falta el dato del principio, usa la operación contraria para descubrirlo.</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 14: Cierre -->
+        <div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:38px; font-weight:800; line-height:1.45; max-width:780px;">¡Completaste el módulo de Resta! Ahora dominas el arte de quitar, comprobar e investigar números escondidos.</p>
+            <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">☯️</div>
+        </div>
+        </div>
+
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <span class="sc" id="sc">1 / 18</span>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="18" value="1" oninput="goToSlide(this.value)">
+        </div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>
+const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+function ui() {
+    S.forEach((s,i)=>{
+        s.classList.remove('on','pv','nx');
+        if(i===c) s.classList.add('on');
+        else if(i<c) s.classList.add('pv');
+        else s.classList.add('nx');
+    });
+    document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+    document.getElementById('sc').textContent=`${c+1} / ${T}`;
+    document.getElementById('pv').disabled=c===0;
+    document.getElementById('nx').disabled=c===T-1;
+    let sl = document.getElementById('slide-slider');
+    if(sl) { sl.max = T; sl.value = c + 1; }
+}
+function goToSlide(n) {
+    let val = parseInt(n) - 1;
+    if (val >= 0 && val < T) {
+        c = val;
+        ui();
+    }
+}
+function go(d) {
+    if(d>0) {
+        const hid = S[c].querySelectorAll('.stp:not(.shwn)');
+        if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+    } else {
+        const shw = S[c].querySelectorAll('.stp.shwn');
+        if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+    }
+    const n=c+d;
+    if(n>=0 && n<T) { c=n; ui(); }
+}
+document.addEventListener('keydown', e => {
+    if(e.key==='ArrowRight' || e.key===' ') go(1);
+    if(e.key==='ArrowLeft') go(-1);
+});
+function chkAns(btn, correct, exp) {
+    const wrap = btn.closest('.sl');
+    const buttons = btn.parentElement.querySelectorAll('.btn');
+    const msg = wrap.querySelector('.msg-area');
+    buttons.forEach(b => {
+        b.disabled = false;
+        b.style.background = 'var(--base)';
+        b.style.transform = 'scale(1)';
+    });
+    if (correct) {
+        btn.style.background = '#047857';
+        btn.style.transform = 'scale(1.06)';
+        msg.textContent = `¡Muy bien! ${exp}`;
+        msg.style.color = '#047857';
+    } else {
+        btn.style.background = '#b91c1c';
+        msg.textContent = exp;
+        msg.style.color = '#b91c1c';
+    }
+}
+ui();
+</script>
+</body>
+</html>

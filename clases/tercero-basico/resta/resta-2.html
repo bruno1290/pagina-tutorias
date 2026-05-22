@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Resta 2: Algoritmo con Canje</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root {
+    --base: #1C4A82;
+    --bg: #f5f6f8;
+    --tx: #333;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--tx);
+}
+.dk { position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex; }
+.sl {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 36px 40px 82px;
+    opacity: 0;
+    transform: scale(.96);
+    transition: opacity .4s, transform .4s;
+    pointer-events: none;
+    z-index: 1;
+    overflow-y: auto;
+}
+.sl.on { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
+.sl.pv { opacity: 0; transform: translateX(-50px) scale(.95); }
+.sl.nx { opacity: 0; transform: translateX(50px) scale(.95); }
+.head-title {
+    background: var(--base);
+    color: white;
+    padding: 10px 40px;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    display: inline-block;
+    border-radius: 12px;
+    text-align: center;
+}
+.sub-text {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+    line-height: 1.4;
+}
+.pb { position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100; }
+.nv {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 100;
+}
+.nb {
+    background: #eee;
+    color: var(--base);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all .2s;
+}
+.nb:hover { background: #ddd; }
+.nb:disabled { opacity: 0.3; cursor: not-allowed; }
+.sc { color: #888; font-size: 16px; font-weight: 900; }
+.stp {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+.stp.shwn { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.pnl {
+    background: #fff;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 3px solid #eaeaea;
+    width: 100%;
+}
+.pnl-border {
+    background: #fff;
+    border: 4px solid var(--base);
+    border-radius: 20px;
+    padding: 24px;
+    width: 100%;
+}
+.hl { color: var(--base); font-weight: 900; }
+.btn {
+    background: var(--base);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 24px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .2s;
+    font-family: 'Nunito', sans-serif;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3); }
+.chip-row, .card-row, .base-row, .quiz-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.mini-chip {
+    background: #eef5ff;
+    border: 2px solid #b6d4f3;
+    border-radius: 999px;
+    padding: 12px 18px;
+    font-size: 24px;
+    font-weight: 800;
+}
+.base-card {
+    flex: 1 1 320px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 18px;
+    border: 4px solid #d9e7f6;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+}
+.base-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    text-align: center;
+    margin-bottom: 14px;
+}
+.two-col {
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 18px;
+    width: 100%;
+    align-items: stretch;
+}
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.step-box {
+    background: #f7fbff;
+    border-left: 8px solid var(--base);
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 24px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+.side-panel {
+    background: linear-gradient(180deg, #fefefe 0%, #f4f9ff 100%);
+    border: 3px solid #d5e4f5;
+    border-radius: 18px;
+    padding: 18px;
+    min-height: 200px;
+}
+.side-panel h3 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 12px;
+}
+.side-panel p {
+    font-size: 24px;
+    line-height: 1.45;
+}
+.story-card {
+    width: 100%;
+    border-radius: 28px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: center;
+}
+.story-emoji {
+    font-size: 114px;
+    text-align: center;
+    animation: bob 2.8s infinite;
+}
+.story-card h2 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+.story-card p {
+    font-size: 24px;
+    line-height: 1.45;
+}
+.summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+.summary-item {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 18px;
+    border: 3px solid #dbe7f4;
+    font-size: 23px;
+    line-height: 1.45;
+}
+.fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+.fact-box {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 18px;
+    padding: 16px;
+    border: 3px solid #d8e7f6;
+    min-height: 140px;
+}
+.warn-card {
+    background: #fff8e5;
+    border: 4px solid #f0ca59;
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 24px;
+    line-height: 1.45;
+    width: 100%;
+}
+.msg-area {
+    font-size: 24px;
+    font-weight: 900;
+    height: 40px;
+    text-align: center;
+    margin-top: 20px;
+}
+.hero-title {
+    font-size: 62px;
+    color: var(--base);
+    margin-bottom: 18px;
+    text-align: center;
+    line-height: 1.1;
+}
+.hero-sub {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    max-width: 720px;
+}
+.hero-emoji {
+    font-size: 108px;
+    margin-top: 28px;
+    animation: bounce 2s infinite;
+}
+
+/* Bloques multibase CSS puros con textura */
+.mb-c {
+    --bg-color: #9DE3BD;
+    --border-color: #388E3C;
+    width: 140px; height: 140px;
+    background:
+        repeating-linear-gradient(0deg, transparent, transparent 13px, rgba(0,0,0,0.15) 13px, rgba(0,0,0,0.15) 14px),
+        repeating-linear-gradient(90deg, transparent, transparent 13px, rgba(0,0,0,0.15) 13px, rgba(0,0,0,0.15) 14px),
+        var(--bg-color);
+    border: 1px solid var(--border-color);
+    display: inline-block; margin: 2px; border-radius: 3px;
+}
+.mb-d {
+    --bg-color: #9DDEFF;
+    --border-color: #1976D2;
+    width: 14px; height: 140px;
+    background: 
+        repeating-linear-gradient(0deg, transparent, transparent 13px, rgba(0,0,0,0.2) 13px, rgba(0,0,0,0.2) 14px),
+        var(--bg-color);
+    border: 1px solid var(--border-color);
+    display: inline-block; margin: 2px; border-radius: 2px;
+}
+.mb-u {
+    --bg-color: #FFE082;
+    --border-color: #F57F17;
+    width: 14px; height: 14px;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    display: inline-block; margin: 2px; border-radius: 2px;
+}
+.mb-group {
+    display: flex; align-items: flex-end; justify-content: center; gap: 8px;
+    padding: 10px; background: #fff; border-radius: 12px; border: 2px dashed #ccc;
+    flex-wrap: wrap;
+}
+
+/* Algoritmo Vertical */
+.algo-wrap {
+    display: inline-block;
+    font-size: 46px;
+    font-weight: 900;
+    font-family: 'Courier New', Courier, monospace;
+    background: #fff;
+    padding: 24px 46px;
+    border-radius: 20px;
+    border: 4px solid #d4e6f7;
+    text-align: right;
+    line-height: 1.2;
+    position: relative;
+}
+.algo-row span[class^="col-"] { width: 36px; text-align: center; display: inline-block; position: relative; }
+.algo-row { display: flex; justify-content: flex-end; position: relative; gap: 8px; }
+.algo-line { border-bottom: 5px solid var(--base); margin: 10px 0; }
+.algo-sym { position: absolute; left: 20px; color: var(--base); bottom: 20px;}
+.algo-res { 
+    font-size: 24px; 
+    color: #d32f2f; 
+    position: absolute; 
+    top: -24px; 
+    letter-spacing: normal;
+}
+.res-u { right: 18px; }
+.res-d { right: 54px; }
+.res-c { right: 90px; }
+
+.col-c { color: #388E3C; }
+.col-d { color: #1976D2; }
+.col-u { color: #F57F17; }
+
+/* Para los tachados en el algoritmo */
+.strike {
+    position: relative;
+    display: inline-block;
+    color: #999;
+}
+.strike::after {
+    content: '';
+    position: absolute;
+    left: -2px; width: 28px; top: 50%;
+    height: 5px;
+    background: #d32f2f;
+    transform: rotate(-20deg);
+    border-radius: 2px;
+}
+.canje-num {
+    position: absolute;
+    top: -42px;
+    font-size: 26px;
+    font-weight: 900;
+    color: #E65100;
+    background: #FFF3E0;
+    border: 3px solid #FFB74D;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    left: 12px;
+    transform: translateX(-50%);
+    letter-spacing: 0;
+    box-shadow: 0 4px 8px rgba(230, 81, 0, 0.2);
+}
+
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes highlight { 0%, 100% { background: transparent; } 50% { background: #ffcdd2; } }
+.hl-box { animation: highlight 2s infinite; border-radius: 8px; padding: 0 4px; }
+</style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 class="hero-title">Resta: Algoritmo con Canje</h1>
+            <p class="hero-sub">¿Qué hacemos cuando el número de arriba es muy pequeño para quitarle?</p>
+            <div class="hero-emoji">🤝</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 2: INTRO No me alcanza -->
+        <div class="sl">
+        <div class="head-title" style="background:#F57C00;">Cuando no tenemos suficiente</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">Imagina que vas a comprar un helado que cuesta 5 monedas, pero solo tienes 3.</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#F57C00;">¡No te alcanza para pagar!</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">En la resta, a veces a un número de arriba le queremos quitar algo más grande. Como no se puede, tenemos que pedirle ayuda al vecino de al lado.</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">🍦🪙</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 3: El problema -->
+        <div class="sl">
+        <div class="head-title">¡No me alcanza!</div>
+        <p class="sub-text">Intenta restar las unidades de <b class="hl">243 − 115</b>.</p>
+        <div class="base-card" style="max-width:500px; margin:0 auto; text-align:center;">
+            <div class="algo-wrap">
+                <span class="algo-sym" style="bottom: 24px;">−</span>
+                <div class="algo-row"><span class="col-c">2</span><span class="col-d">4</span><span class="hl-box"><span class="col-u">3</span></span></div>
+                <div class="algo-row"><span class="col-c">1</span><span class="col-d">1</span><span class="hl-box"><span class="col-u">5</span></span></div>
+                <div class="algo-line"></div>
+                <div class="algo-row stp"><span class="col-c">?</span><span class="col-d">?</span><span class="col-u hl-box">❓</span></div>
+            </div>
+        </div>
+        <div class="stp warn-card" style="margin-top:20px; border-color:#d32f2f; background:#ffcdd2;">
+            🛑 ¡Espera! A <b>3</b> no le puedes quitar <b>5</b>. ¡No puedes invertir el orden y decir 5-3=2!<br>Tenemos que pedir ayuda al vecino.
+        </div>
+        </div>
+
+        <!-- SLIDE 3: El Canje con bloques -->
+        <div class="sl">
+        <div class="head-title">El poder del Canje (Desarmar)</div>
+        <p class="sub-text">Podemos pedirle prestada <b class="hl">1 decena</b> al vecino y desarmarla en <b class="hl">10 unidades</b>.</p>
+        <div class="fact-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="fact-box">
+                <h4 style="color:#1976D2;">Teníamos 4D y 3U...</h4>
+                <div class="mb-group" style="margin-top:14px; min-height:100px;">
+                    <div><div class="mb-d"></div><div class="mb-d"></div><div class="mb-d"></div><div class="mb-d" style="--border-color:#d32f2f; --bg-color:#ffcdd2;"></div></div>
+                    <span style="font-size:24px; font-weight:900; margin:0 10px;">y</span>
+                    <div><div class="mb-u"></div><div class="mb-u"></div><div class="mb-u"></div></div>
+                </div>
+            </div>
+            <div class="fact-box stp">
+                <h4 style="color:#F57F17;">...desarmamos 1D</h4>
+                <p>Las 4D quedan en <b>3D</b>. ¡Las 3U se convierten en <b>13U</b>!</p>
+                <div class="mb-group" style="margin-top:10px; min-height:100px;">
+                    <div><div class="mb-d"></div><div class="mb-d"></div><div class="mb-d"></div></div>
+                    <span style="font-size:24px; font-weight:900; margin:0 10px;">y</span>
+                    <div style="display:flex; flex-wrap:wrap; max-width:80px;">
+                        <div class="mb-u"></div><div class="mb-u"></div><div class="mb-u"></div>
+                        <div class="mb-u" style="border-color:#d32f2f;"></div><div class="mb-u" style="border-color:#d32f2f;"></div><div class="mb-u" style="border-color:#d32f2f;"></div><div class="mb-u" style="border-color:#d32f2f;"></div><div class="mb-u" style="border-color:#d32f2f;"></div>
+                        <div class="mb-u" style="border-color:#d32f2f;"></div><div class="mb-u" style="border-color:#d32f2f;"></div><div class="mb-u" style="border-color:#d32f2f;"></div><div class="mb-u" style="border-color:#d32f2f;"></div><div class="mb-u" style="border-color:#d32f2f;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="stp mini-chip" style="margin-top:14px;">
+            ¡Ahora tenemos 13 unidades! A 13 sí le podemos quitar 5.
+        </div>
+        </div>
+
+        <!-- SLIDE 4: El Algoritmo Correcto -->
+        <div class="sl">
+        <div class="head-title">Canje en las Unidades</div>
+        <p class="sub-text">Resolvamos <b class="hl">243 − 115</b> paso a paso.</p>
+        <div class="two-col">
+            <div style="display:flex; justify-content:center; align-items:center;">
+                <div class="algo-wrap" style="margin-top:30px;">
+                    <span class="algo-sym" style="bottom:24px;">−</span>
+                    <div class="algo-row">
+                        <span class="col-c">2</span>
+                        <span class="col-d strike" style="position:relative;">4<span class="canje-num stp" style="color:#1976D2;">3</span></span>
+                        <span class="col-u strike" style="position:relative;">3<span class="canje-num stp" style="color:#F57F17;">13</span></span>
+                    </div>
+                    <div class="algo-row"><span class="col-c">1</span><span class="col-d">1</span><span class="col-u">5</span></div>
+                    <div class="algo-line"></div>
+                    <div class="algo-row"><span class="col-c stp">1</span><span class="col-d stp">2</span><span class="col-u stp">8</span></div>
+                </div>
+            </div>
+            <div class="side-panel">
+                <h3>Pasos:</h3>
+                <p class="stp" style="margin-bottom:12px;">1️⃣ <b>Unidades:</b> 3 es menor que 5. Pido 1D al vecino (4).</p>
+                <p class="stp" style="margin-bottom:12px;">2️⃣ <b>Canje:</b> El 4 queda en <b>3</b>. El 3 se convierte en <b>13</b>.</p>
+                <p class="stp" style="margin-bottom:12px;">3️⃣ <b>Resto U:</b> 13 − 5 = <b>8</b>.</p>
+                <p class="stp" style="margin-bottom:12px;">4️⃣ <b>Resto D:</b> 3 − 1 = <b>2</b>.</p>
+                <p class="stp">5️⃣ <b>Resto C:</b> 2 − 1 = <b>1</b>. Resultado: <b>128</b>.</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 5: Canje en las Decenas -->
+        <div class="sl">
+        <div class="head-title">Canje en las Decenas</div>
+        <p class="sub-text">A veces a las decenas no les alcanza, ¡y le piden a las <b class="hl">centenas</b>! Resolvamos <b class="hl">428 − 153</b>.</p>
+        <div class="two-col">
+            <div style="display:flex; justify-content:center; align-items:center;">
+                <div class="algo-wrap" style="margin-top:30px;">
+                    <span class="algo-sym" style="bottom:24px;">−</span>
+                    <div class="algo-row">
+                        <span class="col-c strike" style="position:relative;">4<span class="canje-num stp" style="color:#388E3C;">3</span></span>
+                        <span class="col-d strike" style="position:relative;">2<span class="canje-num stp" style="color:#1976D2;">12</span></span>
+                        <span class="col-u">8</span>
+                    </div>
+                    <div class="algo-row"><span class="col-c">1</span><span class="col-d">5</span><span class="col-u">3</span></div>
+                    <div class="algo-line"></div>
+                    <div class="algo-row"><span class="col-c stp">2</span><span class="col-d stp">7</span><span class="col-u stp">5</span></div>
+                </div>
+            </div>
+            <div class="side-panel">
+                <h3>Pasos:</h3>
+                <p class="stp" style="margin-bottom:12px;">1️⃣ <b>U:</b> 8 − 3 = <b>5</b> (aquí alcanza, sin canje).</p>
+                <p class="stp" style="margin-bottom:12px;">2️⃣ <b>D:</b> 2 es menor que 5. Pido 1C al vecino (4).</p>
+                <p class="stp" style="margin-bottom:12px;">3️⃣ <b>Canje:</b> El 4 queda en <b>3</b>. El 2 se convierte en <b>12</b>.</p>
+                <p class="stp" style="margin-bottom:12px;">4️⃣ <b>Resto D:</b> 12 − 5 = <b>7</b>.</p>
+                <p class="stp">5️⃣ <b>Resto C:</b> 3 − 1 = <b>2</b>. Total: <b>275</b>.</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 7: INTRO Doble Canje -->
+        <div class="sl">
+        <div class="head-title" style="background:#9333EA;">Pidiendo prestado a dos vecinos</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">¿Qué pasa si tienes que pagar en varias tiendas y en ninguna te alcanza con el suelto?</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#9333EA;">¡Le pides a un amigo, y luego a otro!</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">En la resta, a veces las unidades le piden a las decenas, y luego las decenas se quedan sin suficiente y le tienen que pedir a las centenas. ¡Es una cadena de favores o "Doble Canje"!</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">💸🤝</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 8: Doble Canje -->
+        <div class="sl">
+        <div class="head-title" style="background:#F57C00;">Doble Canje</div>
+        <p class="sub-text">¿Qué pasa si a las unidades <b class="hl">Y</b> a las decenas les falta? <b class="hl">634 − 258</b></p>
+        <div class="two-col">
+            <div style="display:flex; justify-content:center; align-items:center;">
+                <div class="algo-wrap" style="margin-top:30px;">
+                    <span class="algo-sym" style="bottom:24px;">−</span>
+                    <div class="algo-row">
+                        <span class="col-c strike" style="position:relative;">6<span class="canje-num stp" style="color:#388E3C;">5</span></span>
+                        <span class="col-d strike" style="position:relative;">3<span class="canje-num stp" style="color:#1976D2;">12</span></span>
+                        <span class="col-u strike" style="position:relative;">4<span class="canje-num stp" style="color:#F57F17;">14</span></span>
+                    </div>
+                    <div class="algo-row"><span class="col-c">2</span><span class="col-d">5</span><span class="col-u">8</span></div>
+                    <div class="algo-line"></div>
+                    <div class="algo-row"><span class="col-c stp">3</span><span class="col-d stp">7</span><span class="col-u stp">6</span></div>
+                </div>
+            </div>
+            <div class="side-panel">
+                <h3>¡Con calma!</h3>
+                <p class="stp" style="margin-bottom:12px;">1️⃣ <b>U:</b> 4 no alcanza. El 3 pasa a <b>2</b>, y el 4 pasa a <b>14</b>. ¡14 − 8 = <b>6</b>!</p>
+                <p class="stp" style="margin-bottom:12px;">2️⃣ <b>D:</b> Nos quedó un <b>2</b>, pero a 2 no le puedo quitar 5. ¡Pido a la centena!</p>
+                <p class="stp" style="margin-bottom:12px;">3️⃣ <b>C:</b> El 6 pasa a <b>5</b>. Y el 2 de las decenas pasa a <b>12</b>. ¡12 − 5 = <b>7</b>!</p>
+                <p class="stp">4️⃣ <b>C:</b> Finalmente, 5 − 2 = <b>3</b>.</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 9: INTRO Cuidado con el cero -->
+        <div class="sl">
+        <div class="head-title" style="background:#d32f2f;">El vecino pobre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">Vas donde tu vecino a pedir azúcar, pero él te dice: "¡No tengo nada, estoy en CERO!"</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#d32f2f;">¿Qué hacemos entonces?</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">Tu vecino tiene que ir donde el OTRO vecino a pedir prestado. Una vez que consiga azúcar (canjee con la centena), recién ahí te podrá prestar a ti. ¡Es un trabajo en equipo!</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">🚪🧂</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 10: El temido cero -->
+        <div class="sl">
+        <div class="head-title" style="background:#d32f2f;">¡Cuidado con el cero!</div>
+        <p class="sub-text">¿Qué pasa si el vecino es un <b>0</b> y no tiene nada para prestar? <b class="hl">503 − 265</b></p>
+        <div class="base-card" style="max-width:550px; margin:0 auto; padding-top:40px;">
+            <div style="display:flex; justify-content:center; margin-bottom:20px;">
+                <div class="algo-wrap">
+                    <span class="algo-sym" style="bottom:24px;">−</span>
+                    <div class="algo-row">
+                        <span class="col-c strike" style="position:relative;">5<span class="canje-num stp" style="color:#388E3C;">4</span></span>
+                        <span class="col-d strike" style="position:relative;">0<span class="canje-num stp" style="color:#1976D2;">9</span></span>
+                        <span class="col-u strike" style="position:relative;">3<span class="canje-num stp" style="color:#F57F17;">13</span></span>
+                    </div>
+                    <div class="algo-row"><span class="col-c">2</span><span class="col-d">6</span><span class="col-u">5</span></div>
+                    <div class="algo-line"></div>
+                    <div class="algo-row stp"><span class="col-c">2</span><span class="col-d">3</span><span class="col-u">8</span></div>
+                </div>
+            </div>
+            <div class="stp" style="text-align:center; margin-top:20px; font-size:18px; color:#555; font-weight:800;">
+                El 3 le pide al 0 (no puede). El 0 le pide al 5. El 5 queda en <b>4</b> y el 0 pasa a <b>10</b>.<br>
+                Ahora sí el 10 le presta al 3. El 10 queda en <b>9</b> y el 3 pasa a <b>13</b>.<br>
+                ¡Es un salto de vecino a vecino!
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 8: Abre tu cuaderno -->
+        <div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Copia, ordena en vertical, haz los canjes necesarios y resuelve:</p>
+        <div class="step-list" style="max-width:700px; width:100%;">
+            <div class="step-box" style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:32px;">642 − 218 =</span>
+                <span class="stp" style="font-size:36px; color:#d32f2f; font-weight:900;">424</span>
+            </div>
+            <div class="step-box stp" style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:32px;">735 − 451 =</span>
+                <span class="stp" style="font-size:36px; color:#d32f2f; font-weight:900;">284</span>
+            </div>
+            <div class="step-box stp" style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:32px;">523 − 167 =</span>
+                <span class="stp" style="font-size:36px; color:#d32f2f; font-weight:900;">356</span>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 9: Detección de error -->
+        <div class="sl">
+        <div class="head-title" style="background:#d32f2f;">¡Encuentra el error!</div>
+        <p class="sub-text">Un personaje resolvió <b class="hl">432 − 115</b> así. ¿Qué olvidó tachar?</p>
+        <div class="base-card" style="max-width:500px; margin:0 auto; text-align:center;">
+            <div class="algo-wrap" style="border-color:#ffcdd2;">
+                <span class="algo-sym" style="bottom:24px;">−</span>
+                <div class="algo-row">
+                    <span class="col-c">4</span>
+                    <span class="col-d">3</span>
+                    <span class="col-u strike" style="position:relative;">2<span class="canje-num" style="color:#F57F17;">12</span></span>
+                </div>
+                <div class="algo-row"><span class="col-c">1</span><span class="col-d">1</span><span class="col-u">5</span></div>
+                <div class="algo-line"></div>
+                <div class="algo-row"><span class="col-c" style="color:#d32f2f;">3</span><span class="col-d" style="color:#d32f2f;">2</span><span class="col-u">7</span></div>
+            </div>
+            <div class="stp warn-card" style="margin-top:20px; font-size:22px; text-align:left;">
+                ❌ Le prestó 1 decena al 2 (lo convirtió en 12), ¡pero <b>olvidó restarle 1 al 3</b>!<br>
+                El 3 debió quedar en 2. Así, 2 − 1 = <b>1</b> (y no 2).<br>
+                Total correcto: <b>317</b>.
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 10: Quiz interactivo -->
+        <div class="sl">
+        <div class="head-title">Quiz de Canje</div>
+        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+            <p style="font-size:28px; font-weight:800; text-align:center; margin-bottom:24px;">Si al restar las unidades tienes <b>4 − 7</b>, ¿Qué debes hacer?</p>
+            <div class="quiz-row">
+                <button class="btn" style="flex:1;" onclick="chkAns(this, false, '¡Error grave! No puedes restar de abajo hacia arriba.')">Dar vuelta y hacer 7 − 4 = 3</button>
+                <button class="btn" style="flex:1;" onclick="chkAns(this, true, '¡Correcto! Pides 1 decena, el vecino se reduce en 1 y tu 4 se vuelve 14.')">Pedir canje al vecino de las decenas</button>
+                <button class="btn" style="flex:1;" onclick="chkAns(this, false, 'Si no te alcanza, nunca el resultado será cero.')">Escribir 0 abajo</button>
+            </div>
+            <div class="msg-area"></div>
+        </div>
+        </div>
+
+        <!-- SLIDE 11: Ejercicios Propuestos -->
+        <div class="sl">
+        <div class="head-title">Ejercicios Propuestos</div>
+        <p class="sub-text">Resuelve en tu cuaderno aplicando el canje.</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Canje en U: 382 − 146</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Canje en D: 518 − 245</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Doble canje: 741 − 365</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Canje con cero: 405 − 128</div>
+            </div>
+            <div class="pnl-border" style="padding:16px; grid-column: span 2;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Un libro tiene 415 páginas. Si ya leí 128 páginas, ¿cuántas me faltan por leer?</div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 12: Respuestas -->
+        <div class="sl">
+        <div class="head-title">Respuestas</div>
+        <p class="sub-text">Revisa tus respuestas:</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">382 − 146 = <b>236</b></div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">518 − 245 = <b>273</b></div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">741 − 365 = <b>376</b></div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">405 − 128 = <b>277</b></div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669; grid-column: span 2;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">415 − 128 = <b>287</b>. Me faltan 287 páginas.</div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 13: Problema situacional 1 -->
+        <div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#FFF8E1; border:5px solid #F9A825;">
+            <div class="story-emoji">✈️</div>
+            <div>
+                <h2 style="color:#F9A825;">El viaje en avión</h2>
+                <p>El vuelo de Santiago a Buenos Aires recorre <b>1140</b> kilómetros. (Imagina que es 114 y 0, ¡usa 114 decenas!). Si el avión ya ha recorrido <b>385</b> km, ¿cuántos kilómetros le <b>faltan</b> por recorrer?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #F9A825; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Hagámoslo simple con 3 cifras:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Digamos que el viaje es de <b>834</b> km y ha recorrido <b>385</b> km.<br>
+                        Operación: 834 − 385 (Doble canje)<br>
+                        <span style="color:var(--base);">Le faltan 449 kilómetros.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 14: Problema de 2 pasos -->
+        <div class="sl">
+        <div class="head-title" style="background: linear-gradient(90deg, #9333EA 0%, #db2777 100%);">Desafío Supremo</div>
+        <div class="story-card" style="background:#F3E8FF; border:5px solid #9333EA; box-shadow: 0 10px 25px rgba(147, 51, 234, 0.2);">
+            <div class="story-emoji" style="font-size:100px; animation:bounce 2s infinite;">🛍️</div>
+            <div>
+                <h2 style="color:#9333EA; font-size:36px;">Día de compras</h2>
+                <p style="font-size:22px; font-weight:600;">Mamá salió con <b>$900</b>. Compró carne por <b>$450</b> y pan por <b>$185</b>. ¿Cuánto dinero le <b>quedó</b> al final del día?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #9333EA; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Dos formas de hacerlo:</p>
+                    <div style="font-size:22px; font-weight:900; line-height:1.6;">
+                        1) Restar en cadena: 900 − 450 = 450. Luego 450 − 185 = <b>$265</b>.<br>
+                        2) Sumar los gastos primero (450 + 185 = 635) y luego restarlo al total (900 − 635 = <b>$265</b>).
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        
+        <!-- SLIDE: Metodología -->
+        <div class="sl">
+        <div class="head-title">Resolución con Canje</div>
+        <div class="two-col" style="max-width:900px;">
+            <div class="side-panel" style="border-color:#F9A825;">
+                <h3 style="color:#F9A825; font-size:28px;">Las hojas de papel</h3>
+                <p style="font-size:24px;">Una resma tiene <b>500</b> hojas. Usamos <b>143</b> hojas para imprimir pruebas. ¿Cuántas hojas <b>quedan</b>?</p>
+            </div>
+            <div class="step-list">
+                <div class="step-box stp" style="border-color:#2196F3; font-size:22px;">
+                    <b style="color:#1976D2;">Paso 1: Palabra Clave</b><br>
+                    "Quedan" = Quitar = <b style="background:#e3f2fd; padding:2px 8px; border-radius:8px;">RESTAR</b>.
+                </div>
+                <div class="step-box stp" style="border-color:#4CAF50; font-size:22px;">
+                    <b style="color:#388E3C;">Paso 2: Alinear y Canjear</b><br>
+                    Al restar 500 - 143, en las unidades a 0 no le puedo quitar 3. <b>¡Debemos hacer canje desde las centenas!</b>
+                </div>
+                <div class="step-box stp" style="border-color:#FF9800; font-size:22px;">
+                    <b style="color:#F57F17;">Paso 3: Resolver</b><br>
+                    500 - 143 = <b>357</b>.<br>
+                    <i>Quedan 357 hojas de papel.</i>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE: Problema 1 -->
+        <div class="sl">
+        <div class="head-title">Problema de Aplicación 1</div>
+        <div class="story-card" style="background:#E8F5E9; border:5px solid #2E7D32;">
+            <div class="story-emoji">🎮</div>
+            <div>
+                <h2 style="color:#2E7D32;">Puntajes en el juego</h2>
+                <p>Mi puntaje máximo es <b>842</b> puntos. El puntaje de mi amigo es <b>568</b>. ¿Por cuántos puntos le gano?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #2E7D32; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Resolución:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Operación: 842 - 568 (Requiere doble canje)<br>
+                        842 - 568 = <b>274</b><br>
+                        <span style="color:var(--base);">Le gano por 274 puntos.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE: Problema 2 -->
+        <div class="sl">
+        <div class="head-title">Problema de Aplicación 2</div>
+        <div class="story-card" style="background:#FCE4EC; border:5px solid #C2185B;">
+            <div class="story-emoji">🥚</div>
+            <div>
+                <h2 style="color:#C2185B;">La granja de gallinas</h2>
+                <p>Las gallinas pusieron <b>315</b> huevos en la semana. El granjero vendió <b>189</b> en el mercado. ¿Cuántos huevos le sobraron?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #C2185B; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Resolución:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Palabra clave: "vendió/sobraron" (Restar)<br>
+                        Operación: 315 - 189 = <b>126</b><br>
+                        <span style="color:var(--base);">Le sobraron 126 huevos.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE: Problema 3 -->
+        <div class="sl">
+        <div class="head-title">Problema de Aplicación 3</div>
+        <div class="story-card" style="background:#E1F5FE; border:5px solid #0288D1;">
+            <div class="story-emoji">🚌</div>
+            <div>
+                <h2 style="color:#0288D1;">Pasajeros del bus</h2>
+                <p>En el bus iban <b>405</b> pasajeros en un viaje largo. En la primera parada se bajaron <b>168</b>. ¿Cuántas personas siguieron en el viaje?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #0288D1; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Resolución:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Operación: 405 - 168 (Restar con canje pasando por cero)<br>
+                        405 - 168 = <b>237</b><br>
+                        <span style="color:var(--base);">Siguieron 237 pasajeros.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    
+        <!-- SLIDE 15: Resumen -->
+        <div class="sl">
+        <div class="head-title">Resumen</div>
+        <div class="summary-list">
+            <div class="stp summary-item"><b>🔍 ¡Revisa siempre!:</b> Si el número de arriba es menor que el de abajo, <b>no puedes restar de abajo hacia arriba</b>.</div>
+            <div class="stp summary-item"><b>🤝 Canje:</b> Pide ayuda al vecino de la izquierda. Él te presta 1 (que vale 10 para ti).</div>
+            <div class="stp summary-item"><b>⚠️ ¡Tacha!:</b> Siempre tacha el número del vecino y redúcelo en 1, para que no olvides que te prestó.</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 16: Cierre -->
+        <div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:38px; font-weight:800; line-height:1.45; max-width:780px;">¡Excelente! Dominas el algoritmo de resta con canje. Ningún "0" ni ningún número pequeño te podrá detener.</p>
+            <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">🤝</div>
+        </div>
+        </div>
+
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <span class="sc" id="sc">1 / 20</span>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="20" value="1" oninput="goToSlide(this.value)">
+        </div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>
+const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+function ui() {
+    S.forEach((s,i)=>{
+        s.classList.remove('on','pv','nx');
+        if(i===c) s.classList.add('on');
+        else if(i<c) s.classList.add('pv');
+        else s.classList.add('nx');
+    });
+    document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+    document.getElementById('sc').textContent=`${c+1} / ${T}`;
+    document.getElementById('pv').disabled=c===0;
+    document.getElementById('nx').disabled=c===T-1;
+    let sl = document.getElementById('slide-slider');
+    if(sl) { sl.max = T; sl.value = c + 1; }
+}
+function goToSlide(n) {
+    let val = parseInt(n) - 1;
+    if (val >= 0 && val < T) {
+        c = val;
+        ui();
+    }
+}
+function go(d) {
+    if(d>0) {
+        const hid = S[c].querySelectorAll('.stp:not(.shwn)');
+        if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+    } else {
+        const shw = S[c].querySelectorAll('.stp.shwn');
+        if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+    }
+    const n=c+d;
+    if(n>=0 && n<T) { c=n; ui(); }
+}
+document.addEventListener('keydown', e => {
+    if(e.key==='ArrowRight' || e.key===' ') go(1);
+    if(e.key==='ArrowLeft') go(-1);
+});
+function chkAns(btn, correct, exp) {
+    const wrap = btn.closest('.sl');
+    const buttons = btn.parentElement.querySelectorAll('.btn');
+    const msg = wrap.querySelector('.msg-area');
+    buttons.forEach(b => {
+        b.disabled = false;
+        b.style.background = 'var(--base)';
+        b.style.transform = 'scale(1)';
+    });
+    if (correct) {
+        btn.style.background = '#047857';
+        btn.style.transform = 'scale(1.06)';
+        msg.textContent = `¡Muy bien! ${exp}`;
+        msg.style.color = '#047857';
+    } else {
+        btn.style.background = '#b91c1c';
+        msg.textContent = exp;
+        msg.style.color = '#b91c1c';
+    }
+}
+ui();
+</script>
+</body>
+</html>

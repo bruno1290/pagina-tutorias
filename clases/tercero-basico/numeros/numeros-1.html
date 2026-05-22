@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Números 1: Lectura y Construcción</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root {
+    --base: #1C4A82;
+    --bg: #f5f6f8;
+    --tx: #333;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--tx);
+}
+.dk { position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex; }
+.sl {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 36px 40px 82px;
+    opacity: 0;
+    transform: scale(.96);
+    transition: opacity .4s, transform .4s;
+    pointer-events: none;
+    z-index: 1;
+    overflow-y: auto;
+}
+.sl.on { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
+.sl.pv { opacity: 0; transform: translateX(-50px) scale(.95); }
+.sl.nx { opacity: 0; transform: translateX(50px) scale(.95); }
+.head-title {
+    background: var(--base);
+    color: white;
+    padding: 10px 40px;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    display: inline-block;
+    border-radius: 12px;
+    text-align: center;
+}
+.sub-text {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+    line-height: 1.4;
+}
+.pb { position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100; }
+.nv {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 100;
+}
+.nb {
+    background: #eee;
+    color: var(--base);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all .2s;
+}
+.nb:hover { background: #ddd; }
+.nb:disabled { opacity: 0.3; cursor: not-allowed; }
+.sc { color: #888; font-size: 16px; font-weight: 900; }
+.stp {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+.stp.shwn { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.pnl {
+    background: #fff;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 3px solid #eaeaea;
+    width: 100%;
+}
+.pnl-border {
+    background: #fff;
+    border: 4px solid var(--base);
+    border-radius: 20px;
+    padding: 24px;
+    width: 100%;
+}
+.hl { color: var(--base); font-weight: 900; }
+.btn {
+    background: var(--base);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .2s;
+    font-family: 'Nunito', sans-serif;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3); }
+.math-eq {
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--base);
+    background: #fff;
+    padding: 12px 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border: 3px dashed #bbdefb;
+    margin: 12px;
+    text-align: center;
+}
+.chip-row, .card-row, .base-row, .quiz-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.mini-chip {
+    background: #eef5ff;
+    border: 2px solid #b6d4f3;
+    border-radius: 999px;
+    padding: 12px 18px;
+    font-size: 20px;
+    font-weight: 800;
+}
+.idea-card {
+    flex: 1 1 220px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+    border-radius: 18px;
+    padding: 18px;
+    border: 3px solid #d7e7f7;
+    min-height: 180px;
+}
+.idea-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    margin-bottom: 10px;
+}
+.idea-card p {
+    font-size: 21px;
+    line-height: 1.45;
+}
+.base-card {
+    flex: 1 1 320px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 18px;
+    border: 4px solid #d9e7f6;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+}
+.base-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    text-align: center;
+    margin-bottom: 14px;
+}
+.place-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+.place-box {
+    background: #f8fbff;
+    border: 2px dashed #c6d9ef;
+    border-radius: 16px;
+    padding: 12px;
+    min-height: 184px;
+}
+.place-title {
+    text-align: center;
+    font-size: 19px;
+    font-weight: 900;
+    color: #315c8d;
+    margin-bottom: 10px;
+}
+.block-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 88px;
+}
+.unit {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: var(--fill, #FFE082);
+    border: 1px solid rgba(0,0,0,0.25);
+}
+.rod {
+    width: 12px;
+    height: 120px;
+    border-radius: 3px;
+    background: 
+        repeating-linear-gradient(0deg, transparent, transparent 11px, rgba(0,0,0,0.2) 11px, rgba(0,0,0,0.2) 12px),
+        var(--fill, #9DDEFF);
+    border: 1px solid rgba(0,0,0,0.25);
+}
+.flat {
+    width: 120px;
+    height: 120px;
+    border-radius: 4px;
+    background:
+        repeating-linear-gradient(0deg, transparent, transparent 11px, rgba(0,0,0,0.15) 11px, rgba(0,0,0,0.15) 12px),
+        repeating-linear-gradient(90deg, transparent, transparent 11px, rgba(0,0,0,0.15) 11px, rgba(0,0,0,0.15) 12px),
+        var(--fill, #9DE3BD);
+    border: 1px solid rgba(0,0,0,0.25);
+}
+.number-tag {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 900;
+}
+.two-col {
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 18px;
+    width: 100%;
+    align-items: stretch;
+}
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.step-box {
+    background: #f7fbff;
+    border-left: 8px solid var(--base);
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+.column-wrap {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 18px;
+    width: 100%;
+    align-items: start;
+}
+.side-panel {
+    background: linear-gradient(180deg, #fefefe 0%, #f4f9ff 100%);
+    border: 3px solid #d5e4f5;
+    border-radius: 18px;
+    padding: 18px;
+    min-height: 200px;
+}
+.side-panel h3 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 12px;
+}
+.side-panel p {
+    font-size: 20px;
+    line-height: 1.45;
+}
+.story-card {
+    width: 100%;
+    border-radius: 28px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: center;
+}
+.story-emoji {
+    font-size: 114px;
+    text-align: center;
+    animation: bob 2.8s infinite;
+}
+.story-card h2 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+.story-card p {
+    font-size: 24px;
+    line-height: 1.45;
+}
+.summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+.summary-item {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 18px;
+    border: 3px solid #dbe7f4;
+    font-size: 23px;
+    line-height: 1.45;
+}
+.fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+.fact-box {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 18px;
+    padding: 16px;
+    border: 3px solid #d8e7f6;
+    min-height: 140px;
+}
+.fact-box h4 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 10px;
+    text-align: center;
+}
+.fact-box p {
+    font-size: 21px;
+    line-height: 1.45;
+    text-align: center;
+}
+.decomp-flow {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+}
+.decomp-box {
+    background: #fff;
+    border: 3px solid #d4e6f7;
+    border-radius: 18px;
+    padding: 14px 18px;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--base);
+}
+.arrow {
+    font-size: 34px;
+    font-weight: 900;
+    color: #4d6d94;
+}
+.warn-card {
+    background: #fff8e5;
+    border: 4px solid #f0ca59;
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 22px;
+    line-height: 1.45;
+    width: 100%;
+}
+.msg-area {
+    font-size: 24px;
+    font-weight: 900;
+    height: 40px;
+    text-align: center;
+    margin-top: 20px;
+}
+.hero-title {
+    font-size: 68px;
+    color: var(--base);
+    margin-bottom: 18px;
+    text-align: center;
+    line-height: 1;
+}
+.hero-sub {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    max-width: 720px;
+}
+.hero-emoji {
+    font-size: 108px;
+    margin-top: 28px;
+    animation: bounce 2s infinite;
+}
+.count-board {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.count-card {
+    flex: 1 1 260px;
+    background: linear-gradient(180deg, #ffffff 0%, #f6fbff 100%);
+    border-radius: 22px;
+    padding: 20px;
+    border: 4px solid #d6e8f8;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+    text-align: center;
+}
+.count-card h3 {
+    font-size: 28px;
+    margin-bottom: 12px;
+    color: var(--base);
+}
+.emoji-pack {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    min-height: 86px;
+    margin-bottom: 12px;
+}
+.label-pill {
+    background: #eef5ff;
+    border: 2px solid #c5dcf5;
+    border-radius: 14px;
+    padding: 10px 16px;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--base);
+}
+/* CDU Table */
+.cdu-table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 28px;
+    font-weight: 900;
+}
+.cdu-table th {
+    padding: 10px 28px;
+    border-radius: 12px 12px 0 0;
+    color: white;
+    font-size: 22px;
+}
+.cdu-table td {
+    padding: 14px 28px;
+    text-align: center;
+    border: 2px solid #e0e8f2;
+    font-size: 36px;
+    background: #fff;
+}
+.th-c { background: #388E3C; }
+.th-d { background: #1976D2; }
+.th-u { background: #F57F17; }
+/* Reading cards */
+.read-card {
+    background: #fff;
+    border: 3px solid #d4e6f7;
+    border-radius: 18px;
+    padding: 18px 22px;
+    text-align: center;
+    min-width: 140px;
+}
+.read-num {
+    font-size: 38px;
+    font-weight: 900;
+    color: var(--base);
+    margin-bottom: 6px;
+}
+.read-word {
+    font-size: 18px;
+    font-weight: 700;
+    color: #555;
+}
+/* Pronunciation highlight */
+.pron-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+}
+.pron-card {
+    background: #fff;
+    border: 3px solid #e8d4f5;
+    border-radius: 18px;
+    padding: 16px;
+    text-align: center;
+}
+.pron-wrong {
+    font-size: 22px;
+    color: #dc2626;
+    text-decoration: line-through;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+.pron-right {
+    font-size: 24px;
+    color: #059669;
+    font-weight: 900;
+}
+/* Coin visual */
+.coin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    font-weight: 900;
+    font-size: 16px;
+    border: 3px solid rgba(0,0,0,0.2);
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), 0 3px 8px rgba(0,0,0,0.15);
+}
+.coin-100 { background: linear-gradient(135deg, #9DE3BD, #6BC89B); color: #1a5c3a; }
+.coin-10 { background: linear-gradient(135deg, #9DDEFF, #6BB8E0); color: #0c4a6e; }
+.coin-1 { background: linear-gradient(135deg, #FFE082, #F5C842); color: #7c5c00; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+/* Bloques multibase CSS puros con textura */
+.mb-c {
+    --bg-color: #9DE3BD;
+    --border-color: #388E3C;
+    width: 140px; height: 140px;
+    background:
+        repeating-linear-gradient(0deg, transparent, transparent 13px, rgba(0,0,0,0.15) 13px, rgba(0,0,0,0.15) 14px),
+        repeating-linear-gradient(90deg, transparent, transparent 13px, rgba(0,0,0,0.15) 13px, rgba(0,0,0,0.15) 14px),
+        var(--bg-color);
+    border: 1px solid var(--border-color);
+    display: inline-block; margin: 2px; border-radius: 3px;
+}
+.mb-d {
+    --bg-color: #9DDEFF;
+    --border-color: #1976D2;
+    width: 14px; height: 140px;
+    background: 
+        repeating-linear-gradient(0deg, transparent, transparent 13px, rgba(0,0,0,0.2) 13px, rgba(0,0,0,0.2) 14px),
+        var(--bg-color);
+    border: 1px solid var(--border-color);
+    display: inline-block; margin: 2px; border-radius: 2px;
+}
+.mb-u {
+    --bg-color: #FFE082;
+    --border-color: #F57F17;
+    width: 14px; height: 14px;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    display: inline-block; margin: 2px; border-radius: 2px;
+}
+.mb-group {
+    display: flex; align-items: flex-end; justify-content: center; gap: 8px;
+    padding: 10px; background: #fff; border-radius: 12px; border: 2px dashed #ccc;
+    flex-wrap: wrap;
+}
+
+</style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 class="hero-title">Números: Lectura y Construcción</h1>
+            <p class="hero-sub">Aprendamos a leer, pronunciar y construir números hasta el 999.</p>
+            <div class="hero-emoji">🔢</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 2: ¿Qué sabemos de los números? -->
+        <div class="sl">
+        <div class="head-title">¿Qué sabemos de los números?</div>
+        <p class="sub-text">Ya conocemos los números del <b class="hl">1 al 99</b>. Hoy vamos a llegar hasta el <b class="hl">999</b>.</p>
+        <div class="count-board">
+            <div class="count-card" style="border-color:#FFE082; background:linear-gradient(180deg,#fffdf1 0%,#ffffff 100%);">
+                <h3>🟡 Unidades (U)</h3>
+                <p style="font-size:22px; font-weight:700;">Los números sueltos:<br><b>1, 2, 3, 4, 5, 6, 7, 8, 9</b></p>
+            </div>
+            <div class="count-card stp" style="border-color:#9DDEFF; background:linear-gradient(180deg,#f0f9ff 0%,#ffffff 100%);">
+                <h3>🔵 Decenas (D)</h3>
+                <p style="font-size:22px; font-weight:700;">Grupos de 10:<br><b>10, 20, 30... 90</b></p>
+            </div>
+            <div class="count-card stp" style="border-color:#9DE3BD; background:linear-gradient(180deg,#f0faf4 0%,#ffffff 100%);">
+                <h3>🟢 Centenas (C)</h3>
+                <p style="font-size:22px; font-weight:700;">Grupos de 100:<br><b>100, 200, 300... 900</b></p>
+            </div>
+        </div>
+        <div class="stp mini-chip" style="margin-top:16px;">10 unidades = 1 decena · 10 decenas = 1 centena · 1 centena = 100 unidades</div>
+        </div>
+
+        <!-- SLIDE 3: INTRO a la Centena -->
+        <div class="sl">
+        <div class="head-title" style="background:#388E3C;">¿Qué pasa cuando llegamos a 99?</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">Imagínate que en la "Caja de las Decenas" solo caben 9 barras como máximo.</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#388E3C;">Pero... ¿Qué pasa si le sumamos 1 más al 99?</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">¡La caja de las decenas explota! Tuvimos que inventar una caja más grande y fuerte para guardar 10 decenas juntas.</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">💥📦</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 4: Construyendo la centena -->
+        <div class="sl">
+        <div class="head-title">Construyendo la Centena</div>
+        <p class="sub-text">Si junto <b class="hl">10 barras de decena</b>, formo una <b class="hl">placa de centena</b>.</p>
+        <div class="base-row">
+            <div class="base-card">
+                <h3>10 Decenas = 1 Centena</h3>
+                <div style="display:flex; gap:18px; justify-content:center; align-items:center; flex-wrap:wrap;">
+                    <div style="text-align:center;">
+                        <div class="block-stack" style="gap:4px;">
+                            <div class="mb-d"></div>
+                            <div class="mb-d"></div>
+                            <div class="mb-d"></div>
+                            <div class="mb-d"></div>
+                            <div class="mb-d"></div>
+                            <div class="mb-d"></div>
+                            <div class="mb-d"></div>
+                            <div class="mb-d"></div>
+                            <div class="mb-d"></div>
+                            <div class="mb-d"></div>
+                        </div>
+                        <div class="number-tag" style="color:#1976D2;">10 barras</div>
+                    </div>
+                    <div class="stp arrow" style="font-size:48px;">→</div>
+                    <div class="stp" style="text-align:center;">
+                        <div class="mb-c"></div>
+                        <div class="number-tag" style="color:#388E3C;">1 placa = 100</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 4: Lectura de centenas puras -->
+        <div class="sl">
+        <div class="head-title">Las centenas puras</div>
+        <p class="sub-text">Leamos las centenas en voz alta. ¡Atención a las <b style="color:#dc2626;">trampas</b>!</p>
+        <div class="chip-row" style="gap:12px; margin-bottom:18px;">
+            <div class="read-card"><div class="read-num">100</div><div class="read-word">cien</div></div>
+            <div class="read-card"><div class="read-num">200</div><div class="read-word">doscientos</div></div>
+            <div class="read-card"><div class="read-num">300</div><div class="read-word">trescientos</div></div>
+            <div class="read-card"><div class="read-num">400</div><div class="read-word">cuatrocientos</div></div>
+        </div>
+        <div class="stp chip-row" style="gap:12px;">
+            <div class="read-card" style="border-color:#e8d4f5;"><div class="read-num">500</div><div class="read-word" style="color:#059669;">quinientos</div></div>
+            <div class="read-card"><div class="read-num">600</div><div class="read-word">seiscientos</div></div>
+            <div class="read-card" style="border-color:#e8d4f5;"><div class="read-num">700</div><div class="read-word" style="color:#059669;">setecientos</div></div>
+            <div class="read-card"><div class="read-num">800</div><div class="read-word">ochocientos</div></div>
+            <div class="read-card" style="border-color:#e8d4f5;"><div class="read-num">900</div><div class="read-word" style="color:#059669;">novecientos</div></div>
+        </div>
+        <div class="stp warn-card" style="margin-top:14px;">
+            ⚠️ ¡Ojo! Se dice <b style="color:#059669;">quinientos</b> (no "cincocientos"), <b style="color:#059669;">setecientos</b> (no "sietecientos") y <b style="color:#059669;">novecientos</b> (no "nuevecientos").
+        </div>
+        </div>
+
+        <!-- SLIDE 5: Pronunciación correcta -->
+        <div class="sl">
+        <div class="head-title" style="background:#7B1FA2;">¡Ojo con la pronunciación!</div>
+        <p class="sub-text">Estos son los errores más comunes. ¿Los has escuchado alguna vez?</p>
+        <div class="pron-grid">
+            <div class="pron-card">
+                <div class="pron-wrong">❌ "cincocientos"</div>
+                <div class="pron-right">✅ quinientos</div>
+            </div>
+            <div class="pron-card stp">
+                <div class="pron-wrong">❌ "sietecientos"</div>
+                <div class="pron-right">✅ setecientos</div>
+            </div>
+            <div class="pron-card stp">
+                <div class="pron-wrong">❌ "nuevecientos"</div>
+                <div class="pron-right">✅ novecientos</div>
+            </div>
+            <div class="pron-card stp">
+                <div class="pron-wrong">❌ "treinta y cinco" (para 305)</div>
+                <div class="pron-right">✅ trescientos cinco</div>
+            </div>
+        </div>
+        <div class="stp mini-chip" style="margin-top:14px;">Truco: separa el número en bloques → "tres-cientos / cinco" 🗣️</div>
+        </div>
+
+        <!-- SLIDE 7: INTRO a la Lectura -->
+        <div class="sl">
+        <div class="head-title" style="background:#1976D2;">El idioma secreto de los números</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">Los números grandes parecen difíciles de leer, como si estuvieran en otro idioma.</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#1976D2;">¡Pero tienen un secreto muy simple!</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">Siempre se leen de izquierda a derecha, igual que las palabras. Solo necesitas saber el "nombre" de cada caja (centenas, decenas, unidades).</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">🗣️📖</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 8: Leyendo un número de 3 cifras -->
+        <div class="sl">
+        <div class="head-title">Leyendo números de 3 cifras</div>
+        <p class="sub-text">Para leer un número de 3 cifras, separamos en <b class="hl">centenas</b>, <b class="hl">decenas</b> y <b class="hl">unidades</b>.</p>
+        <div class="two-col">
+            <div class="base-card">
+                <h3 style="font-size:24px;">Ejemplo: 743</h3>
+                <table class="cdu-table">
+                    <tr>
+                        <th class="th-c">C</th>
+                        <th class="th-d">D</th>
+                        <th class="th-u">U</th>
+                    </tr>
+                    <tr>
+                        <td style="color:#388E3C;">7</td>
+                        <td style="color:#1976D2;">4</td>
+                        <td style="color:#F57F17;">3</td>
+                    </tr>
+                </table>
+                <div class="stp" style="text-align:center; margin-top:14px; font-size:26px; font-weight:900; color:var(--base);">
+                    setecientos cuarenta y tres
+                </div>
+            </div>
+            <div class="side-panel">
+                <h3>¿Cómo lo leo?</h3>
+                <p class="stp" style="margin-bottom:12px;"><b style="color:#388E3C;">7</b> centenas → <b>setecientos</b></p>
+                <p class="stp" style="margin-bottom:12px;"><b style="color:#1976D2;">4</b> decenas → <b>cuarenta</b></p>
+                <p class="stp" style="margin-bottom:12px;"><b style="color:#F57F17;">3</b> unidades → <b>y tres</b></p>
+                <p class="stp" style="font-size:18px; color:#888; margin-top:12px;">¡Lo leo en voz alta separando!<br>"sete-cientos / cuarenta y tres"</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 7: Cero intermedio -->
+        <div class="sl">
+        <div class="head-title" style="background:#d32f2f;">¡Cuidado con el cero!</div>
+        <p class="sub-text">Cuando hay un <b class="hl">cero en el medio</b>, no significa que no hay nada. ¡El cero <b style="color:#d32f2f;">ocupa su lugar</b>!</p>
+        <div class="fact-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="fact-box" style="border-color:#ffcdd2;">
+                <h4 style="color:#d32f2f;">305</h4>
+                <table class="cdu-table" style="font-size:20px;">
+                    <tr><th class="th-c" style="padding:6px 16px;">C</th><th class="th-d" style="padding:6px 16px;">D</th><th class="th-u" style="padding:6px 16px;">U</th></tr>
+                    <tr><td style="color:#388E3C; padding:8px 16px;">3</td><td style="color:#d32f2f; padding:8px 16px; font-weight:900;">0</td><td style="color:#F57F17; padding:8px 16px;">5</td></tr>
+                </table>
+                <p class="stp" style="margin-top:10px; font-size:18px; text-align:center;"><b>trescientos cinco</b><br><span style="color:#d32f2f;">≠ treinta y cinco</span></p>
+            </div>
+            <div class="fact-box stp" style="border-color:#ffcdd2;">
+                <h4 style="color:#d32f2f;">608</h4>
+                <table class="cdu-table" style="font-size:20px;">
+                    <tr><th class="th-c" style="padding:6px 16px;">C</th><th class="th-d" style="padding:6px 16px;">D</th><th class="th-u" style="padding:6px 16px;">U</th></tr>
+                    <tr><td style="color:#388E3C; padding:8px 16px;">6</td><td style="color:#d32f2f; padding:8px 16px; font-weight:900;">0</td><td style="color:#F57F17; padding:8px 16px;">8</td></tr>
+                </table>
+                <p class="stp" style="margin-top:10px; font-size:18px; text-align:center;"><b>seiscientos ocho</b><br><span style="color:#d32f2f;">≠ sesenta y ocho</span></p>
+            </div>
+            <div class="fact-box stp" style="border-color:#ffcdd2;">
+                <h4 style="color:#d32f2f;">470</h4>
+                <table class="cdu-table" style="font-size:20px;">
+                    <tr><th class="th-c" style="padding:6px 16px;">C</th><th class="th-d" style="padding:6px 16px;">D</th><th class="th-u" style="padding:6px 16px;">U</th></tr>
+                    <tr><td style="color:#388E3C; padding:8px 16px;">4</td><td style="color:#1976D2; padding:8px 16px;">7</td><td style="color:#d32f2f; padding:8px 16px; font-weight:900;">0</td></tr>
+                </table>
+                <p class="stp" style="margin-top:10px; font-size:18px; text-align:center;"><b>cuatrocientos setenta</b><br><span style="color:#d32f2f;">≠ cuarenta y siete</span></p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 8: Representación con bloques -->
+        <div class="sl">
+        <div class="head-title">Viendo los números con bloques</div>
+        <p class="sub-text">Así se ve el número <b class="hl">253</b> con nuestro material multibase.</p>
+        <div class="base-row">
+            <div class="base-card"><h3>253 = 2 centenas, 5 decenas y 3 unidades</h3><div class="place-grid" style="grid-template-columns:repeat(3, 1fr);">
+            <div class="place-box">
+                <div class="place-title" style="color:#388E3C;">Centenas</div>
+                <div class="block-stack"><div class="mb-c"></div><div class="mb-c"></div></div>
+                <div class="number-tag">2</div>
+            </div>
+            <div class="place-box">
+                <div class="place-title" style="color:#1976D2;">Decenas</div>
+                <div class="block-stack"><div class="mb-d"></div><div class="mb-d"></div><div class="mb-d"></div><div class="mb-d"></div><div class="mb-d"></div></div>
+                <div class="number-tag">5</div>
+            </div>
+            <div class="place-box">
+                <div class="place-title" style="color:#F57F17;">Unidades</div>
+                <div class="block-stack"><div class="mb-u"></div><div class="mb-u"></div><div class="mb-u"></div></div>
+                <div class="number-tag">3</div>
+            </div>
+        </div>
+        <div class="stp math-eq" style="font-size:34px;">253</div>
+    </div>
+    
+        </div>
+        </div>
+
+        <!-- SLIDE 11: INTRO a Monedas -->
+        <div class="sl">
+        <div class="head-title" style="background:#F57F17;">¡A comprar al kiosco!</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">¿Para qué nos sirven las centenas, decenas y unidades en la vida real?</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#F57F17;">¡Para usar el dinero!</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">En Chile usamos monedas de $100 (centenas), monedas de $10 (decenas) y monedas de $1 (unidades) para armar cualquier precio.</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">💰🏪</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 12: Representación con monedas -->
+        <div class="sl">
+        <div class="head-title">Representando con monedas chilenas</div>
+        <p class="sub-text">También podemos representar números usando nuestras monedas: <b class="hl">$100</b>, <b class="hl">$10</b> y <b class="hl">$1</b>.</p>
+        <div class="two-col">
+            <div class="base-card">
+                <h3 style="font-size:24px;">$362</h3>
+                <div style="display:flex; flex-direction:column; gap:14px; align-items:center;">
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <span class="coin coin-100">$100</span>
+                        <span class="coin coin-100">$100</span>
+                        <span class="coin coin-100">$100</span>
+                        <span style="font-size:18px; font-weight:800; color:#388E3C; margin-left:6px;">= $300</span>
+                    </div>
+                    <div class="stp" style="display:flex; gap:8px; align-items:center;">
+                        <span class="coin coin-10">$10</span>
+                        <span class="coin coin-10">$10</span>
+                        <span class="coin coin-10">$10</span>
+                        <span class="coin coin-10">$10</span>
+                        <span class="coin coin-10">$10</span>
+                        <span class="coin coin-10">$10</span>
+                        <span style="font-size:18px; font-weight:800; color:#1976D2; margin-left:6px;">= $60</span>
+                    </div>
+                    <div class="stp" style="display:flex; gap:8px; align-items:center;">
+                        <span class="coin coin-1">$1</span>
+                        <span class="coin coin-1">$1</span>
+                        <span style="font-size:18px; font-weight:800; color:#F57F17; margin-left:6px;">= $2</span>
+                    </div>
+                </div>
+            </div>
+            <div class="side-panel">
+                <h3>¿Cómo funciona?</h3>
+                <p class="stp" style="margin-bottom:12px;">🟢 <b>3 monedas de $100</b> = 3 centenas</p>
+                <p class="stp" style="margin-bottom:12px;">🔵 <b>6 monedas de $10</b> = 6 decenas</p>
+                <p class="stp" style="margin-bottom:12px;">🟡 <b>2 monedas de $1</b> = 2 unidades</p>
+                <p class="stp" style="font-weight:900; color:var(--base); font-size:22px; margin-top:12px;">$300 + $60 + $2 = $362</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 10: Abre tu cuaderno -->
+        <div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Escribe en tu cuaderno cómo se leen estos números. Luego léelos en voz alta.</p>
+        <div class="fact-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom:14px;">
+            <div class="fact-box" style="text-align:center;">
+                <h4 style="font-size:36px;">152</h4>
+                <p class="stp" style="color:#059669; font-weight:900;">ciento cincuenta y dos</p>
+            </div>
+            <div class="fact-box" style="text-align:center;">
+                <h4 style="font-size:36px;">506</h4>
+                <p class="stp" style="color:#059669; font-weight:900;">quinientos seis</p>
+            </div>
+            <div class="fact-box" style="text-align:center;">
+                <h4 style="font-size:36px;">819</h4>
+                <p class="stp" style="color:#059669; font-weight:900;">ochocientos diecinueve</p>
+            </div>
+        </div>
+        <div class="stp fact-grid" style="grid-template-columns: repeat(2, 1fr);">
+            <div class="fact-box" style="text-align:center;">
+                <h4 style="font-size:36px;">470</h4>
+                <p class="stp" style="color:#059669; font-weight:900;">cuatrocientos setenta</p>
+            </div>
+            <div class="fact-box" style="text-align:center;">
+                <h4 style="font-size:36px;">305</h4>
+                <p class="stp" style="color:#059669; font-weight:900;">trescientos cinco</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 11: Detección de error -->
+        <div class="sl">
+        <div class="head-title" style="background:#d32f2f;">¿Quién se equivocó?</div>
+        <p class="sub-text">Valentina leyó el número <b class="hl">305</b> como <b style="color:#dc2626;">"treinta y cinco"</b>. ¿Qué error cometió?</p>
+        <div class="two-col">
+            <div class="base-card" style="border-color:#ffcdd2;">
+                <h3 style="color:#d32f2f;">El error de Valentina</h3>
+                <div style="font-size:22px; line-height:1.6; padding:10px;">
+                    <p>Valentina ignoró la <b>centena</b> (el 3) y leyó solo las decenas y unidades.</p>
+                    <p style="margin-top:10px;">Confundió <b>305</b> con <b>35</b>.</p>
+                    <p style="margin-top:10px; font-size:20px; color:#888;">Pero 305 tiene un <b>3 en la centena</b> y un <b>0 en la decena</b>.</p>
+                </div>
+            </div>
+            <div class="stp side-panel" style="border-color:#c8e6c9;">
+                <h3 style="color:#059669;">Corrección</h3>
+                <table class="cdu-table" style="font-size:18px; margin-top:10px;">
+                    <tr><th class="th-c" style="padding:6px 14px;">C</th><th class="th-d" style="padding:6px 14px;">D</th><th class="th-u" style="padding:6px 14px;">U</th></tr>
+                    <tr><td style="color:#388E3C; padding:8px 14px;">3</td><td style="color:#d32f2f; padding:8px 14px;">0</td><td style="color:#F57F17; padding:8px 14px;">5</td></tr>
+                </table>
+                <p style="margin-top:14px; font-size:22px; font-weight:900; color:#059669; text-align:center;">trescientos cinco</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 12: Quiz interactivo -->
+        <div class="sl">
+        <div class="head-title">Quiz de lectura</div>
+        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">¿Cómo se lee el número <b>709</b>?</p>
+            <div class="quiz-row">
+                <button class="btn" onclick="chkAns(this, false, '709 tiene 7 centenas, 0 decenas y 9 unidades = setecientos nueve.')">Setenta y nueve</button>
+                <button class="btn" onclick="chkAns(this, true, '709 tiene 7 centenas, 0 decenas y 9 unidades = setecientos nueve.')">Setecientos nueve</button>
+                <button class="btn" onclick="chkAns(this, false, '709 tiene 7 centenas, 0 decenas y 9 unidades = setecientos nueve.')">Sietecientos nueve</button>
+            </div>
+            <div class="msg-area"></div>
+        </div>
+        </div>
+
+        <!-- SLIDE 13: Ejercicios Propuestos -->
+        <div class="sl">
+        <div class="head-title">Ejercicios Propuestos</div>
+        <p class="sub-text">Copia en tu cuaderno y escribe cómo se lee cada número.</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">
+            <div class="pnl-border" style="display:flex; justify-content:space-between; align-items:center; padding:16px;">
+                <div style="font-size:26px; font-weight:900; color:var(--base);">248 →</div>
+                <div class="stp" style="font-size:22px; font-weight:900; color:#059669;">?</div>
+            </div>
+            <div class="pnl-border" style="display:flex; justify-content:space-between; align-items:center; padding:16px;">
+                <div style="font-size:26px; font-weight:900; color:var(--base);">506 →</div>
+                <div class="stp" style="font-size:22px; font-weight:900; color:#059669;">?</div>
+            </div>
+            <div class="pnl-border" style="display:flex; justify-content:space-between; align-items:center; padding:16px;">
+                <div style="font-size:26px; font-weight:900; color:var(--base);">715 →</div>
+                <div class="stp" style="font-size:22px; font-weight:900; color:#059669;">?</div>
+            </div>
+            <div class="pnl-border" style="display:flex; justify-content:space-between; align-items:center; padding:16px;">
+                <div style="font-size:26px; font-weight:900; color:var(--base);">novecientos dos →</div>
+                <div class="stp" style="font-size:22px; font-weight:900; color:#059669;">?</div>
+            </div>
+            <div class="pnl-border" style="display:flex; justify-content:space-between; align-items:center; padding:16px;">
+                <div style="font-size:26px; font-weight:900; color:var(--base);">trescientos sesenta →</div>
+                <div class="stp" style="font-size:22px; font-weight:900; color:#059669;">?</div>
+            </div>
+            <div class="pnl-border" style="display:flex; justify-content:space-between; align-items:center; padding:16px;">
+                <div style="font-size:26px; font-weight:900; color:var(--base);">quinientos ochenta y uno →</div>
+                <div class="stp" style="font-size:22px; font-weight:900; color:#059669;">?</div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 14: Respuestas -->
+        <div class="sl">
+        <div class="head-title">Respuestas</div>
+        <p class="sub-text">Revisa tus respuestas:</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">
+            <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:22px; font-weight:900; color:#059669;">248 → doscientos cuarenta y ocho</div>
+            </div>
+            <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:22px; font-weight:900; color:#059669;">506 → quinientos seis</div>
+            </div>
+            <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:22px; font-weight:900; color:#059669;">715 → setecientos quince</div>
+            </div>
+            <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:22px; font-weight:900; color:#059669;">novecientos dos → 902</div>
+            </div>
+            <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:22px; font-weight:900; color:#059669;">trescientos sesenta → 360</div>
+            </div>
+            <div class="pnl-border" style="display:flex; justify-content:center; align-items:center; padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:22px; font-weight:900; color:#059669;">quinientos ochenta y uno → 581</div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 15: Problema situacional 1 -->
+        <div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#FFF8E1; border:5px solid #F9A825;">
+            <div class="story-emoji">🛒</div>
+            <div>
+                <h2 style="color:#F9A825;">La feria del barrio</h2>
+                <p>En la feria venden un álbum a <b>$785</b> y una pelota a <b>$608</b>. Lee en voz alta ambos precios. Luego, representa $608 con monedas de $100, $10 y $1.</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #F9A825; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        $785 → <b>setecientos ochenta y cinco</b><br>
+                        $608 → <b>seiscientos ocho</b><br>
+                        <span style="color:var(--base);">$608 = 6 monedas de $100 + 0 de $10 + 8 de $1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 16: Problema situacional 2 -->
+        <div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#E8F5E9; border:5px solid #2E7D32;">
+            <div class="story-emoji">🏪</div>
+            <div>
+                <h2 style="color:#2E7D32;">El almacén de Don Pedro</h2>
+                <p>Don Pedro vendió productos por <b>$504</b> el lunes y <b>$370</b> el martes. ¿Cómo se leen estos números? Represéntalos en una tabla C–D–U.</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #2E7D32; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        $504 → <b>quinientos cuatro</b> (C:5, D:0, U:4)<br>
+                        $370 → <b>trescientos setenta</b> (C:3, D:7, U:0)<br>
+                        <span style="color:var(--base);">¡Ojo! El 504 tiene cero en la decena.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 17: Desafío Supremo 1 -->
+        <div class="sl">
+        <div class="head-title" style="background: linear-gradient(90deg, #9333EA 0%, #db2777 100%);">Desafío Supremo</div>
+        <div class="story-card" style="background:#F3E8FF; border:5px solid #9333EA; box-shadow: 0 10px 25px rgba(147, 51, 234, 0.2);">
+            <div class="story-emoji" style="font-size:100px; animation:bounce 2s infinite;">🔮</div>
+            <div>
+                <h2 style="color:#9333EA; font-size:38px;">La Combinación Mágica</h2>
+                <p style="font-size:24px; font-weight:600;">Con los dígitos <b>2</b>, <b>5</b> y <b>9</b> (sin repetir), forma todos los números de 3 cifras distintas que puedas. ¿Cuántos hay? Léelos todos en voz alta.</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #9333EA; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta descubierta:</p>
+                    <div style="font-size:22px; font-weight:900; line-height:1.6;">
+                        259 · 295 · 529 · 592 · 925 · 952<br>
+                        <span style="color:#9333ea;">¡Son 6 números en total!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 18: Desafío Supremo 2 — ObraCraft -->
+        <div class="sl">
+        <div class="head-title" style="background: linear-gradient(90deg, #9333EA 0%, #db2777 100%);">Desafío Supremo</div>
+        <div class="story-card" style="background:#FDF2F8; border:5px solid #DB2777; box-shadow: 0 10px 25px rgba(219, 39, 119, 0.2);">
+            <div class="story-emoji" style="font-size:100px; animation:bounce 2s infinite;">⛏️</div>
+            <div>
+                <h2 style="color:#DB2777; font-size:38px;">ObraCraft: El Cofre del Minero</h2>
+                <p style="font-size:24px; font-weight:600;">En la mina mágica encontraste 3 cofres. El cofre rojo tiene <b>quinientos diecisiete</b> diamantes. El cofre azul tiene <b>setecientos cuatro</b>. Y el cofre verde tiene <b>novecientos sesenta</b>. Escribe los 3 números con cifras y ordénalos del que tiene más al que tiene menos.</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #DB2777; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta descubierta:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Rojo: 517 · Azul: 704 · Verde: 960<br>
+                        <span style="color:#db2777;">Orden: 960 > 704 > 517</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 19: Boletas del barrio — Integrador -->
+        <div class="sl">
+        <div class="head-title" style="background:#0277BD;">Problema Integrador</div>
+        <div class="story-card" style="background:#E1F5FE; border:5px solid #0277BD;">
+            <div class="story-emoji" style="font-size:100px;">🧾</div>
+            <div>
+                <h2 style="color:#0277BD;">Las boletas del barrio</h2>
+                <p style="font-size:22px; font-weight:600;">Mira estas 3 boletas de compra: <b>$305</b>, <b>$580</b> y <b>$716</b>.<br>(a) Lee en voz alta cada total.<br>(b) Representa $305 con monedas.<br>(c) Escribe con palabras el más caro.</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #0277BD; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:18px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:20px; font-weight:900; line-height:1.6;">
+                        (a) trescientos cinco · quinientos ochenta · setecientos dieciséis<br>
+                        (b) 3 de $100 + 0 de $10 + 5 de $1<br>
+                        (c) <span style="color:var(--base);">setecientos dieciséis ($716)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 20: Resumen -->
+        <div class="sl">
+        <div class="head-title">Resumen</div>
+        <div class="summary-list">
+            <div class="stp summary-item"><b>🟢 Centena:</b> Grupo de 100. 10 decenas = 1 centena. Usamos la placa verde.</div>
+            <div class="stp summary-item"><b>📖 Lectura:</b> Separamos el número en bloques: centenas – decenas – unidades. Ejemplo: 743 → "setecientos cuarenta y tres".</div>
+            <div class="stp summary-item"><b>⚠️ Cero intermedio:</b> El cero ocupa su lugar. 305 = trescientos cinco (NO "treinta y cinco").</div>
+            <div class="stp summary-item"><b>🗣️ Pronunciación:</b> quinientos, setecientos, novecientos. ¡Sin inventar!</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 21: Cierre -->
+        <div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:38px; font-weight:800; line-height:1.45; max-width:780px;">¡Ya sabes leer y construir números hasta el 999!</p>
+            <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">🏆</div>
+        </div>
+        </div>
+
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <span class="sc" id="sc">1 / 21</span>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="21" value="1" oninput="goToSlide(this.value)">
+        </div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>
+const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+function ui() {
+    S.forEach((s,i)=>{
+        s.classList.remove('on','pv','nx');
+        if(i===c) s.classList.add('on');
+        else if(i<c) s.classList.add('pv');
+        else s.classList.add('nx');
+    });
+    document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+    document.getElementById('sc').textContent=`${c+1} / ${T}`;
+    document.getElementById('pv').disabled=c===0;
+    document.getElementById('nx').disabled=c===T-1;
+    let sl = document.getElementById('slide-slider');
+    if(sl) { sl.max = T; sl.value = c + 1; }
+}
+function goToSlide(n) {
+    let val = parseInt(n) - 1;
+    if (val >= 0 && val < T) {
+        c = val;
+        ui();
+    }
+}
+function go(d) {
+    if(d>0) {
+        const hid = S[c].querySelectorAll('.stp:not(.shwn)');
+        if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+    } else {
+        const shw = S[c].querySelectorAll('.stp.shwn');
+        if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+    }
+    const n=c+d;
+    if(n>=0 && n<T) { c=n; ui(); }
+}
+document.addEventListener('keydown', e => {
+    if(e.key==='ArrowRight' || e.key===' ') go(1);
+    if(e.key==='ArrowLeft') go(-1);
+});
+function chkAns(btn, correct, exp) {
+    const wrap = btn.closest('.sl');
+    const buttons = btn.parentElement.querySelectorAll('.btn');
+    const msg = wrap.querySelector('.msg-area');
+    buttons.forEach(b => {
+        b.disabled = false;
+        b.style.background = 'var(--base)';
+        b.style.transform = 'scale(1)';
+    });
+    if (correct) {
+        btn.style.background = '#047857';
+        btn.style.transform = 'scale(1.06)';
+        msg.textContent = `¡Muy bien! ${exp}`;
+        msg.style.color = '#047857';
+    } else {
+        btn.style.background = '#b91c1c';
+        msg.textContent = 'Piensa en las centenas y el cero intermedio. ¡Inténtalo de nuevo!';
+        msg.style.color = '#b91c1c';
+    }
+}
+ui();
+</script>
+</body>
+</html>

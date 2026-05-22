@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Números 3: Comparación, Orden y Recta Numérica</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root {
+    --base: #1C4A82;
+    --bg: #f5f6f8;
+    --tx: #333;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--tx);
+}
+.dk { position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex; }
+.sl {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 36px 40px 82px;
+    opacity: 0;
+    transform: scale(.96);
+    transition: opacity .4s, transform .4s;
+    pointer-events: none;
+    z-index: 1;
+    overflow-y: auto;
+}
+.sl.on { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
+.sl.pv { opacity: 0; transform: translateX(-50px) scale(.95); }
+.sl.nx { opacity: 0; transform: translateX(50px) scale(.95); }
+.head-title {
+    background: var(--base);
+    color: white;
+    padding: 10px 40px;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    display: inline-block;
+    border-radius: 12px;
+    text-align: center;
+}
+.sub-text {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+    line-height: 1.4;
+}
+.pb { position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100; }
+.nv {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 100;
+}
+.nb {
+    background: #eee;
+    color: var(--base);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all .2s;
+}
+.nb:hover { background: #ddd; }
+.nb:disabled { opacity: 0.3; cursor: not-allowed; }
+.sc { color: #888; font-size: 16px; font-weight: 900; }
+.stp {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+.stp.shwn { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.pnl {
+    background: #fff;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 3px solid #eaeaea;
+    width: 100%;
+}
+.pnl-border {
+    background: #fff;
+    border: 4px solid var(--base);
+    border-radius: 20px;
+    padding: 24px;
+    width: 100%;
+}
+.hl { color: var(--base); font-weight: 900; }
+.btn {
+    background: var(--base);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .2s;
+    font-family: 'Nunito', sans-serif;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3); }
+.math-eq {
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--base);
+    background: #fff;
+    padding: 12px 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border: 3px dashed #bbdefb;
+    margin: 12px;
+    text-align: center;
+}
+.chip-row, .card-row, .base-row, .quiz-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.mini-chip {
+    background: #eef5ff;
+    border: 2px solid #b6d4f3;
+    border-radius: 999px;
+    padding: 12px 18px;
+    font-size: 20px;
+    font-weight: 800;
+}
+.idea-card {
+    flex: 1 1 220px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+    border-radius: 18px;
+    padding: 18px;
+    border: 3px solid #d7e7f7;
+    min-height: 140px;
+}
+.idea-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    margin-bottom: 10px;
+}
+.idea-card p {
+    font-size: 21px;
+    line-height: 1.45;
+}
+.base-card {
+    flex: 1 1 320px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 18px;
+    border: 4px solid #d9e7f6;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+}
+.base-card h3 {
+    font-size: 28px;
+    color: var(--base);
+    text-align: center;
+    margin-bottom: 14px;
+}
+.two-col {
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 18px;
+    width: 100%;
+    align-items: stretch;
+}
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.step-box {
+    background: #f7fbff;
+    border-left: 8px solid var(--base);
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+.column-wrap {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 18px;
+    width: 100%;
+    align-items: start;
+}
+.side-panel {
+    background: linear-gradient(180deg, #fefefe 0%, #f4f9ff 100%);
+    border: 3px solid #d5e4f5;
+    border-radius: 18px;
+    padding: 18px;
+    min-height: 200px;
+}
+.side-panel h3 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 12px;
+}
+.side-panel p {
+    font-size: 20px;
+    line-height: 1.45;
+}
+.story-card {
+    width: 100%;
+    border-radius: 28px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: center;
+}
+.story-emoji {
+    font-size: 114px;
+    text-align: center;
+    animation: bob 2.8s infinite;
+}
+.story-card h2 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+.story-card p {
+    font-size: 24px;
+    line-height: 1.45;
+}
+.summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+.summary-item {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 18px;
+    border: 3px solid #dbe7f4;
+    font-size: 23px;
+    line-height: 1.45;
+}
+.fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+.fact-box {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 18px;
+    padding: 16px;
+    border: 3px solid #d8e7f6;
+    min-height: 120px;
+}
+.fact-box h4 {
+    font-size: 24px;
+    color: var(--base);
+    margin-bottom: 10px;
+    text-align: center;
+}
+.fact-box p {
+    font-size: 21px;
+    line-height: 1.45;
+    text-align: center;
+}
+.decomp-flow {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+}
+.decomp-box {
+    background: #fff;
+    border: 3px solid #d4e6f7;
+    border-radius: 18px;
+    padding: 14px 18px;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--base);
+}
+.arrow {
+    font-size: 34px;
+    font-weight: 900;
+    color: #4d6d94;
+}
+.warn-card {
+    background: #fff8e5;
+    border: 4px solid #f0ca59;
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 22px;
+    line-height: 1.45;
+    width: 100%;
+}
+.msg-area {
+    font-size: 24px;
+    font-weight: 900;
+    height: 40px;
+    text-align: center;
+    margin-top: 20px;
+}
+.hero-title {
+    font-size: 58px;
+    color: var(--base);
+    margin-bottom: 18px;
+    text-align: center;
+    line-height: 1.1;
+}
+.hero-sub {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    max-width: 720px;
+}
+.hero-emoji {
+    font-size: 108px;
+    margin-top: 28px;
+    animation: bounce 2s infinite;
+}
+.label-pill {
+    background: #eef5ff;
+    border: 2px solid #c5dcf5;
+    border-radius: 14px;
+    padding: 10px 16px;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--base);
+}
+/* CDU Table */
+.cdu-table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 28px;
+    font-weight: 900;
+}
+.cdu-table th {
+    padding: 10px 28px;
+    border-radius: 12px 12px 0 0;
+    color: white;
+    font-size: 22px;
+}
+.cdu-table td {
+    padding: 14px 28px;
+    text-align: center;
+    border: 2px solid #e0e8f2;
+    font-size: 36px;
+    background: #fff;
+}
+.th-c { background: #388E3C; }
+.th-d { background: #1976D2; }
+.th-u { background: #F57F17; }
+/* Comparison symbols */
+.comp-sym {
+    font-size: 48px;
+    font-weight: 900;
+    color: #d32f2f;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 16px;
+    background: #fff;
+    border: 4px solid #ffcdd2;
+    box-shadow: 0 4px 12px rgba(211,47,47,0.15);
+}
+/* Number line */
+.num-line-wrap {
+    width: 100%;
+    padding: 10px 0;
+    position: relative;
+}
+.num-line {
+    width: 100%;
+    height: 6px;
+    background: var(--base);
+    border-radius: 3px;
+    position: relative;
+    margin: 40px 0 20px;
+}
+.num-tick {
+    position: absolute;
+    top: -8px;
+    width: 3px;
+    height: 22px;
+    background: var(--base);
+    transform: translateX(-50%);
+}
+.num-label {
+    position: absolute;
+    top: 20px;
+    transform: translateX(-50%);
+    font-size: 16px;
+    font-weight: 900;
+    color: #555;
+    white-space: nowrap;
+}
+.num-marker {
+    position: absolute;
+    top: -36px;
+    transform: translateX(-50%);
+    font-size: 20px;
+    font-weight: 900;
+    color: #d32f2f;
+    background: #fff3e0;
+    padding: 4px 10px;
+    border-radius: 10px;
+    border: 2px solid #ff9800;
+    white-space: nowrap;
+}
+/* Compare card */
+.comp-card {
+    background: #fff;
+    border: 3px solid #d4e6f7;
+    border-radius: 18px;
+    padding: 18px 22px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--base);
+}
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+</style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 class="hero-title">Comparación, Orden y Recta Numérica</h1>
+            <p class="hero-sub">Aprendamos a comparar y ordenar números usando la tabla posicional y la recta numérica.</p>
+            <div class="hero-emoji">📏</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 2: INTRO Cocodrilo Glotón -->
+        <div class="sl">
+        <div class="head-title" style="background:#d32f2f;">El cocodrilo glotón</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">Imagina que hay un cocodrilo gigante que tiene muchísima hambre.</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#d32f2f;">¿Qué lado va a elegir comerse?</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">¡Obvio! Siempre abrirá su boca grande hacia donde haya <b>más comida</b> (el número mayor).</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">🐊🍔</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 3: Los símbolos -->
+        <div class="sl">
+        <div class="head-title">Los símbolos de comparación</div>
+        <p class="sub-text">Usamos tres símbolos para comparar números:</p>
+        <div class="chip-row" style="gap:24px;">
+            <div class="idea-card" style="text-align:center; min-height:auto;">
+                <div class="comp-sym">&lt;</div>
+                <h3 style="margin-top:10px; font-size:22px;">Menor que</h3>
+                <p style="font-size:19px;">3 <b style="color:#d32f2f;">&lt;</b> 5</p>
+            </div>
+            <div class="idea-card stp" style="text-align:center; min-height:auto;">
+                <div class="comp-sym">&gt;</div>
+                <h3 style="margin-top:10px; font-size:22px;">Mayor que</h3>
+                <p style="font-size:19px;">8 <b style="color:#d32f2f;">&gt;</b> 2</p>
+            </div>
+            <div class="idea-card stp" style="text-align:center; min-height:auto;">
+                <div class="comp-sym">=</div>
+                <h3 style="margin-top:10px; font-size:22px;">Igual a</h3>
+                <p style="font-size:19px;">7 <b style="color:#d32f2f;">=</b> 7</p>
+            </div>
+        </div>
+        <div class="stp mini-chip" style="margin-top:18px;">Truco: el símbolo < y > siempre "se come" al número más grande. ¡Como un cocodrilo! 🐊</div>
+        </div>
+
+        <!-- SLIDE 3: Estrategia de comparación -->
+        <div class="sl">
+        <div class="head-title">¿Cómo comparar números?</div>
+        <p class="sub-text">Comparamos <b class="hl">posición por posición</b>, de izquierda a derecha.</p>
+        <div class="two-col">
+            <div class="base-card">
+                <h3 style="font-size:22px;">¿675 o 657?</h3>
+                <table class="cdu-table" style="margin-bottom:10px;">
+                    <tr>
+                        <th class="th-c">C</th>
+                        <th class="th-d">D</th>
+                        <th class="th-u">U</th>
+                    </tr>
+                    <tr>
+                        <td style="color:#388E3C;">6</td>
+                        <td style="color:#1976D2; background:#bbdefb;">7</td>
+                        <td style="color:#F57F17;">5</td>
+                    </tr>
+                    <tr>
+                        <td style="color:#388E3C;">6</td>
+                        <td style="color:#1976D2; background:#e3f2fd;">5</td>
+                        <td style="color:#F57F17;">7</td>
+                    </tr>
+                </table>
+                <div class="stp" style="text-align:center; font-size:28px; font-weight:900; color:#d32f2f;">675 > 657</div>
+            </div>
+            <div class="side-panel">
+                <h3>Paso a paso</h3>
+                <p class="stp" style="margin-bottom:12px;">1️⃣ <b style="color:#388E3C;">Centenas:</b> 6 = 6 → ¡Empate! Sigo.</p>
+                <p class="stp" style="margin-bottom:12px;">2️⃣ <b style="color:#1976D2;">Decenas:</b> 7 > 5 → ¡Ganó!</p>
+                <p class="stp" style="margin-bottom:12px;">3️⃣ Ya no necesito mirar las unidades.</p>
+                <p class="stp" style="font-size:18px; color:#888; margin-top:14px;">Justificación: "675 es mayor que 657 porque tienen las mismas centenas, pero 7 decenas es más que 5 decenas".</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 4: Ejemplo con distinta centena -->
+        <div class="sl">
+        <div class="head-title">Comparación rápida</div>
+        <p class="sub-text">Cuando las <b class="hl">centenas son diferentes</b>, ¡ya tenemos la respuesta!</p>
+        <div class="base-card" style="max-width:600px; margin:0 auto;">
+            <h3 style="font-size:22px;">¿257 o 161?</h3>
+            <table class="cdu-table" style="margin-bottom:10px;">
+                <tr>
+                    <th class="th-c">C</th>
+                    <th class="th-d">D</th>
+                    <th class="th-u">U</th>
+                </tr>
+                <tr>
+                    <td style="color:#388E3C; background:#c8e6c9;">2</td>
+                    <td style="color:#1976D2;">5</td>
+                    <td style="color:#F57F17;">7</td>
+                </tr>
+                <tr>
+                    <td style="color:#388E3C; background:#e8f5e9;">1</td>
+                    <td style="color:#1976D2;">6</td>
+                    <td style="color:#F57F17;">1</td>
+                </tr>
+            </table>
+            <div class="stp" style="text-align:center; font-size:28px; font-weight:900; color:#d32f2f;">257 > 161</div>
+        </div>
+        <div class="stp warn-card" style="margin-top:14px; max-width:600px;">
+            ⚡ Centenas diferentes: 2 > 1, ¡listo! No necesito comparar decenas ni unidades.
+        </div>
+        </div>
+
+        <!-- SLIDE 5: Abre tu cuaderno - comparación -->
+        <div class="sl">
+        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
+        <p class="sub-text">Completa con <b class="hl">&lt;</b>, <b class="hl">&gt;</b> o <b class="hl">=</b>:</p>
+        <div class="step-list" style="max-width:600px; width:100%;">
+            <div class="step-box" style="font-size:26px; text-align:center;">
+                351 ___ 513 <span class="stp" style="color:#d32f2f; display:inline; font-size:28px;"><b>&lt;</b></span>
+            </div>
+            <div class="step-box stp" style="font-size:26px; text-align:center;">
+                296 ___ 269 <span class="stp" style="color:#d32f2f; display:inline; font-size:28px;"><b>&gt;</b></span>
+            </div>
+            <div class="step-box stp" style="font-size:26px; text-align:center;">
+                460 ___ 604 <span class="stp" style="color:#d32f2f; display:inline; font-size:28px;"><b>&lt;</b></span>
+            </div>
+            <div class="step-box stp" style="font-size:26px; text-align:center;">
+                151 ___ 151 <span class="stp" style="color:#d32f2f; display:inline; font-size:28px;"><b>=</b></span>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 6: Ordenar números -->
+        <div class="sl">
+        <div class="head-title">Ordenar números</div>
+        <p class="sub-text">Podemos ordenar números de <b class="hl">menor a mayor</b> o de <b class="hl">mayor a menor</b>.</p>
+        <div class="base-card" style="max-width:700px; margin:0 auto;">
+            <h3 style="font-size:22px;">Ordena: 385, 358, 835, 538</h3>
+            <div class="stp step-list" style="margin-top:14px;">
+                <div class="step-box">1️⃣ Comparo centenas: <b>3</b>85, <b>3</b>58 vs <b>8</b>35, <b>5</b>38</div>
+                <div class="step-box stp">2️⃣ Los de centena 3: 358 < 385 (decenas: 5 < 8)</div>
+                <div class="step-box stp">3️⃣ Los otros: 538 < 835 (centenas: 5 < 8)</div>
+            </div>
+        </div>
+        <div class="stp decomp-flow" style="margin-top:16px;">
+            <div class="decomp-box" style="font-size:24px;">358</div>
+            <div class="arrow">&lt;</div>
+            <div class="decomp-box" style="font-size:24px;">385</div>
+            <div class="arrow">&lt;</div>
+            <div class="decomp-box" style="font-size:24px;">538</div>
+            <div class="arrow">&lt;</div>
+            <div class="decomp-box" style="font-size:24px;">835</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 7: Formando el mayor y menor -->
+        <div class="sl">
+        <div class="head-title">El mayor y el menor</div>
+        <p class="sub-text">Con los dígitos <b class="hl">3</b>, <b class="hl">8</b> y <b class="hl">5</b>: ¿cuál es el número de 3 cifras más grande y el más chico?</p>
+        <div class="fact-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="fact-box" style="border-color:#c8e6c9;">
+                <h4 style="color:#388E3C;">Mayor posible</h4>
+                <p style="font-size:20px;">Poner el dígito más grande en la centena:</p>
+                <div class="stp" style="font-size:38px; font-weight:900; color:#388E3C; text-align:center; margin-top:8px;">853</div>
+            </div>
+            <div class="fact-box stp" style="border-color:#ffcdd2;">
+                <h4 style="color:#d32f2f;">Menor posible</h4>
+                <p style="font-size:20px;">Poner el dígito más chico en la centena:</p>
+                <div class="stp" style="font-size:38px; font-weight:900; color:#d32f2f; text-align:center; margin-top:8px;">358</div>
+            </div>
+        </div>
+        <div class="stp mini-chip" style="margin-top:14px;">
+            🧠 Para el mayor: dígitos de mayor a menor. Para el menor: dígitos de menor a mayor.
+        </div>
+        </div>
+
+        <!-- SLIDE 9: INTRO El Mapa -->
+        <div class="sl">
+        <div class="head-title" style="background:#1976D2;">El mapa de los números</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:32px; font-weight:800; max-width:800px; line-height:1.4;">¿Alguna vez te has perdido en un juego y tuviste que mirar el mapa para ubicarte?</p>
+            <div class="stp" style="margin-top:24px;">
+                <p style="font-size:26px; font-weight:800; color:#1976D2;">Los números también tienen un mapa llamado "Recta Numérica".</p>
+                <p style="font-size:24px; max-width:700px; margin-top:12px;">Es una línea larga donde cada número tiene su propio lugar. ¡Nos ayuda a saber quién va primero y quién va después!</p>
+            </div>
+            <div class="stp hero-emoji" style="margin-top:20px; font-size:90px;">🗺️📍</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 10: La recta numérica -->
+        <div class="sl">
+        <div class="head-title">La Recta Numérica</div>
+        <p class="sub-text">La recta numérica nos ayuda a <b class="hl">ver el orden</b> de los números. Izquierda = menor. Derecha = mayor.</p>
+        <div class="base-card" style="max-width:800px; margin:0 auto;">
+            <h3 style="font-size:20px;">Recta del 100 al 200 (de 10 en 10)</h3>
+            <div class="num-line-wrap">
+                <div class="num-line">
+                    <div class="num-tick" style="left:0%;"><div class="num-label">100</div></div>
+                    <div class="num-tick" style="left:10%;"><div class="num-label">110</div></div>
+                    <div class="num-tick" style="left:20%;"><div class="num-label">120</div></div>
+                    <div class="num-tick" style="left:30%;"><div class="num-label">130</div></div>
+                    <div class="num-tick" style="left:40%;"><div class="num-label">140</div></div>
+                    <div class="num-tick" style="left:50%;"><div class="num-label">150</div></div>
+                    <div class="num-tick" style="left:60%;"><div class="num-label">160</div></div>
+                    <div class="num-tick" style="left:70%;"><div class="num-label">170</div></div>
+                    <div class="num-tick" style="left:80%;"><div class="num-label">180</div></div>
+                    <div class="num-tick" style="left:90%;"><div class="num-label">190</div></div>
+                    <div class="num-tick" style="left:100%;"><div class="num-label">200</div></div>
+                    <!-- Marked numbers -->
+                    <div class="stp num-marker" style="left:25%;">125</div>
+                    <div class="stp num-marker" style="left:73%;">173</div>
+                </div>
+            </div>
+        </div>
+        <div class="stp mini-chip" style="margin-top:16px;">
+            125 está entre 120 y 130. 173 está entre 170 y 180.
+        </div>
+        </div>
+
+        <!-- SLIDE 9: Recta con escala diferente -->
+        <div class="sl">
+        <div class="head-title">Recta con otra escala</div>
+        <p class="sub-text">La recta puede tener escalas distintas. Aquí va <b class="hl">de 25 en 25</b>.</p>
+        <div class="base-card" style="max-width:800px; margin:0 auto;">
+            <h3 style="font-size:20px;">Recta del 100 al 300 (de 25 en 25)</h3>
+            <div class="num-line-wrap">
+                <div class="num-line">
+                    <div class="num-tick" style="left:0%;"><div class="num-label">100</div></div>
+                    <div class="num-tick" style="left:12.5%;"><div class="num-label">125</div></div>
+                    <div class="num-tick" style="left:25%;"><div class="num-label">150</div></div>
+                    <div class="num-tick" style="left:37.5%;"><div class="num-label">175</div></div>
+                    <div class="num-tick" style="left:50%;"><div class="num-label">200</div></div>
+                    <div class="num-tick" style="left:62.5%;"><div class="num-label">225</div></div>
+                    <div class="num-tick" style="left:75%;"><div class="num-label">250</div></div>
+                    <div class="num-tick" style="left:87.5%;"><div class="num-label">275</div></div>
+                    <div class="num-tick" style="left:100%;"><div class="num-label">300</div></div>
+                </div>
+            </div>
+        </div>
+        <div class="stp warn-card" style="margin-top:14px; max-width:700px;">
+            ⚠️ ¡Ojo! Cuando cambia la escala, ya no contamos de 10 en 10. Fíjate siempre en los números de la recta antes de ubicar un valor.
+        </div>
+        </div>
+
+        <!-- SLIDE 10: Números cercanos -->
+        <div class="sl">
+        <div class="head-title">Números cercanos</div>
+        <p class="sub-text">¿Entre qué <b class="hl">decenas</b> o <b class="hl">centenas</b> está un número?</p>
+        <div class="fact-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="fact-box" style="border-color:#9DDEFF;">
+                <h4 style="color:#1976D2;">679</h4>
+                <p>Decenas más cercanas:</p>
+                <div class="stp decomp-flow" style="margin-top:6px; gap:8px;">
+                    <div class="decomp-box" style="font-size:22px; padding:8px 14px;">670</div>
+                    <div class="arrow" style="font-size:22px;">← 679 →</div>
+                    <div class="decomp-box" style="font-size:22px; padding:8px 14px;">680</div>
+                </div>
+            </div>
+            <div class="fact-box stp" style="border-color:#9DE3BD;">
+                <h4 style="color:#388E3C;">841</h4>
+                <p>Centenas más cercanas:</p>
+                <div class="stp decomp-flow" style="margin-top:6px; gap:8px;">
+                    <div class="decomp-box" style="font-size:22px; padding:8px 14px;">800</div>
+                    <div class="arrow" style="font-size:22px;">← 841 →</div>
+                    <div class="decomp-box" style="font-size:22px; padding:8px 14px;">900</div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 11: Quiz interactivo -->
+        <div class="sl">
+        <div class="head-title">Quiz de comparación</div>
+        <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">¿Cuál es el símbolo correcto?<br><b>296 ___ 269</b></p>
+            <div class="quiz-row">
+                <button class="btn" onclick="chkAns(this, false, '296 tiene más decenas (9) que 269 (6). Por eso 296 > 269.')">&lt;</button>
+                <button class="btn" onclick="chkAns(this, true, '296 tiene más decenas (9) que 269 (6). Por eso 296 > 269.')">&gt;</button>
+                <button class="btn" onclick="chkAns(this, false, '296 tiene más decenas (9) que 269 (6). Por eso 296 > 269.')">=</button>
+            </div>
+            <div class="msg-area"></div>
+        </div>
+        </div>
+
+        <!-- SLIDE 12: Ejercicios Propuestos -->
+        <div class="sl">
+        <div class="head-title">Ejercicios Propuestos</div>
+        <p class="sub-text">Copia en tu cuaderno y resuelve.</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Completa: 438 ___ 483</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Completa: 715 ___ 715</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Ordena de menor a mayor: 542, 425, 524, 245</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Con 4, 7, 1: forma el mayor y menor</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">Decenas cercanas a 356</div>
+            </div>
+            <div class="pnl-border" style="padding:16px;">
+                <div style="font-size:22px; font-weight:900; color:var(--base);">¿Cuántos números hay entre 798 y 806?</div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 13: Respuestas -->
+        <div class="sl">
+        <div class="head-title">Respuestas</div>
+        <p class="sub-text">Revisa tus respuestas:</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%;">
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">438 <b>&lt;</b> 483</div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">715 <b>=</b> 715</div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">245 < 425 < 524 < 542</div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">Mayor: <b>741</b> · Menor: <b>147</b></div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">350 y 360</div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:20px; font-weight:900; color:#059669;">7 números: 799, 800, 801, 802, 803, 804, 805</div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 14: Problema situacional 1 -->
+        <div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#FFF8E1; border:5px solid #F9A825;">
+            <div class="story-emoji">💰</div>
+            <div>
+                <h2 style="color:#F9A825;">Los ahorros de Francisca</h2>
+                <p>Francisca tiene <b>$970</b> ahorrados y quiere un álbum que cuesta <b>$790</b>. ¿Le sobra o le falta dinero? Justifica tu respuesta.</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #F9A825; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        970 > 790, entonces <b>le sobra</b> dinero.<br>
+                        <span style="color:var(--base);">Tiene $180 más de lo que necesita.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 15: Problema situacional 2 -->
+        <div class="sl">
+        <div class="head-title">Problemas Situacionales</div>
+        <div class="story-card" style="background:#E8F5E9; border:5px solid #2E7D32;">
+            <div class="story-emoji">♻️</div>
+            <div>
+                <h2 style="color:#2E7D32;">Campaña de reciclaje</h2>
+                <p>En la campaña: 1° básico reunió <b>412</b> latas, 2° básico <b>421</b>, 3° básico <b>415</b> y 4° básico <b>425</b>. Los dos cursos con más latas reciben premio. ¿Quiénes son?</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #2E7D32; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta guiada:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        Orden: 412 < 415 < 421 < 425<br>
+                        <span style="color:var(--base);">Ganan: 4° básico (425) y 2° básico (421).</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 16: Desafío Supremo 1 -->
+        <div class="sl">
+        <div class="head-title" style="background: linear-gradient(90deg, #9333EA 0%, #db2777 100%);">Desafío Supremo</div>
+        <div class="story-card" style="background:#F3E8FF; border:5px solid #9333EA; box-shadow: 0 10px 25px rgba(147, 51, 234, 0.2);">
+            <div class="story-emoji" style="font-size:100px; animation:bounce 2s infinite;">🏋️</div>
+            <div>
+                <h2 style="color:#9333EA; font-size:36px;">El Podio de los Animales</h2>
+                <p style="font-size:22px; font-weight:600;">En el zoológico pesaron 4 animales: león <b>198 kg</b>, tigre <b>215 kg</b>, jaguar <b>102 kg</b> y leopardo <b>89 kg</b>.<br>(a) Lee cada peso en voz alta.<br>(b) Ordénalos de menor a mayor.<br>(c) Arma un podio con los 3 más pesados.</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #9333EA; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:18px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta descubierta:</p>
+                    <div style="font-size:20px; font-weight:900; line-height:1.6;">
+                        Orden: 89 < 102 < 198 < 215<br>
+                        🥇 Tigre (215) · 🥈 León (198) · 🥉 Jaguar (102)
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 17: Desafío Supremo 2 — ObraCraft -->
+        <div class="sl">
+        <div class="head-title" style="background: linear-gradient(90deg, #9333EA 0%, #db2777 100%);">Desafío Supremo</div>
+        <div class="story-card" style="background:#FDF2F8; border:5px solid #DB2777; box-shadow: 0 10px 25px rgba(219, 39, 119, 0.2);">
+            <div class="story-emoji" style="font-size:100px; animation:bounce 2s infinite;">⛏️</div>
+            <div>
+                <h2 style="color:#DB2777; font-size:36px;">ObraCraft: La Escalera del Portal</h2>
+                <p style="font-size:22px; font-weight:600;">Para abrir el portal mágico debes colocar estos números de <b>menor a mayor</b> en los escalones: <b>507</b>, <b>570</b>, <b>750</b>, <b>705</b>. Si te equivocas en el orden, el portal se cierra. ¡Escribe el orden correcto!</p>
+                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #DB2777; border-radius:18px; padding:18px 20px;">
+                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Respuesta descubierta:</p>
+                    <div style="font-size:24px; font-weight:900; line-height:1.6;">
+                        507 < 570 < 705 < 750<br>
+                        <span style="color:#db2777;">¡El portal se abre!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 18: Resumen -->
+        <div class="sl">
+        <div class="head-title">Resumen</div>
+        <div class="summary-list">
+            <div class="stp summary-item"><b>🐊 Símbolos:</b> < (menor que), > (mayor que), = (igual a). El símbolo se come al más grande.</div>
+            <div class="stp summary-item"><b>📊 Estrategia:</b> Comparar posición por posición: primero centenas, luego decenas, luego unidades.</div>
+            <div class="stp summary-item"><b>📏 Recta numérica:</b> Izquierda = menor, derecha = mayor. ¡Fijarse siempre en la escala!</div>
+            <div class="stp summary-item"><b>🎯 Números cercanos:</b> 679 está entre las decenas 670 y 680. 841 entre las centenas 800 y 900.</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 19: Cierre -->
+        <div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:38px; font-weight:800; line-height:1.45; max-width:780px;">¡Ya sabes comparar, ordenar y ubicar números en la recta!</p>
+            <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">📏</div>
+        </div>
+        </div>
+
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <span class="sc" id="sc">1 / 19</span>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="19" value="1" oninput="goToSlide(this.value)">
+        </div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>
+const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+function ui() {
+    S.forEach((s,i)=>{
+        s.classList.remove('on','pv','nx');
+        if(i===c) s.classList.add('on');
+        else if(i<c) s.classList.add('pv');
+        else s.classList.add('nx');
+    });
+    document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+    document.getElementById('sc').textContent=`${c+1} / ${T}`;
+    document.getElementById('pv').disabled=c===0;
+    document.getElementById('nx').disabled=c===T-1;
+    let sl = document.getElementById('slide-slider');
+    if(sl) { sl.max = T; sl.value = c + 1; }
+}
+function goToSlide(n) {
+    let val = parseInt(n) - 1;
+    if (val >= 0 && val < T) {
+        c = val;
+        ui();
+    }
+}
+function go(d) {
+    if(d>0) {
+        const hid = S[c].querySelectorAll('.stp:not(.shwn)');
+        if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+    } else {
+        const shw = S[c].querySelectorAll('.stp.shwn');
+        if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+    }
+    const n=c+d;
+    if(n>=0 && n<T) { c=n; ui(); }
+}
+document.addEventListener('keydown', e => {
+    if(e.key==='ArrowRight' || e.key===' ') go(1);
+    if(e.key==='ArrowLeft') go(-1);
+});
+function chkAns(btn, correct, exp) {
+    const wrap = btn.closest('.sl');
+    const buttons = btn.parentElement.querySelectorAll('.btn');
+    const msg = wrap.querySelector('.msg-area');
+    buttons.forEach(b => {
+        b.disabled = false;
+        b.style.background = 'var(--base)';
+        b.style.transform = 'scale(1)';
+    });
+    if (correct) {
+        btn.style.background = '#047857';
+        btn.style.transform = 'scale(1.06)';
+        msg.textContent = `¡Muy bien! ${exp}`;
+        msg.style.color = '#047857';
+    } else {
+        btn.style.background = '#b91c1c';
+        msg.textContent = 'Compara primero las centenas. ¡Inténtalo de nuevo!';
+        msg.style.color = '#b91c1c';
+    }
+}
+ui();
+</script>
+</body>
+</html>

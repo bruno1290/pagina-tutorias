@@ -2652,15 +2652,279 @@
         ];
 
         const TOPICS = [
-            { id: 'suma_resta', cat: 'num', topic: 'suma_resta', title: 'Suma y Resta', desc: 'Práctica de adición y sustracción, con estrategias y problemas.', symbol: '➕' },
-            { id: 'multiplicacion', cat: 'mul', topic: 'multiplicacion', title: 'Multiplicación', desc: 'Tablas, sumas reiteradas, arreglos y algoritmos.', symbol: '✖️' },
-            { id: 'division', cat: 'div', topic: 'division', title: 'División', desc: 'Reparto, agrupación equitativa y estrategias de cálculo.', symbol: '➗' },
-            { id: 'fracciones', cat: 'frac', topic: 'fracciones', title: 'Fracciones', desc: 'Representación, equivalencias y operaciones matemáticas.', symbol: '¼' },
-            { id: 'geometria', cat: 'geo', topic: 'geometria', title: 'Geometría', desc: 'Formas, ángulos, perímetros y cuerpos geométricos.', symbol: '📐' },
-            { id: 'sesiones_mentoreo_extra', cat: 'extra', topic: 'sesiones_mentoreo_extra', title: 'Sesiones de Mentoreo Extra', desc: 'Sesiones de mentoreo extra.', symbol: '📝' },
+            // 3° Básico
+            { id: 'numeros_3', level: 3, cat: 'num', topic: 'numeros_3', title: 'Números', desc: 'Conteo, valor posicional, orden y comparación.', symbol: '🔢' },
+            { id: 'suma_3', level: 3, cat: 'num', topic: 'suma_3', title: 'Suma', desc: 'Práctica de adición con estrategias y problemas.', symbol: '➕' },
+            { id: 'resta_3', level: 3, cat: 'num', topic: 'resta_3', title: 'Resta', desc: 'Sustracción con sentido, cálculo y resolución de problemas.', symbol: '➖' },
+            { id: 'multiplicacion_3', level: 3, cat: 'mul', topic: 'multiplicacion_3', title: 'Multiplicación', desc: 'Concepto de multiplicación, sumas reiteradas y tablas.', symbol: '✖️' },
+            { id: 'division_3', level: 3, cat: 'div', topic: 'division_3', title: 'División', desc: 'Reparto equitativo, agrupación y relación con la multiplicación.', symbol: '➗' },
+            { id: 'problemas_extras_3', level: 3, cat: 'extra', topic: 'problemas_extras_3', title: 'Problemas Extras', desc: 'Desafíos matemáticos y resolución de problemas.', symbol: '💡' },
+            { id: 'sesiones_mentoreo_extra_3', level: 3, cat: 'extra', topic: 'sesiones_mentoreo_extra_3', title: 'Sesiones de Mentoreo Extra', desc: 'Sesiones de mentoreo extra.', symbol: '📝' },
+
+            // 4° Básico
+            { id: 'suma_resta', level: 4, cat: 'num', topic: 'suma_resta', title: 'Suma y Resta', desc: 'Práctica de adición y sustracción, con estrategias y problemas.', symbol: '➕' },
+            { id: 'multiplicacion', level: 4, cat: 'mul', topic: 'multiplicacion', title: 'Multiplicación', desc: 'Tablas, sumas reiteradas, arreglos y algoritmos.', symbol: '✖️' },
+            { id: 'division', level: 4, cat: 'div', topic: 'division', title: 'División', desc: 'Reparto, agrupación equitativa y estrategias de cálculo.', symbol: '➗' },
+            { id: 'fracciones', level: 4, cat: 'frac', topic: 'fracciones', title: 'Fracciones', desc: 'Representación, equivalencias y operaciones matemáticas.', symbol: '¼' },
+            { id: 'geometria', level: 4, cat: 'geo', topic: 'geometria', title: 'Geometría', desc: 'Formas, ángulos, perímetros y cuerpos geométricos.', symbol: '📐' },
+            { id: 'sesiones_mentoreo_extra', level: 4, cat: 'extra', topic: 'sesiones_mentoreo_extra', title: 'Sesiones de Mentoreo Extra', desc: 'Sesiones de mentoreo extra.', symbol: '📝' },
         ];
 
         const MODULES = [
+            // ── NÚMEROS (3° BÁSICO) ────────────────────────────────────────
+            {
+                id: 201, serial: 1, cat: 'num', topic: 'numeros_3', title: 'Lectura y Construcción', dur: '60 min',
+                objectives: ['Leer y pronunciar números hasta 999', 'Representar con bloques multibase y monedas', 'Identificar centenas, decenas y unidades'],
+                htmlSlide: 'clases/tercero-basico/numeros/numeros-1.html',
+                mentoreo: { pdf: '', title: '' },
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Lectura y Construcción',
+                    questions: [
+                        { emoji: '🗣️', q: '¿Cómo se lee correctamente el número 507?', opts: ['Cincuenta y siete', 'Quinientos siete', 'Cincocientos siete', 'Quinientos setenta'], ok: 1, exp: '507 tiene 5 centenas, 0 decenas y 7 unidades: quinientos siete ✓' },
+                        { emoji: '🟢', q: '¿Cuántas placas de centena necesitas para representar el número 400?', opts: ['4 placas', '40 placas', '400 placas', '14 placas'], ok: 0, exp: 'Cada placa vale 100. Para 400 necesitas 4 placas ✓' },
+                        { emoji: '⚠️', q: 'Un compañero lee 305 como "treinta y cinco". ¿Qué error cometió?', opts: ['Confundió centenas con unidades', 'Ignoró la centena y el cero intermedio', 'Sumó los dígitos', 'Leyó al revés'], ok: 1, exp: '305 tiene un 3 en la centena y un cero en la decena. Se lee "trescientos cinco", no "treinta y cinco" ✓' },
+                        { emoji: '💰', q: 'Si tienes 6 monedas de $100, 0 de $10 y 8 de $1, ¿cuánto dinero tienes?', opts: ['$68', '$680', '$608', '$806'], ok: 2, exp: '6 centenas + 0 decenas + 8 unidades = 608 ✓' },
+                        { emoji: '📖', q: '¿Cuál de estos números se pronuncia "novecientos"?', opts: ['90', '190', '900', '9000'], ok: 2, exp: 'Novecientos = 900. Es una centena pura ✓' },
+                    ]
+                }
+            },
+            {
+                id: 202, serial: 2, cat: 'num', topic: 'numeros_3', title: 'Valor Posicional y Descomposición', dur: '60 min',
+                objectives: ['Distinguir posición de valor posicional', 'Descomponer y componer números aditivamente', 'Comprender equivalencias entre posiciones'],
+                htmlSlide: 'clases/tercero-basico/numeros/numeros-2.html',
+                mentoreo: { pdf: '', title: '' },
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Valor Posicional',
+                    questions: [
+                        { emoji: '🔍', q: 'En el número 648, ¿cuál es el valor posicional del dígito 4?', opts: ['4', '40', '400', '4000'], ok: 1, exp: 'El 4 está en la posición de las decenas, por eso vale 40 ✓' },
+                        { emoji: '🧩', q: '¿Cuál es la descomposición correcta de 305?', opts: ['30 + 5', '300 + 5', '300 + 50', '35'], ok: 1, exp: '305 = 300 + 0 + 5. El cero intermedio no aporta valor pero ocupa la posición ✓' },
+                        { emoji: '🔢', q: 'Si compongo 8 C + 4 U (sin decenas), ¿qué número obtengo?', opts: ['84', '804', '840', '408'], ok: 1, exp: '8 centenas = 800, 0 decenas = 0, 4 unidades = 4. Total: 804 ✓' },
+                        { emoji: '🔄', q: '¿Cuántas unidades hay en 6 decenas?', opts: ['6', '16', '60', '600'], ok: 2, exp: '1 decena = 10 unidades. Entonces 6 decenas = 60 unidades ✓' },
+                        { emoji: '🐷', q: 'Martina guardó 5 billetes de $100 y 3 monedas de $1 en su alcancía. ¿Cuánto tiene?', opts: ['$53', '$530', '$503', '$350'], ok: 2, exp: '5 centenas + 0 decenas + 3 unidades = $503 ✓' },
+                    ]
+                }
+            },
+            {
+                id: 203, serial: 3, cat: 'num', topic: 'numeros_3', title: 'Comparación, Orden y Recta Numérica', dur: '60 min',
+                objectives: ['Comparar números usando tabla posicional', 'Ordenar números de menor a mayor y viceversa', 'Ubicar números en la recta numérica'],
+                htmlSlide: 'clases/tercero-basico/numeros/numeros-3.html',
+                mentoreo: { pdf: '', title: '' },
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Comparación y Orden',
+                    questions: [
+                        { emoji: '🐊', q: '¿Qué símbolo va entre 438 y 483?', opts: ['>', '<', '=', '≠'], ok: 1, exp: '438 < 483 porque al comparar decenas: 3 < 8 ✓' },
+                        { emoji: '📊', q: 'Con los dígitos 6, 2 y 9, ¿cuál es el mayor número de 3 cifras que se puede formar?', opts: ['269', '629', '926', '962'], ok: 3, exp: 'Para el mayor: dígitos de mayor a menor → 962 ✓' },
+                        { emoji: '📏', q: 'En una recta numérica, ¿qué número está más a la derecha?', opts: ['340', '304', '430', '403'], ok: 2, exp: 'En la recta, más a la derecha = mayor. 430 es el más grande ✓' },
+                        { emoji: '🎯', q: '¿Cuáles son las decenas más cercanas al número 567?', opts: ['500 y 600', '560 y 570', '550 y 600', '56 y 57'], ok: 1, exp: '567 está entre la decena 560 y la decena 570 ✓' },
+                        { emoji: '♻️', q: 'Tres cursos juntaron latas: A=315, B=351, C=135. ¿Cuál juntó más?', opts: ['Curso A', 'Curso B', 'Curso C', 'Juntaron igual'], ok: 1, exp: 'Comparando: 135 < 315 < 351. El curso B juntó más ✓' },
+                    ]
+                }
+            },
+            // ── SUMA (3° BÁSICO) ───────────────────────────────────────────
+            {
+                id: 204, serial: 1, cat: 'num', topic: 'suma_3', title: 'Sentido y Descomposición', dur: '60 min',
+                objectives: ['Reconocer vocabulario asociado a la suma (juntar, agregar)', 'Sumar usando algoritmo vertical sin reserva', 'Comprender la suma como juntar centenas, decenas y unidades'],
+                htmlSlide: 'clases/tercero-basico/suma/suma-1.html',
+                mentoreo: { pdf: '', title: '' },
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Suma sin reserva',
+                    questions: [
+                        { emoji: '🗣️', q: '¿Qué palabra clave NO nos indica que debemos sumar en un problema?', opts: ['Juntar', 'Perder', 'Agregar', 'Regalar'], ok: 1, exp: 'Perder significa que nos quedamos con menos, por lo que indica RESTAR, no sumar ✓' },
+                        { emoji: '🧱', q: 'Si sumamos 300 + 400 usando descomposición, ¿qué estamos sumando en realidad?', opts: ['3 unidades + 4 unidades', '3 decenas + 4 decenas', '3 centenas + 4 centenas', '30 centenas + 40 centenas'], ok: 2, exp: '300 son 3 centenas, y 400 son 4 centenas. Juntamos las centenas ✓' },
+                        { emoji: '⬇️', q: 'Al resolver una suma en vertical, ¿por dónde debes empezar SIEMPRE?', opts: ['Por las centenas', 'Por el número más grande', 'Por la izquierda', 'Por las unidades (derecha)'], ok: 3, exp: 'Siempre se comienza a sumar por la columna de las unidades ✓' },
+                        { emoji: '🔢', q: '¿Cuánto es 423 + 245?', opts: ['668', '678', '665', '268'], ok: 0, exp: 'Unidades: 3+5=8. Decenas: 2+4=6. Centenas: 4+2=6. Total: 668 ✓' },
+                        { emoji: '🎈', q: 'María compró globos por $215 y una guirnalda por $142. ¿Cuánto dinero gastó en total?', opts: ['$367', '$357', '$257', '$127'], ok: 1, exp: '215 + 142 = 357. Gastó $357 en total ✓' },
+                    ]
+                }
+            },
+            {
+                id: 205, serial: 2, cat: 'num', topic: 'suma_3', title: 'Algoritmo con Reserva', dur: '60 min',
+                objectives: ['Comprender la reserva como canje o reagrupación', 'Aplicar algoritmo vertical con reserva simple', 'Aplicar algoritmo vertical con doble reserva'],
+                htmlSlide: 'clases/tercero-basico/suma/suma-2.html',
+                mentoreo: { pdf: '', title: '' },
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Suma con reserva',
+                    questions: [
+                        { emoji: '🎒', q: 'Al sumar 368 + 215, en las unidades tenemos 8+5=13. ¿Qué hacemos con ese 13?', opts: ['Escribimos 13 en las unidades', 'Escribimos 3 en unidades y guardamos 1 centena', 'Escribimos 3 en unidades y guardamos 1 decena', 'No se puede sumar'], ok: 2, exp: 'El 13 equivale a 3 unidades sueltas y 1 decena nueva que se va de reserva ✓' },
+                        { emoji: '🧩', q: '¿Cuántas decenas sueltas forman UNA centena?', opts: ['10 decenas', '100 decenas', '5 decenas', '1 decena'], ok: 0, exp: 'Si juntas 10 barras (decenas), formas 1 placa (centena) ✓' },
+                        { emoji: '⚠️', q: '¿Cuál es el error más común al resolver sumas con reserva?', opts: ['Empezar por las unidades', 'Olvidar sumar la reserva que guardaste', 'Escribir el número bien', 'Sumar bien'], ok: 1, exp: 'El error más común es guardar la reserva arriba y luego olvidar sumarla ✓' },
+                        { emoji: '➕', q: '¿Cuál es el resultado de 587 + 245?', opts: ['722', '832', '822', '732'], ok: 1, exp: 'Hay doble reserva (en unidades y decenas). El total correcto es 832 ✓' },
+                        { emoji: '🧑‍🌾', q: 'En un huerto hay 256 manzanos y 178 perales. ¿Cuántos árboles hay en total?', opts: ['434', '324', '424', '334'], ok: 0, exp: '256 + 178 = 434 árboles en total ✓' },
+                    ]
+                }
+            },
+            {
+                id: 206, serial: 3, cat: 'num', topic: 'suma_3', title: 'Propiedades y Cálculo Mental', dur: '60 min',
+                objectives: ['Conocer y usar la propiedad conmutativa', 'Agrupar sumandos (propiedad asociativa) para facilitar el cálculo', 'Descomponer para sumar mentalmente más rápido'],
+                htmlSlide: 'clases/tercero-basico/suma/suma-3.html',
+                mentoreo: { pdf: '', title: '' },
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Propiedades de la suma',
+                    questions: [
+                        { emoji: '🔄', q: 'La propiedad conmutativa dice que "el orden de los sumandos no altera la suma". ¿Qué ejemplo lo demuestra?', opts: ['12 + 5 = 12 + 5', '12 + 5 = 17', '12 + 5 = 5 + 12', '12 - 5 = 7'], ok: 2, exp: '12 + 5 da el mismo resultado que 5 + 12. Podemos dar vuelta los números ✓' },
+                        { emoji: '🧠', q: 'Para calcular mentalmente 56 + 13, ¿cuál es la mejor técnica de descomposición?', opts: ['Sumar 5 + 1 y 6 + 3', '56 + 10 = 66, y 66 + 3 = 69', 'Contar con los dedos de 1 en 1', 'Usar calculadora'], ok: 1, exp: 'Desarmar el 13 en 10 + 3 facilita hacer dos sumas mentales rápidas ✓' },
+                        { emoji: '🤝', q: 'Si tienes que sumar 120 + 80 + 354, ¿qué par conviene agrupar y sumar primero?', opts: ['80 + 354', '120 + 354', '120 + 80', 'Da lo mismo porque todos son difíciles'], ok: 2, exp: '120 + 80 da 200 exacto. Luego 200 + 354 = 554 es muy fácil ✓' },
+                        { emoji: '✍️', q: 'Si te dan la operación 500 + 200, ¿qué problema de la vida real representa?', opts: ['Tenía $500 y gasté $200', 'Tengo 500 manzanas y regalé 200', 'Ahorré $500 ayer y $200 hoy', 'Me faltan 200 para llegar a 500'], ok: 2, exp: '"Ahorrar" implica agregar o juntar, por lo tanto modela una suma ✓' },
+                        { emoji: '⚡', q: '¿Cuánto es 45 + 19 mentalmente?', opts: ['64', '65', '54', '55'], ok: 0, exp: 'Piensa en 45 + 20 = 65, y luego le quitas 1 (porque era 19). Total: 64 ✓' },
+                    ]
+                }
+            },
+            // ── RESTA (3° BÁSICO) ──────────────────────────────────────────
+            {
+                id: 207, serial: 1, cat: 'num', topic: 'resta_3', title: 'Sentido y Descomposición', dur: '60 min',
+                objectives: ['Reconocer vocabulario asociado a la resta (quitar, perder, faltar)', 'Restar usando algoritmo vertical sin canje', 'Comprender que el minuendo debe ser mayor o igual al sustraendo'],
+                htmlSlide: 'clases/tercero-basico/resta/resta-1.html',
+                mentoreo: { pdf: '', title: '' },
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Resta sin canje',
+                    questions: [
+                        { emoji: '📉', q: '¿Qué palabra clave nos indica que debemos restar en un problema?', opts: ['Ahorrar', 'Juntar', 'Gastar', 'Recibir'], ok: 2, exp: 'Gastar significa que nuestro dinero disminuye, por lo que debemos restar ✓' },
+                        { emoji: '⚠️', q: 'En la resta, ¿qué regla sobre el orden es fundamental?', opts: ['Da igual el orden', 'El número menor siempre va arriba', 'El número mayor va abajo', 'El número mayor (o igual) va arriba'], ok: 3, exp: 'El minuendo (arriba) debe ser mayor o igual al sustraendo (abajo) para poder quitarle ✓' },
+                        { emoji: '⬇️', q: '¿Cuál es el resultado correcto de 586 − 243?', opts: ['343', '349', '829', '353'], ok: 0, exp: 'U: 6-3=3, D: 8-4=4, C: 5-2=3. Total 343 ✓' },
+                        { emoji: '🍎', q: 'Un vendedor tenía 485 manzanas y vendió 152. ¿Cuántas le quedaron?', opts: ['637', '333', '323', '233'], ok: 1, exp: '485 − 152 = 333 manzanas ✓' },
+                        { emoji: '📖', q: 'Para llenar un álbum de 350 láminas, a Juan le falta pegar las últimas 120. ¿Cuántas láminas ya ha pegado?', opts: ['230', '470', '130', '220'], ok: 0, exp: '350 − 120 = 230 láminas pegadas ✓' },
+                    ]
+                }
+            },
+            {
+                id: 208, serial: 2, cat: 'num', topic: 'resta_3', title: 'Algoritmo con Canje', dur: '60 min',
+                objectives: ['Comprender la necesidad de canje cuando el dígito superior es menor', 'Aplicar canje de decenas a unidades y de centenas a decenas', 'Resolver algoritmo vertical con doble canje'],
+                htmlSlide: 'clases/tercero-basico/resta/resta-2.html',
+                mentoreo: { pdf: '', title: '' },
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Resta con canje',
+                    questions: [
+                        { emoji: '🤝', q: 'En 352 − 128, a 2 no le podemos quitar 8. ¿Qué debemos hacer?', opts: ['Hacer 8 − 2 = 6', 'Poner 0 abajo', 'Pedir 1 decena al 5, transformando el 2 en 12', 'Pedir 1 centena al 3'], ok: 2, exp: 'Pedimos al vecino de las decenas. El 5 queda en 4, y el 2 se convierte en 12 ✓' },
+                        { emoji: '✍️', q: 'Si pedimos una decena al vecino que tiene 7, ¿en cuánto queda ese vecino?', opts: ['En 8', 'En 6', 'Se queda igual', 'En 0'], ok: 1, exp: 'Al prestar 1, el 7 se reduce a 6 ✓' },
+                        { emoji: '➖', q: '¿Cuál es el resultado de 645 − 278?', opts: ['433', '377', '367', '423'], ok: 2, exp: 'Doble canje. 645 − 278 = 367 ✓' },
+                        { emoji: '🛍️', q: 'Si pago algo de $345 con un billete de $500, ¿cuánto es mi vuelto?', opts: ['$255', '$165', '$155', '$845'], ok: 2, exp: '500 − 345 = 155. Cuidado con los canjes en los ceros ✓' },
+                        { emoji: '❌', q: '¿Qué es incorrecto en esta resta: 432 − 115 = 327?', opts: ['Olvidó restar 1 a la decena que prestó', 'Restó mal las unidades', 'Restó mal las centenas', 'Está correcta'], ok: 0, exp: 'El 3 debió quedar en 2. 2-1 es 1, no 2. Lo correcto es 317 ✓' },
+                    ]
+                }
+            },
+            {
+                id: 209, serial: 3, cat: 'num', topic: 'resta_3', title: 'Relación con la Suma', dur: '60 min',
+                objectives: ['Comprender que suma y resta son operaciones inversas', 'Comprobar el resultado de una resta usando suma', 'Descubrir el número incógnito en ecuaciones simples'],
+                htmlSlide: 'clases/tercero-basico/resta/resta-3.html',
+                mentoreo: { pdf: '', title: '' },
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Relación suma/resta',
+                    questions: [
+                        { emoji: '🏠', q: '¿Cuál operación NO pertenece a la familia de los números 15, 20 y 35?', opts: ['15 + 20 = 35', '35 − 20 = 15', '20 + 15 = 35', '35 + 15 = 50'], ok: 3, exp: '35 + 15 = 50 introduce un número nuevo (50) que no es de la familia ✓' },
+                        { emoji: '✅', q: 'Resolviste 540 − 120 = 420. ¿Cómo compruebas que está correcto?', opts: ['540 + 120', '420 + 120', '540 − 420', '420 − 120'], ok: 1, exp: 'Sumas el resultado (420) con lo que restaste (120). Si da 540, está bien ✓' },
+                        { emoji: '🔎', q: 'En la ecuación ☐ + 45 = 100, ¿qué operación debes hacer para encontrar el número escondido?', opts: ['100 + 45', '100 − 45', '45 − 100', 'No se puede saber'], ok: 1, exp: 'Usamos la operación inversa: 100 − 45 = 55 ✓' },
+                        { emoji: '💰', q: 'Ahorré dinero, luego mi tía me dio $200 y ahora tengo $500. ¿Cuánto tenía al principio?', opts: ['$700', '$300', '$250', '$200'], ok: 1, exp: '☐ + 200 = 500. Haciendo 500 − 200, sabemos que tenías $300 ✓' },
+                        { emoji: '🧩', q: 'En la ecuación ☐ − 30 = 70, el número escondido es:', opts: ['40', '100', '50', '30'], ok: 1, exp: 'La operación inicial era resta, usamos suma: 70 + 30 = 100 ✓' },
+                    ]
+                }
+            },
+            // ── MULTIPLICACIÓN 3° BÁSICO ────────────────────────────────────
+            {
+                id: 210, serial: 1, cat: 'mul', topic: 'multiplicacion_3', title: 'Sentido y Significados', dur: '60 min',
+                objectives: ['Comprender la multiplicación como suma iterada', 'Representar la multiplicación con arreglos rectangulares', 'Memorizar tablas del 2, 5 y 10'],
+                htmlSlide: 'clases/tercero-basico/multiplicacion/multiplicacion-1.html',
+                mentoreo: { pdf: '', title: '' },
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Significados de la Multiplicación',
+                    questions: [
+                        { emoji: '🎈', q: '¿Cuál es la suma iterada correcta para 4 × 5?', opts: ['4 + 5 = 9', '4 + 4 + 4 + 4 = 16', '5 + 5 + 5 + 5 = 20', '4 + 5 + 4 + 5 = 18'], ok: 2, exp: '4 veces 5 es lo mismo que 5 + 5 + 5 + 5 = 20 ✓' },
+                        { emoji: '📚', q: 'Hay 3 estantes con 8 libros cada uno. ¿Qué multiplicación lo representa?', opts: ['3 × 3', '8 × 8', '3 × 8', '3 + 8'], ok: 2, exp: 'Son 3 grupos de 8, por lo tanto es 3 × 8 ✓' },
+                        { emoji: '🔄', q: 'Si sabemos que 2 × 7 = 14, por la propiedad conmutativa también sabemos que:', opts: ['7 × 7 = 49', '2 × 2 = 4', '7 × 2 = 14', '14 × 1 = 14'], ok: 2, exp: 'El orden de los factores no altera el producto, 2 × 7 es igual a 7 × 2 ✓' },
+                        { emoji: '🖐️', q: '¿En qué números terminan todos los resultados de la tabla del 5?', opts: ['En 0 o 2', 'En 0 o 5', 'En 5 o 10', 'En cualquier número'], ok: 1, exp: 'Al contar de 5 en 5, siempre terminamos en 0 o en 5 (5, 10, 15, 20...) ✓' },
+                        { emoji: '🔟', q: '¿Cuánto es 6 × 10?', opts: ['16', '60', '106', '600'], ok: 1, exp: 'Para multiplicar por 10, simplemente agregamos un cero al número. 6 unidades son 6 decenas = 60 ✓' }
+                    ]
+                }
+            },
+            {
+                id: 211, serial: 2, cat: 'mul', topic: 'multiplicacion_3', title: 'Tablas con Estrategias', dur: '60 min',
+                objectives: ['Aplicar la propiedad distributiva para construir tablas', 'Usar la estrategia del doble del doble para multiplicar por 4', 'Utilizar la técnica de los dedos para la tabla del 9'],
+                htmlSlide: 'clases/tercero-basico/multiplicacion/multiplicacion-2.html',
+                mentoreo: { pdf: '', title: '' },
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Estrategias de Multiplicación',
+                    questions: [
+                        { emoji: '🧩', q: 'Para calcular 6 × 7 usando la distributiva, puedo descomponerlo como:', opts: ['6 × 5 + 6 × 2', '6 × 4 + 6 × 4', '7 × 3 + 7 × 3', '6 × 6 + 1'], ok: 0, exp: 'Descomponemos el 7 en 5 y 2. Así multiplicamos 6×5 y 6×2 ✓' },
+                        { emoji: '🔄', q: 'Si quiero multiplicar 4 × 8 usando "doble del doble", ¿qué debo hacer?', opts: ['El doble de 4, dos veces', 'El doble de 8, dos veces', 'Sumar 4 + 8 y duplicarlo', 'Multiplicar 8 × 8'], ok: 1, exp: 'El doble de 8 es 16, y el doble de 16 es 32. Así hacemos 4 × 8 ✓' },
+                        { emoji: '🖐️', q: 'Al usar el truco de los dedos para la tabla del 9 (ej: 9 × 4), bajamos el dedo 4. ¿Qué significan los dedos a la izquierda del que bajamos?', opts: ['Las centenas', 'Las decenas', 'Las unidades', 'El resto'], ok: 1, exp: 'Los dedos a la izquierda son las decenas, y a la derecha las unidades ✓' },
+                        { emoji: '💡', q: '¿Cuál es el resultado de 3 × 9?', opts: ['12', '27', '30', '21'], ok: 1, exp: 'Con los dedos o sabiendo que 10×3 - 3 = 30 - 3 = 27 ✓' },
+                        { emoji: '❌', q: '¿Por qué está mal este cálculo: 2 × 15 = (2 + 10) + (2 + 5)?', opts: ['Debería ser multiplicación: (2 × 10) + (2 × 5)', 'No se puede separar el 15', 'El resultado es 30 de todos modos', 'Porque falta sumar otro 2'], ok: 0, exp: 'Al usar la distributiva hay que multiplicar ambos números, no sumarlos ✓' }
+                    ]
+                }
+            },
+            {
+                id: 212, serial: 3, cat: 'mul', topic: 'multiplicacion_3', title: 'Problemas Multiplicativos', dur: '60 min',
+                objectives: ['Aplicar el Modelo de 4 Pasos en la resolución de problemas', 'Identificar los diferentes tipos de problemas multiplicativos', 'Crear problemas inversos a partir de una multiplicación'],
+                htmlSlide: 'clases/tercero-basico/multiplicacion/multiplicacion-3.html',
+                mentoreo: { pdf: '', title: '' },
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Resolución de Problemas',
+                    questions: [
+                        { emoji: '📋', q: 'Según el Modelo de 4 Pasos, ¿qué se debe hacer después de Comprender el problema?', opts: ['Resolver', 'Planificar', 'Comprobar', 'Adivinar'], ok: 1, exp: 'El modelo es: Comprender, Planificar, Resolver, Comprobar ✓' },
+                        { emoji: '🍎', q: 'En el almacén hay 6 cajas con 5 manzanas cada una. ¿Qué tipo de problema es?', opts: ['Arreglo rectangular', 'Correspondencia múltiple', 'Grupos iguales (iteración)', 'Resta'], ok: 2, exp: 'Son varios grupos (las cajas) con la misma cantidad (5 manzanas), por eso son Grupos Iguales ✓' },
+                        { emoji: '🚴', q: 'En un paseo hay 8 bicicletas. Si cada una tiene 2 ruedas, ¿cuántas ruedas hay en total?', opts: ['10', '16', '12', '4'], ok: 1, exp: '8 bicicletas × 2 ruedas cada una = 16 ruedas ✓' },
+                        { emoji: '❌', q: 'Tengo 3 cajas con 5 dulces y 1 caja con 4 dulces. ¿Puedo resolver el total haciendo solo 4 × 5?', opts: ['Sí, porque en total son 4 cajas', 'No, porque no todos los grupos son iguales', 'Sí, pero luego hay que restar 1', 'No, porque el resultado da 20'], ok: 1, exp: 'La multiplicación requiere que TODOS los grupos tengan exactamente la misma cantidad ✓' },
+                        { emoji: '🤔', q: '¿Qué problema puede representar la operación 4 × 6 = 24?', opts: ['Tengo 4 lápices y me regalan 6', 'Reparto 24 lápices entre 4 niños', 'Tengo 4 estuches con 6 lápices cada uno', 'Tengo 6 estuches y pierdo 4'], ok: 2, exp: '4 estuches de 6 lápices cada uno es una suma iterada que se resuelve con 4 × 6 = 24 ✓' }
+                    ]
+                }
+            },
+            // ── DIVISION (3° Basico) ────────────────────────────────────────────────
+            {
+                id: 220, serial: 1, cat: 'div', topic: 'division_3', title: 'Sentido y Significados', dur: '60 min',
+                objectives: ['Comprender la división como sustracción sucesiva', 'Distinguir entre reparto equitativo y agrupación', 'Resolver divisiones exactas simples'],
+                htmlSlide: 'clases/tercero-basico/division/division-1.html',
+                mentoreo: { pdf: '', title: '' },
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Reparto y Agrupación',
+                    questions: [
+                        { emoji: '💡', q: '¿Cuál de estas palabras clave significa DIVIDIR?', opts: ['Añadir', 'Repartir en partes iguales', 'Quitar a uno', 'Juntar'], ok: 1, exp: 'Repartir, distribuir y hacer partes iguales son palabras clave para la división ✓' },
+                        { emoji: '🍫', q: 'Hay 15 chocolates y 3 niños. Si se reparten equitativamente, ¿cuántos recibe cada niño?', opts: ['3', '4', '5', '6'], ok: 2, exp: '15 chocolates repartidos en 3 niños = 5 chocolates por niño ✓' },
+                        { emoji: '❌', q: 'Para calcular 12 ÷ 4 con sustracción sucesiva, debo restar 4 hasta llegar a 0. ¿Cuántas veces restaré 4?', opts: ['2 veces', '3 veces', '4 veces', '12 veces'], ok: 1, exp: '12-4=8, 8-4=4, 4-4=0 (Restamos 3 veces, así que 12÷4=3) ✓' }
+                    ]
+                }
+            },
+            {
+                id: 221, serial: 2, cat: 'div', topic: 'division_3', title: 'Operación Inversa', dur: '60 min',
+                objectives: ['Usar la multiplicación como atajo para dividir', 'Comprender las familias de operaciones', 'Comprobar divisiones usando multiplicación'],
+                htmlSlide: 'clases/tercero-basico/division/division-2.html',
+                mentoreo: { pdf: '', title: '' },
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Operación Inversa',
+                    questions: [
+                        { emoji: '🧠', q: 'Para calcular 40 ÷ 8, ¿qué pregunta debes hacerte?', opts: ['¿Qué número sumado con 8 da 40?', '¿Qué número multiplicado por 8 da 40?', '¿Cuánto le falta a 8 para ser 40?', '¿Qué número restado de 40 da 8?'], ok: 1, exp: 'Pensar en la multiplicación inversa es el mejor atajo para dividir ✓' },
+                        { emoji: '✖️', q: '¿Qué operación sirve para comprobar que 35 ÷ 5 = 7 está correcto?', opts: ['35 + 5 = 40', '35 - 5 = 30', '5 × 7 = 35', '7 + 5 = 12'], ok: 2, exp: 'Multiplicamos el cociente por el divisor: 7 × 5 = 35 ✓' },
+                        { emoji: '👨‍👩‍👧', q: '¿Qué operaciones forman la familia del 3, 4 y 12?', opts: ['3+4=7, 4+3=7, 7-3=4', '3×4=12, 4×3=12, 12÷4=3, 12÷3=4', '3×4=12, 12+4=16, 16÷4=4', '12÷3=4 y 12+3=15'], ok: 1, exp: 'Una familia multiplicativa tiene 2 multiplicaciones y 2 divisiones con esos 3 números ✓' }
+                    ]
+                }
+            },
+            {
+                id: 222, serial: 3, cat: 'div', topic: 'division_3', title: 'Problemas y Decisiones', dur: '60 min',
+                objectives: ['Decidir si un problema requiere multiplicación o división', 'Aplicar el modelo de 4 pasos', 'Inventar problemas a partir de una operación'],
+                htmlSlide: 'clases/tercero-basico/division/division-3.html',
+                mentoreo: { pdf: '', title: '' },
+                activities: [],
+                ticket: {
+                    title: 'Ticket de salida – Problemas y Decisiones',
+                    questions: [
+                        { emoji: '🤔', q: '¿Cuándo debes usar la MULTIPLICACIÓN?', opts: ['Cuando quieres separar un grupo grande', 'Cuando conoces las partes iguales y buscas el Total Gigante', 'Cuando tienes el total y sabes cuántos grupos hay', 'Para comprobar una suma'], ok: 1, exp: 'Cuando juntas varios grupos iguales, multiplicas para encontrar el total ✓' },
+                        { emoji: '🍓', q: 'Tengo 32 fresas y las guardo en potes poniendo 8 fresas en cada uno. ¿Qué operación usaré para saber cuántos potes necesito?', opts: ['Suma: 32 + 8', 'Resta: 32 - 8', 'Multiplicación: 32 × 8', 'División: 32 ÷ 8'], ok: 3, exp: 'Tengo el total (32) y sé cuántos van por grupo (8). Busco la cantidad de grupos, entonces DIVIDO ✓' },
+                        { emoji: '✏️', q: '¿Cuál problema sirve para 18 ÷ 3 = 6?', opts: ['Tengo 18 lápices y mi amigo 3. ¿Cuántos tenemos juntos?', 'Tengo 18 lápices y los reparto equitativamente en 3 vasos. ¿Cuántos hay en cada vaso?', 'Tengo 3 estuches con 18 lápices cada uno. ¿Cuántos hay en total?', 'Tengo 18 y pierdo 3. ¿Cuántos me quedan?'], ok: 1, exp: 'Repartir un total (18) en grupos (3) es una división ✓' }
+                    ]
+                }
+            },
             // ── SUMA Y RESTA ────────────────────────────────────────────────
             {
                 id: 7, serial: 1, cat: 'num', topic: 'suma_resta', title: 'Suma', dur: '45 min',
@@ -2946,6 +3210,55 @@
                 mentoreo: { pdf: 'https://drive.google.com/file/d/1bcim7aItvia4hP8VImIKGxJ3Ts2sV553/preview', title: 'Sesión: Talento' },
                 activities: [],
                 ticket: { title: 'Ticket de salida – Talento', questions: [] }
+            },
+            // ── SESIONES DE MENTOREO EXTRA (3° BÁSICO) ──────────────────────
+            {
+                id: 301, serial: 1, cat: 'extra', topic: 'sesiones_mentoreo_extra_3', title: 'Mi Futuro', dur: '45 min',
+                objectives: ['Explorar metas y sueños personales', 'Visualizar el camino a seguir'],
+                slideUrl: 'https://drive.google.com/file/d/1bAR-dd5PiweTiAWnvM3i-AceI1u0x7TE/view',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1bAR-dd5PiweTiAWnvM3i-AceI1u0x7TE/preview', title: 'Sesión: Mi Futuro' },
+                activities: [],
+                ticket: { title: 'Ticket de salida – Mi Futuro', questions: [] }
+            },
+            {
+                id: 302, serial: 2, cat: 'extra', topic: 'sesiones_mentoreo_extra_3', title: 'Mi Mejor Versión', dur: '45 min',
+                objectives: ['Identificar fortalezas personales', 'Trabajar en el crecimiento propio'],
+                slideUrl: 'https://drive.google.com/file/d/19kcFpZ7gMLGrzXxYga-DZSwmoknIYgK6/view',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/19kcFpZ7gMLGrzXxYga-DZSwmoknIYgK6/preview', title: 'Sesión: Mi Mejor Versión' },
+                activities: [],
+                ticket: { title: 'Ticket de salida – Mi Mejor Versión', questions: [] }
+            },
+            {
+                id: 303, serial: 3, cat: 'extra', topic: 'sesiones_mentoreo_extra_3', title: 'Mis Aventuras', dur: '45 min',
+                objectives: ['Compartir experiencias significativas', 'Valorar las vivencias del pasado'],
+                slideUrl: 'https://drive.google.com/file/d/189v9UW7EosORaUYI69w7SNaHMBut7sby/view',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/189v9UW7EosORaUYI69w7SNaHMBut7sby/preview', title: 'Sesión: Mis Aventuras' },
+                activities: [],
+                ticket: { title: 'Ticket de salida – Mis Aventuras', questions: [] }
+            },
+            {
+                id: 304, serial: 4, cat: 'extra', topic: 'sesiones_mentoreo_extra_3', title: 'Mis Personas Favoritas', dur: '45 min',
+                objectives: ['Reconocer los vínculos afectivos', 'Valorar la red de apoyo personal'],
+                slideUrl: 'https://drive.google.com/file/d/1LCyvFlaV0bE1h9gI8H-CANkcX1kFNQO-/view',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1LCyvFlaV0bE1h9gI8H-CANkcX1kFNQO-/preview', title: 'Sesión: Mis Personas Favoritas' },
+                activities: [],
+                ticket: { title: 'Ticket de salida – Mis Personas Favoritas', questions: [] }
+            },
+            {
+                id: 305, serial: 5, cat: 'extra', topic: 'sesiones_mentoreo_extra_3', title: 'Soñar', dur: '45 min',
+                objectives: ['Permitirse imaginar sin límites', 'Fomentar la creatividad y la esperanza'],
+                slideUrl: 'https://drive.google.com/file/d/10l_sPtdN2cTRExHyPFuVpD1ZQxRKP-HK/view',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/10l_sPtdN2cTRExHyPFuVpD1ZQxRKP-HK/preview', title: 'Sesión: Soñar' },
+                activities: [],
+                ticket: { title: 'Ticket de salida – Soñar', questions: [] }
+            },
+            {
+                id: 306, serial: 6, cat: 'extra', topic: 'sesiones_mentoreo_extra_3', title: 'Talento', dur: '45 min',
+                objectives: ['Descubrir habilidades innatas', 'Fomentar la confianza en uno mismo'],
+                slideUrl: 'https://drive.google.com/file/d/1bcim7aItvia4hP8VImIKGxJ3Ts2sV553/view',
+                mentoreo: { pdf: 'https://drive.google.com/file/d/1bcim7aItvia4hP8VImIKGxJ3Ts2sV553/preview', title: 'Sesión: Talento' },
+                activities: [],
+                ticket: { title: 'Ticket de salida – Talento', questions: [] }
             }
         ];
 
@@ -3084,9 +3397,12 @@
 
         function getModuleSymbol(module) {
             const t = `${module.title} ${module.objectives.join(' ')}`.toLowerCase();
+            if (t.includes('lectura') && t.includes('números')) return '🔢';
+            if (t.includes('valor posicional')) return '🧩';
+            if (t.includes('comparación') || t.includes('recta numérica')) return '📏';
             if (t.includes('fracciones')) return '¼';
             if (t.includes('decimales')) return '0,5';
-            if (t.includes('descomposición')) return '🔢';
+            if (t.includes('descomposición') && t.includes('números')) return '🔢';
             if (t.includes('multiplicación')) return '✖️';
             if (t.includes('división')) return '➗';
             if (t.includes('suma')) return '➕';
@@ -3138,17 +3454,19 @@
 
         function buildPrevGrid() {
             const grid = document.getElementById('prev-grid');
-            if (currentLevel === 3) {
+            const levelTopics = TOPICS.filter(t => t.level === currentLevel);
+
+            if (levelTopics.length === 0) {
                 grid.innerHTML = `
                 <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #fff; border-radius: 20px; border: 1px solid #e2e8f0; width: 100%;">
                     <div style="font-size: 52px; margin-bottom: 20px;">🏗️</div>
                     <h3 style="font-size: 30px; color: #1A3F6E; margin-bottom: 12px; font-family: var(--font-main);">¡Estamos trabajando para usted!</h3>
-                    <p style="color: #64748b; font-size: 16px; max-width: 450px; margin: 0 auto; line-height: 1.6;">Estamos preparando las mejores aventuras educativas para 3° Básico. ¡Vuelve pronto!</p>
+                    <p style="color: #64748b; font-size: 16px; max-width: 450px; margin: 0 auto; line-height: 1.6;">Estamos preparando las mejores aventuras educativas para este nivel. ¡Vuelve pronto!</p>
                 </div>`;
                 return;
             }
 
-            grid.innerHTML = TOPICS.map(t => {
+            grid.innerHTML = levelTopics.map(t => {
                 const cat = getCat(t.cat);
                 const accent = cat.color;
                 return `<button type="button" class="prev-card" style="--card-accent:${accent};" onclick="loadTopic('${t.id}')" aria-label="Abrir ${t.title}">
@@ -3180,22 +3498,32 @@
             document.getElementById('topic-desc').textContent = topic.desc;
 
             const mods = MODULES.filter(m => m.topic === topicId);
-            document.getElementById('topic-grid').innerHTML = mods.map(m => {
-                const cat = getCat(m.cat);
-                const symbol = getModuleSymbol(m);
-                const preview = getModulePreviewText(m);
-                const accent = getModuleAccent(m, cat);
-                return `<button type="button" class="prev-card" style="--card-accent:${accent};" onclick="loadMod(${m.id})" aria-label="Abrir ${m.title}">
-            <div class="pc-accent-bar"></div>
-            <div class="pc-emoji-col">${symbol}</div>
-            <div class="pc-text-col">
-                <div class="pc-name">${m.title}</div>
-                <div class="pc-desc">${preview}</div>
-                ${done.has(m.id) ? '<div class="pc-done">✅ Completado</div>' : ''}
-            </div>
-            <div class="pc-arrow">›</div>
-        </button>`;
-            }).join('');
+            
+            if (mods.length === 0) {
+                document.getElementById('topic-grid').innerHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #fff; border-radius: 20px; border: 1px dashed #cbdcf0; width: 100%;">
+                    <div style="font-size: 40px; margin-bottom: 15px;">🚧</div>
+                    <h3 style="font-size: 24px; color: var(--navy); margin-bottom: 10px;">En construcción</h3>
+                    <p style="color: var(--text-light); font-size: 15px;">Pronto agregaremos las clases de este módulo.</p>
+                </div>`;
+            } else {
+                document.getElementById('topic-grid').innerHTML = mods.map(m => {
+                    const cat = getCat(m.cat);
+                    const symbol = getModuleSymbol(m);
+                    const preview = getModulePreviewText(m);
+                    const accent = getModuleAccent(m, cat);
+                    return `<button type="button" class="prev-card" style="--card-accent:${accent};" onclick="loadMod(${m.id})" aria-label="Abrir ${m.title}">
+                <div class="pc-accent-bar"></div>
+                <div class="pc-emoji-col">${symbol}</div>
+                <div class="pc-text-col">
+                    <div class="pc-name">${m.title}</div>
+                    <div class="pc-desc">${preview}</div>
+                    ${done.has(m.id) ? '<div class="pc-done">✅ Completado</div>' : ''}
+                </div>
+                <div class="pc-arrow">›</div>
+            </button>`;
+                }).join('');
+            }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -3277,11 +3605,11 @@
             document.getElementById('mod-view').style.display = 'block';
 
             // Ocultar pestañas innecesarias para mentoreos extra
-            const isExtra = current.topic === 'sesiones_mentoreo_extra';
+            const isExtra = current.topic.includes('sesiones_mentoreo_extra');
             const mTabBtn = document.querySelector('.tab-btn[data-tab="mentoreo"]');
             const tTabBtn = document.querySelector('.tab-btn[data-tab="ticket"]');
 
-            if (mTabBtn) mTabBtn.style.display = isExtra ? 'none' : 'inline-block';
+            if (mTabBtn) mTabBtn.style.display = (isExtra || !current.mentoreo?.pdf) ? 'none' : 'inline-block';
             if (tTabBtn) tTabBtn.style.display = (isExtra || !current.ticket?.questions?.length) ? 'none' : 'inline-block';
 
             const cat = getCat(current.cat);
