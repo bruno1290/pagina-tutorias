@@ -10,8 +10,8 @@ def generate_html():
     body {font-family: 'Nunito', sans-serif; background: var(--bg); overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; color: var(--tx);}
     .dk {position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex;}
     
-    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 40px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1;}
-    .sl.on {opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10;}
+    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 36px 40px 82px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1;}
+    .sl.on {opacity: 1; transform: scale(0.9); pointer-events: auto; z-index: 10;}
     .sl.pv {opacity: 0; transform: translateX(-50px) scale(.95);}
     .sl.nx {opacity: 0; transform: translateX(50px) scale(.95);}
     
@@ -55,6 +55,15 @@ def generate_html():
         document.getElementById('sc').textContent=`${c+1} / ${T}`;
         document.getElementById('pv').disabled=c===0;
         document.getElementById('nx').disabled=c===T-1;
+        let sl = document.getElementById('slide-slider');
+        if(sl) { sl.max = T; sl.value = c + 1; }
+    }
+    function goToSlide(n) {
+        let val = parseInt(n) - 1;
+        if (val >= 0 && val < T) {
+            c = val;
+            ui();
+        }
     }
     function go(d) {
         if(d>0) {
@@ -124,6 +133,27 @@ def generate_html():
         </div>
     """)
     
+    # INTRODUCCIÓN (Rompehielo)
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">¿Para qué sirve multiplicar?</div>
+        <div style="display:flex; gap:40px; align-items:center; width:100%; height:100%;">
+            <div style="font-size:120px; animation: bounce 3s infinite;">🛒</div>
+            <div style="flex:1;">
+                <p style="font-size:28px; font-weight:800; margin-bottom:20px;">
+                    Imagina que vas al supermercado y compras 5 paquetes de galletas. Cada paquete trae 6 galletas.
+                </p>
+                <div class="stp pnl" style="border-left:8px solid #F57C00;">
+                    <p style="font-size:24px;">Podrías contar las galletas una por una... <b style="color:#d32f2f;">(¡muy lento!)</b></p>
+                    <p style="font-size:24px; margin-top:10px;">Podrías sumar 6 + 6 + 6 + 6 + 6... <b style="color:#F57C00;">(mejor)</b></p>
+                    <p style="font-size:26px; margin-top:10px; font-weight:900; color:#047857;">¡O podrías multiplicar 5 x 6 y saberlo al instante!</p>
+                </div>
+                <div class="stp" style="font-size:26px; font-weight:800; margin-top:20px; text-align:center;">
+                    Multiplicar es un "atajo mágico" para no sumar todo el tiempo. ✨
+                </div>
+            </div>
+        </div>
+    """)
+
     # --- SECCIÓN 1: SUMA ITERADA Y CONCEPTO ---
     slide(f"""
         <div class="head-title">Un pequeño problema</div>
@@ -216,45 +246,6 @@ def generate_html():
         </div>
     """)
 
-    # ABRE TU CUADERNO (Suma iterada a multi)
-    slide(f"""
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Observa la imagen y escribe la <b class="hl">Suma</b> y la <b class="hl">Multiplicación</b>.</p>
-        
-        {emoji_groups(4, 5, "🏀", "#FF9D9D")}
-        
-        <div style="display:flex; gap:40px; justify-content:center; width:100%; margin-top:20px;">
-            <div class="pnl stp" style="border-width:4px; max-width:400px; text-align:center;">
-                <h3 style="color:#c2185b; margin-bottom:15px; font-size:26px;">Suma Iterada</h3>
-                <div class="stp math-eq" style="font-size:36px; padding:10px;">5+5+5+5=20</div>
-            </div>
-            
-            <div class="pnl stp" style="border-width:4px; max-width:400px; text-align:center;">
-                <h3 style="color:var(--base); margin-bottom:15px; font-size:26px;">Multiplicación</h3>
-                <div class="stp math-eq" style="font-size:46px; padding:10px; background:#e3f2fd;">4 x 5 = 20</div>
-            </div>
-        </div>
-    """)
-
-    slide(f"""
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Observa la imagen y escribe la <b class="hl">Suma</b> y la <b class="hl">Multiplicación</b>.</p>
-        
-        {emoji_groups(6, 2, "🍩", "#9DDEFF")}
-        
-        <div style="display:flex; gap:40px; justify-content:center; width:100%; margin-top:20px;">
-            <div class="pnl stp" style="border-width:4px; max-width:400px; text-align:center;">
-                <h3 style="color:#c2185b; margin-bottom:15px; font-size:26px;">Suma Iterada</h3>
-                <div class="stp math-eq" style="font-size:30px; padding:10px;">2+2+2+2+2+2=12</div>
-            </div>
-            
-            <div class="pnl stp" style="border-width:4px; max-width:400px; text-align:center;">
-                <h3 style="color:var(--base); margin-bottom:15px; font-size:26px;">Multiplicación</h3>
-                <div class="stp math-eq" style="font-size:46px; padding:10px; background:#e3f2fd;">6 x 2 = 12</div>
-            </div>
-        </div>
-    """)
-
     # --- SECCIÓN 2: PROPIEDAD CONMUTATIVA ---
     slide(f"""
         <div class="head-title">Un Secreto Matemático</div>
@@ -293,19 +284,28 @@ def generate_html():
         </div>
     """)
 
+    # --- PROPIEDADES DEL 0 Y DEL 1 ---
     slide(f"""
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Escribe las dos multiplicaciones (invertidas) que representa este dibujo.</p>
+        <div class="head-title">Los Superpoderes del 0 y del 1</div>
+        <p class="sub-text">¡Dos trucos mentales que te salvarán la vida!</p>
         
-        <div style="display:flex; justify-content:center; margin-bottom:30px;">
-            {svg_array(2, 6, "#FFE082")}
+        <div style="display:flex; justify-content:center; gap:40px; width:100%;">
+            <div class="stp pnl" style="border:5px solid #FF9D9D; width:45%;">
+                <div style="font-size:80px; text-align:center;">🛡️ 1</div>
+                <h3 style="color:#d32f2f; font-size:26px; text-align:center; margin:10px 0;">El Escudo Espejo</h3>
+                <p style="font-size:20px; text-align:center;">Todo número multiplicado por 1 <b>se queda igual</b>.</p>
+                <div class="math-eq" style="font-size:30px; text-align:center; margin-top:15px;">5 x 1 = 5</div>
+                <div class="math-eq" style="font-size:30px; text-align:center; margin-top:10px;">99 x 1 = 99</div>
+            </div>
+            
+            <div class="stp pnl" style="border:5px solid #9DDEFF; width:45%;">
+                <div style="font-size:80px; text-align:center;">🕳️ 0</div>
+                <h3 style="color:#1976D2; font-size:26px; text-align:center; margin:10px 0;">El Agujero Negro</h3>
+                <p style="font-size:20px; text-align:center;">Todo número multiplicado por 0 <b>desaparece (es cero)</b>.</p>
+                <div class="math-eq" style="font-size:30px; text-align:center; margin-top:15px;">8 x 0 = 0</div>
+                <div class="math-eq" style="font-size:30px; text-align:center; margin-top:10px;">1.000 x 0 = 0</div>
+            </div>
         </div>
-        
-        <div class="stp" style="display:flex; justify-content:center; gap:40px;">
-            <div class="math-eq" style="font-size:48px;">2 x 6 = 12</div>
-            <div class="math-eq" style="font-size:48px;">6 x 2 = 12</div>
-        </div>
-        <div class="stp" style="text-align:center; font-size:30px; font-weight:900; color:#047857; margin-top:20px;">✅ ¡Ambas son correctas!</div>
     """)
 
     # --- SECCIÓN 3: TABLA DEL 2 ---
@@ -345,24 +345,6 @@ def generate_html():
     
     slide(slide_doble(4, "🎈"))
     slide(slide_doble(7, "🧩"))
-
-    # Abre tu cuaderno: Tabla del 2
-    slide(f"""
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Calcula mentalmente usando la estrategia "El Doble".</p>
-        
-        <div style="display:flex; flex-direction:column; gap:20px; align-items:center; width:100%;">
-            <div class="stp math-eq" style="width:600px; display:flex; justify-content:space-between; padding:20px 40px;">
-                <span>2 x 6 =</span> <span class="stp hl">12</span>
-            </div>
-            <div class="stp math-eq" style="width:600px; display:flex; justify-content:space-between; padding:20px 40px;">
-                <span>2 x 8 =</span> <span class="stp hl">16</span>
-            </div>
-            <div class="stp math-eq" style="width:600px; display:flex; justify-content:space-between; padding:20px 40px;">
-                <span>2 x 10 =</span> <span class="stp hl">20</span>
-            </div>
-        </div>
-    """)
 
     # --- SECCIÓN 4: TABLA DEL 5 ---
     slide(f"""
@@ -409,31 +391,11 @@ def generate_html():
         </div>
     """)
 
-    slide(f"""
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Calcula contando de 5 en 5.</p>
-        
-        <div style="display:flex; flex-direction:column; gap:20px; align-items:center; width:100%;">
-            <div class="stp math-eq" style="width:600px; display:flex; justify-content:space-between; padding:20px 40px; border-color:#9DE3BD;">
-                <span>5 x 6 =</span> <span class="stp" style="color:#047857;">30</span>
-            </div>
-            <div class="stp math-eq" style="width:600px; display:flex; justify-content:space-between; padding:20px 40px; border-color:#9DE3BD;">
-                <span>5 x 8 =</span> <span class="stp" style="color:#047857;">40</span>
-            </div>
-        </div>
-        <div class="stp" style="font-weight:800; font-size:24px; color:#c2185b; margin-top:20px;">
-            (Recuerda la regla de terminar en 0 o 5)
-        </div>
-    """)
-
     # --- SECCIÓN FINAL: QUIZ INTERACTIVO Y PROBLEMAS ---
     
     # Quiz Multiples Options
     quizzes = [
-        ("¿Cuál es la forma correcta de escribir esta multiplicación?<br><br><b>4 + 4 + 4 + 4 + 4 = 20</b>", ["5 x 4 = 20", "4 x 4 = 20", "6 x 4 = 20"], "5 x 4 = 20"),
-        ("Elige la opción correcta usando la propiedad conmutativa:", ["2 x 5 = 5 x 2", "5 x 2 = 5 + 2", "5 x 3 = 10"], "2 x 5 = 5 x 2"),
-        ("¿Qué número es el doble de 8?", ["18", "16", "14"], "16"),
-        ("Si cuento de 5 en 5... ¿Cuánto es 5 x 7?", ["30", "45", "35"], "35")
+        ("¿Cuál es la forma correcta de escribir esta multiplicación?<br><br><b>4 + 4 + 4 + 4 + 4 = 20</b>", ["5 x 4 = 20", "4 x 4 = 20", "6 x 4 = 20"], "5 x 4 = 20")
     ]
 
     for q_idx, q in enumerate(quizzes):
@@ -453,6 +415,56 @@ def generate_html():
             <div class="msg-area" style="font-size:26px; font-weight:900; height:40px; margin-top:40px; text-align:center;"></div>
         </div>
         """)
+
+    # --- BLOQUE 3: EJERCICIOS PROPUESTOS (6 EJERCICIOS) ---
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Misión de Entrenamiento ✍️</div>
+        <p class="sub-text">¡Saca tu cuaderno! Resuelve estos 6 desafíos.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; grid-template-rows:1fr 1fr; gap:20px; width:100%;">
+            <!-- Mecánicos -->
+            <div style="background:#FFF9C4; border:4px solid #FBC02D; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#FBC02D; margin-bottom:10px;">Cálculo Rápido</div>
+                <div style="font-size:32px; font-weight:900;">2 x 8 = ?</div>
+            </div>
+            <div style="background:#FFF9C4; border:4px solid #FBC02D; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#FBC02D; margin-bottom:10px;">Suma a Multiplicación</div>
+                <div style="font-size:26px; font-weight:900;">5 + 5 + 5 + 5</div>
+            </div>
+            <!-- Aplicados -->
+            <div style="background:#E3F2FD; border:4px solid #0288D1; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#0288D1; margin-bottom:10px;">Problema</div>
+                <div style="font-size:20px; font-weight:900;">Tengo 5 sobres. Cada uno trae 3 cartas. ¿Total?</div>
+            </div>
+            <div style="background:#E3F2FD; border:4px solid #0288D1; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#0288D1; margin-bottom:10px;">El Espejo</div>
+                <div style="font-size:24px; font-weight:900;">Sofía dice que 4x2 es lo mismo que 2x4. ¿Verdad o falso?</div>
+            </div>
+            <!-- Creativos -->
+            <div style="background:#F3E8FF; border:4px solid #9333EA; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#9333EA; margin-bottom:10px;">Dato Faltante</div>
+                <div style="font-size:32px; font-weight:900;">? x 5 = 20</div>
+            </div>
+            <div style="background:#F3E8FF; border:4px solid #9333EA; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#9333EA; margin-bottom:10px;">Agujero Negro</div>
+                <div style="font-size:24px; font-weight:900;">Si multiplico mi edad por 0, ¿cuánto da?</div>
+            </div>
+        </div>
+    """)
+
+    respuestas_1 = ["16", "4 x 5", "15 cartas", "Verdad", "4", "0"]
+    res_html_1 = ""
+    for i, res in enumerate(respuestas_1):
+        res_html_1 += f'''<div class="stp" style="background:#fff; border:4px solid #047857; border-radius:10px; padding:15px; font-size:30px; font-weight:900; text-align:center;">
+            <span style="color:#888; font-size:20px; margin-right:10px;">#{i+1}</span> {res}
+        </div>'''
+        
+    slide(f"""
+        <div class="head-title" style="background:#047857;">Revisión de la Misión ✅</div>
+        <p class="sub-text">Compara tus resultados. Haz un check (✔) en tu cuaderno si está correcta.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; width:100%; margin-top:20px;">
+            {res_html_1}
+        </div>
+    """)
 
     # Problemas Situacionales
     problemas = [
@@ -510,17 +522,23 @@ def generate_html():
     </div>
     <div class="nv">
         <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
-        <div class="sc" id="sc">1 / {len(slides)}</div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <span class="sc" id="sc">1 / {len(slides)}</span>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="{len(slides)}" value="1" oninput="goToSlide(this.value)">
+        </div>
         <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
     </div>
     <script>{js}</script>
 </body>
 </html>
 """
-    output_path = '/Users/brunonattino/Desktop/PAGINA TUTORIAS/SLIDES/multiplicaciones HTMLS/multiplicaciones_1.html'
+    import os
+    output_dir = '/Users/brunonattino/Desktop/PAGINA TUTORIAS/clases/cuarto-basico/multiplicacion'
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, 'multiplicaciones_1.html')
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(html)
-    print(f"Módulo 1 generado: {len(slides)} slides.")
+    print(f"Módulo 1 generado: {len(slides)} slides en {output_path}")
 
 if __name__ == '__main__':
     generate_html()

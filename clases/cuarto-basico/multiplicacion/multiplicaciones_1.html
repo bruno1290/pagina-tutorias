@@ -14,8 +14,8 @@
     body {font-family: 'Nunito', sans-serif; background: var(--bg); overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; color: var(--tx);}
     .dk {position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex;}
     
-    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 40px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1;}
-    .sl.on {opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10;}
+    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 36px 40px 82px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1;}
+    .sl.on {opacity: 1; transform: scale(0.9); pointer-events: auto; z-index: 10;}
     .sl.pv {opacity: 0; transform: translateX(-50px) scale(.95);}
     .sl.nx {opacity: 0; transform: translateX(50px) scale(.95);}
     
@@ -55,6 +55,24 @@
             <p class="sub-text">Construyendo las Bases Sólidas 🏗️</p>
             <p style="font-size:100px; margin-top:30px; animation: bounce 2s infinite;">🎒</p>
             <style>@keyframes bounce { 0%, 100%{transform:translateY(0);} 50%{transform:translateY(-20px);} }</style>
+        </div>
+    </div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">¿Para qué sirve multiplicar?</div>
+        <div style="display:flex; gap:40px; align-items:center; width:100%; height:100%;">
+            <div style="font-size:120px; animation: bounce 3s infinite;">🛒</div>
+            <div style="flex:1;">
+                <p style="font-size:28px; font-weight:800; margin-bottom:20px;">
+                    Imagina que vas al supermercado y compras 5 paquetes de galletas. Cada paquete trae 6 galletas.
+                </p>
+                <div class="stp pnl" style="border-left:8px solid #F57C00;">
+                    <p style="font-size:24px;">Podrías contar las galletas una por una... <b style="color:#d32f2f;">(¡muy lento!)</b></p>
+                    <p style="font-size:24px; margin-top:10px;">Podrías sumar 6 + 6 + 6 + 6 + 6... <b style="color:#F57C00;">(mejor)</b></p>
+                    <p style="font-size:26px; margin-top:10px; font-weight:900; color:#047857;">¡O podrías multiplicar 5 x 6 y saberlo al instante!</p>
+                </div>
+                <div class="stp" style="font-size:26px; font-weight:800; margin-top:20px; text-align:center;">
+                    Multiplicar es un "atajo mágico" para no sumar todo el tiempo. ✨
+                </div>
+            </div>
         </div>
     </div><div class="sl">
         <div class="head-title">Un pequeño problema</div>
@@ -138,40 +156,6 @@
             </div>
         </div>
     </div><div class="sl">
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Observa la imagen y escribe la <b class="hl">Suma</b> y la <b class="hl">Multiplicación</b>.</p>
-        
-        <div style="display:flex; justify-content:center; gap:20px; margin: 20px 0; flex-wrap:wrap;"><div class="group-box" style="border-color:#FF9D9D; width: 210px;"><div>🏀</div><div>🏀</div><div>🏀</div><div>🏀</div><div>🏀</div></div><div class="group-box" style="border-color:#FF9D9D; width: 210px;"><div>🏀</div><div>🏀</div><div>🏀</div><div>🏀</div><div>🏀</div></div><div class="group-box" style="border-color:#FF9D9D; width: 210px;"><div>🏀</div><div>🏀</div><div>🏀</div><div>🏀</div><div>🏀</div></div><div class="group-box" style="border-color:#FF9D9D; width: 210px;"><div>🏀</div><div>🏀</div><div>🏀</div><div>🏀</div><div>🏀</div></div></div>
-        
-        <div style="display:flex; gap:40px; justify-content:center; width:100%; margin-top:20px;">
-            <div class="pnl stp" style="border-width:4px; max-width:400px; text-align:center;">
-                <h3 style="color:#c2185b; margin-bottom:15px; font-size:26px;">Suma Iterada</h3>
-                <div class="stp math-eq" style="font-size:36px; padding:10px;">5+5+5+5=20</div>
-            </div>
-            
-            <div class="pnl stp" style="border-width:4px; max-width:400px; text-align:center;">
-                <h3 style="color:var(--base); margin-bottom:15px; font-size:26px;">Multiplicación</h3>
-                <div class="stp math-eq" style="font-size:46px; padding:10px; background:#e3f2fd;">4 x 5 = 20</div>
-            </div>
-        </div>
-    </div><div class="sl">
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Observa la imagen y escribe la <b class="hl">Suma</b> y la <b class="hl">Multiplicación</b>.</p>
-        
-        <div style="display:flex; justify-content:center; gap:20px; margin: 20px 0; flex-wrap:wrap;"><div class="group-box" style="border-color:#9DDEFF; width: 120px;"><div>🍩</div><div>🍩</div></div><div class="group-box" style="border-color:#9DDEFF; width: 120px;"><div>🍩</div><div>🍩</div></div><div class="group-box" style="border-color:#9DDEFF; width: 120px;"><div>🍩</div><div>🍩</div></div><div class="group-box" style="border-color:#9DDEFF; width: 120px;"><div>🍩</div><div>🍩</div></div><div class="group-box" style="border-color:#9DDEFF; width: 120px;"><div>🍩</div><div>🍩</div></div><div class="group-box" style="border-color:#9DDEFF; width: 120px;"><div>🍩</div><div>🍩</div></div></div>
-        
-        <div style="display:flex; gap:40px; justify-content:center; width:100%; margin-top:20px;">
-            <div class="pnl stp" style="border-width:4px; max-width:400px; text-align:center;">
-                <h3 style="color:#c2185b; margin-bottom:15px; font-size:26px;">Suma Iterada</h3>
-                <div class="stp math-eq" style="font-size:30px; padding:10px;">2+2+2+2+2+2=12</div>
-            </div>
-            
-            <div class="pnl stp" style="border-width:4px; max-width:400px; text-align:center;">
-                <h3 style="color:var(--base); margin-bottom:15px; font-size:26px;">Multiplicación</h3>
-                <div class="stp math-eq" style="font-size:46px; padding:10px; background:#e3f2fd;">6 x 2 = 12</div>
-            </div>
-        </div>
-    </div><div class="sl">
         <div class="head-title">Un Secreto Matemático</div>
         <p class="sub-text">¿Qué pasará si cambiamos el orden de los factores?</p>
         
@@ -205,18 +189,26 @@
             </div>
         </div>
     </div><div class="sl">
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Escribe las dos multiplicaciones (invertidas) que representa este dibujo.</p>
+        <div class="head-title">Los Superpoderes del 0 y del 1</div>
+        <p class="sub-text">¡Dos trucos mentales que te salvarán la vida!</p>
         
-        <div style="display:flex; justify-content:center; margin-bottom:30px;">
-            <svg width="380" height="140" viewBox="0 0 380 140"><circle cx="40" cy="40" r="22" fill="#FFE082" stroke="#555" stroke-width="3"/><circle cx="100" cy="40" r="22" fill="#FFE082" stroke="#555" stroke-width="3"/><circle cx="160" cy="40" r="22" fill="#FFE082" stroke="#555" stroke-width="3"/><circle cx="220" cy="40" r="22" fill="#FFE082" stroke="#555" stroke-width="3"/><circle cx="280" cy="40" r="22" fill="#FFE082" stroke="#555" stroke-width="3"/><circle cx="340" cy="40" r="22" fill="#FFE082" stroke="#555" stroke-width="3"/><circle cx="40" cy="100" r="22" fill="#FFE082" stroke="#555" stroke-width="3"/><circle cx="100" cy="100" r="22" fill="#FFE082" stroke="#555" stroke-width="3"/><circle cx="160" cy="100" r="22" fill="#FFE082" stroke="#555" stroke-width="3"/><circle cx="220" cy="100" r="22" fill="#FFE082" stroke="#555" stroke-width="3"/><circle cx="280" cy="100" r="22" fill="#FFE082" stroke="#555" stroke-width="3"/><circle cx="340" cy="100" r="22" fill="#FFE082" stroke="#555" stroke-width="3"/></svg>
+        <div style="display:flex; justify-content:center; gap:40px; width:100%;">
+            <div class="stp pnl" style="border:5px solid #FF9D9D; width:45%;">
+                <div style="font-size:80px; text-align:center;">🛡️ 1</div>
+                <h3 style="color:#d32f2f; font-size:26px; text-align:center; margin:10px 0;">El Escudo Espejo</h3>
+                <p style="font-size:20px; text-align:center;">Todo número multiplicado por 1 <b>se queda igual</b>.</p>
+                <div class="math-eq" style="font-size:30px; text-align:center; margin-top:15px;">5 x 1 = 5</div>
+                <div class="math-eq" style="font-size:30px; text-align:center; margin-top:10px;">99 x 1 = 99</div>
+            </div>
+            
+            <div class="stp pnl" style="border:5px solid #9DDEFF; width:45%;">
+                <div style="font-size:80px; text-align:center;">🕳️ 0</div>
+                <h3 style="color:#1976D2; font-size:26px; text-align:center; margin:10px 0;">El Agujero Negro</h3>
+                <p style="font-size:20px; text-align:center;">Todo número multiplicado por 0 <b>desaparece (es cero)</b>.</p>
+                <div class="math-eq" style="font-size:30px; text-align:center; margin-top:15px;">8 x 0 = 0</div>
+                <div class="math-eq" style="font-size:30px; text-align:center; margin-top:10px;">1.000 x 0 = 0</div>
+            </div>
         </div>
-        
-        <div class="stp" style="display:flex; justify-content:center; gap:40px;">
-            <div class="math-eq" style="font-size:48px;">2 x 6 = 12</div>
-            <div class="math-eq" style="font-size:48px;">6 x 2 = 12</div>
-        </div>
-        <div class="stp" style="text-align:center; font-size:30px; font-weight:900; color:#047857; margin-top:20px;">✅ ¡Ambas son correctas!</div>
     </div><div class="sl">
         <div class="head-title" style="background:#c2185b;">La Tabla del 2</div>
         <div style="display:flex; flex-direction:column; align-items:center;">
@@ -263,21 +255,6 @@
             </div>
         </div>
         </div><div class="sl">
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Calcula mentalmente usando la estrategia "El Doble".</p>
-        
-        <div style="display:flex; flex-direction:column; gap:20px; align-items:center; width:100%;">
-            <div class="stp math-eq" style="width:600px; display:flex; justify-content:space-between; padding:20px 40px;">
-                <span>2 x 6 =</span> <span class="stp hl">12</span>
-            </div>
-            <div class="stp math-eq" style="width:600px; display:flex; justify-content:space-between; padding:20px 40px;">
-                <span>2 x 8 =</span> <span class="stp hl">16</span>
-            </div>
-            <div class="stp math-eq" style="width:600px; display:flex; justify-content:space-between; padding:20px 40px;">
-                <span>2 x 10 =</span> <span class="stp hl">20</span>
-            </div>
-        </div>
-    </div><div class="sl">
         <div class="head-title" style="background:#047857;">La Tabla del 5</div>
         <div style="display:flex; flex-direction:column; align-items:center;">
             <p class="sub-text">La tabla del 5 es rítmica... como dar grandes saltos.</p>
@@ -315,41 +292,63 @@
             4 x 5 = <span class="stp" style="color:#047857;">20</span>
         </div>
     </div><div class="sl">
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Calcula contando de 5 en 5.</p>
-        
-        <div style="display:flex; flex-direction:column; gap:20px; align-items:center; width:100%;">
-            <div class="stp math-eq" style="width:600px; display:flex; justify-content:space-between; padding:20px 40px; border-color:#9DE3BD;">
-                <span>5 x 6 =</span> <span class="stp" style="color:#047857;">30</span>
+        <div class="head-title">Desafío Relámpago ⚡ (1/1)</div>
+        <div class="pnl-border" style="width:100%; border-color:#d63384;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:40px;">¿Cuál es la forma correcta de escribir esta multiplicación?<br><br><b>4 + 4 + 4 + 4 + 4 = 20</b></p>
+            <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; width:100%;">
+                <button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, true)'>5 x 4 = 20</button><button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>4 x 4 = 20</button><button class='btn' style='font-size:24px; padding:20px;' onclick='chkAns(this, false)'>6 x 4 = 20</button>
             </div>
-            <div class="stp math-eq" style="width:600px; display:flex; justify-content:space-between; padding:20px 40px; border-color:#9DE3BD;">
-                <span>5 x 8 =</span> <span class="stp" style="color:#047857;">40</span>
-            </div>
+            <div class="msg-area" style="font-size:26px; font-weight:900; height:40px; margin-top:40px; text-align:center;"></div>
         </div>
-        <div class="stp" style="font-weight:800; font-size:24px; color:#c2185b; margin-top:20px;">
-            (Recuerda la regla de terminar en 0 o 5)
+        </div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">Misión de Entrenamiento ✍️</div>
+        <p class="sub-text">¡Saca tu cuaderno! Resuelve estos 6 desafíos.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; grid-template-rows:1fr 1fr; gap:20px; width:100%;">
+            <!-- Mecánicos -->
+            <div style="background:#FFF9C4; border:4px solid #FBC02D; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#FBC02D; margin-bottom:10px;">Cálculo Rápido</div>
+                <div style="font-size:32px; font-weight:900;">2 x 8 = ?</div>
+            </div>
+            <div style="background:#FFF9C4; border:4px solid #FBC02D; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#FBC02D; margin-bottom:10px;">Suma a Multiplicación</div>
+                <div style="font-size:26px; font-weight:900;">5 + 5 + 5 + 5</div>
+            </div>
+            <!-- Aplicados -->
+            <div style="background:#E3F2FD; border:4px solid #0288D1; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#0288D1; margin-bottom:10px;">Problema</div>
+                <div style="font-size:20px; font-weight:900;">Tengo 5 sobres. Cada uno trae 3 cartas. ¿Total?</div>
+            </div>
+            <div style="background:#E3F2FD; border:4px solid #0288D1; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#0288D1; margin-bottom:10px;">El Espejo</div>
+                <div style="font-size:24px; font-weight:900;">Sofía dice que 4x2 es lo mismo que 2x4. ¿Verdad o falso?</div>
+            </div>
+            <!-- Creativos -->
+            <div style="background:#F3E8FF; border:4px solid #9333EA; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#9333EA; margin-bottom:10px;">Dato Faltante</div>
+                <div style="font-size:32px; font-weight:900;">? x 5 = 20</div>
+            </div>
+            <div style="background:#F3E8FF; border:4px solid #9333EA; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#9333EA; margin-bottom:10px;">Agujero Negro</div>
+                <div style="font-size:24px; font-weight:900;">Si multiplico mi edad por 0, ¿cuánto da?</div>
+            </div>
         </div>
     </div><div class="sl">
-        <div class="head-title">Ejercicios para tu cuaderno ✏️</div>
-        <p class="sub-text">Copia y resuelve. Usa lo que aprendiste sobre el doble, la tabla del 5 y la suma iterada.</p>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; width:100%; margin-top:10px;">
-            <div class="pnl" style="text-align:center; font-size:28px; font-weight:900; border-color:#9DDEFF;">2 × 6 = <span class="stp" style="color:var(--base);">?</span></div>
-            <div class="pnl" style="text-align:center; font-size:28px; font-weight:900; border-color:#FF9D9D;">5 × 7 = <span class="stp" style="color:var(--base);">?</span></div>
-            <div class="pnl" style="text-align:center; font-size:28px; font-weight:900; border-color:#9DE3BD;">¿3 × 4 es igual a 4 × 3? Escribe ambas.</div>
-            <div class="pnl" style="text-align:center; font-size:28px; font-weight:900; border-color:#FFE082;">5 × 9 = <span class="stp" style="color:var(--base);">?</span></div>
-            <div class="pnl" style="text-align:center; font-size:24px; font-weight:900; border-color:#E1BEE7;">Hay 2 canastas con 8 naranjas c/u. ¿Cuántas hay?</div>
-            <div class="pnl" style="text-align:center; font-size:24px; font-weight:900; border-color:#FFB74D;">Dibuja los grupos de 5 × 3 y escribe la suma iterada.</div>
+        <div class="head-title" style="background:#047857;">Revisión de la Misión ✅</div>
+        <p class="sub-text">Compara tus resultados. Haz un check (✔) en tu cuaderno si está correcta.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; width:100%; margin-top:20px;">
+            <div class="stp" style="background:#fff; border:4px solid #047857; border-radius:10px; padding:15px; font-size:30px; font-weight:900; text-align:center;">
+            <span style="color:#888; font-size:20px; margin-right:10px;">#1</span> 16
+        </div><div class="stp" style="background:#fff; border:4px solid #047857; border-radius:10px; padding:15px; font-size:30px; font-weight:900; text-align:center;">
+            <span style="color:#888; font-size:20px; margin-right:10px;">#2</span> 4 x 5
+        </div><div class="stp" style="background:#fff; border:4px solid #047857; border-radius:10px; padding:15px; font-size:30px; font-weight:900; text-align:center;">
+            <span style="color:#888; font-size:20px; margin-right:10px;">#3</span> 15 cartas
+        </div><div class="stp" style="background:#fff; border:4px solid #047857; border-radius:10px; padding:15px; font-size:30px; font-weight:900; text-align:center;">
+            <span style="color:#888; font-size:20px; margin-right:10px;">#4</span> Verdad
+        </div><div class="stp" style="background:#fff; border:4px solid #047857; border-radius:10px; padding:15px; font-size:30px; font-weight:900; text-align:center;">
+            <span style="color:#888; font-size:20px; margin-right:10px;">#5</span> 4
+        </div><div class="stp" style="background:#fff; border:4px solid #047857; border-radius:10px; padding:15px; font-size:30px; font-weight:900; text-align:center;">
+            <span style="color:#888; font-size:20px; margin-right:10px;">#6</span> 0
         </div>
-    </div><div class="sl">
-        <div class="head-title" style="background:#047857;">✅ Respuestas</div>
-        <p class="sub-text">Compara con tu cuaderno. ¿Cuántas tuviste bien?</p>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; width:100%; margin-top:10px;">
-            <div class="pnl" style="text-align:center; font-size:28px; font-weight:900; color:#047857; border-color:#9DE3BD;">2 × 6 = 12 ✓</div>
-            <div class="pnl" style="text-align:center; font-size:28px; font-weight:900; color:#047857; border-color:#9DE3BD;">5 × 7 = 35 ✓</div>
-            <div class="pnl" style="text-align:center; font-size:24px; font-weight:800; color:#047857; border-color:#9DE3BD;">3×4 = 12 = 4×3 ✓ Propiedad Conmutativa</div>
-            <div class="pnl" style="text-align:center; font-size:28px; font-weight:900; color:#047857; border-color:#9DE3BD;">5 × 9 = 45 ✓</div>
-            <div class="pnl" style="text-align:center; font-size:24px; font-weight:900; color:#047857; border-color:#9DE3BD;">2 × 8 = 16 naranjas ✓</div>
-            <div class="pnl" style="text-align:center; font-size:22px; font-weight:800; color:#047857; border-color:#9DE3BD;">5+5+5 = 15 → 5×3 = 15 ✓</div>
         </div>
     </div><div class="sl">
         <div class="head-title">Resolución de Problemas 🧠</div>
@@ -357,10 +356,11 @@
             <div style="font-size:120px; animation: bounce 3s infinite;">🚗</div>
             <div style="flex:1;">
                 <h2 style="font-size:32px; color:#1976D2; margin-bottom:15px;">Cajas de Juguetes</h2>
-                <p style="font-size:26px; font-weight:600; line-height:1.4;">Pedro compró <b>5 cajas</b> de autitos. Si en cada caja vienen <b>4 autitos</b>, ¿cuántos tiene en total?</p>
+                <p style="font-size:26px; font-weight:600; line-height:1.4;">Pedro compró <b>5 cajas</b> de autitos. Si en cada caja vienen <b>4 autitos</b>, ¿Cuántos tiene en total?</p>
+                
                 <div class="stp" style="margin-top:20px; background:#fff; padding:20px; border-radius:20px; border-left: 10px solid #1976D2; box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
                     <p style="font-size:22px; font-weight:800; color:#555;">La respuesta es:</p>
-                    <div style="font-size:32px; font-weight:900; margin-top:10px;">5 cajas × 4 autitos = <br><span style='font-size:46px; color:var(--base);'>20 autitos 🚗</span></div>
+                    <div style="font-size:32px; font-weight:900; margin-top:10px;">5 cajas x 4 autitos = <br><span style='font-size:46px; color:var(--base);'>20 autitos</span></div>
                 </div>
             </div>
         </div>
@@ -371,35 +371,10 @@
             <div style="flex:1;">
                 <h2 style="font-size:32px; color:#C2185B; margin-bottom:15px;">Bolsas de Dulces</h2>
                 <p style="font-size:26px; font-weight:600; line-height:1.4;">Tu amiga trajo <b>2 bolsas</b> para el recreo. Cada una tiene <b>9 dulces</b>. ¿Cuántos dulces son en total?</p>
+                
                 <div class="stp" style="margin-top:20px; background:#fff; padding:20px; border-radius:20px; border-left: 10px solid #C2185B; box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
                     <p style="font-size:22px; font-weight:800; color:#555;">La respuesta es:</p>
-                    <div style="font-size:32px; font-weight:900; margin-top:10px;">El doble de 9 = <br><span style='font-size:46px; color:var(--base);'>18 dulces 🍬</span></div>
-                </div>
-            </div>
-        </div>
-        </div><div class="sl">
-        <div class="head-title" style="background: linear-gradient(90deg, #9333EA 0%, #db2777 100%);">Desafío Supremo ⚡</div>
-        <div style="background:#DCFCE7; border:5px solid #16A34A; border-radius:40px; padding:40px; display:flex; gap:40px; align-items:center; width:100%; box-shadow: 0 10px 25px rgba(22,163,74,0.2);">
-            <div style="font-size:100px; animation: bounce 2s infinite;">⛏️</div>
-            <div style="flex:1;">
-                <h2 style="color:#16A34A; font-size:34px; margin-bottom:15px;">ObraCraft: El Dragón de las 5 Cabezas</h2>
-                <p style="font-size:24px; font-weight:600; line-height:1.5;">En ObraCraft, un dragón legendario tiene <b>5 cabezas mágicas</b>. Cada cabeza lanza <b>2 bolas de fuego</b> por turno. Si el dragón hace <b>3 turnos de ataque</b>, ¿cuántas bolas de fuego caen en total?</p>
-                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #16A34A; border-radius:18px; padding:18px 20px;">
-                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Solución:</p>
-                    <div style="font-size:26px; font-weight:900; line-height:1.5;">Por turno: 5 × 2 = 10 bolas.<br>En 3 turnos: 10 × 3 = <span style="color:#16a34a;">30 bolas de fuego 🔥</span></div>
-                </div>
-            </div>
-        </div>
-        </div><div class="sl">
-        <div class="head-title" style="background: linear-gradient(90deg, #9333EA 0%, #db2777 100%);">Desafío Supremo 🔐</div>
-        <div style="background:#F3E8FF; border:5px solid #9333EA; border-radius:40px; padding:40px; display:flex; gap:40px; align-items:center; width:100%; box-shadow: 0 10px 25px rgba(147,51,234,0.2);">
-            <div style="font-size:100px; animation: bounce 2s infinite;">🧩</div>
-            <div style="flex:1;">
-                <h2 style="color:#9333EA; font-size:34px; margin-bottom:15px;">El Doble del Doble</h2>
-                <p style="font-size:24px; font-weight:600; line-height:1.5;">Valentina piensa: <b>"El doble de 6 es 12. El doble del doble de 6 debe ser..."</b><br>¿Cuánto es el doble del doble de 6? ¿Y el doble del doble de 5? ¿Ves un patrón?</p>
-                <div class="stp" style="margin-top:18px; background:#fff; border-left:10px solid #9333EA; border-radius:18px; padding:18px 20px;">
-                    <p style="font-size:20px; font-weight:800; color:#555; margin-bottom:8px;">Solución:</p>
-                    <div style="font-size:26px; font-weight:900; line-height:1.5;">Doble de 6 = 12. Doble de 12 = 24.<br>Doble de 5 = 10. Doble de 10 = 20.<br><span style="color:#9333ea;">Hacer el doble del doble = multiplicar por 4.</span></div>
+                    <div style="font-size:32px; font-weight:900; margin-top:10px;">El doble de 9 = <br><span style='font-size:46px; color:var(--base);'>18 dulces</span></div>
                 </div>
             </div>
         </div>
@@ -422,8 +397,8 @@
     <div class="nv">
         <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
         <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
-            <div class="sc" id="sc"></div>
-            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="10" value="1" oninput="goToSlide(this.value)">
+            <span class="sc" id="sc">1 / 23</span>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="23" value="1" oninput="goToSlide(this.value)">
         </div>
         <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
     </div>
@@ -440,17 +415,16 @@
         document.getElementById('sc').textContent=`${c+1} / ${T}`;
         document.getElementById('pv').disabled=c===0;
         document.getElementById('nx').disabled=c===T-1;
-            let sl = document.getElementById('slide-slider');
-            if(sl) { sl.max = T; sl.value = c + 1; }
+        let sl = document.getElementById('slide-slider');
+        if(sl) { sl.max = T; sl.value = c + 1; }
     }
-
-        function goToSlide(n) {
-            let index = parseInt(n) - 1;
-            if (index >= 0 && index < T) {
-                c = index;
-                ui();
-            }
+    function goToSlide(n) {
+        let val = parseInt(n) - 1;
+        if (val >= 0 && val < T) {
+            c = val;
+            ui();
         }
+    }
     function go(d) {
         if(d>0) {
             const hid = S[c].querySelectorAll('.stp:not(.shwn)');

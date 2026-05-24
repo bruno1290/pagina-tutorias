@@ -6,8 +6,8 @@ def generate_html():
     body {font-family: 'Nunito', sans-serif; background: var(--bg); overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; color: var(--tx);}
     .dk {position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex;}
     
-    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 40px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1;}
-    .sl.on {opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10;}
+    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 36px 40px 82px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1;}
+    .sl.on {opacity: 1; transform: scale(0.9); pointer-events: auto; z-index: 10;}
     .sl.pv {opacity: 0; transform: translateX(-50px) scale(.95);}
     .sl.nx {opacity: 0; transform: translateX(50px) scale(.95);}
     
@@ -37,9 +37,25 @@ def generate_html():
     js = """
     const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
     function ui() {
-        S.forEach((s,i)=>{ s.classList.remove('on','pv','nx'); if(i===c) s.classList.add('on'); else if(i<c) s.classList.add('pv'); else s.classList.add('nx'); });
-        document.getElementById('pb').style.width=((c+1)/T*100)+'%'; document.getElementById('sc').textContent=`${c+1} / ${T}`;
-        document.getElementById('pv').disabled=c===0; document.getElementById('nx').disabled=c===T-1;
+        S.forEach((s,i)=>{
+            s.classList.remove('on','pv','nx');
+            if(i===c) s.classList.add('on');
+            else if(i<c) s.classList.add('pv');
+            else s.classList.add('nx');
+        });
+        document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+        document.getElementById('sc').textContent=`${c+1} / ${T}`;
+        document.getElementById('pv').disabled=c===0;
+        document.getElementById('nx').disabled=c===T-1;
+        let sl = document.getElementById('slide-slider');
+        if(sl) { sl.max = T; sl.value = c + 1; }
+    }
+    function goToSlide(n) {
+        let val = parseInt(n) - 1;
+        if (val >= 0 && val < T) {
+            c = val;
+            ui();
+        }
     }
     function go(d) {
         if(d>0) { const hid = S[c].querySelectorAll('.stp:not(.shwn)'); if(hid.length > 0) { hid[0].classList.add('shwn'); return; } }
@@ -68,6 +84,24 @@ def generate_html():
             <style>@keyframes bounce {{ 0%, 100%{{transform:translateY(0);}} 50%{{transform:translateY(-20px);}} }}</style>
         </div>
     """)
+
+    # INTRODUCCIÓN GENERAL
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">El Siguiente Nivel</div>
+        <div style="display:flex; gap:40px; align-items:center; width:100%; height:100%;">
+            <div style="font-size:120px; animation: bounce 3s infinite;">🧠</div>
+            <div style="flex:1;">
+                <p style="font-size:28px; font-weight:800; margin-bottom:20px;">
+                    Ya dominas las tablas básicas. Ahora necesitamos estrategias para números más grandes.
+                </p>
+                <div class="stp pnl" style="border-left:8px solid #F57C00;">
+                    <p style="font-size:24px;">En vez de memorizar de memoria todas las tablas difíciles...</p>
+                    <p style="font-size:26px; margin-top:10px; font-weight:900; color:#047857;">¡Aprenderemos "Estrategias Mentales" de Ninjas!</p>
+                </div>
+            </div>
+        </div>
+    """)
+
     
     # --- TABLA DEL 3 ---
     slide(f"""
@@ -82,22 +116,23 @@ def generate_html():
         </div>
     """)
     
-    def multi_practice(title, ops):
-        # ops = [(eq, ans), (eq, ans)]
-        rows = ""
-        for eq, ans in ops:
-            rows += f'<div class="stp math-eq" style="width:400px; display:flex; justify-content:space-between; padding:20px 40px;"><span>{eq} =</span> <span class="stp hl">{ans}</span></div>'
-        return f"""
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno: {title}</div>
-        <p class="sub-text">Calcula el resultado...</p>
-        <div style="display:flex; flex-direction:column; gap:20px; align-items:center; width:100%; margin-top:20px;">
-            {rows}
-        </div>
-        """
-
-    slide(multi_practice("Tabla del 3", [("3 x 3", "9"), ("3 x 5", "15"), ("3 x 7", "21")]))
-
     # --- TABLA DEL 4 ---
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">¿Qué pasa si duplicamos el doble?</div>
+        <div style="display:flex; gap:40px; align-items:center; width:100%; height:100%;">
+            <div style="font-size:120px; animation: bounce 3s infinite;">👯‍♂️</div>
+            <div style="flex:1;">
+                <p style="font-size:28px; font-weight:800; margin-bottom:20px;">
+                    Ya eres experto calculando el doble (multiplicar por 2).
+                </p>
+                <div class="stp pnl" style="border-left:8px solid #F57C00;">
+                    <p style="font-size:24px;">Imagina que calculas el doble de un número...</p>
+                    <p style="font-size:24px; margin-top:10px;">¡Y luego a ese resultado le calculas el doble de nuevo!</p>
+                    <p style="font-size:26px; margin-top:10px; font-weight:900; color:#047857;">Esta súper técnica se llama "Doble del Doble" y es el secreto de la tabla del 4.</p>
+                </div>
+            </div>
+        </div>
+    """)
     slide(f"""
         <div class="head-title">La Tabla del 4</div>
         <p class="sub-text">¡El 4 es amigo del 2! Es el <b style="color:var(--base);">Doble del Doble</b>.</p>
@@ -119,8 +154,6 @@ def generate_html():
         </div>
     """)
     
-    slide(multi_practice("Tabla del 4", [("4 x 4", "16"), ("4 x 7", "28"), ("4 x 9", "36")]))
-
     # --- TABLA DEL 6 ---
     slide(f"""
         <div class="head-title">La Tabla del 6</div>
@@ -145,8 +178,6 @@ def generate_html():
         </div>
     """)
     
-    slide(multi_practice("Tabla del 6", [("6 x 5", "30"), ("6 x 6", "36"), ("6 x 8", "48")]))
-
     # --- TABLA DEL 7 ---
     slide(f"""
         <div class="head-title">La Tabla del 7</div>
@@ -162,8 +193,6 @@ def generate_html():
             ¡Simplemente le sumamos 7 a 49! ➔ <span style="font-size:36px; color:#047857;">56</span>
         </div>
     """)
-
-    slide(multi_practice("Tabla del 7", [("7 x 3", "21"), ("7 x 5", "35"), ("7 x 9", "63")]))
 
     # --- TABLA DEL 8 ---
     slide(f"""
@@ -192,15 +221,55 @@ def generate_html():
         </div>
     """)
 
-    slide(multi_practice("Tabla del 9", [("9 x 3", "27"), ("9 x 7", "63"), ("9 x 8", "72")]))
+    # --- ESTRATEGIA DOBLAR Y DIVIDIR POR 2 ---
+    slide(f"""
+        <div class="head-title" style="background:#9333EA;">Una Estrategia Secreta</div>
+        <div style="display:flex; gap:40px; align-items:center; width:100%; height:100%;">
+            <div style="font-size:120px; animation: bounce 3s infinite;">⚖️</div>
+            <div style="flex:1;">
+                <p style="font-size:28px; font-weight:800; margin-bottom:20px;">
+                    ¿Qué pasa si a un factor lo partes por la mitad, y al otro lo multiplicas por 2?
+                </p>
+                <div class="stp pnl" style="border-left:8px solid #9333EA;">
+                    <p style="font-size:26px; font-weight:900; color:#047857;">¡El resultado final se mantiene exactamente igual!</p>
+                    <p style="font-size:24px; margin-top:10px;">A esto le llamamos la técnica de "Doblar y Dividir por 2".</p>
+                </div>
+            </div>
+        </div>
+    """)
+
+    slide(f"""
+        <div class="head-title" style="background:#9333EA;">Doblar y Dividir por 2</div>
+        <p class="sub-text">Sirve para transformar una multiplicación difícil en una muy fácil.</p>
+        <div class="pnl-border" style="border-color:#9333EA; background:#F3E8FF;">
+            <p style="font-size:36px; font-weight:800; text-align:center;">Tenemos <b style="color:#c2185b;">12 x 4</b></p>
+            
+            <div style="display:flex; justify-content:center; gap:60px; margin-top:30px; width:100%;">
+                <div class="stp" style="text-align:center;">
+                    <p style="font-size:24px; font-weight:900; color:#0288D1;">La mitad de 12</p>
+                    <div style="font-size:40px; margin-top:10px;">⬇️</div>
+                    <div class="math-eq" style="color:#0288D1; font-size:48px;">6</div>
+                </div>
+                
+                <div class="stp" style="font-size:50px; font-weight:900; align-self:center;">X</div>
+                
+                <div class="stp" style="text-align:center;">
+                    <p style="font-size:24px; font-weight:900; color:#c2185b;">El doble de 4</p>
+                    <div style="font-size:40px; margin-top:10px;">⬇️</div>
+                    <div class="math-eq" style="color:#c2185b; font-size:48px;">8</div>
+                </div>
+            </div>
+            
+            <div class="stp math-eq" style="margin-top:30px; font-size:48px; background:#fff; color:#047857;">
+                ¡6 x 8 = 48!
+            </div>
+            <p class="stp" style="font-size:24px; margin-top:10px;">(Por lo tanto, 12 x 4 también es 48)</p>
+        </div>
+    """)
 
     # --- QUIZZES Y PROBLEMAS ---
     quizzes = [
-        ("¿Cuánto es 4 x 8?", ["28", "32", "36"], "32"),
-        ("Si usamos la regla del 'doble del doble', ¿qué número multiplicamos?", ["Tabla del 3", "Tabla del 6", "Tabla del 4"], "Tabla del 4"),
-        ("¿Cuál es el resultado de 7 x 6?", ["42", "48", "36"], "42"),
-        ("La tabla del 6 es calcular la del 5... ¿y luego qué?", ["Le sumo 1", "Le sumo el otro factor", "Le resto 1"], "Le sumo el otro factor"),
-        ("¡Desafío! 9 x 9 =", ["81", "72", "99"], "81")
+        ("¿Cuánto es 4 x 8?", ["28", "32", "36"], "32")
     ]
     
     for q_idx, q in enumerate(quizzes):
@@ -220,6 +289,56 @@ def generate_html():
             <div class="msg-area" style="font-size:26px; font-weight:900; height:40px; margin-top:20px; text-align:center;"></div>
         </div>
         """)
+
+    # --- BLOQUE 3: EJERCICIOS PROPUESTOS (6 EJERCICIOS) ---
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Misión de Entrenamiento ✍️</div>
+        <p class="sub-text">¡Saca tu cuaderno! Resuelve estos 6 desafíos.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; grid-template-rows:1fr 1fr; gap:20px; width:100%;">
+            <!-- Mecánicos -->
+            <div style="background:#FFF9C4; border:4px solid #FBC02D; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#FBC02D; margin-bottom:10px;">Cálculo Rápido</div>
+                <div style="font-size:32px; font-weight:900;">6 x 6 = ?</div>
+            </div>
+            <div style="background:#FFF9C4; border:4px solid #FBC02D; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#FBC02D; margin-bottom:10px;">Doble del Doble</div>
+                <div style="font-size:32px; font-weight:900;">4 x 8 = ?</div>
+            </div>
+            <!-- Aplicados -->
+            <div style="background:#E3F2FD; border:4px solid #0288D1; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#0288D1; margin-bottom:10px;">Problema</div>
+                <div style="font-size:20px; font-weight:900;">Un auto tiene 4 ruedas. ¿Cuántas ruedas hay en 7 autos?</div>
+            </div>
+            <div style="background:#E3F2FD; border:4px solid #0288D1; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#0288D1; margin-bottom:10px;">El Mes</div>
+                <div style="font-size:20px; font-weight:900;">Una semana tiene 7 días. ¿Cuántos días hay en 4 semanas?</div>
+            </div>
+            <!-- Creativos -->
+            <div style="background:#F3E8FF; border:4px solid #9333EA; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#9333EA; margin-bottom:10px;">Dato Faltante</div>
+                <div style="font-size:32px; font-weight:900;">9 x ? = 81</div>
+            </div>
+            <div style="background:#F3E8FF; border:4px solid #9333EA; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#9333EA; margin-bottom:10px;">Dividir por 2</div>
+                <div style="font-size:24px; font-weight:900;">14 x 4 es lo mismo que 7 x 8. ¿Verdad o falso?</div>
+            </div>
+        </div>
+    """)
+
+    respuestas_2 = ["36", "32", "28 ruedas", "28 días", "9", "Verdad"]
+    res_html_2 = ""
+    for i, res in enumerate(respuestas_2):
+        res_html_2 += f'''<div class="stp" style="background:#fff; border:4px solid #047857; border-radius:10px; padding:15px; font-size:30px; font-weight:900; text-align:center;">
+            <span style="color:#888; font-size:20px; margin-right:10px;">#{i+1}</span> {res}
+        </div>'''
+        
+    slide(f"""
+        <div class="head-title" style="background:#047857;">Revisión de la Misión ✅</div>
+        <p class="sub-text">Compara tus resultados. Haz un check (✔) en tu cuaderno si está correcta.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; width:100%; margin-top:20px;">
+            {res_html_2}
+        </div>
+    """)
 
     problemas = [
         ("Cajas de Zapatos", "En una zapatería hay <b>6 estantes</b>. En cada estante caben <b>8 cajas</b>. ¿Cuántas cajas hay?", "6 x 8 = <br><span style='font-size:46px; color:var(--base);'>48 cajas</span>", "👟", "#E3F2FD", "#1976D2"),
@@ -266,12 +385,22 @@ def generate_html():
     html = f"""<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Multiplicación 2 - Interactivo</title><style>{css}</style></head>
 <body><div class="pb" id="pb"></div><div class="dk">{"".join(slides)}</div>
-<div class="nv"><button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button><div class="sc" id="sc">1 / {len(slides)}</div><button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button></div>
+<div class="nv">
+    <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+        <span class="sc" id="sc">1 / {len(slides)}</span>
+        <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="{len(slides)}" value="1" oninput="goToSlide(this.value)">
+    </div>
+    <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+</div>
 <script>{js}</script></body></html>"""
     
-    output_path = '/Users/brunonattino/Desktop/PAGINA TUTORIAS/SLIDES/multiplicaciones HTMLS/multiplicaciones_2.html'
+    import os
+    output_dir = '/Users/brunonattino/Desktop/PAGINA TUTORIAS/clases/cuarto-basico/multiplicacion'
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, 'multiplicaciones_2.html')
     with open(output_path, 'w', encoding='utf-8') as f: f.write(html)
-    print(f"Módulo 2 generado: {len(slides)} slides.")
+    print(f"Módulo 2 generado: {len(slides)} slides en {output_path}")
 
 if __name__ == '__main__':
     generate_html()

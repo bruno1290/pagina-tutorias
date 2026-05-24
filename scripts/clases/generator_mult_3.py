@@ -6,8 +6,8 @@ def generate_html():
     body {font-family: 'Nunito', sans-serif; background: var(--bg); overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; color: var(--tx);}
     .dk {position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex;}
     
-    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 40px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1;}
-    .sl.on {opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10;}
+    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 36px 40px 82px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1;}
+    .sl.on {opacity: 1; transform: scale(0.9); pointer-events: auto; z-index: 10;}
     .sl.pv {opacity: 0; transform: translateX(-50px) scale(.95);}
     .sl.nx {opacity: 0; transform: translateX(50px) scale(.95);}
     
@@ -40,9 +40,25 @@ def generate_html():
     js = """
     const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
     function ui() {
-        S.forEach((s,i)=>{ s.classList.remove('on','pv','nx'); if(i===c) s.classList.add('on'); else if(i<c) s.classList.add('pv'); else s.classList.add('nx'); });
-        document.getElementById('pb').style.width=((c+1)/T*100)+'%'; document.getElementById('sc').textContent=`${c+1} / ${T}`;
-        document.getElementById('pv').disabled=c===0; document.getElementById('nx').disabled=c===T-1;
+        S.forEach((s,i)=>{
+            s.classList.remove('on','pv','nx');
+            if(i===c) s.classList.add('on');
+            else if(i<c) s.classList.add('pv');
+            else s.classList.add('nx');
+        });
+        document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+        document.getElementById('sc').textContent=`${c+1} / ${T}`;
+        document.getElementById('pv').disabled=c===0;
+        document.getElementById('nx').disabled=c===T-1;
+        let sl = document.getElementById('slide-slider');
+        if(sl) { sl.max = T; sl.value = c + 1; }
+    }
+    function goToSlide(n) {
+        let val = parseInt(n) - 1;
+        if (val >= 0 && val < T) {
+            c = val;
+            ui();
+        }
     }
     function go(d) {
         if(d>0) { const hid = S[c].querySelectorAll('.stp:not(.shwn)'); if(hid.length > 0) { hid[0].classList.add('shwn'); return; } }
@@ -71,6 +87,24 @@ def generate_html():
             <style>@keyframes bounce {{ 0%, 100%{{transform:translateY(0);}} 50%{{transform:translateY(-20px);}} }}</style>
         </div>
     """)
+
+    # INTRODUCCIÓN GENERAL
+    slide(f"""
+        <div class="head-title" style="background:#F57C00;">Grandes Desafíos</div>
+        <div style="display:flex; gap:40px; align-items:center; width:100%; height:100%;">
+            <div style="font-size:120px; animation: bounce 3s infinite;">🏙️</div>
+            <div style="flex:1;">
+                <p style="font-size:28px; font-weight:800; margin-bottom:20px;">
+                    Imagina que debes organizar todas las sillas de un estadio gigante.
+                </p>
+                <div class="stp pnl" style="border-left:8px solid #F57C00;">
+                    <p style="font-size:24px;">Las tablas mentales son geniales, pero a veces los números son inmensos.</p>
+                    <p style="font-size:26px; margin-top:10px; font-weight:900; color:#047857;">¡Hoy aprenderemos herramientas poderosas: Estimación y Algoritmos!</p>
+                </div>
+            </div>
+        </div>
+    """)
+
     
     # --- MULTIPLICAR POR 10, 100 ---
     slide(f"""
@@ -104,35 +138,6 @@ def generate_html():
         </div>
     """)
 
-    slide(f"""
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Calcula mentalmente usando la regla mágica de los ceros:</p>
-        <div style="display:flex; flex-direction:column; gap:20px; font-size:40px; font-weight:900; align-items:center;">
-            <div class="stp" style="display:flex; justify-content:space-between; width:450px;">
-                <span>12 x 10 =</span> <span class="stp hl" style="color:#047857;">120</span>
-            </div>
-            <div class="stp" style="display:flex; justify-content:space-between; width:450px;">
-                <span>45 x 100 =</span> <span class="stp hl" style="color:#047857;">4.500</span>
-            </div>
-            <div class="stp" style="display:flex; justify-content:space-between; width:450px;">
-                <span>15 x 1000 =</span> <span class="stp hl" style="color:#047857;">15.000</span>
-            </div>
-        </div>
-    """)
-
-    slide(f"""
-        <div class="head-title">Abre tu cuaderno (Inverso)</div>
-        <p class="sub-text">¿Por cuánto multiplicamos para llegar al resultado?</p>
-        <div style="display:flex; flex-direction:column; gap:20px; font-size:40px; font-weight:900; align-items:center;">
-            <div class="stp" style="display:flex; justify-content:space-between; width:500px;">
-                <span>8 x <span class="stp" style="color:#d32f2f;">100</span> =</span> <span>800</span>
-            </div>
-            <div class="stp" style="display:flex; justify-content:space-between; width:500px;">
-                <span>32 x <span class="stp" style="color:#d32f2f;">10</span> =</span> <span>320</span>
-            </div>
-        </div>
-    """)
-
     # --- MULTIPLOS DE 10 ---
     slide(f"""
         <div class="head-title">Multiplicar por Múltiplos (20, 30..)</div>
@@ -150,22 +155,6 @@ def generate_html():
             
             <div class="stp math-eq" style="margin-top:20px; font-size:60px; color:#047857;">
                 8<span style="color:#d32f2f;">0</span>
-            </div>
-        </div>
-    """)
-
-    slide(f"""
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Calcula mentalmente estos múltiplos:</p>
-        <div style="display:flex; flex-direction:column; gap:20px; font-size:40px; font-weight:900; align-items:center; width:100%;">
-            <div class="stp" style="display:flex; justify-content:space-between; width:500px;">
-                <span>3 x 30 =</span> <span class="stp hl" style="color:#047857;">90</span>
-            </div>
-            <div class="stp" style="display:flex; justify-content:space-between; width:500px;">
-                <span>6 x 200 =</span> <span class="stp hl" style="color:#047857;">1.200</span>
-            </div>
-            <div class="stp" style="display:flex; justify-content:space-between; width:500px;">
-                <span>5 x 40 =</span> <span class="stp hl" style="color:#047857;">200</span>
             </div>
         </div>
     """)
@@ -212,42 +201,40 @@ def generate_html():
         </div>
     """)
 
+    # --- ESTIMACIÓN POR REDONDEO ---
     slide(f"""
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Aplica descomposición aditiva para: <b>5 x 14</b></p>
-        
-        <div class="pnl" style="font-size:28px; display:flex; flex-direction:column; align-items:center; border:3px solid #E3F2FD;">
-            <div class="stp math-eq" style="background:#fff;">5 x (10 + 4)</div>
-            
-            <div class="stp" style="margin-top:10px; font-weight:900;">
-                Paso 1: <span class="stp" style="color:var(--base);">5 x 10 = 50</span>
-            </div>
-            <div class="stp" style="margin-top:10px; font-weight:900;">
-                Paso 2: <span class="stp" style="color:#c2185b;">5 x 4 = 20</span>
-            </div>
-            
-            <div class="stp math-eq" style="margin-top:20px; font-size:46px; color:#047857;">
-                Suma: 50 + 20 = 70
+        <div class="head-title" style="background:#9333EA;">Estimación por Redondeo</div>
+        <div style="display:flex; gap:40px; align-items:center; width:100%; height:100%;">
+            <div style="font-size:120px; animation: bounce 3s infinite;">🎯</div>
+            <div style="flex:1;">
+                <p style="font-size:28px; font-weight:800; margin-bottom:20px;">
+                    A veces no necesitamos el número exacto, solo queremos saber "más o menos" cuánto es.
+                </p>
+                <div class="stp pnl" style="border-left:8px solid #9333EA;">
+                    <p style="font-size:26px; font-weight:900; color:#c2185b;">¡A eso le llamamos Estimar!</p>
+                    <p style="font-size:24px; margin-top:10px;">Para estimar una multiplicación, redondeamos el número más grande.</p>
+                </div>
             </div>
         </div>
     """)
 
     slide(f"""
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Resuelve usando descomposición: <b>3 x 25</b></p>
+        <div class="head-title" style="background:#9333EA;">¿Cómo Estimar?</div>
+        <p class="sub-text">Queremos calcular rápido: <b style="color:var(--base);">135 x 4</b></p>
         
-        <div class="pnl" style="font-size:28px; display:flex; flex-direction:column; align-items:center; border:3px solid #E3F2FD;">
-            <div class="stp math-eq" style="background:#fff;">3 x (20 + 5)</div>
-            
-            <div class="stp" style="margin-top:10px; font-weight:900;">
-                Paso 1: <span class="stp" style="color:var(--base);">3 x 20 = 60</span>
-            </div>
-            <div class="stp" style="margin-top:10px; font-weight:900;">
-                Paso 2: <span class="stp" style="color:#c2185b;">3 x 5 = 15</span>
+        <div class="pnl-border" style="border-color:#9333EA; background:#F3E8FF;">
+            <div class="stp" style="font-size:28px; text-align:center;">
+                <b class="hl">Paso 1:</b> El 135 está entre el 100 y el 200.<br>Pero está mucho más cerca del <b>100</b> (si redondeamos a la centena).
             </div>
             
-            <div class="stp math-eq" style="margin-top:20px; font-size:46px; color:#047857;">
-                Suma: 60 + 15 = 75
+            <div class="stp" style="margin-top:30px; font-size:28px; text-align:center;">
+                <b class="hl">Paso 2:</b> Multiplicamos el número redondeado.<br>
+                <div class="math-eq" style="color:#047857; margin-top:15px; font-size:48px;">100 x 4 = 400</div>
+            </div>
+            
+            <div class="stp" style="margin-top:20px; font-size:24px; font-weight:800;">
+                Sabemos que el resultado exacto de 135x4 estará "cerca" de 400.<br>
+                ¡Esto nos sirve para revisar si no nos equivocamos al calcular!
             </div>
         </div>
     """)
@@ -294,48 +281,6 @@ def generate_html():
                 <div class="stp pnl" style="border-width:3px; background:#e8f5e9; border-color:#047857; text-align:center;">
                     <b style="color:#047857; font-size:24px;">Total = 96</b>
                 </div>
-            </div>
-        </div>
-    """)
-
-    slide(f"""
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Resuelve usando algoritmo: <b>12 x 4</b></p>
-        <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; width:100%;">
-            <div class="grid-algo" style="margin:0;">
-                <div style="grid-row:2; grid-column:3;">1</div>
-                <div style="grid-row:2; grid-column:4;">2</div>
-                <div style="grid-row:3; grid-column:2; color:var(--base);">x</div>
-                <div style="grid-row:3; grid-column:4;">4</div>
-                <div class="line-algo"></div>
-                
-                <div class="stp" style="grid-row:5; grid-column:4; color:#047857;">8</div>
-                <div class="stp" style="grid-row:5; grid-column:3; color:#047857;">4</div>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:15px; width:360px;">
-                <div class="stp pnl" style="border-color:#FF9D9D;"><b>Paso 1:</b> 4 x 2 = 8</div>
-                <div class="stp pnl" style="border-color:#9DDEFF;"><b>Paso 2:</b> 4 x 1 = 4</div>
-            </div>
-        </div>
-    """)
-
-    slide(f"""
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Resuelve usando algoritmo: <b>21 x 4</b></p>
-        <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; width:100%;">
-            <div class="grid-algo" style="margin:0;">
-                <div style="grid-row:2; grid-column:3;">2</div>
-                <div style="grid-row:2; grid-column:4;">1</div>
-                <div style="grid-row:3; grid-column:2; color:var(--base);">x</div>
-                <div style="grid-row:3; grid-column:4;">4</div>
-                <div class="line-algo"></div>
-                
-                <div class="stp" style="grid-row:5; grid-column:4; color:#047857;">4</div>
-                <div class="stp" style="grid-row:5; grid-column:3; color:#047857;">8</div>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:15px; width:360px;">
-                <div class="stp pnl" style="border-color:#FF9D9D;"><b>Paso 1:</b> 4 x 1 = 4</div>
-                <div class="stp pnl" style="border-color:#9DDEFF;"><b>Paso 2:</b> 4 x 2 = 8</div>
             </div>
         </div>
     """)
@@ -391,52 +336,6 @@ def generate_html():
         </div>
     """)
 
-    slide(f"""
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Cuidado con la reserva: <b>16 x 5</b></p>
-        <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; width:100%;">
-            <div class="grid-algo" style="margin:0;">
-                <div style="grid-row:2; grid-column:3;">1</div>
-                <div style="grid-row:2; grid-column:4;">6</div>
-                <div style="grid-row:3; grid-column:2; color:var(--base);">x</div>
-                <div style="grid-row:3; grid-column:4;">5</div>
-                <div class="line-algo"></div>
-                
-                <div class="stp" style="grid-row:5; grid-column:4; color:#047857;">0</div>
-                <div class="stp res-carry" style="grid-row:1; grid-column:3;">3</div>
-                <div class="stp" style="grid-row:5; grid-column:3; color:#047857;">8</div>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:15px; width:380px;">
-                <div class="stp pnl" style="border-color:#FF9D9D;"><b>Paso 1:</b> 5x6 = 30. Anoto 0, Subo 3.</div>
-                <div class="stp pnl" style="border-color:#FF9D9D;"><b>Paso 2:</b> Anoto la reserva de 3.</div>
-                <div class="stp pnl" style="border-color:#9DDEFF;"><b>Paso 3:</b> 5x1=5 (+3 reserva) = 8.</div>
-            </div>
-        </div>
-    """)
-
-    slide(f"""
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Cuidado con la reserva: <b>28 x 3</b></p>
-        <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; width:100%;">
-            <div class="grid-algo" style="margin:0;">
-                <div style="grid-row:2; grid-column:3;">2</div>
-                <div style="grid-row:2; grid-column:4;">8</div>
-                <div style="grid-row:3; grid-column:2; color:var(--base);">x</div>
-                <div style="grid-row:3; grid-column:4;">3</div>
-                <div class="line-algo"></div>
-                
-                <div class="stp" style="grid-row:5; grid-column:4; color:#047857;">4</div>
-                <div class="stp res-carry" style="grid-row:1; grid-column:3;">2</div>
-                <div class="stp" style="grid-row:5; grid-column:3; color:#047857;">8</div>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:15px; width:380px;">
-                <div class="stp pnl" style="border-color:#FF9D9D;"><b>Paso 1:</b> 3x8 = 24. Anoto 4, Subo 2.</div>
-                <div class="stp pnl" style="border-color:#FF9D9D;"><b>Paso 2:</b> Anoto la reserva de 2.</div>
-                <div class="stp pnl" style="border-color:#9DDEFF;"><b>Paso 3:</b> 3x2=6 (+2 reserva) = 8.</div>
-            </div>
-        </div>
-    """)
-
     # 3 DIGITOS
     slide(f"""
         <div class="head-title" style="background:var(--base);">El Rey: 3 Dígitos</div>
@@ -477,56 +376,106 @@ def generate_html():
         </div>
     """)
 
+    # --- BLOQUE 3: EJERCICIOS PROPUESTOS (6 EJERCICIOS) ---
     slide(f"""
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Resuelve: <b>123 x 3</b></p>
-        <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; width:100%;">
-            <div class="grid-algo" style="margin:0; grid-template-columns: repeat(5, 60px);">
-                <div style="grid-row:2; grid-column:3;">1</div>
-                <div style="grid-row:2; grid-column:4;">2</div>
-                <div style="grid-row:2; grid-column:5;">3</div>
-                
-                <div style="grid-row:3; grid-column:3; color:var(--base);">x</div>
-                <div style="grid-row:3; grid-column:5;">3</div>
-                <div class="line-algo"></div>
-                
-                <div class="stp" style="grid-row:5; grid-column:5; color:#047857;">9</div>
-                <div class="stp" style="grid-row:5; grid-column:4; color:#047857;">6</div>
-                <div class="stp" style="grid-row:5; grid-column:3; color:#047857;">3</div>
+        <div class="head-title" style="background:#F57C00;">Misión de Entrenamiento ✍️</div>
+        <p class="sub-text">¡Saca tu cuaderno! Resuelve estos 6 desafíos.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; grid-template-rows:1fr 1fr; gap:20px; width:100%;">
+            <!-- Mecánicos -->
+            <div style="background:#FFF9C4; border:4px solid #FBC02D; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#FBC02D; margin-bottom:10px;">Algoritmo</div>
+                <div style="font-size:32px; font-weight:900;">41 x 5 = ?</div>
             </div>
+            <div style="background:#FFF9C4; border:4px solid #FBC02D; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#FBC02D; margin-bottom:10px;">Regla de los ceros</div>
+                <div style="font-size:32px; font-weight:900;">12 x 100 = ?</div>
+            </div>
+            <!-- Aplicados -->
+            <div style="background:#E3F2FD; border:4px solid #0288D1; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#0288D1; margin-bottom:10px;">Problema</div>
+                <div style="font-size:20px; font-weight:900;">Un tren lleva 105 pasajeros por vagón. Si tiene 4 vagones, ¿cuántos pasajeros van?</div>
+            </div>
+            <div style="background:#E3F2FD; border:4px solid #0288D1; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#0288D1; margin-bottom:10px;">Cálculo Rápido</div>
+                <div style="font-size:24px; font-weight:900;">Tengo 3 billetes de $200. ¿Cuánto dinero tengo?</div>
+            </div>
+            <!-- Creativos -->
+            <div style="background:#F3E8FF; border:4px solid #9333EA; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#9333EA; margin-bottom:10px;">Dato Faltante</div>
+                <div style="font-size:32px; font-weight:900;">? x 10 = 350</div>
+            </div>
+            <div style="background:#F3E8FF; border:4px solid #9333EA; border-radius:15px; padding:15px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <div style="font-size:16px; font-weight:800; color:#9333EA; margin-bottom:10px;">Estimación</div>
+                <div style="font-size:24px; font-weight:900;">189 x 4... ¿estará más cerca de 400 o de 800?</div>
+            </div>
+        </div>
+    """)
 
-            <div style="display:flex; flex-direction:column; gap:10px; width:380px;">
-                <div class="stp pnl" style="padding:15px;">Paso 1: 3x3 = 9</div>
-                <div class="stp pnl" style="padding:15px;">Paso 2: 3x2 = 6</div>
-                <div class="stp pnl" style="padding:15px;">Paso 3: 3x1 = 3</div>
+    respuestas_3 = ["205", "1.200", "420 pasajeros", "$600", "35", "De 800"]
+    res_html_3 = ""
+    for i, res in enumerate(respuestas_3):
+        res_html_3 += f'''<div class="stp" style="background:#fff; border:4px solid #047857; border-radius:10px; padding:15px; font-size:30px; font-weight:900; text-align:center;">
+            <span style="color:#888; font-size:20px; margin-right:10px;">#{i+1}</span> {res}
+        </div>'''
+        
+    slide(f"""
+        <div class="head-title" style="background:#047857;">Revisión de la Misión ✅</div>
+        <p class="sub-text">Compara tus resultados. Haz un check (✔) en tu cuaderno si está correcta.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; width:100%; margin-top:20px;">
+            {res_html_3}
+        </div>
+    """)
+
+    # --- MODELO 5 PASOS ---
+    slide(f"""
+        <div class="head-title" style="background:#1976D2;">Modelo de 5 Pasos</div>
+        <div style="display:flex; gap:40px; align-items:center; width:100%; height:100%;">
+            <div style="font-size:120px; animation: bounce 3s infinite;">🕵️‍♂️</div>
+            <div style="flex:1;">
+                <p style="font-size:28px; font-weight:800; margin-bottom:20px;">
+                    Para resolver problemas matemáticos como un profesional, usamos 5 pasos:
+                </p>
+                <div class="stp pnl" style="border-left:8px solid #1976D2; display:flex; flex-direction:column; gap:10px;">
+                    <div style="font-size:22px;"><b>1. Comprender:</b> ¿Qué datos tengo y qué me piden?</div>
+                    <div style="font-size:22px;"><b>2. Matematizar:</b> Traducir a números.</div>
+                    <div style="font-size:22px;"><b>3. Plantear y Calcular:</b> Elegir la operación y resolver.</div>
+                    <div style="font-size:22px;"><b>4. Interpretar:</b> ¿Qué significa el número que me dio?</div>
+                    <div style="font-size:22px;"><b>5. Validar:</b> ¿Tiene sentido la respuesta? (¡Aquí usamos estimación!)</div>
+                </div>
             </div>
         </div>
     """)
 
     slide(f"""
-        <div class="head-title" style="background:#F57C00;">Abre tu cuaderno</div>
-        <p class="sub-text">Resuelve: <b>104 x 5</b></p>
-        <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; width:100%;">
-            <div class="grid-algo" style="margin:0; grid-template-columns: repeat(5, 60px);">
-                <div style="grid-row:2; grid-column:3;">1</div>
-                <div style="grid-row:2; grid-column:4;">0</div>
-                <div style="grid-row:2; grid-column:5;">4</div>
-                
-                <div style="grid-row:3; grid-column:3; color:var(--base);">x</div>
-                <div style="grid-row:3; grid-column:5;">5</div>
-                <div class="line-algo"></div>
-                
-                <div class="stp" style="grid-row:5; grid-column:5; color:#047857;">0</div>
-                <div class="stp res-carry" style="grid-row:1; grid-column:4; width:35px; height:35px; font-size:22px;">2</div>
-                <div class="stp" style="grid-row:5; grid-column:4; color:#047857;">2</div>
-                <div class="stp" style="grid-row:5; grid-column:3; color:#047857;">5</div>
-            </div>
+        <div class="head-title" style="background:#1976D2;">Ejemplo de los 5 Pasos</div>
+        <p class="sub-text">"Un colegio compró 4 cajas con 125 lápices cada una. ¿Cuántos hay en total?"</p>
+        <div style="display:flex; flex-direction:column; gap:10px; width:100%;">
+            <div class="stp pnl" style="padding:15px; border-left:6px solid #FF9D9D;"><b>1. Comprender:</b> Tenemos 4 cajas. Cada una tiene 125 lápices. Piden el total.</div>
+            <div class="stp pnl" style="padding:15px; border-left:6px solid #FFCC80;"><b>2. Matematizar:</b> Hay que repetir 4 veces el número 125. (Multiplicación).</div>
+            <div class="stp pnl" style="padding:15px; border-left:6px solid #9DE3BD;"><b>3. Calcular:</b> 125 x 4 = 500 lápices.</div>
+            <div class="stp pnl" style="padding:15px; border-left:6px solid #9DDEFF;"><b>4. Interpretar:</b> El número 500 son "lápices en total".</div>
+            <div class="stp pnl" style="padding:15px; border-left:6px solid #CE93D8;"><b>5. Validar:</b> Estimamos 100x4=400. 500 está cerca y es mayor. ¡Tiene sentido!</div>
+        </div>
+    """)
 
-            <div style="display:flex; flex-direction:column; gap:10px; width:400px;">
-                <div class="stp pnl" style="padding:15px;">Paso 1: 5x4 = 20. Res.=2</div>
-                <div class="stp pnl" style="padding:15px;">Paso 2: Reserva 2</div>
-                <div class="stp pnl" style="padding:15px;">Paso 3: 5x0=0 (+2)= 2</div>
-                <div class="stp pnl" style="padding:15px;">Paso 4: 5x1= 5</div>
+    # --- PROBLEMA INVERSO ---
+    slide(f"""
+        <div class="head-title" style="background:#c2185b;">El Reto Inverso 🔄</div>
+        <div class="pnl-border" style="border-color:#c2185b; background:#fff0f5;">
+            <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:20px;">
+                Dada esta operación: <b style="font-size:48px; color:var(--base);">8 x 50</b>
+            </p>
+            <div class="stp" style="font-size:28px; text-align:center;">
+                ¡Invéntate una historia que se resuelva con ella!
+            </div>
+            
+            <div class="stp pnl" style="margin-top:30px; border:3px dashed #c2185b; background:#fff;">
+                <p style="font-size:24px; color:#555; margin-bottom:10px;">Un ejemplo de historia podría ser:</p>
+                <b style="font-size:26px; color:#c2185b;">"Compré 8 bolsas de dulces para mi cumpleaños. Si cada bolsa me costó $50 pesos, ¿Cuánto gasté en total?"</b>
+            </div>
+            
+            <div class="stp" style="font-size:26px; font-weight:800; margin-top:20px; color:#047857; text-align:center;">
+                ¡Atrévete a crear la tuya! 🖊️
             </div>
         </div>
     """)
@@ -578,12 +527,22 @@ def generate_html():
     html = f"""<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Multiplicación 3 - Interactivo</title><style>{css}</style></head>
 <body><div class="pb" id="pb"></div><div class="dk">{"".join(slides)}</div>
-<div class="nv"><button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button><div class="sc" id="sc">1 / {len(slides)}</div><button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button></div>
+<div class="nv">
+    <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+        <span class="sc" id="sc">1 / {len(slides)}</span>
+        <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="{len(slides)}" value="1" oninput="goToSlide(this.value)">
+    </div>
+    <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+</div>
 <script>{js}</script></body></html>"""
     
-    output_path = '/Users/brunonattino/Desktop/PAGINA TUTORIAS/SLIDES/multiplicaciones HTMLS/multiplicaciones_3.html'
+    import os
+    output_dir = '/Users/brunonattino/Desktop/PAGINA TUTORIAS/clases/cuarto-basico/multiplicacion'
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, 'multiplicaciones_3.html')
     with open(output_path, 'w', encoding='utf-8') as f: f.write(html)
-    print(f"Módulo 3 actualizado: {len(slides)} slides con explicaciones separadas y sin overlap.")
+    print(f"Módulo 3 generado: {len(slides)} slides en {output_path}")
 
 if __name__ == '__main__':
     generate_html()
