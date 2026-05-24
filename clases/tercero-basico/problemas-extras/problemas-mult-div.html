@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Multiplicación y División: Problemas Nivel Dios</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root {
+    --base: #1C4A82;
+    --bg: #f5f6f8;
+    --tx: #333;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--tx);
+}
+.dk { position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex; }
+.sl {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 36px 40px 82px;
+    opacity: 0;
+    transform: scale(.96);
+    transition: opacity .4s, transform .4s;
+    pointer-events: none;
+    z-index: 1;
+    overflow-y: auto;
+}
+.sl.on { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
+.sl.pv { opacity: 0; transform: translateX(-50px) scale(.95); }
+.sl.nx { opacity: 0; transform: translateX(50px) scale(.95); }
+.head-title {
+    background: var(--base);
+    color: white;
+    padding: 10px 40px;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    display: inline-block;
+    border-radius: 12px;
+    text-align: center;
+}
+.sub-text {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+    line-height: 1.4;
+}
+.pb { position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100; }
+.nv {
+    position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: white;
+    border-top: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; z-index: 100;
+}
+.nb {
+    background: #eee; color: var(--base); border: none; padding: 10px 20px; border-radius: 8px;
+    font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer; transition: all .2s;
+}
+.nb:hover { background: #ddd; }
+.nb:disabled { opacity: 0.3; cursor: not-allowed; }
+.sc { color: #888; font-size: 16px; font-weight: 900; }
+.stp {
+    opacity: 0; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;
+}
+.stp.shwn { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.pnl-border {
+    background: #fff; border: 4px solid var(--base); border-radius: 20px; padding: 24px; width: 100%;
+}
+.btn {
+    background: var(--base); color: white; border: none; padding: 14px 24px; border-radius: 12px;
+    font-size: 24px; font-weight: 900; cursor: pointer; transition: transform .2s; font-family: 'Nunito', sans-serif;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3); }
+
+/* Roulette CSS */
+.roulette-container {
+    position: relative;
+    width: 350px;
+    height: 350px;
+    margin: 20px auto 40px;
+}
+.roulette-wheel {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(
+        #FF5252 0deg 90deg, 
+        #448AFF 90deg 180deg, 
+        #FFEB3B 180deg 270deg, 
+        #69F0AE 270deg 360deg
+    );
+    border: 8px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: transform 4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+.wheel-labels {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+.wheel-label {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 20px;
+    font-size: 36px;
+    font-weight: 900;
+    color: #333;
+    transform-origin: 175px 155px; /* center of wheel taking border into account */
+}
+.wl-1 { transform: rotate(45deg); }
+.wl-2 { transform: rotate(135deg); }
+.wl-3 { transform: rotate(225deg); }
+.wl-4 { transform: rotate(315deg); }
+
+.roulette-pointer {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 40px solid #212121;
+    z-index: 10;
+    filter: drop-shadow(0 4px 4px rgba(0,0,0,0.3));
+}
+.roulette-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: #333;
+    border-radius: 50%;
+    z-index: 5;
+    border: 4px solid #fff;
+}
+
+.hero-emoji { font-size: 108px; margin-top: 28px; animation: bob 2.8s infinite; }
+@keyframes bob {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(4deg); }
+}
+
+.step-box {
+    background: #f7fbff; border-left: 8px solid var(--base); padding: 14px 16px;
+    border-radius: 14px; font-size: 24px; line-height: 1.4; font-weight: 700; margin-bottom: 16px;
+}
+.math-eq {
+    font-size: 42px; font-weight: 900; color: var(--base); background: #fff;
+    padding: 12px 30px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border: 3px dashed #bbdefb; margin: 12px; text-align: center;
+}
+.story-card {
+    width: 100%; border-radius: 28px; padding: 28px; display: grid;
+    grid-template-columns: 120px 1fr; gap: 24px; align-items: center;
+}
+.story-emoji { font-size: 114px; text-align: center; animation: bob 2.8s infinite; }
+.story-card h2 { font-size: 30px; margin-bottom: 12px; }
+.story-card p { font-size: 24px; line-height: 1.45; }
+</style>
+</head>
+<body>
+<div class="pb" id="pb"></div>
+<div class="dk" id="dk">
+
+    <!-- SLIDE 1: Portada -->
+    <div class="sl on">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <div class="hero-emoji">🎡</div>
+            <h1 style="font-size: 62px; color: var(--base); margin-bottom: 18px; text-align: center; line-height: 1.1;">El Desafío de la Ruleta<br>Problemas Nivel Dios</h1>
+            <p style="font-size: 28px; font-weight: 700; text-align: center; max-width: 720px;">Multiplicación y División combinadas</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: Explicación Visual 1 -->
+    <div class="sl">
+        <div class="head-title">De Cajas a Bolsas</div>
+        <p class="sub-text">Primero agrupamos todo, y luego lo volvemos a repartir.</p>
+        <div class="pnl-border" style="max-width:800px; margin-top:20px;">
+            <div style="font-size:26px; font-weight:800; color:#333; line-height:1.5; margin-bottom:20px;">
+                "Llegaron 3 cajas grandes con 10 dulces cada una. Queremos repartir todos los dulces equitativamente entre 5 amigos. ¿Cuántos recibe cada uno?"
+            </div>
+            <div class="stp" style="display:flex; justify-content:center; gap:20px; align-items:center;">
+                <div style="background:#FFF3E0; border:3px solid #F57C00; padding:20px; border-radius:16px; text-align:center; flex:1;">
+                    <b style="font-size:24px; color:#F57C00;">Paso 1: Total</b><br>
+                    <span style="font-size:32px; font-weight:900;">3 • 10 = 30</span><br>
+                    <span style="font-size:20px;">(Dulces en total)</span>
+                </div>
+                <div style="font-size:40px; color:var(--base);">➡️</div>
+                <div class="stp" style="background:#E8F5E9; border:3px solid #388E3C; padding:20px; border-radius:16px; text-align:center; flex:1;">
+                    <b style="font-size:24px; color:#388E3C;">Paso 2: Repartir</b><br>
+                    <span style="font-size:32px; font-weight:900;">30 : 5 = 6</span><br>
+                    <span style="font-size:20px;">(Dulces por amigo)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: Explicación Visual 2 -->
+    <div class="sl">
+        <div class="head-title">La Ecuación Combinada</div>
+        <p class="sub-text">También lo podemos escribir todo de una vez con paréntesis.</p>
+        <div class="math-eq" style="max-width:800px; margin-top:30px;">
+            <span style="color:#1976D2;">( 3 • 10 )</span> <span style="color:#D32F2F;">: 5</span> = <span style="color:#F57C00;">6</span>
+        </div>
+        <div class="stp step-box" style="margin-top:40px; max-width:800px;">
+            <b style="color:var(--base);">Regla de oro:</b> Lo que está dentro de los paréntesis <b>( )</b> se resuelve PRIMERO. Multiplicamos para hallar el total (30) y luego dividimos (: 5).
+        </div>
+    </div>
+
+    <!-- SLIDE 4: Ruleta Intro -->
+    <div class="sl">
+        <div class="head-title" style="background:#D32F2F;">La Ruleta de Operaciones</div>
+        <p class="sub-text">Gira la ruleta y resuelve el desafío aleatorio.</p>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <div class="hero-emoji" style="font-size:120px;">🎡</div>
+            <p style="font-size:28px; max-width:700px; margin-top:20px;">
+                La ruleta elegirá una operación combinada para ti.<br>
+                Tendrás que anotar el problema en tu cuaderno y encontrar la solución final.
+            </p>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: Roulette Game 1 -->
+    <div class="sl">
+        <div class="head-title" style="background:#D32F2F;">¡A Girar! #1</div>
+        
+        <div class="roulette-container">
+            <div class="roulette-pointer"></div>
+            <div class="roulette-center"></div>
+            <div class="roulette-wheel" id="wheel-1">
+                <div class="wheel-labels">
+                    <div class="wheel-label wl-1">1</div>
+                    <div class="wheel-label wl-2">2</div>
+                    <div class="wheel-label wl-3">3</div>
+                    <div class="wheel-label wl-4">4</div>
+                </div>
+            </div>
+        </div>
+        <button class="btn" style="background:#F57C00; font-size:32px; border-radius:50px; padding:15px 40px;" id="btn-spin-1" onclick="spinWheel(1)">¡GIRAR RULETA!</button>
+        
+        <div class="stp" style="margin-top:20px; width:100%; max-width:800px; text-align:center;">
+            <div id="challenge-1" style="font-size:36px; font-weight:900; color:var(--base); margin-top:15px; background:#fff; padding:15px; border-radius:15px; border:3px solid #ccc; display:none;">
+                ...
+            </div>
+            <button class="btn stp" id="btn-res-1" style="margin-top:10px; background:#4CAF50; display:none;" onclick="showRes(1)">Ver Respuesta</button>
+            <div id="res-1" style="font-size:30px; font-weight:900; color:#E65100; margin-top:10px; display:none;"></div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: Roulette Game 2 -->
+    <div class="sl">
+        <div class="head-title" style="background:#D32F2F;">¡A Girar! #2</div>
+        
+        <div class="roulette-container">
+            <div class="roulette-pointer"></div>
+            <div class="roulette-center"></div>
+            <div class="roulette-wheel" id="wheel-2">
+                <div class="wheel-labels">
+                    <div class="wheel-label wl-1">1</div>
+                    <div class="wheel-label wl-2">2</div>
+                    <div class="wheel-label wl-3">3</div>
+                    <div class="wheel-label wl-4">4</div>
+                </div>
+            </div>
+        </div>
+        <button class="btn" style="background:#F57C00; font-size:32px; border-radius:50px; padding:15px 40px;" id="btn-spin-2" onclick="spinWheel(2)">¡GIRAR RULETA!</button>
+        
+        <div class="stp" style="margin-top:20px; width:100%; max-width:800px; text-align:center;">
+            <div id="challenge-2" style="font-size:36px; font-weight:900; color:var(--base); margin-top:15px; background:#fff; padding:15px; border-radius:15px; border:3px solid #ccc; display:none;">
+                ...
+            </div>
+            <button class="btn stp" id="btn-res-2" style="margin-top:10px; background:#4CAF50; display:none;" onclick="showRes(2)">Ver Respuesta</button>
+            <div id="res-2" style="font-size:30px; font-weight:900; color:#E65100; margin-top:10px; display:none;"></div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: Abre tu cuaderno -->
+    <div class="sl">
+        <div class="head-title" style="background:#00ACC1;">Abre tu cuaderno</div>
+        <p class="sub-text">Problema de fábrica (Modelo CPRC).</p>
+        <div class="math-eq" style="font-size:28px; padding:20px; text-align:center;">
+            Una fábrica produce 4 cajas con 8 juguetes cada una. <br>
+            Luego, empacan todos los juguetes en bolsas de 4 juguetes para la venta.<br>
+            ¿Cuántas bolsas se usarán?<br>
+            <span style="font-size:20px; color:#555;">(Copia en tu cuaderno: Comprende, Planifica, Resuelve, Comprueba)</span>
+        </div>
+        <div class="stp" style="margin-top:20px; width:100%; max-width:800px;">
+            <div class="pnl-border" style="text-align:left; background:#E0F7FA; border-color:#00ACC1;">
+                <div style="font-size:24px; font-weight:900; color:#00838F; text-align:center;">¡Revisemos!</div>
+                <div style="font-size:20px; font-weight:800; color:#555; margin-top:10px; line-height:1.4;">
+                    <b style="color:var(--base);">C:</b> 4 cajas de 8. Se re-empacan en bolsas de a 4. Busco: número de bolsas.<br>
+                    <b style="color:var(--base);">P:</b> 1º Multiplico para hallar el total de juguetes. 2º Divido el total por 4.<br>
+                    <b style="color:var(--base);">R:</b> (4 • 8) : 4. Primero: 4•8=32. Luego: 32:4 = 8.<br>
+                    <b style="color:var(--base);">C:</b> 8 bolsas de 4 = 32. 4 cajas de 8 = 32. ¡Coincide! La respuesta es 8 bolsas.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: Ejercicios Propuestos -->
+    <div class="sl">
+        <div class="head-title">Ejercicios Propuestos</div>
+        <p class="sub-text">Anota las operaciones combinadas y resuelve en tu cuaderno.</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr; gap:20px; width:100%; max-width:800px;">
+            <div class="pnl-border" style="padding:16px;"><div style="font-size:22px; font-weight:900; color:var(--base);"><b>1.</b> (5 • 6) : 3 = ___</div></div>
+            <div class="pnl-border" style="padding:16px;"><div style="font-size:22px; font-weight:900; color:var(--base);"><b>2.</b> (8 • 4) : 4 = ___</div></div>
+            <div class="pnl-border" style="padding:16px;"><div style="font-size:22px; font-weight:900; color:var(--base);"><b>3.</b> Una caja trae 12 alfajores. Compré 3 cajas y los repartí entre 6 niños. ¿Cuántos le tocan a cada uno?</div></div>
+            <div class="pnl-border" style="padding:16px;"><div style="font-size:22px; font-weight:900; color:var(--base);"><b>4.</b> Juan tiene 4 paquetes con 5 cartas cada uno. Su amigo tiene el doble de cartas en total. ¿Cuántas cartas tiene su amigo?</div></div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: Respuestas -->
+    <div class="sl">
+        <div class="head-title">Respuestas</div>
+        <p class="sub-text">Revisa tus cálculos.</p>
+        <div class="stp" style="display:grid; grid-template-columns: 1fr; gap:20px; width:100%; max-width:800px;">
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:22px; font-weight:900; color:#059669;">1. 30 : 3 = <b>10</b></div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:22px; font-weight:900; color:#059669;">2. 32 : 4 = <b>8</b> <i>(Atajo: si multiplicas y divides por 4, quedas igual)</i></div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:22px; font-weight:900; color:#059669;">3. (12 • 3) : 6 = 36 : 6 = <b>6 alfajores</b></div>
+            </div>
+            <div class="pnl-border" style="padding:16px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:22px; font-weight:900; color:#059669;">4. (4 • 5) • 2 = 20 • 2 = <b>40 cartas</b></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 10: Problema de Aplicación -->
+    <div class="sl">
+        <div class="head-title">Problema de Aplicación</div>
+        <div class="story-card" style="background:#fff3e0; border:4px solid #ffb74d;">
+            <div class="story-emoji">🎭</div>
+            <div>
+                <h2>La Obra Escolar</h2>
+                <p>Para la obra de teatro se armaron <b>8 filas</b> con <b>5 sillas</b> en cada fila. <br>Al terminar la obra, el profesor pide que desarmen las filas y hagan grupos de a <b>10 sillas</b> para guardarlas más fácil. ¿Cuántos grupos se forman?</p>
+            </div>
+        </div>
+        <div class="stp" style="margin-top:20px; width:100%; max-width:800px;">
+            <div class="pnl-border" style="text-align:left;">
+                <p style="font-size:24px; margin-bottom:10px;"><b>Operación Combinada:</b> (8 • 5) : 10</p>
+                <p style="font-size:24px; margin-bottom:10px;">Paso 1: 8 • 5 = 40 sillas en total.</p>
+                <p style="font-size:24px; margin-bottom:10px;">Paso 2: 40 : 10 = 4 grupos.</p>
+                <p style="font-size:24px; color:#E65100; font-weight:900;">Respuesta: Se formarán 4 grupos de sillas.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 11: Desafío Supremo -->
+    <div class="sl">
+        <div class="head-title" style="background:linear-gradient(90deg, #9333EA, #db2777);">Desafío Supremo</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h2 style="font-size:42px; margin-bottom:20px; color:#9333EA;">💎 ObraCraft: La Mina de Diamantes</h2>
+            <p style="font-size:24px; text-align:center; max-width:800px; margin-bottom:30px;">
+                Un equipo de <b>4 mineros</b> encontró un túnel secreto con <b>5 cofres</b>. <br>
+                Cada cofre contenía exactamente <b>8 diamantes</b>. <br>
+                Si deciden repartirse todos los diamantes en partes iguales, ¿cuántos diamantes le tocan a cada minero?
+            </p>
+            <div class="stp" style="width:100%; max-width:700px; background:#222; border:6px solid #555; border-radius:12px; padding:20px; color:white; text-align:center; font-family:monospace;">
+                <p style="font-size:28px; color:#FFD700; margin-bottom:20px;">( 5 cofres • 8 diamantes ) : 4 mineros</p>
+                <div class="stp">
+                    <p style="font-size:24px; color:#aaa; margin-bottom:5px;">Paso 1 (Total): 5 • 8 = 40 diamantes</p>
+                    <p style="font-size:24px; color:#aaa; margin-bottom:20px;">Paso 2 (Reparto): 40 : 4 = 10</p>
+                    <p style="font-size:36px; font-weight:bold; color:#55FF55;">¡10 diamantes para cada minero! 🏆</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 12: Resumen -->
+    <div class="sl">
+        <div class="head-title">Resumen</div>
+        <div style="display:flex; flex-direction:column; gap:16px; max-width:800px; margin:0 auto;">
+            <div class="step-box" style="border-left-color:#047857;">
+                <b style="color:var(--base);">El poder de los paréntesis ( ):</b> Nos dicen qué operación debemos resolver primero para no equivocarnos.
+            </div>
+            <div class="step-box" style="border-left-color:#047857;">
+                <b style="color:var(--base);">Primero el Total, luego Repartir:</b> Muchos problemas te piden multiplicar para encontrar todo lo que tienes, y luego dividirlo entre personas o cajas.
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 13: Cierre -->
+    <div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <h2 style="font-size:48px; color:#047857; margin-bottom:20px;">¡Gran trabajo en la Feria!</h2>
+            <p style="font-size:28px; max-width:700px;">¡Ya dominas los problemas matemáticos más avanzados de todo Tercero Básico!</p>
+            <div class="hero-emoji">🎖️</div>
+        </div>
+    </div>
+
+</div>
+<div class="nv">
+    <button class="nb" id="b-p" onclick="go(-1)">⬅ Anterior</button>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+        <span class="sc" id="st">1 / X</span>
+        <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="100" value="1" oninput="goToSlide(this.value)">
+    </div>
+    <button class="nb" id="b-n" onclick="go(1)">Siguiente ➡</button>
+</div>
+<script>
+// Roulette Logic
+const challenges = [
+    { text: "( 4 • 6 ) : 3 =", res: "24 : 3 = 8" },
+    { text: "( 5 • 4 ) : 2 =", res: "20 : 2 = 10" },
+    { text: "( 2 • 9 ) : 6 =", res: "18 : 6 = 3" },
+    { text: "( 7 • 4 ) : 4 =", res: "28 : 4 = 7" }
+];
+
+let currentRotations = [0, 0, 0]; // Keep track of rotations for each wheel
+
+function spinWheel(id) {
+    const btn = document.getElementById('btn-spin-' + id);
+    if(btn.disabled) return;
+    btn.disabled = true;
+    
+    const wheel = document.getElementById('wheel-' + id);
+    const challengeDiv = document.getElementById('challenge-' + id);
+    const btnRes = document.getElementById('btn-res-' + id);
+    const resDiv = document.getElementById('res-' + id);
+    
+    // Hide previous results
+    challengeDiv.style.display = 'none';
+    btnRes.classList.remove('shwn');
+    btnRes.style.display = 'none';
+    resDiv.style.display = 'none';
+    
+    // Pick a random segment (0 to 3)
+    const segment = Math.floor(Math.random() * 4);
+    
+    // Calculate new rotation: Add 5 full spins + degrees to reach segment
+    // Segment 0 is top (between 315 and 45). To land there, rotate to ~0 deg.
+    // In our CSS: wl-1 is 45deg, wl-2 is 135deg, wl-3 is 225deg, wl-4 is 315deg
+    // The pointer is at TOP. 
+    // If we want wl-1 (red segment) to be at top, we rotate -45deg.
+    const segmentAngles = [-45, -135, -225, -315];
+    const extraSpins = 5 * 360;
+    
+    currentRotations[id] += extraSpins;
+    // We want the final angle to match the segment
+    const finalAngle = currentRotations[id] + segmentAngles[segment];
+    
+    wheel.style.transform = `rotate(${finalAngle}deg)`;
+    
+    // Wait for animation to finish
+    setTimeout(() => {
+        btn.textContent = "¡GIRAR DE NUEVO!";
+        btn.disabled = false;
+        
+        challengeDiv.textContent = challenges[segment].text;
+        challengeDiv.style.display = 'block';
+        resDiv.textContent = challenges[segment].res;
+        
+        btnRes.style.display = 'inline-block';
+        setTimeout(() => { btnRes.classList.add('shwn'); }, 100);
+        
+    }, 4000);
+}
+function showRes(id) {
+    document.getElementById('res-' + id).style.display = 'block';
+}
+
+const sls = document.querySelectorAll('.sl');
+const st = document.getElementById('st');
+const bp = document.getElementById('b-p');
+const bn = document.getElementById('b-n');
+const pb = document.getElementById('pb');
+let c = 0; const T = sls.length;
+function ui() {
+    sls.forEach((s, i) => {
+        s.className = 'sl ' + (i === c ? 'on' : i < c ? 'pv' : 'nx');
+    });
+    st.textContent = `${c + 1} / ${T}`;
+    pb.style.width = `${((c + 1) / T) * 100}%`;
+    bp.disabled = c === 0;
+    bn.disabled = c === T - 1;
+    let sl = document.getElementById('slide-slider');
+    if(sl) { sl.max = T; sl.value = c + 1; }
+}
+function goToSlide(n) {
+    let val = parseInt(n) - 1;
+    if (val >= 0 && val < T) {
+        c = val;
+        ui();
+    }
+}
+function go(d) {
+    if(d>0) {
+        const hid = sls[c].querySelectorAll('.stp:not(.shwn)');
+        if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+    } else {
+        const shw = sls[c].querySelectorAll('.stp.shwn');
+        if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+    }
+    const n = c + d;
+    if(n >= 0 && n < T) { c = n; ui(); }
+}
+document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') go(1);
+    if (e.key === 'ArrowLeft') go(-1);
+});
+ui();
+</script>
+</body>
+</html>
