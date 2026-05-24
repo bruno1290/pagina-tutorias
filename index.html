@@ -3300,25 +3300,21 @@
             // Limpiar opciones
             select.innerHTML = '<option value="">Selecciona la presentación dictada...</option>';
             
+            let filteredModules = [];
             if (curso === "4") {
-                // Clases de 4to básico
-                MODULES.forEach(m => {
-                    const opt = document.createElement('option');
-                    opt.value = m.title;
-                    opt.textContent = m.title;
-                    select.appendChild(opt);
-                });
+                // Clases de 4to básico (no terminan en _3)
+                filteredModules = MODULES.filter(m => !m.topic.endsWith('_3'));
             } else if (curso === "3") {
-                // Clases de 3ro básico (Placeholder hasta que se agreguen a MODULES)
-                const optPlaceholder = document.createElement('option');
-                optPlaceholder.value = 'Próximamente material 3ro';
-                optPlaceholder.textContent = 'Próximamente material 3ro...';
-                select.appendChild(optPlaceholder);
-                
-                // Si en el futuro agregas clases de 3ro a MODULES, puedes filtrarlas aquí, 
-                // por ejemplo agregando un campo "curso: 3" a cada objeto y haciendo:
-                // MODULES.filter(m => m.curso === 3).forEach(...)
+                // Clases de 3ro básico (terminan en _3)
+                filteredModules = MODULES.filter(m => m.topic.endsWith('_3'));
             }
+            
+            filteredModules.forEach(m => {
+                const opt = document.createElement('option');
+                opt.value = m.title;
+                opt.textContent = m.title;
+                select.appendChild(opt);
+            });
             
             if (curso !== "") {
                 const optOther = document.createElement('option');
