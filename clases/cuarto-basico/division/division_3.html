@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>División Módulo 3</title><style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+    :root {
+        --base: #1C4A82;
+        --bg: #f5f6f8;
+        --tx: #333;
+    }
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family: 'Nunito', sans-serif; background: var(--bg); overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; color: var(--tx);}
+    .dk {position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex;}
+    
+    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 36px 40px 82px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1;}
+    .sl.on {opacity: 1; transform: scale(0.9); pointer-events: auto; z-index: 10;}
+    .sl.pv {opacity: 0; transform: translateX(-50px) scale(.95);}
+    .sl.nx {opacity: 0; transform: translateX(50px) scale(.95);}
+    
+    .head-title {background: var(--base); color: white; padding: 10px 40px; font-size: 32px; font-weight: 900; margin-bottom: 30px; display: inline-block; border-radius: 12px; text-align: center;}
+    .sub-text {font-size: 26px; font-weight: 600; margin-bottom: 25px; text-align: center;}
+    
+    .pb {position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100;}
+    .nv {position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: white; border-top: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; z-index: 100;}
+    .nb {background: #eee; color: var(--base); border: none; padding: 10px 20px; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer; transition: all .2s;}
+    .nb:hover {background: #ddd;}
+    .nb:disabled {opacity: 0.3; cursor: not-allowed;}
+    .sc {color: #888; font-size: 16px; font-weight: 900;}
+    
+    .stp {opacity: 0; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;}
+    .stp.shwn {opacity: 1; transform: translateY(0); pointer-events: auto;}
+    
+    .pnl {background: #fff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 3px solid #eaeaea; width: 100%; margin-bottom: 20px;}
+    .pnl-border {background: #fff; border: 4px solid var(--base); border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; width: 100%;}
+    .hl {color: var(--base); font-weight: 900;}
+    
+    .btn {background: var(--base); color: white; border: none; padding: 14px 28px; border-radius: 12px; font-size: 20px; font-weight: 900; cursor: pointer; transition: transform .2s; font-family: 'Nunito', sans-serif;}
+    .btn:hover {transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3);}
+    
+    .math-eq {font-size: 48px; font-weight: 900; color: var(--base); background: #fff; padding: 10px 30px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); border: 3px dashed #bbdefb; margin: 15px;}
+    
+    .card-row {display: flex; justify-content: center; gap: 18px; width: 100%; flex-wrap: wrap;}
+    .idea-card {flex: 1 1 220px; background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%); border-radius: 18px; padding: 18px; border: 3px solid #d7e7f7; min-height: 220px;}
+    .idea-card h3 {font-size: 28px; color: var(--base); margin-bottom: 10px; text-align: center;}
+    
+    .count-board {display: flex; justify-content: center; gap: 20px; width: 100%; flex-wrap: wrap;}
+    .count-card {flex: 1 1 260px; background: linear-gradient(180deg, #ffffff 0%, #f6fbff 100%); border-radius: 22px; padding: 20px; border: 4px solid #d6e8f8; box-shadow: 0 12px 24px rgba(0,0,0,0.06); text-align: center;}
+    .count-card h3 {font-size: 28px; margin-bottom: 12px; color: var(--base);}
+    .emoji-pack {display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; min-height: 86px; margin-bottom: 12px;}
+    
+    .mini-chip {background: #eef5ff; border: 2px solid #b6d4f3; border-radius: 999px; padding: 12px 18px; font-size: 20px; font-weight: 800;}
+    
+    .decomp-flow {display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; width: 100%; align-items: center;}
+    .decomp-box {background: #fff; border: 3px solid #d4e6f7; border-radius: 18px; padding: 14px 18px; font-size: 28px; font-weight: 900; color: var(--base);}
+    .arrow {font-size: 34px; font-weight: 900; color: #4d6d94;}
+    
+    .fact-grid {display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; width: 100%;}
+    .fact-box {background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%); border-radius: 18px; padding: 16px; border: 3px solid #d8e7f6; min-height: 170px;}
+    .fact-box h4 {font-size: 24px; margin-bottom: 10px; text-align: center;}
+    
+    .story-card {width: 100%; border-radius: 28px; padding: 28px; display: grid; grid-template-columns: 120px 1fr; gap: 24px; align-items: center; background: #fff;}
+    .story-emoji {font-size: 114px; text-align: center;}
+    </style></head>
+<body><div class="pb" id="pb"></div><div class="dk"><div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 style="font-size:68px; color:var(--base); margin-bottom:18px; text-align:center; line-height:1;">¡División 3! 🧩</h1>
+            <p style="font-size:28px; font-weight:700; text-align:center; max-width:720px;">Problemas verbales, el modelo de los 5 pasos, interpretar el resto y decidir qué operación usar.</p>
+            <div style="font-size:108px; margin-top:28px;">🕵️‍♀️</div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">El verdadero Superpoder 🦸‍♂️</div>
+        <div class="story-card" style="border:5px solid #FFB74D; background:#fffbf4;">
+            <div class="story-emoji">🌎</div>
+            <div>
+                <h2 style="color:#e65100; font-size:32px;">Saber calcular vs Saber CUÁNDO</h2>
+                <p style="font-size:24px;">Saber hacer el algoritmo de la división está súper bien, pero no sirve de nada si en el supermercado no sabes qué operación usar para saber cuánto cuesta un yogurt.</p>
+                <div class="stp" style="margin-top:15px;">
+                    <p style="font-size:24px; font-weight:800; color:#e65100;">El verdadero superpoder de las matemáticas es leer un problema de la vida real y decir: "¡Ah! ¡Aquí tengo que dividir!"</p>
+                </div>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">El Modelo de los 5 Pasos</div>
+        <p class="sub-text">Para resolver problemas como verdaderos detectives, usamos este mapa.</p>
+        <div class="fact-grid">
+            <div class="fact-box stp" style="border-color:#FF9D9D;">
+                <h4 style="color:#b91c1c;">1. Comprende</h4>
+                <p>¿Qué me preguntan? ¿Cuáles son los datos clave?</p>
+            </div>
+            <div class="fact-box stp" style="border-color:#FFB74D;">
+                <h4 style="color:#e65100;">2. Matematiza</h4>
+                <p>¿Qué operación necesito? (Multiplicar, Dividir, etc).</p>
+            </div>
+            <div class="fact-box stp" style="border-color:#FFE082;">
+                <h4 style="color:#f57f17;">3. Plantea</h4>
+                <p>Escribo el cálculo (ej: 45 : 3) y lo resuelvo.</p>
+            </div>
+            <div class="fact-box stp" style="border-color:#9DE3BD;">
+                <h4 style="color:#047857;">4. Interpreta</h4>
+                <p>Escribo la respuesta con palabras. ¿Qué significa ese número?</p>
+            </div>
+            <div class="fact-box stp" style="border-color:#9DDEFF;">
+                <h4 style="color:#1C4A82;">5. Valida</h4>
+                <p>Compruebo si tiene sentido en la vida real.</p>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">Dos formas de dividir</div>
+        <p class="sub-text">La división sirve para dos situaciones distintas pero muy parecidas.</p>
+        <div style="display:flex; justify-content:space-around; width:100%; gap:20px;">
+            <div class="pnl-border" style="border-color:#FFB74D;">
+                <h3 style="color:#e65100; margin-bottom:15px; font-size:32px;">Reparto Equitativo</h3>
+                <p style="font-size:22px; text-align:center;">Conozco el total y la cantidad de grupos. <b>Busco cuántos van en cada grupo.</b></p>
+                <div class="stp" style="margin-top:20px; font-style:italic; font-size:20px; background:#fffbf4; padding:10px; border-radius:10px;">Ej: "Tengo 50 entradas y 2 cursos. ¿Cuántas para cada curso?"</div>
+            </div>
+            <div class="pnl-border stp" style="border-color:#9DE3BD;">
+                <h3 style="color:#047857; margin-bottom:15px; font-size:32px;">Agrupación</h3>
+                <p style="font-size:22px; text-align:center;">Conozco el total y cuántos quiero poner por grupo. <b>Busco cuántos grupos formaré.</b></p>
+                <div class="stp" style="margin-top:20px; font-style:italic; font-size:20px; background:#f4fff7; padding:10px; border-radius:10px;">Ej: "Tengo 84 huevos y cajas de 6. ¿Cuántas cajas necesito?"</div>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">Interpretar el Resto 🚌</div>
+        <div class="story-card" style="border:5px solid #FF9D9D;">
+            <div class="story-emoji">🧑‍🎓</div>
+            <div>
+                <h2 style="color:#b91c1c; font-size:32px;">El viaje de curso</h2>
+                <p style="font-size:24px;">53 estudiantes van de paseo al Cajón del Maipo. Los mini-buses de la empresa son para exactamente 8 personas cada uno.</p>
+                <div class="stp" style="margin-top:15px;">
+                    <p style="font-size:24px; font-weight:800; color:#b91c1c;">¿Cuántos buses se necesitan arrendar en total?</p>
+                </div>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">Resolviendo el viaje 🚌</div>
+        <div class="pnl-border" style="background:#fff7f7; border-color:#FF9D9D;">
+            <div class="math-eq" style="font-size:42px;">53 ÷ 8 = 6 y sobran 5</div>
+            <div class="stp" style="margin-top:20px;">
+                <p style="font-size:28px;">El <b>6</b> significa que se llenan 6 buses completos de pasajeros.</p>
+            </div>
+            <div class="stp" style="margin-top:20px;">
+                <p style="font-size:28px; color:#b91c1c; font-weight:800;">El <b>5</b> es el resto: ¡Son 5 estudiantes que quedaron sin asiento!</p>
+            </div>
+            <div class="stp" style="margin-top:20px; background:#FF9D9D; color:white; padding:15px; border-radius:10px;">
+                <p style="font-size:26px; font-weight:900; text-align:center;">Respuesta (Interpretar): Se necesitan 7 buses. (6 llenos + 1 para los 5 que sobraron, no los vamos a dejar abajo).</p>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">¿Qué hacemos con el resto? 🤔</div>
+        <p class="sub-text">Depende de la historia. A veces te obliga a agregar uno más (buses) y a veces se descarta.</p>
+        <div class="card-row">
+            <div class="idea-card stp" style="border-color:#9DE3BD;">
+                <h3 style="color:#047857; font-size:32px;">Se agrega uno extra</h3>
+                <p style="font-size:22px;"><b>Buses, mesas, cajas:</b> Si sobra alguien o algo, necesitas un bus/mesa/caja más para no dejarlos tirados en el suelo.</p>
+            </div>
+            <div class="idea-card stp" style="border-color:#FFB74D;">
+                <h3 style="color:#e65100; font-size:32px;">Se descarta</h3>
+                <p style="font-size:22px;"><b>Pulseras, comprar juguetes:</b> Si te sobran 3 cuentas y necesitas 5 para hacer una pulsera, no puedes armarla. Esas 3 simplemente sobran.</p>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title" style="background:#1976D2;">Abre tu cuaderno 📓</div>
+        <div class="pnl-border" style="border-color:#1976D2;">
+            <p style="font-size:32px; font-weight:800; margin-bottom:20px; text-align:center;">¿Qué hacemos con el resto aquí?</p>
+            <div style="font-size:24px; text-align:center; max-width:800px; margin-bottom:20px;">
+                "Tengo $35 pesos y los alfajores valen $10 cada uno. Compré 3 alfajores y me sobraron $5 pesos."
+            </div>
+            <div class="stp" style="display:flex; justify-content:center; gap:40px; margin-top:20px;">
+                <div class="mini-chip" style="font-size:24px; background:#FF9D9D; border-color:#b91c1c; color:#b91c1c;">A) Agrego 1 alfajor extra</div>
+                <div class="mini-chip" style="font-size:24px; background:#9DE3BD; border-color:#047857; color:#047857;">B) Lo descarto (me lo guardo)</div>
+            </div>
+            <div class="stp" style="width:100%; text-align:center; margin-top:30px;">
+                <div style="font-size:26px; font-weight:800; color:#047857;">¡La B! El kiosquero no te va a dar un alfajor por $5 pesos. Los guardas en tu bolsillo.</div>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">Problema de Agrupación 🧀</div>
+        <div class="story-card" style="border:5px solid #FFE082;">
+            <div class="story-emoji">🐐</div>
+            <div>
+                <h2 style="color:#f57f17; font-size:32px;">Queso de cabra sureño</h2>
+                <p style="font-size:24px;">En una parcela, para hacer 1 kilo de queso de cabra se necesitan 8 Litros de leche pura.</p>
+                <div class="stp" style="margin-top:15px;">
+                    <p style="font-size:24px; font-weight:800;">¿Cuántos kilos completos se pueden hacer con 96 Litros de leche?</p>
+                </div>
+                <div class="stp" style="margin-top:15px; background:#fff8e1; padding:15px; border-radius:10px;">
+                    <p style="font-size:26px; font-weight:900;">Cálculo: 96 ÷ 8 = 12.</p>
+                    <p style="font-size:24px; margin-top:10px;">Respuesta: Se pueden hacer exactamente 12 kilos.</p>
+                </div>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title" style="background:#e53935;">¡Encuentra el Error! 🚨</div>
+        <div class="story-card" style="border:5px solid #FF9D9D;">
+            <div class="story-emoji">🤷‍♂️</div>
+            <div>
+                <h2 style="color:#b91c1c; font-size:32px;">El cumpleaños de Martina</h2>
+                <p style="font-size:24px;">Problema: "Martina compró 48 globos y los repartió en 4 mesas por igual. ¿Cuántos globos hay por mesa?"</p>
+                <p style="font-size:24px; margin-top:10px;">El amigo de Martina resolvió: <b>48 x 4 = 192 globos por mesa.</b></p>
+                <div class="stp" style="margin-top:15px;">
+                    <p style="font-size:24px; font-weight:800; color:#047857;">¿Qué hizo mal y por qué la respuesta no tiene sentido?</p>
+                </div>
+                <div class="stp" style="margin-top:15px; background:#D1FAE5; padding:15px; border-radius:10px;">
+                    <p style="font-size:22px; font-weight:700;">Usó multiplicación en vez de división. ¡No tiene sentido que haya 192 globos por mesa si en total solo compró 48! Lo correcto era 48 ÷ 4 = 12 globos por mesa.</p>
+                </div>
+            </div>
+        </div>
+    </div><div class="sl">
+            <div class="head-title">¿Multiplicar o Dividir? 🧐</div>
+            <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+                <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">Tengo 5 cajas con 8 lápices cada una. ¿Cuántos lápices hay en total?</p>
+                <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;"><button class="btn" onclick="chkAns(this, true, '¡Bien! Si quieres encontrar un total gigante a partir de grupos pequeños, multiplicas.')">Multiplicar (5 x 8)</button><button class="btn" onclick="chkAns(this, false, '¡Bien! Si quieres encontrar un total gigante a partir de grupos pequeños, multiplicas.')">Dividir (8 : 5)</button><button class="btn" onclick="chkAns(this, false, '¡Bien! Si quieres encontrar un total gigante a partir de grupos pequeños, multiplicas.')">Dividir (5 : 8)</button></div>
+                <div class="msg-area" style="font-size:24px; font-weight:900; text-align:center; margin-top:20px; min-height:40px;"></div>
+            </div>
+        </div><div class="sl">
+            <div class="head-title">¿Multiplicar o Dividir? 🧐</div>
+            <div class="pnl-border" style="border-color:#d63384; background:#fff7fb;">
+                <p style="font-size:32px; font-weight:800; text-align:center; margin-bottom:24px;">Tengo 40 lápices en total y los quiero guardar en 5 cajas iguales. ¿Cuántos van por caja?</p>
+                <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;"><button class="btn" onclick="chkAns(this, false, '¡Excelente! Conoces el total gigante y quieres repartirlo en grupos pequeños. Divides.')">Multiplicar (40 x 5)</button><button class="btn" onclick="chkAns(this, true, '¡Excelente! Conoces el total gigante y quieres repartirlo en grupos pequeños. Divides.')">Dividir (40 : 5)</button><button class="btn" onclick="chkAns(this, false, '¡Excelente! Conoces el total gigante y quieres repartirlo en grupos pequeños. Divides.')">Dividir (5 : 40)</button></div>
+                <div class="msg-area" style="font-size:24px; font-weight:900; text-align:center; margin-top:20px; min-height:40px;"></div>
+            </div>
+        </div><div class="sl">
+        <div class="head-title">Problema Inverso 💡</div>
+        <p class="sub-text">¡Ahora tú eres el profesor! Observa esta división e inventa una historia real.</p>
+        <div class="pnl-border" style="border-color:#9DDEFF; background:#f4f9ff;">
+            <div class="math-eq" style="font-size:54px;">96 ÷ 3 = 32</div>
+            <div class="stp" style="margin-top:20px; width:100%;">
+                <p style="font-size:26px; font-weight:800; color:#1C4A82;">Pistas para armar tu historia en tu cuaderno:</p>
+                <ul style="font-size:24px; color:#333; margin-left:40px; margin-top:10px;">
+                    <li>Piensa en tu colegio o un cumpleaños.</li>
+                    <li>Tienes 96 (lápices, globos, estudiantes).</li>
+                    <li>Hay 3 (cursos, mesas, cajas).</li>
+                    <li>¿Qué te respondería el número 32 al final de la historia?</li>
+                </ul>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">¡Hora de ser detectives!</div>
+        <p class="sub-text">A continuación, enfrentarás 6 problemas verbales en tu cuaderno.</p>
+        <div class="fact-grid">
+            <div class="fact-box stp" style="border-color:#FFE082;">
+                <h4>Lee bien</h4>
+                <p>Identifica si te piden multiplicar un total o repartirlo.</p>
+            </div>
+            <div class="fact-box stp" style="border-color:#9DE3BD;">
+                <h4>Anota el cálculo</h4>
+                <p>No pongas solo el resultado. Muestra qué operación elegiste (Ej: 20 ÷ 4 = 5).</p>
+            </div>
+            <div class="fact-box stp" style="border-color:#E1BEE7;">
+                <h4>Ojo al resto</h4>
+                <p>Si la división es inexacta, mira bien qué te pregunta el problema.</p>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title" style="background:#F57C00;">Misión de Entrenamiento ✍️</div>
+        <p class="sub-text">Escribe solo el <b>cálculo</b> y la <b>respuesta con palabras</b> en tu cuaderno.</p>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; width:100%;">
+            <div class="pnl-border" style="display:flex; flex-direction:column; justify-content:center; align-items:center; padding:15px; border-color:#FF9D9D;">
+                <div style="font-size:20px; font-weight:700; text-align:center;">1) Tomás tiene 27 dulces y los reparte a 4 amigos. ¿Cuántos le tocan a cada uno?</div>
+                <div style="font-size:24px; font-weight:900; color:#b91c1c; border-bottom:3px solid #b91c1c; width:150px; text-align:center; margin-top:10px;">?</div>
+            </div>
+            <div class="pnl-border" style="display:flex; flex-direction:column; justify-content:center; align-items:center; padding:15px; border-color:#FF9D9D;">
+                <div style="font-size:20px; font-weight:700; text-align:center;">2) Del problema anterior, ¿cuántos dulces sobraron en la bolsa de Tomás?</div>
+                <div style="font-size:24px; font-weight:900; color:#b91c1c; border-bottom:3px solid #b91c1c; width:150px; text-align:center; margin-top:10px;">?</div>
+            </div>
+            <div class="pnl-border" style="display:flex; flex-direction:column; justify-content:center; align-items:center; padding:15px; border-color:#FFB74D;">
+                <div style="font-size:20px; font-weight:700; text-align:center;">3) 35 estudiantes de campamento duermen en carpas de a 4. ¿Cuántas carpas necesitan arrendar?</div>
+                <div style="font-size:24px; font-weight:900; color:#e65100; border-bottom:3px solid #e65100; width:150px; text-align:center; margin-top:10px;">?</div>
+            </div>
+            <div class="pnl-border" style="display:flex; flex-direction:column; justify-content:center; align-items:center; padding:15px; border-color:#FFB74D;">
+                <div style="font-size:20px; font-weight:700; text-align:center;">4) Para hacer un collar se usan 8 perlas. Con 50 perlas, ¿cuántos collares completos puedo armar?</div>
+                <div style="font-size:24px; font-weight:900; color:#e65100; border-bottom:3px solid #e65100; width:150px; text-align:center; margin-top:10px;">?</div>
+            </div>
+            <div class="pnl-border" style="display:flex; flex-direction:column; justify-content:center; align-items:center; padding:15px; border-color:#9DDEFF;">
+                <div style="font-size:20px; font-weight:700; text-align:center;">5) Carolina entrena gimnasia 8 min al día y lleva 96 min acumulados. ¿Cuántos días ha entrenado?</div>
+                <div style="font-size:24px; font-weight:900; color:#1C4A82; border-bottom:3px solid #1C4A82; width:150px; text-align:center; margin-top:10px;">?</div>
+            </div>
+            <div class="pnl-border" style="display:flex; flex-direction:column; justify-content:center; align-items:center; padding:15px; border-color:#9DDEFF;">
+                <div style="font-size:20px; font-weight:700; text-align:center;">6) Inventa en 1 línea un problema corto para esta división: 20 ÷ 5 = 4</div>
+                <div style="font-size:24px; font-weight:900; color:#1C4A82; border-bottom:3px solid #1C4A82; width:150px; text-align:center; margin-top:10px;">?</div>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title" style="background:#047857;">Revisión de la Misión ✔️</div>
+        <p class="sub-text">Revisa tus cálculos e interpretaciones de los problemas:</p>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; width:100%;">
+            <div class="pnl-border stp" style="display:flex; flex-direction:column; justify-content:center; align-items:center; padding:15px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:22px; font-weight:900; color:#059669; text-align:center;">1) 27 ÷ 4 = 6. Le tocan 6 dulces a cada amigo.</div>
+            </div>
+            <div class="pnl-border stp" style="display:flex; flex-direction:column; justify-content:center; align-items:center; padding:15px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:22px; font-weight:900; color:#059669; text-align:center;">2) Resto = 3. Sobraron 3 dulces en la bolsa de Tomás.</div>
+            </div>
+            <div class="pnl-border stp" style="display:flex; flex-direction:column; justify-content:center; align-items:center; padding:15px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:22px; font-weight:900; color:#059669; text-align:center;">3) 35 ÷ 4 = 8 resto 3. Necesitan 9 carpas (1 extra para los 3 que sobran).</div>
+            </div>
+            <div class="pnl-border stp" style="display:flex; flex-direction:column; justify-content:center; align-items:center; padding:15px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:22px; font-weight:900; color:#059669; text-align:center;">4) 50 ÷ 8 = 6 resto 2. Alcanza para 6 collares. (Los 2 sueltos se descartan).</div>
+            </div>
+            <div class="pnl-border stp" style="display:flex; flex-direction:column; justify-content:center; align-items:center; padding:15px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:22px; font-weight:900; color:#059669; text-align:center;">5) 96 ÷ 8 = 12 días de entrenamiento.</div>
+            </div>
+            <div class="pnl-border stp" style="display:flex; flex-direction:column; justify-content:center; align-items:center; padding:15px; background:#D1FAE5; border-color:#059669;">
+                <div style="font-size:22px; font-weight:900; color:#059669; text-align:center;">6) "Tengo 20 globos, los reparto en 5 mesas..."</div>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">Problema Integrador: La Rifa Escolar 🎟️</div>
+        <div class="story-card" style="border:5px solid #9DDEFF; background:#f4f9ff;">
+            <div class="story-emoji">💸</div>
+            <div>
+                <h2 style="color:#1C4A82; font-size:32px;">Premios compartidos</h2>
+                <p style="font-size:22px;">El 4° Básico organizó una rifa. Se recaudaron $87 en monedas y ganaron 5 personas en un empate mágico. Van a repartir el dinero de forma equitativa.</p>
+                <div class="stp" style="margin-top:15px;">
+                    <p style="font-size:22px; font-weight:800; color:#1C4A82;">1. ¿Cuánto recibe cada uno?</p>
+                    <p style="font-size:22px; font-weight:800; color:#1C4A82;">2. ¿Sobró dinero? ¿Cuánto?</p>
+                </div>
+                <div class="stp" style="margin-top:15px; background:#fff; padding:15px; border-radius:10px;">
+                    <p style="font-size:22px; font-weight:800;">87 ÷ 5 = 17 y sobran 2. Cada ganador recibe $17 y sobran $2 que quedan en la caja directiva.</p>
+                </div>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title" style="background:linear-gradient(90deg, #6a1b9a, #d50000);">Desafío Supremo ⚔️</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <h1 style="font-size:64px; color:#4a148c; margin-bottom:20px;">Mundo ObraCraft ⛏️</h1>
+            <p style="font-size:28px; font-weight:700; max-width:720px;">Llegaste a la Aldea del Comercio. El Aldeano Mercader tiene un enigma para ti antes de darte sus herramientas encantadas.</p>
+            <div style="font-size:120px; margin-top:20px;">🗿</div>
+            <p class="stp" style="font-size:24px; margin-top:20px; font-weight:800; color:#b91c1c;">¡Usa tus 5 pasos para resolver su enigma y ganar!</p>
+        </div>
+    </div><div class="sl">
+        <div class="head-title" style="background:linear-gradient(90deg, #6a1b9a, #d50000);">Desafío Supremo ⚔️</div>
+        <div class="pnl-border" style="border-color:#8E44AD; background:#fdfaff;">
+            <div style="font-size:80px; text-align:center;">🧩</div>
+            <p style="font-size:26px; text-align:center; font-weight:700; margin-bottom:20px;">"Forastero, tengo <b style="color:#1C4A82;">94 esmeraldas</b>. Para venderte un pico de diamante necesito que me entregues paquetes exactos de <b style="color:#1C4A82;">8 esmeraldas</b> cada uno."</p>
+            <div class="stp" style="background:#fff; border:3px dashed #8E44AD; padding:20px; border-radius:15px; width:100%; text-align:center;">
+                <p style="font-size:26px; font-weight:900; margin-bottom:10px;">1) ¿Cuántos paquetes exactos de 8 podrás armarle?</p>
+                <p style="font-size:26px; font-weight:900; margin-bottom:10px;">2) Él no acepta esmeraldas sueltas. ¿Cuántas te sobran para guardarte?</p>
+            </div>
+            <div class="stp" style="margin-top:20px; text-align:center;">
+                <p style="font-size:24px; font-weight:800; color:#4a148c;">¡Haz el cálculo en tu cuaderno rápido!</p>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title" style="background:linear-gradient(90deg, #6a1b9a, #d50000);">Desafío Supremo ⚔️</div>
+        <div style="flex:1; display:flex; gap:40px; justify-content:center; align-items:center;">
+            <div style="flex:1; text-align:center;">
+                <div style="font-size:120px; margin-bottom:20px;">✅⛏️</div>
+                <h1 style="font-size:40px; color:#4a148c; margin-bottom:20px;">Le armas 11 paquetes.</h1>
+                <p style="font-size:24px; font-weight:700; color:#e65100;">Y te guardas 6 esmeraldas sueltas que sobraron en tu bolsillo.</p>
+                <p style="font-size:20px; color:#047857; margin-top:15px; font-weight:800;">¡Has conseguido el Pico de Diamante Encantado!</p>
+            </div>
+            <div style="flex:1; display:flex; justify-content:center; align-items:center;">
+                <div class="alg-container" style="border-color:#4a148c; background:#fdfaff; font-size:32px;">
+                    <div class="alg-row"><span>9'4</span> <span>: 8 =</span> <span class="hl" style="color:#047857;">11</span></div>
+                    <div class="alg-row"><span style="color:#b91c1c;">-8</span></div>
+                    <div class="alg-line"></div>
+                    <div class="alg-row"><span>14</span></div>
+                    <div class="alg-row"><span style="color:#b91c1c;">-8</span></div>
+                    <div class="alg-line"></div>
+                    <div class="alg-row"><span>6</span></div>
+                </div>
+            </div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title">Resumen del Módulo</div>
+        <div style="display:flex; flex-direction:column; gap:15px; width:100%;">
+            <div class="stp pnl" style="padding:15px; font-size:22px;"><b>1. Los 5 Pasos:</b> Comprende, Matematiza, Plantea, Interpreta, Valida. Úsalos siempre.</div>
+            <div class="stp pnl" style="padding:15px; font-size:22px;"><b>2. Multiplicar vs Dividir:</b> Multiplicar para hallar el total gigante; Dividir para repartir en grupos chicos.</div>
+            <div class="stp pnl" style="padding:15px; font-size:22px;"><b>3. El dilema del Resto:</b> A veces el resto nos obliga a usar un bus o caja extra (se suma 1). Otras veces, lo que sobra no alcanza para armar el collar y se descarta (te lo guardas).</div>
+        </div>
+    </div><div class="sl">
+        <div class="head-title" style="background:#047857;">¡Módulo 3 Completado!</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:38px; font-weight:800; max-width:780px;">Te has convertido en un maestro de la división. Puedes resolver cualquier problema de la vida real usando las matemáticas.</p>
+            <div style="font-size:120px; margin-top:30px;">🎓🥇</div>
+        </div>
+    </div></div>
+<div class="nv">
+    <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+        <span class="sc" id="sc">1 / 22</span>
+        <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="22" value="1" oninput="goToSlide(this.value)">
+    </div>
+    <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+</div>
+<script>
+    const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+    function ui() {
+        S.forEach((s,i)=>{
+            s.classList.remove('on','pv','nx');
+            if(i===c) s.classList.add('on');
+            else if(i<c) s.classList.add('pv');
+            else s.classList.add('nx');
+        });
+        document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+        document.getElementById('sc').textContent=`${c+1} / ${T}`;
+        document.getElementById('pv').disabled=c===0;
+        document.getElementById('nx').disabled=c===T-1;
+        let sl = document.getElementById('slide-slider');
+        if(sl) { sl.max = T; sl.value = c + 1; }
+    }
+    function goToSlide(n) {
+        let val = parseInt(n) - 1;
+        if (val >= 0 && val < T) {
+            c = val;
+            ui();
+        }
+    }
+    function go(d) {
+        if(d>0) {
+            const hid = S[c].querySelectorAll('.stp:not(.shwn)');
+            if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+        } else {
+            const shw = S[c].querySelectorAll('.stp.shwn');
+            if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+        }
+        const n=c+d; if(n>=0 && n<T) { c=n; ui(); }
+    }
+    document.addEventListener('keydown', e => {
+        if(e.key==='ArrowRight' || e.key===' ') go(1);
+        if(e.key==='ArrowLeft') go(-1);
+    });
+    ui();
+    
+    function chkAns(btn, correct, exp) {
+        let wrap = btn.closest('.sl');
+        let msg = wrap.querySelector('.msg-area');
+        let buttons = wrap.querySelectorAll('.btn');
+        buttons.forEach(b => { b.disabled = false; b.style.transform = 'scale(1)'; b.style.background = 'var(--base)'; });
+        
+        if (correct) {
+            btn.style.background = '#047857';
+            btn.style.transform = 'scale(1.06)';
+            msg.innerHTML = `¡Excelente! ✅ ${exp}`;
+            msg.style.color = '#047857';
+        } else {
+            btn.style.background = '#b91c1c';
+            msg.innerHTML = '¡Inténtalo de nuevo! Revisa tu cálculo.';
+            msg.style.color = '#b91c1c';
+        }
+    }
+    </script></body></html>
