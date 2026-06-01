@@ -2563,17 +2563,30 @@
 
             const btn = document.getElementById('drSaveBtn');
             const status = document.getElementById('drStatus');
-            const date = document.getElementById('drDate').value;
-            const att = document.querySelector('input[name="drAtt"]:checked').value;
-            const rating = document.querySelector('input[name="drRating"]:checked').value;
-            const tema = document.getElementById('drTema').value;
-            const rawNotes = document.getElementById('drNotes').value;
-            const notes = `[Tema: ${tema}]\n${rawNotes}`;
 
             btn.disabled = true;
             btn.textContent = 'Guardando...';
 
             try {
+                // ── Leer y validar campos (dentro del try para atrapar cualquier error) ──
+                const date = document.getElementById('drDate').value;
+                const curso = document.getElementById('drCurso').value;
+                const tema = document.getElementById('drTema').value;
+
+                const attEl = document.querySelector('input[name="drAtt"]:checked');
+                const ratingEl = document.querySelector('input[name="drRating"]:checked');
+
+                if (!date || !curso || !tema || !attEl || !ratingEl) {
+                    status.style.color = 'red';
+                    status.textContent = 'Completa todos los campos antes de guardar.';
+                    return;                // el finally restaura el botón
+                }
+
+                const att = attEl.value;
+                const rating = ratingEl.value;
+                const rawNotes = document.getElementById('drNotes').value;
+                const notes = `[Tema: ${tema}]\n${rawNotes}`;
+
                 const { error } = await supabaseClient.from('sesiones_clases').insert([{
                     tutor_id: userData.id,
                     fecha: date,
@@ -2585,7 +2598,7 @@
                 if (error) {
                     console.error('Supabase error:', error);
                     status.style.color = 'red';
-                    status.textContent = 'Error al guardar.';
+                    status.textContent = 'Error al guardar. Intenta de nuevo.';
                 } else {
                     status.style.color = '#06D6A0';
                     status.textContent = '¡Guardado correctamente! 🎉';
