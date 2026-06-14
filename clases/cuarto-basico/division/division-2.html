@@ -59,10 +59,15 @@
     .story-card {width: 100%; border-radius: 28px; padding: 28px; display: grid; grid-template-columns: 120px 1fr; gap: 24px; align-items: center; background: #fff;}
     .story-emoji {font-size: 114px; text-align: center;}
     
-    /* Para el algoritmo de la casita */
-    .alg-container {font-family: 'Courier New', Courier, monospace; font-size: 44px; font-weight: 900; background: #fff; padding: 30px; border-radius: 20px; border: 3px solid #1C4A82; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: right; display: inline-block;}
-    .alg-line {border-bottom: 4px solid #1C4A82; margin: 5px 0;}
-    .alg-row {display: flex; justify-content: flex-end; align-items: center; gap: 15px;}
+    /* Nuevo Algoritmo Vertical Perfecto */
+    .div-grid { display: grid; grid-auto-columns: 36px; grid-auto-rows: 46px; font-family: 'Courier New', Courier, monospace; font-size: 38px; font-weight: 900; align-items: center; justify-items: center; background: #fff; padding: 25px 35px; border-radius: 20px; border: 4px solid #1C4A82; box-shadow: 0 10px 30px rgba(0,0,0,0.1); justify-content: center; display: inline-grid; }
+    .d-cell { display: flex; justify-content: center; align-items: center; position: relative; width: 100%; height: 100%; }
+    .d-cell.sub { color: #b91c1c; }
+    .d-cell.sub::before { content: '-'; position: absolute; left: -16px; }
+    .d-cell.sub-part { color: #b91c1c; }
+    .d-cell.arr { font-size: 24px; color: #888; animation: bnc 1.5s infinite; }
+    @keyframes bnc { 0%, 100%{transform:translateY(0);} 50%{transform:translateY(5px);} }
+    .d-line { width: 100%; height: 100%; border-bottom: 4px solid #1C4A82; transform: translateY(-8px); }
     .alg-step-box {background: #f4f9ff; border: 2px solid #b6d4f3; border-radius: 12px; padding: 15px; font-size: 22px; font-weight: 700; width: 100%; margin-bottom: 10px;}
     </style></head>
 <body><div class="pb" id="pb"></div><div class="dk"><div class="sl">
@@ -121,14 +126,28 @@
                 <div class="alg-step-box stp"><b>Repito:</b> ¿Qué por 2 da 4? Es 2. Multiplico 2x2=4. Resto 4-4=0. ¡Terminé!</div>
             </div>
             <div style="flex:1; display:flex; justify-content:center; align-items:center;">
-                <div class="alg-container">
-                    <div class="alg-row"><span>8'4</span> <span>: 2 =</span> <span class="stp hl" style="color:#047857;">42</span></div>
-                    <div class="alg-row stp"><span style="color:#b91c1c;">-8</span></div>
-                    <div class="alg-line stp"></div>
-                    <div class="alg-row stp"><span>04</span></div>
-                    <div class="alg-row stp"><span style="color:#b91c1c;">-4</span></div>
-                    <div class="alg-line stp"></div>
-                    <div class="alg-row stp"><span>0</span></div>
+                <div class="div-grid">
+                    <div class="d-cell" style="grid-column: 1; grid-row: 1;">8'</div>
+                    <div class="d-cell" style="grid-column: 2; grid-row: 1;">4</div>
+                    <div class="d-cell" style="grid-column: 3; grid-row: 1;">:</div>
+                    <div class="d-cell" style="grid-column: 4; grid-row: 1;">2</div>
+                    <div class="d-cell" style="grid-column: 5; grid-row: 1;">=</div>
+                    <div class="d-cell hl stp" style="grid-column: 6; grid-row: 1; color:#047857;">4</div>
+                    <div class="d-cell hl stp" style="grid-column: 7; grid-row: 1; color:#047857;">2</div>
+                    
+                    <div class="d-cell sub stp" style="grid-column: 1; grid-row: 2;">8</div>
+                    <div class="d-cell arr stp" style="grid-column: 2; grid-row: 2;">⬇️</div>
+                    
+                    <div class="d-line stp" style="grid-column: 1/3; grid-row: 3;"></div>
+                    
+                    <div class="d-cell stp" style="grid-column: 1; grid-row: 4;">0</div>
+                    <div class="d-cell stp" style="grid-column: 2; grid-row: 4;">4'</div>
+                    
+                    <div class="d-cell sub stp" style="grid-column: 2; grid-row: 5;">4</div>
+                    
+                    <div class="d-line stp" style="grid-column: 2/3; grid-row: 6;"></div>
+                    
+                    <div class="d-cell stp" style="grid-column: 2; grid-row: 7;">0</div>
                 </div>
             </div>
         </div>
@@ -138,24 +157,49 @@
         <div style="display:flex; justify-content:space-around; width:100%; gap:20px;">
             <div class="pnl-border stp" style="border-color:#9DE3BD; width:48%;">
                 <h3 style="margin-bottom:15px; color:#047857;">División Exacta ✔️</h3>
-                <div class="alg-container" style="font-size:32px; margin-bottom:15px; padding:15px;">
-                    <div class="alg-row"><span>68 : 4 = 17</span></div>
-                    <div class="alg-row"><span style="color:#b91c1c;">-4</span></div>
-                    <div class="alg-line"></div>
-                    <div class="alg-row"><span>28</span></div>
-                    <div class="alg-row"><span style="color:#b91c1c;">-28</span></div>
-                    <div class="alg-line"></div>
-                    <div class="alg-row"><span>0</span></div>
+                <div class="div-grid" style="font-size:32px; margin-bottom:15px; padding:15px; grid-auto-columns:28px; grid-auto-rows:40px;">
+                    <div class="d-cell" style="grid-column: 1; grid-row: 1;">6'</div>
+                    <div class="d-cell" style="grid-column: 2; grid-row: 1;">8</div>
+                    <div class="d-cell" style="grid-column: 3; grid-row: 1;">:</div>
+                    <div class="d-cell" style="grid-column: 4; grid-row: 1;">4</div>
+                    <div class="d-cell" style="grid-column: 5; grid-row: 1;">=</div>
+                    <div class="d-cell" style="grid-column: 6; grid-row: 1;">1</div>
+                    <div class="d-cell" style="grid-column: 7; grid-row: 1;">7</div>
+                    
+                    <div class="d-cell sub" style="grid-column: 1; grid-row: 2;">4</div>
+                    <div class="d-cell arr" style="grid-column: 2; grid-row: 2;">⬇️</div>
+                    
+                    <div class="d-line" style="grid-column: 1/3; grid-row: 3;"></div>
+                    
+                    <div class="d-cell" style="grid-column: 1; grid-row: 4;">2</div>
+                    <div class="d-cell" style="grid-column: 2; grid-row: 4;">8'</div>
+                    
+                    <div class="d-cell sub" style="grid-column: 1; grid-row: 5;">2</div>
+                    <div class="d-cell sub-part" style="grid-column: 2; grid-row: 5;">8</div>
+                    
+                    <div class="d-line" style="grid-column: 1/3; grid-row: 6;"></div>
+                    
+                    <div class="d-cell" style="grid-column: 1; grid-row: 7;">0</div>
+                    <div class="d-cell" style="grid-column: 2; grid-row: 7;">0</div>
                 </div>
                 <div class="mini-chip" style="background:#D1FAE5; border-color:#059669; font-size:18px;">Resto = 0 (No sobró nada)</div>
             </div>
             <div class="pnl-border stp" style="border-color:#FFB74D; width:48%;">
                 <h3 style="margin-bottom:15px; color:#e65100;">División Inexacta ⚠️</h3>
-                <div class="alg-container" style="font-size:32px; margin-bottom:15px; padding:15px;">
-                    <div class="alg-row"><span>38 : 5 = 7</span></div>
-                    <div class="alg-row"><span style="color:#b91c1c;">-35</span></div>
-                    <div class="alg-line"></div>
-                    <div class="alg-row"><span>3</span></div>
+                <div class="div-grid" style="font-size:32px; margin-bottom:15px; padding:15px; grid-auto-columns:28px; grid-auto-rows:40px;">
+                    <div class="d-cell" style="grid-column: 1; grid-row: 1;">3</div>
+                    <div class="d-cell" style="grid-column: 2; grid-row: 1;">8'</div>
+                    <div class="d-cell" style="grid-column: 3; grid-row: 1;">:</div>
+                    <div class="d-cell" style="grid-column: 4; grid-row: 1;">5</div>
+                    <div class="d-cell" style="grid-column: 5; grid-row: 1;">=</div>
+                    <div class="d-cell" style="grid-column: 6; grid-row: 1;">7</div>
+                    
+                    <div class="d-cell sub" style="grid-column: 1; grid-row: 2;">3</div>
+                    <div class="d-cell sub-part" style="grid-column: 2; grid-row: 2;">5</div>
+                    
+                    <div class="d-line" style="grid-column: 1/3; grid-row: 3;"></div>
+                    
+                    <div class="d-cell" style="grid-column: 2; grid-row: 4;">3</div>
                 </div>
                 <div class="mini-chip" style="background:#FEF3C7; border-color:#D97706; font-size:18px;">Resto = 3 (Sobran elementos)</div>
             </div>
@@ -178,14 +222,30 @@
             <p style="font-size:32px; font-weight:800; margin-bottom:20px;">Intenta resolver esta división exacta usando "La Casita":</p>
             <div class="math-eq" style="font-size:64px;">72 ÷ 3 = ?</div>
             <div class="stp" style="display:flex; justify-content:center; width:100%; margin-top:20px;">
-                <div class="alg-container" style="border-color:#047857; background:#f4fff7;">
-                    <div class="alg-row"><span>7'2</span> <span>: 3 =</span> <span class="hl" style="color:#047857;">24</span></div>
-                    <div class="alg-row"><span style="color:#b91c1c;">-6</span></div>
-                    <div class="alg-line"></div>
-                    <div class="alg-row"><span>12</span></div>
-                    <div class="alg-row"><span style="color:#b91c1c;">-12</span></div>
-                    <div class="alg-line"></div>
-                    <div class="alg-row"><span>0</span></div>
+                <div class="div-grid" style="border-color:#047857; background:#f4fff7;">
+                    <div class="d-cell" style="grid-column: 1; grid-row: 1;">7'</div>
+                    <div class="d-cell" style="grid-column: 2; grid-row: 1;">2</div>
+                    <div class="d-cell" style="grid-column: 3; grid-row: 1;">:</div>
+                    <div class="d-cell" style="grid-column: 4; grid-row: 1;">3</div>
+                    <div class="d-cell" style="grid-column: 5; grid-row: 1;">=</div>
+                    <div class="d-cell hl" style="grid-column: 6; grid-row: 1; color:#047857;">2</div>
+                    <div class="d-cell hl" style="grid-column: 7; grid-row: 1; color:#047857;">4</div>
+                    
+                    <div class="d-cell sub" style="grid-column: 1; grid-row: 2;">6</div>
+                    <div class="d-cell arr" style="grid-column: 2; grid-row: 2;">⬇️</div>
+                    
+                    <div class="d-line" style="grid-column: 1/3; grid-row: 3; border-color:#047857;"></div>
+                    
+                    <div class="d-cell" style="grid-column: 1; grid-row: 4;">1</div>
+                    <div class="d-cell" style="grid-column: 2; grid-row: 4;">2'</div>
+                    
+                    <div class="d-cell sub" style="grid-column: 1; grid-row: 5;">1</div>
+                    <div class="d-cell sub-part" style="grid-column: 2; grid-row: 5;">2</div>
+                    
+                    <div class="d-line" style="grid-column: 1/3; grid-row: 6; border-color:#047857;"></div>
+                    
+                    <div class="d-cell" style="grid-column: 1; grid-row: 7;">0</div>
+                    <div class="d-cell" style="grid-column: 2; grid-row: 7;">0</div>
                 </div>
             </div>
         </div>
@@ -195,14 +255,28 @@
             <p style="font-size:32px; font-weight:800; margin-bottom:20px;">Ahora intenta esta que te dejará un resto:</p>
             <div class="math-eq" style="font-size:64px;">57 ÷ 5 = ?</div>
             <div class="stp" style="display:flex; justify-content:center; width:100%; margin-top:20px;">
-                <div class="alg-container" style="border-color:#e65100; background:#fffbf4;">
-                    <div class="alg-row"><span>5'7</span> <span>: 5 =</span> <span class="hl" style="color:#e65100;">11</span></div>
-                    <div class="alg-row"><span style="color:#b91c1c;">-5</span></div>
-                    <div class="alg-line"></div>
-                    <div class="alg-row"><span>07</span></div>
-                    <div class="alg-row"><span style="color:#b91c1c;">-5</span></div>
-                    <div class="alg-line"></div>
-                    <div class="alg-row"><span>2</span></div>
+                <div class="div-grid" style="border-color:#e65100; background:#fffbf4;">
+                    <div class="d-cell" style="grid-column: 1; grid-row: 1;">5'</div>
+                    <div class="d-cell" style="grid-column: 2; grid-row: 1;">7</div>
+                    <div class="d-cell" style="grid-column: 3; grid-row: 1;">:</div>
+                    <div class="d-cell" style="grid-column: 4; grid-row: 1;">5</div>
+                    <div class="d-cell" style="grid-column: 5; grid-row: 1;">=</div>
+                    <div class="d-cell hl" style="grid-column: 6; grid-row: 1; color:#e65100;">1</div>
+                    <div class="d-cell hl" style="grid-column: 7; grid-row: 1; color:#e65100;">1</div>
+                    
+                    <div class="d-cell sub" style="grid-column: 1; grid-row: 2;">5</div>
+                    <div class="d-cell arr" style="grid-column: 2; grid-row: 2;">⬇️</div>
+                    
+                    <div class="d-line" style="grid-column: 1/3; grid-row: 3; border-color:#e65100;"></div>
+                    
+                    <div class="d-cell" style="grid-column: 1; grid-row: 4;">0</div>
+                    <div class="d-cell" style="grid-column: 2; grid-row: 4;">7'</div>
+                    
+                    <div class="d-cell sub" style="grid-column: 2; grid-row: 5;">5</div>
+                    
+                    <div class="d-line" style="grid-column: 2/3; grid-row: 6; border-color:#e65100;"></div>
+                    
+                    <div class="d-cell" style="grid-column: 2; grid-row: 7;">2</div>
                 </div>
             </div>
         </div>
@@ -217,11 +291,20 @@
                 <div class="alg-step-box stp">¿Qué número por 7 se acerca a 38? 7x5=35. ¡Anoto el 5 en el resultado!</div>
             </div>
             <div style="flex:1; display:flex; justify-content:center; align-items:center;">
-                <div class="alg-container stp">
-                    <div class="alg-row"><span>38'</span> <span>: 7 =</span> <span class="hl" style="color:#047857;">5</span></div>
-                    <div class="alg-row stp"><span style="color:#b91c1c;">-35</span></div>
-                    <div class="alg-line stp"></div>
-                    <div class="alg-row stp"><span>3</span></div>
+                <div class="div-grid stp">
+                    <div class="d-cell" style="grid-column: 1; grid-row: 1;">3</div>
+                    <div class="d-cell" style="grid-column: 2; grid-row: 1;">8'</div>
+                    <div class="d-cell" style="grid-column: 3; grid-row: 1;">:</div>
+                    <div class="d-cell" style="grid-column: 4; grid-row: 1;">7</div>
+                    <div class="d-cell" style="grid-column: 5; grid-row: 1;">=</div>
+                    <div class="d-cell hl" style="grid-column: 6; grid-row: 1; color:#047857;">5</div>
+                    
+                    <div class="d-cell sub stp" style="grid-column: 1; grid-row: 2;">3</div>
+                    <div class="d-cell sub-part stp" style="grid-column: 2; grid-row: 2;">5</div>
+                    
+                    <div class="d-line stp" style="grid-column: 1/3; grid-row: 3;"></div>
+                    
+                    <div class="d-cell stp" style="grid-column: 2; grid-row: 4;">3</div>
                 </div>
             </div>
         </div>
@@ -233,11 +316,20 @@
                 <div class="mini-chip" style="margin-bottom:15px;">Pista: El 4 es menor que el 6, ¡toma los dos juntos!</div>
             </div>
             <div class="stp" style="display:flex; justify-content:center; width:100%; margin-top:20px;">
-                <div class="alg-container" style="border-color:#1C4A82;">
-                    <div class="alg-row"><span>45'</span> <span>: 6 =</span> <span class="hl" style="color:#1C4A82;">7</span></div>
-                    <div class="alg-row"><span style="color:#b91c1c;">-42</span></div>
-                    <div class="alg-line"></div>
-                    <div class="alg-row"><span>3</span></div>
+                <div class="div-grid">
+                    <div class="d-cell" style="grid-column: 1; grid-row: 1;">4</div>
+                    <div class="d-cell" style="grid-column: 2; grid-row: 1;">5'</div>
+                    <div class="d-cell" style="grid-column: 3; grid-row: 1;">:</div>
+                    <div class="d-cell" style="grid-column: 4; grid-row: 1;">6</div>
+                    <div class="d-cell" style="grid-column: 5; grid-row: 1;">=</div>
+                    <div class="d-cell hl" style="grid-column: 6; grid-row: 1; color:#1C4A82;">7</div>
+                    
+                    <div class="d-cell sub" style="grid-column: 1; grid-row: 2;">4</div>
+                    <div class="d-cell sub-part" style="grid-column: 2; grid-row: 2;">2</div>
+                    
+                    <div class="d-line" style="grid-column: 1/3; grid-row: 3;"></div>
+                    
+                    <div class="d-cell" style="grid-column: 2; grid-row: 4;">3</div>
                 </div>
             </div>
         </div>
@@ -247,16 +339,27 @@
         <div class="pnl-border" style="border-color:#9DDEFF; background:#f4f9ff;">
             <div class="math-eq" style="font-size:42px;">(Cociente × Divisor) + Resto = Dividendo</div>
             <div class="stp" style="width:100%; display:flex; justify-content:space-around; margin-top:30px;">
-                <div class="alg-container" style="font-size:28px;">
-                    <div class="alg-row"><span>38 : 7 = 5</span></div>
-                    <div class="alg-row"><span style="color:#b91c1c;">-35</span></div>
-                    <div class="alg-line"></div>
-                    <div class="alg-row"><span>3</span></div>
+                <div class="div-grid" style="font-size:28px; grid-auto-columns:26px; grid-auto-rows:36px; padding:15px;">
+                    <div class="d-cell" style="grid-column: 1; grid-row: 1;">3</div>
+                    <div class="d-cell" style="grid-column: 2; grid-row: 1;">8</div>
+                    <div class="d-cell" style="grid-column: 3; grid-row: 1;">:</div>
+                    <div class="d-cell" style="grid-column: 4; grid-row: 1;">7</div>
+                    <div class="d-cell" style="grid-column: 5; grid-row: 1;">=</div>
+                    <div class="d-cell" style="grid-column: 6; grid-row: 1;">5</div>
+                    
+                    <div class="d-cell sub" style="grid-column: 1; grid-row: 2;">3</div>
+                    <div class="d-cell sub-part" style="grid-column: 2; grid-row: 2;">5</div>
+                    
+                    <div class="d-line" style="grid-column: 1/3; grid-row: 3;"></div>
+                    
+                    <div class="d-cell" style="grid-column: 2; grid-row: 4;">3</div>
                 </div>
                 <div class="alg-container stp" style="font-size:32px; border-color:#047857; background:#D1FAE5;">
-                    <div class="alg-row" style="color:#047857;"><span>(5 × 7) + 3</span></div>
-                    <div class="alg-row" style="color:#047857;"><span>35 + 3 = 38</span></div>
-                    <div class="alg-row" style="color:#047857;"><span>¡Correcto!</span></div>
+                    <div class="alg-header" style="color:#047857; flex-direction:column;">
+                        <div>(5 × 7) + 3</div>
+                        <div>35 + 3 = 38</div>
+                        <div>¡Correcto!</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -407,14 +510,30 @@
                 <p style="font-size:26px; font-weight:700; color:#e65100;">Y te sobró 1 diamante en tu bolsillo (resto = 1).</p>
             </div>
             <div style="flex:1; display:flex; justify-content:center; align-items:center;">
-                <div class="alg-container" style="border-color:#4a148c; background:#fdfaff; font-size:36px;">
-                    <div class="alg-row"><span>8'5</span> <span>: 6 =</span> <span class="hl" style="color:#047857;">14</span></div>
-                    <div class="alg-row"><span style="color:#b91c1c;">-6</span></div>
-                    <div class="alg-line"></div>
-                    <div class="alg-row"><span>25</span></div>
-                    <div class="alg-row"><span style="color:#b91c1c;">-24</span></div>
-                    <div class="alg-line"></div>
-                    <div class="alg-row"><span>1</span></div>
+                <div class="div-grid" style="border-color:#4a148c; background:#fdfaff; font-size:36px;">
+                    <div class="d-cell" style="grid-column: 1; grid-row: 1;">8'</div>
+                    <div class="d-cell" style="grid-column: 2; grid-row: 1;">5</div>
+                    <div class="d-cell" style="grid-column: 3; grid-row: 1;">:</div>
+                    <div class="d-cell" style="grid-column: 4; grid-row: 1;">6</div>
+                    <div class="d-cell" style="grid-column: 5; grid-row: 1;">=</div>
+                    <div class="d-cell hl" style="grid-column: 6; grid-row: 1; color:#047857;">1</div>
+                    <div class="d-cell hl" style="grid-column: 7; grid-row: 1; color:#047857;">4</div>
+                    
+                    <div class="d-cell sub" style="grid-column: 1; grid-row: 2;">6</div>
+                    <div class="d-cell arr" style="grid-column: 2; grid-row: 2;">⬇️</div>
+                    
+                    <div class="d-line" style="grid-column: 1/3; grid-row: 3; border-color:#4a148c;"></div>
+                    
+                    <div class="d-cell" style="grid-column: 1; grid-row: 4;">2</div>
+                    <div class="d-cell" style="grid-column: 2; grid-row: 4;">5'</div>
+                    
+                    <div class="d-cell sub" style="grid-column: 1; grid-row: 5;">2</div>
+                    <div class="d-cell sub-part" style="grid-column: 2; grid-row: 5;">4</div>
+                    
+                    <div class="d-line" style="grid-column: 1/3; grid-row: 6; border-color:#4a148c;"></div>
+                    
+                    <div class="d-cell" style="grid-column: 1; grid-row: 7;">0</div>
+                    <div class="d-cell" style="grid-column: 2; grid-row: 7;">1</div>
                 </div>
             </div>
         </div>
