@@ -218,34 +218,23 @@ body { font-family:'Nunito',sans-serif; background:var(--bg); overflow:hidden; h
         <div class="pnl" style="max-width:780px; margin:0 auto;">
             <div style="display:flex; justify-content:center; align-items:center; gap:40px; flex-wrap:wrap;">
                 <svg width="180" height="180" viewBox="0 0 180 180">
-                    <!-- Piso 1: 4 cubos (2x2) -->
-                    <polygon points="30,120 60,105 60,135 30,150" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
-                    <polygon points="60,105 90,90 90,120 60,135" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
-                    <polygon points="30,120 60,105 90,120 60,135" fill="#7dd3fc" stroke="#0284c7" stroke-width="2"/>
-
-                    <polygon points="90,120 120,105 120,135 90,150" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
-                    <polygon points="120,105 150,90 150,120 120,135" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
-                    <polygon points="90,120 120,105 150,120 120,135" fill="#7dd3fc" stroke="#0284c7" stroke-width="2"/>
-
-                    <polygon points="30,150 60,135 60,165 30,180" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
-                    <polygon points="60,135 90,120 90,150 60,165" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
-                    <polygon points="30,150 60,135 90,150 60,165" fill="#7dd3fc" stroke="#0284c7" stroke-width="2"/>
-
-                    <polygon points="90,150 120,135 120,165 90,180" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
-                    <polygon points="120,135 150,120 150,150 120,165" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
-                    <polygon points="90,150 120,135 150,150 120,165" fill="#7dd3fc" stroke="#0284c7" stroke-width="2"/>
-
-                    <!-- Piso 2: 4 cubos encima -->
-                    <polygon points="30,90 60,75 60,105 30,120" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
-                    <polygon points="60,75 90,60 90,90 60,105" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
-                    <polygon points="30,90 60,75 90,90 60,105" fill="#7dd3fc" stroke="#0284c7" stroke-width="2"/>
-
-                    <polygon points="90,90 120,75 120,105 90,120" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
-                    <polygon points="120,75 150,60 150,90 120,105" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
-                    <polygon points="90,90 120,75 150,90 120,105" fill="#7dd3fc" stroke="#0284c7" stroke-width="2"/>
-
-                    <polygon points="30,120 60,105 60,135 30,150" fill="none" stroke="#0284c7" stroke-width="1" stroke-dasharray="3,2"/>
-                    <polygon points="90,120 120,105 120,135 90,150" fill="none" stroke="#0284c7" stroke-width="1" stroke-dasharray="3,2"/>
+                    <defs>
+                        <g id="cubo">
+                            <polygon points="0,0 -30,-15 0,-30 30,-15" fill="#7dd3fc" stroke="#0284c7" stroke-width="2" stroke-linejoin="round"/>
+                            <polygon points="0,0 -30,-15 -30,15 0,30" fill="#38bdf8" stroke="#0284c7" stroke-width="2" stroke-linejoin="round"/>
+                            <polygon points="0,0 30,-15 30,15 0,30" fill="#0ea5e9" stroke="#0284c7" stroke-width="2" stroke-linejoin="round"/>
+                        </g>
+                    </defs>
+                    <!-- Piso 1 (Back, Left, Right, Front) -->
+                    <use href="#cubo" x="90" y="90" />
+                    <use href="#cubo" x="60" y="105" />
+                    <use href="#cubo" x="120" y="105" />
+                    <use href="#cubo" x="90" y="120" />
+                    <!-- Piso 2 (Back, Left, Right, Front) -->
+                    <use href="#cubo" x="90" y="60" />
+                    <use href="#cubo" x="60" y="75" />
+                    <use href="#cubo" x="120" y="75" />
+                    <use href="#cubo" x="90" y="90" />
                 </svg>
                 <div class="step-list" style="max-width:350px;">
                     <div class="stp step-box"><b>Piso 1:</b> 2 × 2 = <b style="color:#0284c7;">4 cubos</b></div>
