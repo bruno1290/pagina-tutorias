@@ -1,395 +1,398 @@
 <!DOCTYPE html>
-<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Geometría III - Perímetro y Área</title><style>
-    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
-    :root {
-        --base: #1C4A82;
-        --bg: #f5f6f8;
-        --tx: #333;
-        --accent: #FFB74D;
-        --purple: #9333EA;
-        --pink: #db2777;
-        --green: #059669;
-        --blue: #2563EB;
-        --orange: #EA580C;
-    }
-    * {margin:0; padding:0; box-sizing:border-box;}
-    body {font-family: 'Nunito', sans-serif; background: var(--bg); overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; color: var(--tx);}
-    .dk {position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex;}
-    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 36px 40px 82px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1; overflow-y: auto;}
-    .sl.on {opacity: 1; transform: scale(0.9); pointer-events: auto; z-index: 10;}
-    .sl.pv {opacity: 0; transform: translateX(-50px) scale(.95);}
-    .sl.nx {opacity: 0; transform: translateX(50px) scale(.95);}
-    .head-title {background: var(--base); color: white; padding: 10px 40px; font-size: 30px; font-weight: 900; margin-bottom: 22px; display: inline-block; border-radius: 12px; text-align: center;}
-    .sub-text {font-size: 24px; font-weight: 600; margin-bottom: 18px; text-align: center; line-height: 1.4;}
-    .pb {position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100;}
-    .nv {position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: white; border-top: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; z-index: 100;}
-    .nb {background: #eee; color: var(--base); border: none; padding: 10px 20px; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer; transition: all .2s;}
-    .nb:hover {background: #ddd;}
-    .nb:disabled {opacity: 0.3; cursor: not-allowed;}
-    .sc {color: #888; font-size: 16px; font-weight: 900;}
-    .stp {opacity: 0; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;}
-    .stp.shwn {opacity: 1; transform: translateY(0); pointer-events: auto;}
-    .pnl {background: #fff; padding: 26px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 3px solid #eaeaea; width: 100%; margin-bottom: 16px;}
-    .hl {color: var(--base); font-weight: 900;}
-    .btn {background: var(--base); color: white; border: none; padding: 14px 28px; border-radius: 12px; font-size: 20px; font-weight: 900; cursor: pointer; transition: transform .2s; font-family: 'Nunito', sans-serif;}
-    .btn:hover {transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3);}
-    .card-row {display: flex; justify-content: center; gap: 18px; width: 100%; flex-wrap: wrap;}
-    .idea-card {flex: 1 1 200px; background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%); border-radius: 18px; padding: 18px; border: 3px solid #d7e7f7; text-align: center;}
-    .story-card {width: 100%; border-radius: 28px; padding: 24px; display: grid; grid-template-columns: 90px 1fr; gap: 20px; align-items: center; background: #fff;}
-    .story-emoji {font-size: 72px; text-align: center;}
-    .msg-area {font-size: 22px; font-weight: 800; margin-top: 12px; min-height: 30px;}
-    .cuad-grid {display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; width: 100%;}
-    .cuad-item {background: #fff; border: 3px solid #d8e7f6; border-radius: 14px; padding: 14px; text-align: center; font-size: 20px; font-weight: 800; min-height: 70px; display: flex; flex-direction: column; align-items: center; justify-content: center;}
-    .resp-grid {display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; width: 100%;}
-    .resp-item {background: #f0fdf4; border: 3px solid #86efac; border-radius: 14px; padding: 12px; text-align: center; font-size: 19px; font-weight: 800; display: flex; align-items: center; justify-content: center;}
-</style></head><body><div class="pb" id="pb"></div><div class="dk">
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Geometría 3: Perímetro y Área</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root { --base: #1C4A82; --bg: #f5f6f8; --tx: #333; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family:'Nunito',sans-serif; background:var(--bg); overflow:hidden; height:100vh; width:100vw; display:flex; flex-direction:column; align-items:center; color:var(--tx); }
+.dk { position:relative; width:100%; height:100%; max-width:1000px; display:flex; }
+.sl { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:36px 40px 82px; opacity:0; transform:scale(.96); transition:opacity .4s, transform .4s; pointer-events:none; z-index:1; overflow-y:auto; }
+.sl.on { opacity:1; transform:scale(1); pointer-events:auto; z-index:10; }
+.sl.pv { opacity:0; transform:translateX(-50px) scale(.95); }
+.sl.nx { opacity:0; transform:translateX(50px) scale(.95); }
+.head-title { background:var(--base); color:white; padding:10px 40px; font-size:32px; font-weight:900; margin-bottom:24px; display:inline-block; border-radius:12px; text-align:center; }
+.sub-text { font-size:24px; font-weight:600; margin-bottom:22px; text-align:center; line-height:1.4; }
+.pb { position:fixed; top:0; left:0; height:6px; background:var(--base); transition:width .4s; z-index:100; }
+.nv { position:fixed; bottom:0; left:0; right:0; height:60px; background:white; border-top:1px solid #ddd; display:flex; align-items:center; justify-content:space-between; padding:0 40px; z-index:100; }
+.nb { background:#eee; color:var(--base); border:none; padding:10px 20px; border-radius:8px; font-family:'Nunito',sans-serif; font-size:16px; font-weight:900; cursor:pointer; transition:all .2s; }
+.nb:hover { background:#ddd; } .nb:disabled { opacity:0.3; cursor:not-allowed; }
+.sc { color:#888; font-size:16px; font-weight:900; }
+.stp { opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.4,0,0.2,1); pointer-events:none; }
+.stp.shwn { opacity:1; transform:translateY(0); pointer-events:auto; }
+.pnl { background:#fff; padding:24px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.05); border:3px solid #eaeaea; width:100%; }
+.hl { color:var(--base); font-weight:900; }
+.btn { background:var(--base); color:white; border:none; padding:14px 24px; border-radius:12px; font-size:24px; font-weight:900; cursor:pointer; transition:transform .2s; font-family:'Nunito',sans-serif; }
+.btn:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(28,74,130,0.3); }
+.card-row { display:flex; justify-content:center; gap:18px; width:100%; flex-wrap:wrap; }
+.idea-card { flex:1 1 220px; background:linear-gradient(180deg,#fff 0%,#f7fbff 100%); border-radius:18px; padding:18px; border:3px solid #d7e7f7; min-height:140px; }
+.idea-card h3 { font-size:28px; color:var(--base); margin-bottom:10px; }
+.idea-card p { font-size:24px; line-height:1.45; }
+.story-card { width:100%; border-radius:28px; padding:28px; display:grid; grid-template-columns:120px 1fr; gap:24px; align-items:center; }
+.story-emoji { font-size:114px; text-align:center; animation:bob 2.8s infinite; }
+.story-card h2 { font-size:30px; margin-bottom:12px; }
+.story-card p { font-size:24px; line-height:1.45; }
+.summary-list { display:flex; flex-direction:column; gap:16px; width:100%; }
+.summary-item { background:#fff; border-radius:16px; padding:16px 18px; border:3px solid #dbe7f4; font-size:23px; line-height:1.45; }
+.fact-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:16px; width:100%; }
+.fact-box { background:linear-gradient(180deg,#fff 0%,#f8fbff 100%); border-radius:18px; padding:16px; border:3px solid #d8e7f6; min-height:140px; }
+.fact-box h4 { font-size:24px; color:var(--base); margin-bottom:10px; text-align:center; }
+.fact-box p { font-size:24px; line-height:1.45; text-align:center; }
+.warn-card { background:#fff8e5; border:4px solid #f0ca59; border-radius:20px; padding:20px; font-size:24px; line-height:1.45; width:100%; }
+.msg-area { font-size:24px; font-weight:900; height:40px; text-align:center; margin-top:20px; }
+.hero-title { font-size:62px; color:var(--base); margin-bottom:18px; text-align:center; line-height:1.1; }
+.hero-sub { font-size:28px; font-weight:700; text-align:center; max-width:720px; }
+.hero-emoji { font-size:108px; margin-top:28px; animation:bounce 2s infinite; }
+.step-list { display:flex; flex-direction:column; gap:14px; }
+.step-box { background:#f7fbff; border-left:8px solid var(--base); padding:14px 16px; border-radius:14px; font-size:24px; line-height:1.4; font-weight:700; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:18px; width:100%; align-items:stretch; }
+.cuad-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; width:100%; }
+.cuad-item { background:#fff; border:3px solid #d8e7f6; border-radius:14px; padding:14px; text-align:center; font-size:22px; font-weight:800; min-height:80px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.resp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; width:100%; }
+.resp-item { background:#f0fdf4; border:3px solid #86efac; border-radius:14px; padding:12px; text-align:center; font-size:22px; font-weight:800; display:flex; align-items:center; justify-content:center; }
+@keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-16px);} }
+@keyframes bob { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+</style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
 
-<!-- ====== SLIDE 1: PORTADA ====== -->
-<div class="sl">
-    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <h1 style="font-size:54px; color:var(--base); margin-bottom:18px; text-align:center; line-height:1.1;">Geometría III 📐</h1>
-        <p style="font-size:24px; font-weight:700; text-align:center; max-width:720px;">Perímetro, Área y Cálculo de Superficies.</p>
-        <div style="font-size:108px; margin-top:24px;">🟩📏</div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 2: ROMPEHIELOS ====== -->
-<div class="sl">
-    <div class="head-title">¿Cerca o Pasto? 🏞️</div>
-    <div class="story-card" style="border:5px solid #10B981; background:#f0fdf4;">
-        <div class="story-emoji">🏡</div>
-        <div>
-            <h2 style="color:#047857; font-size:26px;">La gran diferencia</h2>
-            <p style="font-size:21px;">Si quieres cercar tu patio necesitas medir el <b>Perímetro</b> (el borde). Si quieres poner pasto sintético necesitas medir el <b>Área</b> (la superficie interior).</p>
-            <div class="stp" style="margin-top:10px; background:#d1fae5; padding:10px; border-radius:10px; font-weight:800; color:#065f46; font-size:19px;">
-                📏 <b>Perímetro = Contorno (suma de lados)</b> &nbsp;|&nbsp; 🟩 <b>Área = Superficie cubierta</b>
-            </div>
+        <!-- SLIDE 1: PORTADA -->
+        <div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 class="hero-title">Geometría III: Perímetro y Área</h1>
+            <p class="hero-sub">Aprenderemos a medir el contorno y la superficie de las figuras planas.</p>
+            <div class="hero-emoji">🟩</div>
         </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 3: PERÍMETRO DEL CUADRADO ====== -->
-<div class="sl">
-    <div class="head-title">Perímetro del Cuadrado 🔲</div>
-    <p class="sub-text">Como el cuadrado tiene 4 lados iguales: <b class="hl">P = L + L + L + L = 4 × Lado</b></p>
-    <div class="pnl" style="text-align:center; padding:20px;">
-        <!-- SVGs con anchos generosos (520) para evitar que los textos de los lados se corten -->
-        <svg width="520" height="240" viewBox="0 0 520 240" style="max-width:100%;">
-            <!-- Centramos el cuadrado de 160x160 en x=180 -->
-            <rect x="180" y="40" width="160" height="160" fill="#eff6ff" stroke="#2563EB" stroke-width="4" rx="8"/>
-            <text x="260" y="28" font-family="Nunito" font-size="22" font-weight="900" text-anchor="middle" fill="#2563EB">5 cm</text>
-            <text x="260" y="228" font-family="Nunito" font-size="22" font-weight="900" text-anchor="middle" fill="#2563EB">5 cm</text>
-            <!-- Textos laterales con márgenes muy amplios -->
-            <text x="160" y="128" font-family="Nunito" font-size="22" font-weight="900" text-anchor="end" fill="#2563EB">5 cm</text>
-            <text x="360" y="128" font-family="Nunito" font-size="22" font-weight="900" text-anchor="start" fill="#2563EB">5 cm</text>
-        </svg>
-        <div class="stp" style="margin-top:14px; background:#dbeafe; padding:16px; border-radius:14px; font-size:26px; font-weight:900; color:#1e40af; display:inline-block; white-space:nowrap;">
-            P = 5 + 5 + 5 + 5 = <b>20 cm</b> &nbsp;&nbsp;(o 4 × 5 cm = 20 cm)
         </div>
-    </div>
-</div>
 
-<!-- ====== SLIDE 4: PERÍMETRO DEL RECTÁNGULO ====== -->
-<div class="sl">
-    <div class="head-title">Perímetro del Rectángulo ▭</div>
-    <p class="sub-text">Sumamos los 4 lados (los lados opuestos son iguales).</p>
-    <div class="pnl" style="text-align:center; padding:20px;">
-        <!-- SVG ultra ancho (560) -->
-        <svg width="560" height="240" viewBox="0 0 560 240" style="max-width:100%;">
-            <!-- Rectángulo 320x140 centrado en x=120 -->
-            <rect x="120" y="50" width="320" height="140" fill="#fff7ed" stroke="#EA580C" stroke-width="4" rx="8"/>
-            <text x="280" y="38" font-family="Nunito" font-size="22" font-weight="900" text-anchor="middle" fill="#EA580C">Largo = 8 cm</text>
-            <text x="280" y="218" font-family="Nunito" font-size="22" font-weight="900" text-anchor="middle" fill="#EA580C">Largo = 8 cm</text>
-            <!-- Laterales con margen total -->
-            <text x="100" y="128" font-family="Nunito" font-size="22" font-weight="900" text-anchor="end" fill="#EA580C">4 cm</text>
-            <text x="460" y="128" font-family="Nunito" font-size="22" font-weight="900" text-anchor="start" fill="#EA580C">4 cm</text>
-        </svg>
-        <div class="stp" style="margin-top:14px; background:#ffedd5; padding:16px; border-radius:14px; font-size:26px; font-weight:900; color:#c2410c; display:inline-block; white-space:nowrap;">
-            P = 8 + 4 + 8 + 4 = <b>24 cm</b> &nbsp;&nbsp;[P = 2×largo + 2×ancho]
-        </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 5: ÁREA EN CUADRÍCULAS (CERÁMICAS) ====== -->
-<div class="sl">
-    <div class="head-title">Área en Cuadrículas 🧱</div>
-    <p class="sub-text">El Área se mide en <b class="hl">unidades cuadradas ($u^2$)</b> contando superficies.</p>
-    <div class="pnl" style="background:#fdf4ff; border-color:#e879f9;">
-        <div style="display:flex; justify-content:center; align-items:center; gap:20px;">
-            <div style="font-size:72px;">👷‍♂️</div>
+        <!-- SLIDE 2: ROMPEHIELO -->
+        <div class="sl">
+        <div class="head-title" style="background:#2E7D32;">¿Cerca o Pasto? 🏡</div>
+        <div class="story-card" style="border:5px solid #2E7D32; background:#e8f5e9;">
+            <div class="story-emoji">🏡</div>
             <div>
-                <p style="font-size:22px;">Don Paulo está decorando una pared con cerámicas cuadradas.</p>
-                <p style="font-size:22px; font-weight:700; color:#9333EA; margin-top:8px;">¿Cuál es el área de la pared si cada cerámica es $1u^2$?</p>
+                <h2 style="color:#2E7D32;">La gran diferencia</h2>
+                <p>Don Francisco quiere hacer dos cosas en su patio: poner una <b>cerca de madera</b> alrededor y cubrir todo el interior con <b>pasto sintético</b>. ¿Necesita la misma medida para ambas? ¡No! La cerca mide el <b>borde</b> (perímetro) y el pasto cubre la <b>superficie</b> (área). Son cosas muy diferentes.</p>
             </div>
         </div>
-        <div style="text-align:center; margin-top:16px;">
-            <svg width="360" height="180" viewBox="0 0 360 180">
-                <defs>
-                    <pattern id="ceramics" width="30" height="30" patternUnits="userSpaceOnUse">
-                        <rect width="30" height="30" fill="#fde047" stroke="#ca8a04" stroke-width="2"/>
-                    </pattern>
-                </defs>
-                <rect x="0" y="0" width="360" height="180" fill="url(#ceramics)"/>
+        <div class="stp warn-card" style="margin-top:20px; border-color:#2E7D32; background:#e8f5e9;">
+            💡 <b>Resumen rápido:</b> 📏 <b>Perímetro</b> = el contorno (lo de afuera) &nbsp;|&nbsp; 🟩 <b>Área</b> = la superficie cubierta (lo de adentro).
+        </div>
+        </div>
+
+        <!-- SLIDE 3: QUÉ ES EL PERÍMETRO -->
+        <div class="sl">
+        <div class="head-title">¿Qué es el Perímetro? 📏</div>
+        <p class="sub-text">Es la <b class="hl">suma de todos los lados</b> de una figura. ¡Es como caminar todo el borde!</p>
+        <div class="two-col" style="max-width:850px; margin:0 auto;">
+            <div class="idea-card" style="text-align:center; border-color:#2563EB;">
+                <h3 style="color:#2563EB;">Cuadrado</h3>
+                <svg width="200" height="180" viewBox="0 0 200 180" style="display:block; margin:6px auto;">
+                    <rect x="30" y="15" width="140" height="140" fill="#eff6ff" stroke="#2563EB" stroke-width="4" rx="6"/>
+                    <text x="100" y="8" font-family="Nunito" font-size="20" font-weight="900" text-anchor="middle" fill="#2563EB">5 cm</text>
+                    <text x="100" y="175" font-family="Nunito" font-size="20" font-weight="900" text-anchor="middle" fill="#2563EB">5 cm</text>
+                    <text x="14" y="92" font-family="Nunito" font-size="20" font-weight="900" text-anchor="end" fill="#2563EB">5 cm</text>
+                    <text x="186" y="92" font-family="Nunito" font-size="20" font-weight="900" text-anchor="start" fill="#2563EB">5 cm</text>
+                </svg>
+                <p style="font-size:22px; font-weight:900; color:#1e40af;">P = 4 × 5 = <b>20 cm</b></p>
+            </div>
+            <div class="idea-card" style="text-align:center; border-color:#EA580C;">
+                <h3 style="color:#EA580C;">Rectángulo</h3>
+                <svg width="240" height="180" viewBox="0 0 240 180" style="display:block; margin:6px auto;">
+                    <rect x="20" y="30" width="200" height="120" fill="#fff7ed" stroke="#EA580C" stroke-width="4" rx="6"/>
+                    <text x="120" y="22" font-family="Nunito" font-size="20" font-weight="900" text-anchor="middle" fill="#EA580C">8 cm</text>
+                    <text x="120" y="172" font-family="Nunito" font-size="20" font-weight="900" text-anchor="middle" fill="#EA580C">8 cm</text>
+                    <text x="6" y="98" font-family="Nunito" font-size="20" font-weight="900" text-anchor="end" fill="#EA580C">4 cm</text>
+                    <text x="234" y="98" font-family="Nunito" font-size="20" font-weight="900" text-anchor="start" fill="#EA580C">4 cm</text>
+                </svg>
+                <p style="font-size:22px; font-weight:900; color:#c2410c;">P = 8+4+8+4 = <b>24 cm</b></p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 4: QUÉ ES EL ÁREA -->
+        <div class="sl">
+        <div class="head-title">¿Qué es el Área? 🟩</div>
+        <p class="sub-text">Es la <b class="hl">cantidad de superficie</b> que cubre una figura. Se mide en <b class="hl">unidades cuadradas</b> (cm², m²).</p>
+        <div class="pnl" style="text-align:center; padding:20px; max-width:700px; margin:0 auto;">
+            <p style="font-size:22px; margin-bottom:14px;">Imagina que cubrimos un cuadrado con baldosas de 1 cm × 1 cm:</p>
+            <svg width="320" height="200" viewBox="0 0 320 200" style="max-width:100%;">
+                <defs><pattern id="tiles" width="40" height="40" patternUnits="userSpaceOnUse"><rect width="40" height="40" fill="#fde047" stroke="#ca8a04" stroke-width="2"/></pattern></defs>
+                <rect x="40" y="20" width="240" height="160" fill="url(#tiles)" stroke="#854d0e" stroke-width="3" rx="4"/>
             </svg>
-        </div>
-        <div class="stp" style="margin-top:16px; text-align:center; background:#f3e8ff; padding:14px; border-radius:12px;">
-            <p style="font-size:24px; font-weight:900; color:#7e22ce;">Tiene 12 columnas y 6 filas.</p>
-            <p style="font-size:26px; font-weight:900; color:#6b21a8;">Total = 12 × 6 = <b>72 cerámicas (72 $u^2$)</b></p>
-        </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 6: ÁREA DEL CUADRADO ====== -->
-<div class="sl">
-    <div class="head-title">Área del Cuadrado 🔲</div>
-    <p class="sub-text">Fórmula rápida: <b class="hl">Área = Lado × Lado</b></p>
-    <div class="pnl" style="text-align:center; padding:20px;">
-        <svg width="520" height="240" viewBox="0 0 520 240" style="max-width:100%;">
-            <rect x="180" y="40" width="160" height="160" fill="#ecfdf5" stroke="#059669" stroke-width="4" rx="8"/>
-            <text x="260" y="28" font-family="Nunito" font-size="22" font-weight="900" text-anchor="middle" fill="#059669">6 cm</text>
-            <text x="160" y="128" font-family="Nunito" font-size="22" font-weight="900" text-anchor="end" fill="#059669">6 cm</text>
-            <text x="260" y="128" font-family="Nunito" font-size="24" font-weight="900" text-anchor="middle" fill="#047857">Área = ?</text>
-        </svg>
-        <div class="stp" style="margin-top:14px; background:#d1fae5; border:3px solid #34d399; padding:16px; border-radius:14px; font-size:28px; font-weight:900; color:#065f46; display:inline-block; white-space:nowrap;">
-            Área = 6 cm × 6 cm = <b>36 cm²</b>
-        </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 7: ÁREA DEL RECTÁNGULO ====== -->
-<div class="sl">
-    <div class="head-title">Área del Rectángulo ▭</div>
-    <p class="sub-text">Fórmula rápida: <b class="hl">Área = Base × Altura</b></p>
-    <div class="pnl" style="text-align:center; padding:20px;">
-        <svg width="560" height="240" viewBox="0 0 560 240" style="max-width:100%;">
-            <rect x="120" y="50" width="320" height="140" fill="#eff6ff" stroke="#2563EB" stroke-width="4" rx="8"/>
-            <text x="280" y="38" font-family="Nunito" font-size="22" font-weight="900" text-anchor="middle" fill="#2563EB">Base = 9 cm</text>
-            <text x="100" y="128" font-family="Nunito" font-size="22" font-weight="900" text-anchor="end" fill="#2563EB">4 cm</text>
-            <text x="280" y="128" font-family="Nunito" font-size="24" font-weight="900" text-anchor="middle" fill="#1e40af">Área = ?</text>
-        </svg>
-        <div class="stp" style="margin-top:14px; background:#dbeafe; border:3px solid #60a5fa; padding:16px; border-radius:14px; font-size:28px; font-weight:900; color:#1e40af; display:inline-block; white-space:nowrap;">
-            Área = 9 cm × 4 cm = <b>36 cm²</b>
-        </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 8: ÁREA DEL TRIÁNGULO ====== -->
-<div class="sl">
-    <div class="head-title">Área del Triángulo 🔺</div>
-    <p class="sub-text">El triángulo es la <b class="hl">mitad de un rectángulo</b> → <b style="color:#DC2626;">Área = (Base × Altura) ÷ 2</b></p>
-    <div class="pnl" style="text-align:center; padding:20px;">
-        <svg width="540" height="240" viewBox="0 0 540 240" style="max-width:100%;">
-            <rect x="120" y="40" width="300" height="150" fill="#fef2f2" stroke="#fca5a5" stroke-width="3" stroke-dasharray="6,4" rx="6"/>
-            <polygon points="120,190 420,190 120,40" fill="#f87171" stroke="#DC2626" stroke-width="4"/>
-            <text x="270" y="220" font-family="Nunito" font-size="22" font-weight="900" text-anchor="middle" fill="#DC2626">Base = 10 cm</text>
-            <text x="100" y="120" font-family="Nunito" font-size="22" font-weight="900" text-anchor="end" fill="#DC2626">6 cm</text>
-        </svg>
-        <div class="stp" style="margin-top:14px; background:#fee2e2; border:3px solid #f87171; padding:16px; border-radius:14px; font-size:26px; font-weight:900; color:#991b1b; display:inline-block; white-space:nowrap;">
-            Área = (10 × 6) ÷ 2 = 60 ÷ 2 = <b>30 cm²</b>
-        </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 9: PERÍMETRO VS ÁREA ====== -->
-<div class="sl">
-    <div class="head-title">Perímetro vs Área ⚖️</div>
-    <div class="card-row" style="max-width:850px;">
-        <div class="idea-card" style="border-color:#2563EB; flex:1 1 360px; padding:20px;">
-            <h3 style="color:#2563EB; font-size:24px;">📏 Perímetro</h3>
-            <p style="font-size:18px; margin:10px 0;">Suma de todos los lados (el contorno).</p>
-            <p style="font-size:22px; font-weight:900; color:#1e40af;">Unidades simples: cm, m, km</p>
-        </div>
-        <div class="idea-card" style="border-color:#059669; flex:1 1 360px; padding:20px;">
-            <h3 style="color:#059669; font-size:24px;">🟩 Área</h3>
-            <p style="font-size:18px; margin:10px 0;">Superficie interior cubierta.</p>
-            <p style="font-size:22px; font-weight:900; color:#065f46;">Unidades cuadradas: cm², m²</p>
-        </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 10: QUIZ 1 ====== -->
-<div class="sl">
-    <div class="head-title">¡Quiz Relámpago! ⚡</div>
-    <p class="sub-text">¿Cuál es el perímetro de un cuadrado de lado <b>7 cm</b>?</p>
-    <div class="card-row" style="max-width:600px;">
-        <button class="btn" onclick="chkAns(this,false,'')">49 cm</button>
-        <button class="btn" onclick="chkAns(this,true,'4 lados × 7 cm = 28 cm ✨')">28 cm</button>
-        <button class="btn" onclick="chkAns(this,false,'')">14 cm</button>
-    </div>
-    <div class="msg-area"></div>
-</div>
-
-<!-- ====== SLIDE 11: QUIZ 2 ====== -->
-<div class="sl">
-    <div class="head-title">¡Quiz 2! ⚡</div>
-    <p class="sub-text">¿Cuál es el área de un rectángulo de base 8 cm y altura 5 cm?</p>
-    <div class="card-row" style="max-width:500px;">
-        <button class="btn" onclick="chkAns(this,true,'Base × Altura = 8 × 5 = 40 cm² 🟩')">40 cm²</button>
-        <button class="btn" onclick="chkAns(this,false,'')">26 cm²</button>
-        <button class="btn" onclick="chkAns(this,false,'')">20 cm²</button>
-    </div>
-    <div class="msg-area"></div>
-</div>
-
-<!-- ====== SLIDE 12: ABRE TU CUADERNO ====== -->
-<div class="sl">
-    <div class="head-title">✏️ Abre tu Cuaderno</div>
-    <p class="sub-text">Resuelve estos ejercicios en tu cuaderno:</p>
-    <div class="cuad-grid">
-        <div class="cuad-item">1️⃣ Perímetro de un cuadrado de lado 9 cm</div>
-        <div class="cuad-item">2️⃣ Área de un cuadrado de lado 8 cm</div>
-        <div class="cuad-item">3️⃣ Perímetro de un rectángulo de 10 cm × 4 cm</div>
-        <div class="cuad-item">4️⃣ Área de un rectángulo de 7 cm × 6 cm</div>
-        <div class="cuad-item">5️⃣ Área de un triángulo de base 8 cm y altura 6 cm</div>
-        <div class="cuad-item">6️⃣ Si el área de un cuadrado es 25 cm², ¿cuánto mide su lado?</div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 13: RESPUESTAS ====== -->
-<div class="sl">
-    <div class="head-title">✅ Respuestas</div>
-    <div class="resp-grid">
-        <div class="resp-item stp">1️⃣ 4 × 9 = <b>36 cm</b></div>
-        <div class="resp-item stp">2️⃣ 8 × 8 = <b>64 cm²</b></div>
-        <div class="resp-item stp">3️⃣ 2×10 + 2×4 = <b>28 cm</b></div>
-        <div class="resp-item stp">4️⃣ 7 × 6 = <b>42 cm²</b></div>
-        <div class="resp-item stp">5️⃣ (8 × 6) ÷ 2 = <b>24 cm²</b></div>
-        <div class="resp-item stp">6️⃣ Lado = <b>5 cm</b></div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 14: PROBLEMA 1 ====== -->
-<div class="sl">
-    <div class="head-title">Problema 1: El Cancha de Fútbol ⚽</div>
-    <div class="story-card" style="border:4px solid #9DE3BD; background:#f0fdf4;">
-        <div class="story-emoji">⚽</div>
-        <div>
-            <p style="font-size:21px;">Una cancha mide <b>100 m de largo</b> y <b>50 m de ancho</b>.<br>a) ¿Cuántos metros recorre un jugador al dar 1 vuelta al borde?<br>b) ¿Cuál es el área total del pasto?</p>
-            <div class="stp" style="margin-top:12px; background:#d1fae5; padding:14px; border-radius:10px;">
-                <p style="font-size:20px; font-weight:800; color:#047857;">✅ a) Perímetro = 100 + 50 + 100 + 50 = <b>300 metros</b>.<br>✅ b) Área = 100 × 50 = <b>5.000 m²</b>.</p>
+            <div class="stp" style="margin-top:14px; background:#fefce8; padding:16px; border-radius:14px; border:3px solid #fde047;">
+                <p style="font-size:24px; font-weight:900; color:#854d0e;">6 columnas × 4 filas = <b>24 baldosas = 24 cm²</b></p>
             </div>
         </div>
-    </div>
-</div>
+        </div>
 
-<!-- ====== SLIDE 15: PROBLEMA 2 ====== -->
-<div class="sl">
-    <div class="head-title">Problema 2: El Cuadro de Pintura 🖼️</div>
-    <div class="story-card" style="border:4px solid #9DDEFF; background:#f0f8ff;">
-        <div class="story-emoji">🖼️</div>
-        <div>
-            <p style="font-size:21px;">Un marco cuadrado mide <b>30 cm de lado</b>.<br>a) ¿Cuántos cm de madera se usan para el marco?<br>b) ¿Qué área de lienzo queda dentro?</p>
-            <div class="stp" style="margin-top:12px; background:#e3f2fd; padding:14px; border-radius:10px;">
-                <p style="font-size:20px; font-weight:800; color:var(--base);">✅ a) Perímetro = 4 × 30 = <b>120 cm</b>.<br>✅ b) Área = 30 × 30 = <b>900 cm²</b>.</p>
+        <!-- SLIDE 5: FÓRMULA ÁREA CUADRADO -->
+        <div class="sl">
+        <div class="head-title">Área del Cuadrado 🔲</div>
+        <p class="sub-text">Como tiene 4 lados iguales: <b class="hl">Área = Lado × Lado</b></p>
+        <div class="pnl" style="max-width:780px; margin:0 auto;">
+            <div class="step-list">
+                <div class="stp step-box">
+                    <b>Ejemplo:</b> Un cuadrado tiene lados de <b style="color:#059669;">6 cm</b>.
+                </div>
+                <div class="stp step-box">
+                    <b>Fórmula:</b> Área = 6 cm × 6 cm
+                </div>
+                <div class="stp step-box" style="background:#ecfdf5; border-color:#059669;">
+                    ✅ <b>Resultado:</b> Área = <b style="color:#059669; font-size:28px;">36 cm²</b>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 16: DESAFÍO SUPREMO PORTADA ====== -->
-<div class="sl" style="background: linear-gradient(135deg, #9333EA, #db2777); color: white;">
-    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <h1 style="font-size:56px; margin-bottom:18px;">⛏️ Desafío ObraCraft</h1>
-        <p style="font-size:24px; max-width:700px; text-align:center; opacity:0.95;">¡Nivel Secreto: La Fortaleza de Minecraft!</p>
-    </div>
-</div>
-
-<!-- ====== SLIDE 17: OBRACRAFT ====== -->
-<div class="sl">
-    <div class="head-title" style="background:linear-gradient(135deg, #9333EA, #db2777);">⛏️ El Terreno de la Fortaleza</div>
-    <div class="pnl" style="border-color:#9333EA;">
-        <p style="font-size:20px; text-align:center;">Estás construyendo tu base en ObraCraft. Tienes un terreno rectangular de <b>12 bloques de largo</b> por <b>8 bloques de ancho</b>.</p>
-        <div style="background:linear-gradient(135deg,#9333EA22,#db277722); padding:14px; border-radius:14px; margin:12px 0; text-align:center; font-size:19px; font-weight:800; color:#9333EA;">
-            🛡️ Quieres colocar murallas en todo el borde.<br>
-            🧱 Quieres cubrir todo el piso con bloques de piedra.
         </div>
-        <p style="font-size:20px; text-align:center; font-weight:700;">1. ¿Cuántos bloques de muralla necesitas para el borde (Perímetro)?<br>2. ¿Cuántos bloques de piedra necesitas para el piso (Área)?</p>
-        <div class="stp" style="margin-top:14px; background:#f3e5f5; padding:14px; border-radius:10px; font-size:18px;">
-            <p style="font-weight:800; color:var(--purple);">✅ 1. Perímetro = 12+8+12+8 = <b>40 bloques de muralla</b></p>
-            <p style="font-weight:800; color:var(--pink);">✅ 2. Área = 12 × 8 = <b>96 bloques de piso</b></p>
+
+        <!-- SLIDE 6: FÓRMULA ÁREA RECTÁNGULO -->
+        <div class="sl">
+        <div class="head-title">Área del Rectángulo ▭</div>
+        <p class="sub-text">Sus lados opuestos son iguales: <b class="hl">Área = Base × Altura</b></p>
+        <div class="pnl" style="max-width:780px; margin:0 auto;">
+            <div class="step-list">
+                <div class="stp step-box">
+                    <b>Ejemplo:</b> Un rectángulo de base <b style="color:#2563EB;">9 cm</b> y altura <b style="color:#2563EB;">5 cm</b>.
+                </div>
+                <div class="stp step-box">
+                    <b>Fórmula:</b> Área = 9 cm × 5 cm
+                </div>
+                <div class="stp step-box" style="background:#eff6ff; border-color:#2563EB;">
+                    ✅ <b>Resultado:</b> Área = <b style="color:#1e40af; font-size:28px;">45 cm²</b>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 18: RESUMEN ====== -->
-<div class="sl">
-    <div class="head-title">📝 Resumen de la Clase</div>
-    <div class="pnl" style="max-width:680px; margin:0 auto;">
-        <div style="font-size:20px; line-height:2.2;">
-            <p class="stp">✅ <b>Perímetro (P):</b> Suma de los bordes. Cuadrado: 4×L, Rectángulo: 2×largo + 2×ancho.</p>
-            <p class="stp">✅ <b>Área (A):</b> Superficie interior. Cuadrado: L×L, Rectángulo: B×H, Triángulo: (B×H)÷2.</p>
-            <p class="stp">✅ <b>Unidades:</b> Perímetro en cm/m, Área siempre en cm²/m².</p>
         </div>
-    </div>
-</div>
 
-<!-- ====== SLIDE 19: CIERRE ====== -->
-<div class="sl">
-    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <div style="font-size:120px; margin-bottom:20px; animation: bounce 2s infinite;">🏆</div>
-        <h1 style="font-size:46px; color:var(--base); text-align:center;">¡Gran Trabajo!</h1>
-        <p style="font-size:24px; font-weight:700; text-align:center; max-width:600px; margin-top:16px;">¡Ya dominas el perímetro y el área! En la última clase de Geometría exploraremos los cuerpos 3D, el volumen y la simetría.</p>
-        <div style="font-size:54px; margin-top:18px;">🟩📏🧱✨</div>
-    </div>
-</div>
+        <!-- SLIDE 7: ÁREA DEL TRIÁNGULO -->
+        <div class="sl">
+        <div class="head-title">Área del Triángulo 🔺</div>
+        <p class="sub-text">El triángulo es la <b class="hl">mitad de un rectángulo</b>:</p>
+        <div class="pnl" style="text-align:center; padding:16px;">
+            <svg width="500" height="200" viewBox="0 0 500 200" style="max-width:100%;">
+                <rect x="80" y="20" width="340" height="160" fill="#fef2f240" stroke="#fca5a5" stroke-width="3" stroke-dasharray="8,5" rx="6"/>
+                <polygon points="80,180 420,180 80,20" fill="#f8717188" stroke="#DC2626" stroke-width="4"/>
+                <text x="250" y="210" font-family="Nunito" font-size="22" font-weight="900" text-anchor="middle" fill="#DC2626">Base = 10 cm</text>
+                <text x="58" y="105" font-family="Nunito" font-size="22" font-weight="900" text-anchor="end" fill="#DC2626">6 cm</text>
+            </svg>
+            <div class="stp" style="margin-top:14px; background:#fee2e2; padding:16px; border-radius:14px; border:3px solid #f87171;">
+                <p style="font-size:26px; font-weight:900; color:#991b1b;">Área = (Base × Altura) ÷ 2 = (10 × 6) ÷ 2 = <b>30 cm²</b></p>
+            </div>
+        </div>
+        </div>
 
-</div>
-<div class="nv">
-    <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
-    <input type="range" id="slide-slider" min="1" value="1" style="width:200px; accent-color:var(--base);" oninput="goToSlide(this.value)">
-    <span class="sc" id="sc">1 / 19</span>
-    <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
-</div>
-<script>
-    const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
-    function ui() {
-        S.forEach((s,i)=>{
-            s.classList.remove('on','pv','nx');
-            if(i===c) s.classList.add('on');
-            else if(i<c) s.classList.add('pv');
-            else s.classList.add('nx');
-        });
-        document.getElementById('pb').style.width=((c+1)/T*100)+'%';
-        document.getElementById('sc').textContent=`${c+1} / ${T}`;
-        document.getElementById('pv').disabled=c===0;
-        document.getElementById('nx').disabled=c===T-1;
-        let sl = document.getElementById('slide-slider');
-        if(sl) { sl.max = T; sl.value = c + 1; }
-    }
-    function goToSlide(n) {
-        let val = parseInt(n) - 1;
-        if (val >= 0 && val < T) { c = val; ui(); }
-    }
-    function go(d) {
-        if(d>0) {
-            const hid = S[c].querySelectorAll('.stp:not(.shwn)');
-            if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
-        } else {
-            const shw = S[c].querySelectorAll('.stp.shwn');
-            if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
-        }
-        const n=c+d; if(n>=0 && n<T) { c=n; ui(); }
-    }
-    document.addEventListener('keydown', e => {
-        if(e.key==='ArrowRight' || e.key===' ') go(1);
-        if(e.key==='ArrowLeft') go(-1);
-    });
-    ui();
-    function chkAns(btn, correct, exp) {
-        let wrap = btn.closest('.sl');
-        let btnGroup = btn.parentElement;
-        let msg = btnGroup.nextElementSibling;
-        while(msg && !msg.classList.contains('msg-area')) msg = msg.nextElementSibling;
-        if(!msg) { let msgs = wrap.querySelectorAll('.msg-area'); if(msgs.length) msg = msgs[0]; }
-        let buttons = btnGroup.querySelectorAll('.btn');
-        buttons.forEach(b => { b.style.transform = 'scale(1)'; b.style.background = 'var(--base)'; });
-        if (correct) {
-            btn.style.background = '#047857';
-            btn.style.transform = 'scale(1.06)';
-            if(msg) { msg.innerHTML = `¡Excelente! ✅ ${exp}`; msg.style.color = '#047857'; }
-        } else {
-            btn.style.background = '#b91c1c';
-            if(msg) { msg.innerHTML = '¡Inténtalo de nuevo!'; msg.style.color = '#b91c1c'; }
-        }
-    }
-</script></body></html>
+        <!-- SLIDE 8: PERÍMETRO VS ÁREA -->
+        <div class="sl">
+        <div class="head-title">Perímetro vs Área ⚖️</div>
+        <p class="sub-text">¡No los confundas! Son medidas <b class="hl">completamente diferentes</b>:</p>
+        <div class="two-col" style="max-width:850px; margin:0 auto;">
+            <div class="idea-card" style="text-align:center; border-color:#2563EB;">
+                <h3 style="color:#2563EB;">📏 Perímetro</h3>
+                <p style="font-size:22px; margin:10px 0;">Suma de los <b>bordes</b> (contorno).</p>
+                <p style="font-size:24px; font-weight:900; color:#1e40af;">Unidades simples:<br>cm, m, km</p>
+                <p style="font-size:20px; color:#666; margin-top:10px;">Sirve para: cercas, marcos, bordes.</p>
+            </div>
+            <div class="idea-card" style="text-align:center; border-color:#059669;">
+                <h3 style="color:#059669;">🟩 Área</h3>
+                <p style="font-size:22px; margin:10px 0;">Medida de la <b>superficie</b> (interior).</p>
+                <p style="font-size:24px; font-weight:900; color:#065f46;">Unidades cuadradas:<br>cm², m²</p>
+                <p style="font-size:20px; color:#666; margin-top:10px;">Sirve para: pisos, paredes, terrenos.</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 9: FIGURAS COMPUESTAS (FORMA DE L) -->
+        <div class="sl">
+        <div class="head-title">Figuras Compuestas (Forma de "L") 🧩</div>
+        <p class="sub-text">Cuando la figura no es simple, la <b class="hl">dividimos en rectángulos</b>:</p>
+        <div class="pnl" style="text-align:center; padding:16px;">
+            <svg width="400" height="280" viewBox="0 0 400 280" style="max-width:100%;">
+                <!-- Forma L -->
+                <polygon points="40,20 200,20 200,120 320,120 320,260 40,260" fill="#eff6ff" stroke="#2563EB" stroke-width="4"/>
+                <!-- Línea de corte -->
+                <line x1="200" y1="120" x2="40" y2="120" stroke="#DC2626" stroke-width="3" stroke-dasharray="8,5"/>
+                <!-- Etiquetas -->
+                <text x="120" y="12" font-family="Nunito" font-size="18" font-weight="900" text-anchor="middle" fill="#2563EB">4 cm</text>
+                <text x="25" y="70" font-family="Nunito" font-size="18" font-weight="900" text-anchor="end" fill="#2563EB">3 cm</text>
+                <text x="25" y="195" font-family="Nunito" font-size="18" font-weight="900" text-anchor="end" fill="#2563EB">4 cm</text>
+                <text x="180" y="195" font-family="Nunito" font-size="18" font-weight="900" text-anchor="middle" fill="#2563EB">7 cm</text>
+                <text x="120" y="70" font-family="Nunito" font-size="24" font-weight="900" text-anchor="middle" fill="#2563EB">A</text>
+                <text x="180" y="195" font-family="Nunito" font-size="24" font-weight="900" text-anchor="middle" fill="#EA580C" dy="-40">B</text>
+            </svg>
+            <div class="stp" style="margin-top:14px;">
+                <div class="step-list" style="max-width:600px; margin:0 auto;">
+                    <div class="step-box">Rectángulo <b style="color:#2563EB;">A</b>: 4 cm × 3 cm = <b>12 cm²</b></div>
+                    <div class="step-box">Rectángulo <b style="color:#EA580C;">B</b>: 7 cm × 4 cm = <b>28 cm²</b></div>
+                    <div class="step-box" style="background:#ecfdf5; border-color:#059669;">✅ Área total = 12 + 28 = <b style="color:#059669; font-size:28px;">40 cm²</b></div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 10: QUIZ 1 -->
+        <div class="sl">
+        <div class="head-title">¡Quiz Relámpago! ⚡</div>
+        <p class="sub-text">¿Cuál es el perímetro de un cuadrado de lado <b class="hl">7 cm</b>?</p>
+        <div class="card-row" style="max-width:700px;">
+            <button class="btn" onclick="chkAns(this,false,'')">49 cm</button>
+            <button class="btn" onclick="chkAns(this,true,'4 lados × 7 cm = 28 cm ✨')">28 cm</button>
+            <button class="btn" onclick="chkAns(this,false,'')">14 cm</button>
+        </div>
+        <div class="msg-area"></div>
+        </div>
+
+        <!-- SLIDE 11: QUIZ 2 -->
+        <div class="sl">
+        <div class="head-title">¡Quiz 2! ⚡</div>
+        <p class="sub-text">¿Cuál es el <b>área</b> de un rectángulo de base 8 cm y altura 5 cm?</p>
+        <div class="card-row" style="max-width:700px;">
+            <button class="btn" onclick="chkAns(this,true,'Base × Altura = 8 × 5 = 40 cm² 🟩')">40 cm²</button>
+            <button class="btn" onclick="chkAns(this,false,'')">26 cm</button>
+            <button class="btn" onclick="chkAns(this,false,'')">20 cm²</button>
+        </div>
+        <div class="msg-area"></div>
+        </div>
+
+        <!-- SLIDE 12: ABRE TU CUADERNO -->
+        <div class="sl">
+        <div class="head-title">✏️ Abre tu Cuaderno</div>
+        <p class="sub-text">Resuelve estos 6 ejercicios:</p>
+        <div class="cuad-grid">
+            <div class="cuad-item">1️⃣ Perímetro de un cuadrado de lado 9 cm.</div>
+            <div class="cuad-item">2️⃣ Área de un cuadrado de lado 8 cm.</div>
+            <div class="cuad-item">3️⃣ Perímetro de un rectángulo de 10 cm × 4 cm.</div>
+            <div class="cuad-item">4️⃣ Área de un rectángulo de 7 cm × 6 cm.</div>
+            <div class="cuad-item">5️⃣ Área de un triángulo de base 12 cm y altura 8 cm.</div>
+            <div class="cuad-item">6️⃣ Si el área de un cuadrado es 25 cm², ¿cuánto mide su lado?</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 13: RESPUESTAS -->
+        <div class="sl">
+        <div class="head-title">✅ Respuestas</div>
+        <div class="resp-grid">
+            <div class="stp resp-item">1️⃣ 4 × 9 = <b>36 cm</b></div>
+            <div class="stp resp-item">2️⃣ 8 × 8 = <b>64 cm²</b></div>
+            <div class="stp resp-item">3️⃣ 2×10 + 2×4 = <b>28 cm</b></div>
+            <div class="stp resp-item">4️⃣ 7 × 6 = <b>42 cm²</b></div>
+            <div class="stp resp-item">5️⃣ (12×8)÷2 = <b>48 cm²</b></div>
+            <div class="stp resp-item">6️⃣ Lado = <b>5 cm</b> (5×5=25)</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 14: PROBLEMA 1 -->
+        <div class="sl">
+        <div class="head-title">Problema 1: La Cancha de Fútbol ⚽</div>
+        <div class="story-card" style="border:5px solid #059669; background:#ecfdf5;">
+            <div class="story-emoji">⚽</div>
+            <div>
+                <h2 style="color:#047857;">El estadio del colegio</h2>
+                <p>La cancha del colegio mide <b>100 metros de largo</b> y <b>50 metros de ancho</b>. Un jugador corre por todo el borde para calentar. ¿Cuántos metros recorre en una vuelta completa? ¿Cuál es el área total del pasto?</p>
+                <div class="stp" style="margin-top:14px; background:#d1fae5; padding:16px; border-radius:14px;">
+                    <p style="font-weight:800; color:#047857;">✅ Perímetro = 100+50+100+50 = <b>300 m</b>.<br>Área = 100 × 50 = <b>5.000 m²</b>.</p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 15: PROBLEMA 2 -->
+        <div class="sl">
+        <div class="head-title">Problema 2: La Pintura y el Rodapié 🖌️</div>
+        <div class="story-card" style="border:5px solid #2563EB; background:#eff6ff;">
+            <div class="story-emoji">🖌️</div>
+            <div>
+                <h2 style="color:#1d4ed8;">Renovando la habitación</h2>
+                <p>Camila quiere pintar una pared rectangular de <b>4 m de ancho</b> y <b>3 m de alto</b>. También quiere poner un rodapié (tira de madera) solo en la base de esa pared. ¿Cuántos m² de pintura necesita? ¿Cuántos metros de rodapié?</p>
+                <div class="stp" style="margin-top:14px; background:#dbeafe; padding:16px; border-radius:14px;">
+                    <p style="font-weight:800; color:#1e40af;">✅ Pintura (Área) = 4 × 3 = <b>12 m²</b>.<br>Rodapié (solo la base) = <b>4 m</b>.</p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 16: PROBLEMA 3 -->
+        <div class="sl">
+        <div class="head-title">Problema 3: El Marco de Fotos 🖼️</div>
+        <div class="story-card" style="border:5px solid #EA580C; background:#fff7ed;">
+            <div class="story-emoji">🖼️</div>
+            <div>
+                <h2 style="color:#c2410c;">¿Marco o vidrio?</h2>
+                <p>Lucas quiere hacer un marco cuadrado de <b>30 cm de lado</b>. ¿Cuántos cm de madera necesita para el marco? ¿Y cuántos cm² de vidrio para cubrirlo?</p>
+                <div class="stp" style="margin-top:14px; background:#ffedd5; padding:16px; border-radius:14px;">
+                    <p style="font-weight:800; color:#c2410c;">✅ Marco (Perímetro) = 4 × 30 = <b>120 cm</b>.<br>Vidrio (Área) = 30 × 30 = <b>900 cm²</b>.</p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 17: DESAFÍO SUPREMO PORTADA -->
+        <div class="sl" style="background:linear-gradient(135deg, #9333EA, #db2777); color:white;">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <h1 style="font-size:58px; margin-bottom:18px;">⛏️ Desafío Supremo</h1>
+            <p style="font-size:28px; max-width:700px; opacity:0.95;">¡Nivel Secreto ObraCraft: La Fortaleza Suprema!</p>
+            <div style="font-size:100px; margin-top:24px; animation:bounce 2s infinite;">🏰</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 18: OBRACRAFT -->
+        <div class="sl">
+        <div class="head-title" style="background:linear-gradient(135deg, #9333EA, #db2777);">⛏️ ObraCraft: Fortaleza de Bloques</div>
+        <div class="pnl" style="border-color:#9333EA;">
+            <p style="font-size:24px; text-align:center;">Estás construyendo una fortaleza en ObraCraft. El terreno es un rectángulo de <b>12 bloques de largo</b> × <b>8 bloques de ancho</b>.</p>
+            <div style="background:linear-gradient(135deg,#9333EA22,#db277722); padding:18px; border-radius:16px; margin:16px 0; font-size:22px; font-weight:800; color:#9333EA; text-align:center; line-height:1.6;">
+                🛡️ Quieres poner murallas de piedra en <b>todo el borde</b>.<br>
+                🧱 Quieres cubrir <b>todo el piso</b> con bloques de lava endurecida.
+            </div>
+            <p style="font-size:24px; font-weight:700; text-align:center;">1. ¿Cuántos bloques de muralla necesitas (Perímetro)?<br>2. ¿Cuántos bloques de piso necesitas (Área)?</p>
+            <div class="stp" style="margin-top:16px; background:#f3e8ff; padding:16px; border-radius:14px; font-size:22px;">
+                <p style="font-weight:800; color:#9333EA;">✅ 1. Perímetro = 12+8+12+8 = <b>40 bloques de muralla</b>.</p>
+                <p style="font-weight:800; color:#db2777;">✅ 2. Área = 12 × 8 = <b>96 bloques de piso</b>.</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 19: RESUMEN -->
+        <div class="sl">
+        <div class="head-title" style="background:#047857;">📝 Resumen de la Clase</div>
+        <div class="summary-list" style="max-width:780px; margin:0 auto;">
+            <div class="stp summary-item"><b>📏 Perímetro:</b> Suma de los bordes. Cuadrado: 4 × L. Rectángulo: 2 × largo + 2 × ancho.</div>
+            <div class="stp summary-item"><b>🟩 Área:</b> Superficie interior. Cuadrado: L × L. Rectángulo: B × H. Triángulo: (B × H) ÷ 2.</div>
+            <div class="stp summary-item"><b>🧩 Figuras Compuestas:</b> Dividimos en rectángulos más simples y sumamos las áreas.</div>
+            <div class="stp summary-item"><b>📐 Unidades:</b> Perímetro en cm o m. Área siempre en cm² o m².</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 20: CIERRE -->
+        <div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:38px; font-weight:800; line-height:1.45; max-width:780px;">¡Gran trabajo! Ya dominas el perímetro y el área de cuadrados, rectángulos, triángulos y figuras compuestas. En la última clase exploraremos los <b>Cuerpos 3D, el Volumen y la Simetría</b>.</p>
+            <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">🟩</div>
+        </div>
+        </div>
+
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <span class="sc" id="sc">1 / 20</span>
+            <input type="range" id="slide-slider" style="width:100%; cursor:pointer;" min="1" max="20" value="1" oninput="goToSlide(this.value)">
+        </div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>
+const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+function ui(){S.forEach((s,i)=>{s.classList.remove('on','pv','nx');if(i===c)s.classList.add('on');else if(i<c)s.classList.add('pv');else s.classList.add('nx');});document.getElementById('pb').style.width=((c+1)/T*100)+'%';document.getElementById('sc').textContent=`${c+1} / ${T}`;document.getElementById('pv').disabled=c===0;document.getElementById('nx').disabled=c===T-1;let sl=document.getElementById('slide-slider');if(sl){sl.max=T;sl.value=c+1;}}
+function goToSlide(n){let val=parseInt(n)-1;if(val>=0&&val<T){c=val;ui();}}
+function go(d){if(d>0){const hid=S[c].querySelectorAll('.stp:not(.shwn)');if(hid.length>0){hid[0].classList.add('shwn');return;}}else{const shw=S[c].querySelectorAll('.stp.shwn');if(shw.length>0){shw[shw.length-1].classList.remove('shwn');return;}}const n=c+d;if(n>=0&&n<T){c=n;ui();}}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(1);if(e.key==='ArrowLeft')go(-1);});
+function chkAns(btn,correct,exp){const wrap=btn.closest('.sl');const buttons=btn.parentElement.querySelectorAll('.btn');const msg=wrap.querySelector('.msg-area');buttons.forEach(b=>{b.disabled=false;b.style.background='var(--base)';b.style.transform='scale(1)';});if(correct){btn.style.background='#047857';btn.style.transform='scale(1.06)';msg.textContent=`¡Muy bien! ${exp}`;msg.style.color='#047857';}else{btn.style.background='#b91c1c';msg.textContent='¡Inténtalo de nuevo!';msg.style.color='#b91c1c';}}
+ui();
+</script>
+</body>
+</html>

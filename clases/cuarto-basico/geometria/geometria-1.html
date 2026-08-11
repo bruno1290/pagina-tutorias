@@ -1,399 +1,698 @@
 <!DOCTYPE html>
-<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Geometría I - Medidas y Plano Cartesiano</title><style>
-    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
-    :root {
-        --base: #1C4A82;
-        --bg: #f5f6f8;
-        --tx: #333;
-        --accent: #FFB74D;
-        --purple: #9333EA;
-        --pink: #db2777;
-        --green: #059669;
-        --blue: #2563EB;
-        --orange: #EA580C;
-    }
-    * {margin:0; padding:0; box-sizing:border-box;}
-    body {font-family: 'Nunito', sans-serif; background: var(--bg); overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; color: var(--tx);}
-    .dk {position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex;}
-    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 36px 40px 82px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1; overflow-y: auto;}
-    .sl.on {opacity: 1; transform: scale(0.9); pointer-events: auto; z-index: 10;}
-    .sl.pv {opacity: 0; transform: translateX(-50px) scale(.95);}
-    .sl.nx {opacity: 0; transform: translateX(50px) scale(.95);}
-    .head-title {background: var(--base); color: white; padding: 10px 40px; font-size: 30px; font-weight: 900; margin-bottom: 22px; display: inline-block; border-radius: 12px; text-align: center;}
-    .sub-text {font-size: 24px; font-weight: 600; margin-bottom: 18px; text-align: center; line-height: 1.4;}
-    .pb {position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100;}
-    .nv {position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: white; border-top: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; z-index: 100;}
-    .nb {background: #eee; color: var(--base); border: none; padding: 10px 20px; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer; transition: all .2s;}
-    .nb:hover {background: #ddd;}
-    .nb:disabled {opacity: 0.3; cursor: not-allowed;}
-    .sc {color: #888; font-size: 16px; font-weight: 900;}
-    .stp {opacity: 0; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;}
-    .stp.shwn {opacity: 1; transform: translateY(0); pointer-events: auto;}
-    .pnl {background: #fff; padding: 24px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 3px solid #eaeaea; width: 100%; margin-bottom: 16px;}
-    .hl {color: var(--base); font-weight: 900;}
-    .btn {background: var(--base); color: white; border: none; padding: 14px 28px; border-radius: 12px; font-size: 20px; font-weight: 900; cursor: pointer; transition: transform .2s; font-family: 'Nunito', sans-serif;}
-    .btn:hover {transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3);}
-    .card-row {display: flex; justify-content: center; gap: 18px; width: 100%; flex-wrap: wrap;}
-    .idea-card {flex: 1 1 200px; background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%); border-radius: 18px; padding: 20px; border: 3px solid #d7e7f7; text-align: center;}
-    .story-card {width: 100%; border-radius: 28px; padding: 24px; display: grid; grid-template-columns: 90px 1fr; gap: 20px; align-items: center; background: #fff;}
-    .story-emoji {font-size: 72px; text-align: center;}
-    .msg-area {font-size: 22px; font-weight: 800; margin-top: 12px; min-height: 30px;}
-    .cuad-grid {display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; width: 100%;}
-    .cuad-item {background: #fff; border: 3px solid #d8e7f6; border-radius: 14px; padding: 14px; text-align: center; font-size: 20px; font-weight: 800; min-height: 70px; display: flex; flex-direction: column; align-items: center; justify-content: center;}
-    .resp-grid {display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; width: 100%;}
-    .resp-item {background: #f0fdf4; border: 3px solid #86efac; border-radius: 14px; padding: 12px; text-align: center; font-size: 19px; font-weight: 800; display: flex; align-items: center; justify-content: center;}
-</style></head><body><div class="pb" id="pb"></div><div class="dk">
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Geometría 1: Unidades de Medida y Plano Cartesiano</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root {
+    --base: #1C4A82;
+    --bg: #f5f6f8;
+    --tx: #333;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--tx);
+}
+.dk { position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex; }
+.sl {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 36px 40px 82px;
+    opacity: 0;
+    transform: scale(.96);
+    transition: opacity .4s, transform .4s;
+    pointer-events: none;
+    z-index: 1;
+    overflow-y: auto;
+}
+.sl.on { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
+.sl.pv { opacity: 0; transform: translateX(-50px) scale(.95); }
+.sl.nx { opacity: 0; transform: translateX(50px) scale(.95); }
+.head-title {
+    background: var(--base);
+    color: white;
+    padding: 10px 40px;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    display: inline-block;
+    border-radius: 12px;
+    text-align: center;
+}
+.sub-text {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+    line-height: 1.4;
+}
+.pb { position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100; }
+.nv {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 100;
+}
+.nb {
+    background: #eee;
+    color: var(--base);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all .2s;
+}
+.nb:hover { background: #ddd; }
+.nb:disabled { opacity: 0.3; cursor: not-allowed; }
+.sc { color: #888; font-size: 16px; font-weight: 900; }
+.stp {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+.stp.shwn { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.pnl {
+    background: #fff;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 3px solid #eaeaea;
+    width: 100%;
+}
+.hl { color: var(--base); font-weight: 900; }
+.btn {
+    background: var(--base);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 24px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .2s;
+    font-family: 'Nunito', sans-serif;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3); }
+.card-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.idea-card {
+    flex: 1 1 220px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+    border-radius: 18px;
+    padding: 18px;
+    border: 3px solid #d7e7f7;
+    min-height: 140px;
+}
+.idea-card h3 { font-size: 28px; color: var(--base); margin-bottom: 10px; }
+.idea-card p { font-size: 24px; line-height: 1.45; }
+.story-card {
+    width: 100%;
+    border-radius: 28px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: center;
+}
+.story-emoji {
+    font-size: 114px;
+    text-align: center;
+    animation: bob 2.8s infinite;
+}
+.story-card h2 { font-size: 30px; margin-bottom: 12px; }
+.story-card p { font-size: 24px; line-height: 1.45; }
+.summary-list { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+.summary-item {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 18px;
+    border: 3px solid #dbe7f4;
+    font-size: 23px;
+    line-height: 1.45;
+}
+.fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+.fact-box {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 18px;
+    padding: 16px;
+    border: 3px solid #d8e7f6;
+    min-height: 140px;
+}
+.fact-box h4 { font-size: 24px; color: var(--base); margin-bottom: 10px; text-align: center; }
+.fact-box p { font-size: 24px; line-height: 1.45; text-align: center; }
+.warn-card {
+    background: #fff8e5;
+    border: 4px solid #f0ca59;
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 24px;
+    line-height: 1.45;
+    width: 100%;
+}
+.msg-area { font-size: 24px; font-weight: 900; height: 40px; text-align: center; margin-top: 20px; }
+.hero-title { font-size: 62px; color: var(--base); margin-bottom: 18px; text-align: center; line-height: 1.1; }
+.hero-sub { font-size: 28px; font-weight: 700; text-align: center; max-width: 720px; }
+.hero-emoji { font-size: 108px; margin-top: 28px; animation: bounce 2s infinite; }
+.step-list { display: flex; flex-direction: column; gap: 14px; }
+.step-box {
+    background: #f7fbff;
+    border-left: 8px solid var(--base);
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 24px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+.two-col {
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 18px;
+    width: 100%;
+    align-items: stretch;
+}
+.cuad-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    width: 100%;
+}
+.cuad-item {
+    background: #fff;
+    border: 3px solid #d8e7f6;
+    border-radius: 14px;
+    padding: 14px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 800;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.resp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    width: 100%;
+}
+.resp-item {
+    background: #f0fdf4;
+    border: 3px solid #86efac;
+    border-radius: 14px;
+    padding: 12px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+</style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
 
-<!-- ====== SLIDE 1: PORTADA ====== -->
-<div class="sl">
-    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <h1 style="font-size:54px; color:var(--base); margin-bottom:18px; text-align:center; line-height:1.1;">Geometría I 📐</h1>
-        <p style="font-size:24px; font-weight:700; text-align:center; max-width:720px;">Unidades de Medida y el Plano Cartesiano.</p>
-        <div style="font-size:108px; margin-top:24px;">📏🗺️</div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 2: ROMPEHIELOS ====== -->
-<div class="sl">
-    <div class="head-title">¿Cómo medimos el mundo? 🌍</div>
-    <div class="story-card" style="border:5px solid #2563EB; background:#eff6ff;">
-        <div class="story-emoji">📐</div>
-        <div>
-            <h2 style="color:#1d4ed8; font-size:26px;">El tamaño de las cosas</h2>
-            <p style="font-size:21px;">Imagina medir la distancia de tu casa al colegio usando una pequeña regla escolar... ¡Tomaría una eternidad! Por eso inventamos diferentes <b>unidades de medida</b> según lo que queremos medir.</p>
+        <!-- SLIDE 1: PORTADA -->
+        <div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 class="hero-title">Geometría I: Medidas y el Plano Cartesiano</h1>
+            <p class="hero-sub">Aprenderemos a medir el mundo y a encontrar puntos exactos en un mapa usando coordenadas.</p>
+            <div class="hero-emoji">📐</div>
         </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 3: LAS 4 UNIDADES CLAVE ====== -->
-<div class="sl">
-    <div class="head-title">La Regla de las 4 Unidades 📏</div>
-    <div class="card-row">
-        <div class="idea-card stp">
-            <div style="font-size:40px; margin-bottom:10px;">🐜</div>
-            <h3 style="color:#2563EB; font-size:22px;">Milímetro (mm)</h3>
-            <p style="font-size:16px; margin-top:8px;">Para cosas muy diminutas, como el grosor de una moneda o un insecto.</p>
         </div>
-        <div class="idea-card stp">
-            <div style="font-size:40px; margin-bottom:10px;">✏️</div>
-            <h3 style="color:#059669; font-size:22px;">Centímetro (cm)</h3>
-            <p style="font-size:16px; margin-top:8px;">Para cosas medianas, como tu cuaderno, un lápiz o tu propia altura.</p>
-        </div>
-        <div class="idea-card stp">
-            <div style="font-size:40px; margin-bottom:10px;">🚗</div>
-            <h3 style="color:#EA580C; font-size:22px;">Metro (m)</h3>
-            <p style="font-size:16px; margin-top:8px;">Para cosas grandes, como el largo de un auto o el tamaño de tu habitación.</p>
-        </div>
-        <div class="idea-card stp">
-            <div style="font-size:40px; margin-bottom:10px;">🛣️</div>
-            <h3 style="color:#9333EA; font-size:22px;">Kilómetro (km)</h3>
-            <p style="font-size:16px; margin-top:8px;">Para distancias enormes, como de una ciudad a otra ciudad.</p>
-        </div>
-    </div>
-</div>
 
-<!-- ====== SLIDE 4: LA ESCALERA DE CONVERSIÓN ====== -->
-<div class="sl">
-    <div class="head-title">Escalera de Conversión 🪜</div>
-    <p class="sub-text">¿Cómo transformamos una unidad en otra?</p>
-    <div class="pnl" style="text-align:center;">
-        <svg width="600" height="240" viewBox="0 0 600 240" style="max-width:100%;">
-            <!-- Escalones -->
-            <path d="M 50,180 L 150,180 L 150,130 L 300,130 L 300,80 L 450,80 L 450,30 L 550,30" fill="none" stroke="#2563EB" stroke-width="8" stroke-linejoin="round"/>
-            <text x="100" y="165" font-family="Nunito" font-size="22" font-weight="900" text-anchor="middle">mm</text>
-            <text x="225" y="115" font-family="Nunito" font-size="22" font-weight="900" text-anchor="middle">cm</text>
-            <text x="375" y="65" font-family="Nunito" font-size="22" font-weight="900" text-anchor="middle">m</text>
-            <text x="500" y="15" font-family="Nunito" font-size="22" font-weight="900" text-anchor="middle">km</text>
-
-            <!-- Flechas y multiplicadores -->
-            <path class="stp" d="M 450,120 Q 375,180 300,160" fill="none" stroke="#059669" stroke-width="4" marker-end="url(#arrowG)"/>
-            <text class="stp" x="375" y="185" font-family="Nunito" font-size="18" font-weight="900" text-anchor="middle" fill="#059669">1 m = 100 cm</text>
-            
-            <path class="stp" d="M 300,170 Q 225,230 150,210" fill="none" stroke="#EA580C" stroke-width="4" marker-end="url(#arrowO)"/>
-            <text class="stp" x="225" y="235" font-family="Nunito" font-size="18" font-weight="900" text-anchor="middle" fill="#EA580C">1 cm = 10 mm</text>
-
-            <defs>
-                <marker id="arrowG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#059669"/></marker>
-                <marker id="arrowO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#EA580C"/></marker>
-            </defs>
-        </svg>
-    </div>
-</div>
-
-<!-- ====== SLIDE 5: EL MAPA Y EL PLANO CARTESIANO ====== -->
-<div class="sl">
-    <div class="head-title">Encontrar lugares precisos 🗺️</div>
-    <div class="story-card" style="border:5px solid #059669; background:#ecfdf5;">
-        <div class="story-emoji">📍</div>
-        <div>
-            <h2 style="color:#047857; font-size:26px;">¿Dónde está el tesoro?</h2>
-            <p style="font-size:21px;">Para encontrar un punto exacto en un mapa, usamos el <b>Plano Cartesiano</b>. Es una cuadrícula mágica con dos líneas maestras: una Horizontal y una Vertical.</p>
-        </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 6: EL PLANO CARTESIANO GIGANTE (ALTA PRECISIÓN) ====== -->
-<div class="sl">
-    <div class="head-title">Anatomía del Plano Cartesiano 📐</div>
-    <p class="sub-text">Construido por dos ejes (X e Y) que se cruzan en el Origen (0,0).</p>
-    <div class="pnl" style="text-align:center; padding:10px;">
-        <svg width="480" height="380" viewBox="-40 -20 520 420" style="max-width:100%;">
-            <!-- Cuadrícula -->
-            <defs>
-                <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-                    <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#e5e7eb" stroke-width="2"/>
-                </pattern>
-            </defs>
-            <rect x="0" y="0" width="420" height="360" fill="url(#grid)" />
-
-            <!-- Ejes -->
-            <line x1="0" y1="360" x2="440" y2="360" stroke="#DC2626" stroke-width="4" marker-end="url(#arrowR)"/>
-            <text x="450" y="365" font-family="Nunito" font-size="24" font-weight="900" fill="#DC2626">X</text>
-            
-            <line x1="0" y1="360" x2="0" y2="-10" stroke="#2563EB" stroke-width="4" marker-end="url(#arrowB)"/>
-            <text x="-15" y="-20" font-family="Nunito" font-size="24" font-weight="900" fill="#2563EB">Y</text>
-            
-            <!-- Números Eje X -->
-            <g font-family="Nunito" font-size="18" font-weight="800" text-anchor="middle" fill="#DC2626">
-                <text x="0" y="385">0</text>
-                <text x="60" y="385">1</text>
-                <text x="120" y="385">2</text>
-                <text x="180" y="385">3</text>
-                <text x="240" y="385">4</text>
-                <text x="300" y="385">5</text>
-                <text x="360" y="385">6</text>
-                <text x="420" y="385">7</text>
-            </g>
-            
-            <!-- Números Eje Y -->
-            <g font-family="Nunito" font-size="18" font-weight="800" text-anchor="end" fill="#2563EB">
-                <text x="-15" y="306">1</text>
-                <text x="-15" y="246">2</text>
-                <text x="-15" y="186">3</text>
-                <text x="-15" y="126">4</text>
-                <text x="-15" y="66">5</text>
-                <text x="-15" y="6">6</text>
-            </g>
-
-            <!-- Trazado de Punto -->
-            <g class="stp shwn">
-                <line x1="180" y1="360" x2="180" y2="240" stroke="#10B981" stroke-width="3" stroke-dasharray="6,4"/>
-                <line x1="0" y1="240" x2="180" y2="240" stroke="#10B981" stroke-width="3" stroke-dasharray="6,4"/>
-                <circle cx="180" cy="240" r="10" fill="#059669"/>
-                <text x="195" y="230" font-family="Nunito" font-size="22" font-weight="900" fill="#065f46">(3, 2)</text>
-            </g>
-
-            <defs>
-                <marker id="arrowR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#DC2626"/></marker>
-                <marker id="arrowB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2563EB"/></marker>
-            </defs>
-        </svg>
-    </div>
-</div>
-
-<!-- ====== SLIDE 7: LEYENDO COORDENADAS ====== -->
-<div class="sl">
-    <div class="head-title">Regla de Oro: Coordenadas (X, Y) 🧭</div>
-    <div class="card-row" style="max-width:850px;">
-        <div class="idea-card stp" style="border-color:#DC2626; flex:1 1 360px; padding:20px;">
-            <h3 style="color:#DC2626; font-size:24px;">Primero el Eje X</h3>
-            <p style="font-size:20px; font-weight:800; color:#ef4444;">Eje Horizontal ➡️</p>
-            <p style="font-size:18px; margin-top:10px;">Camina por el piso a la derecha primero.</p>
-        </div>
-        <div class="idea-card stp" style="border-color:#2563EB; flex:1 1 360px; padding:20px;">
-            <h3 style="color:#2563EB; font-size:24px;">Segundo el Eje Y</h3>
-            <p style="font-size:20px; font-weight:800; color:#3b82f6;">Eje Vertical ⬆️</p>
-            <p style="font-size:18px; margin-top:10px;">Luego, sube como si usaras un ascensor.</p>
-        </div>
-    </div>
-    <div class="stp" style="margin-top:20px; background:#fefce8; border:3px solid #fde047; padding:16px; border-radius:12px; font-size:22px; font-weight:800; text-align:center;">
-        ¡Punto (3, 2) significa caminar 3 pasos a la derecha y subir 2 pisos!
-    </div>
-</div>
-
-<!-- ====== SLIDE 8: QUIZ 1 ====== -->
-<div class="sl">
-    <div class="head-title">¡Quiz Relámpago! ⚡</div>
-    <p class="sub-text">¿Qué unidad usarías para medir el largo de un bus escolar?</p>
-    <div class="card-row" style="max-width:600px;">
-        <button class="btn" onclick="chkAns(this,false,'')">Centímetros (cm)</button>
-        <button class="btn" onclick="chkAns(this,true,'Un bus escolar se mide mejor en metros (m) 🚌')">Metros (m)</button>
-        <button class="btn" onclick="chkAns(this,false,'')">Kilómetros (km)</button>
-    </div>
-    <div class="msg-area"></div>
-</div>
-
-<!-- ====== SLIDE 9: QUIZ 2 ====== -->
-<div class="sl">
-    <div class="head-title">¡Quiz 2! ⚡</div>
-    <p class="sub-text">Si te dicen que el tesoro está en (5, 4), ¿qué significa el 5?</p>
-    <div class="card-row" style="max-width:600px;">
-        <button class="btn" onclick="chkAns(this,false,'')">Avanzar hacia arriba (Eje Y)</button>
-        <button class="btn" onclick="chkAns(this,true,'El primer número SIEMPRE es el eje horizontal (Eje X) 🧭')">Avanzar a la derecha (Eje X)</button>
-    </div>
-    <div class="msg-area"></div>
-</div>
-
-<!-- ====== SLIDE 10: ABRE TU CUADERNO ====== -->
-<div class="sl">
-    <div class="head-title">✏️ Abre tu Cuaderno</div>
-    <p class="sub-text">Resuelve estos ejercicios en tu cuaderno:</p>
-    <div class="cuad-grid">
-        <div class="cuad-item">1️⃣ ¿Cuántos centímetros hay en 2 metros?</div>
-        <div class="cuad-item">2️⃣ ¿Qué unidad usarías para medir un estadio?</div>
-        <div class="cuad-item">3️⃣ Convierte: 30 mm a centímetros.</div>
-        <div class="cuad-item">4️⃣ El origen del plano cartesiano es el punto...</div>
-        <div class="cuad-item">5️⃣ En el punto (6, 1), ¿a qué número subes en el eje Y?</div>
-        <div class="cuad-item">6️⃣ Dibuja un plano y marca el punto (2, 5).</div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 11: RESPUESTAS ====== -->
-<div class="sl">
-    <div class="head-title">✅ Respuestas</div>
-    <div class="resp-grid">
-        <div class="resp-item stp">1️⃣ <b>200 cm</b></div>
-        <div class="resp-item stp">2️⃣ <b>Metros (m)</b></div>
-        <div class="resp-item stp">3️⃣ <b>3 cm</b></div>
-        <div class="resp-item stp">4️⃣ <b>(0, 0)</b></div>
-        <div class="resp-item stp">5️⃣ Subes al <b>1</b></div>
-        <div class="resp-item stp">6️⃣ (Revisa tu plano en el cuaderno)</div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 12: PROBLEMA 1 ====== -->
-<div class="sl">
-    <div class="head-title">Problema 1: El Salto Largo 🏃</div>
-    <div class="story-card" style="border:4px solid #9DE3BD; background:#f0fdf4;">
-        <div class="story-emoji">🏅</div>
-        <div>
-            <p style="font-size:21px;">En una competencia atlética, Juan saltó <b>2 metros con 15 centímetros</b>. ¿Cuántos centímetros en total saltó Juan?</p>
-            <div class="stp" style="margin-top:12px; background:#d1fae5; padding:14px; border-radius:10px;">
-                <p style="font-size:20px; font-weight:800; color:#047857;">✅ Sabemos que 2 metros = 200 cm. Sumamos los 15 cm extra: <b>215 cm</b>.</p>
+        <!-- SLIDE 2: ROMPEHIELO -->
+        <div class="sl">
+        <div class="head-title" style="background:#2E7D32;">¿Por qué necesitamos medir? 🌍</div>
+        <div class="story-card" style="border:5px solid #2E7D32; background:#e8f5e9;">
+            <div class="story-emoji">📏</div>
+            <div>
+                <h2 style="color:#2E7D32;">La aventura de medir</h2>
+                <p>Imagina que quieres decirle a un amigo lo alto que eres. ¿Podrías decir simplemente "soy alto"? ¡No alcanza! Necesitas un <b>número</b> y una <b>unidad</b>: "mido 1 metro con 35 centímetros". Sin medidas exactas, ¡los doctores no podrían recetar medicinas, los ingenieros no podrían construir puentes, y los panaderos hornearían pasteles enormes o diminutos!</p>
             </div>
         </div>
-    </div>
-</div>
+        <div class="stp warn-card" style="margin-top:20px; border-color:#2E7D32; background:#e8f5e9;">
+            💡 <b>Dato curioso:</b> Hace miles de años, los egipcios medían con los brazos y los pies. ¡Por eso cada persona obtenía medidas distintas! Inventar el metro resolvió ese problema.
+        </div>
+        </div>
 
-<!-- ====== SLIDE 13: PROBLEMA 2 ====== -->
-<div class="sl">
-    <div class="head-title">Problema 2: El Juego de Ajedrez ♟️</div>
-    <div class="story-card" style="border:4px solid #9DDEFF; background:#f0f8ff;">
-        <div class="story-emoji">♟️</div>
-        <div>
-            <p style="font-size:21px;">En un plano cartesiano, un peón está en el punto <b>(2, 3)</b> y avanza un cuadro directamente hacia arriba (en línea recta vertical). ¿En qué punto quedó ahora?</p>
-            <div class="stp" style="margin-top:12px; background:#e3f2fd; padding:14px; border-radius:10px;">
-                <p style="font-size:20px; font-weight:800; color:var(--base);">✅ Avanza hacia arriba, por lo que el eje Y aumenta 1. Queda en el punto <b>(2, 4)</b>.</p>
+        <!-- SLIDE 3: LAS 4 UNIDADES FUNDAMENTALES -->
+        <div class="sl">
+        <div class="head-title">Las 4 Unidades de Longitud 📏</div>
+        <p class="sub-text">Usamos distintas unidades según el <b class="hl">tamaño de lo que medimos</b>:</p>
+        <div class="fact-grid">
+            <div class="stp fact-box" style="border-color:#9333EA;">
+                <h4 style="color:#9333EA;">🐜 Milímetro (mm)</h4>
+                <p>Para cosas muy diminutas: el grosor de una moneda, la punta de un lápiz, un grano de arroz.</p>
+            </div>
+            <div class="stp fact-box" style="border-color:#059669;">
+                <h4 style="color:#059669;">✏️ Centímetro (cm)</h4>
+                <p>Para cosas que puedes tocar: tu cuaderno, tu dedo, una goma de borrar.</p>
+            </div>
+            <div class="stp fact-box" style="border-color:#EA580C;">
+                <h4 style="color:#EA580C;">🚗 Metro (m)</h4>
+                <p>Para cosas grandes: el largo de un auto, el ancho de tu habitación, tu propia estatura.</p>
+            </div>
+            <div class="stp fact-box" style="border-color:#2563EB;">
+                <h4 style="color:#2563EB;">🛣️ Kilómetro (km)</h4>
+                <p>Para distancias enormes: de Santiago a Valparaíso, la distancia al colegio en auto.</p>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 14: DESAFÍO SUPREMO PORTADA ====== -->
-<div class="sl" style="background: linear-gradient(135deg, #9333EA, #db2777); color: white;">
-    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <h1 style="font-size:56px; margin-bottom:18px;">⛏️ Desafío ObraCraft</h1>
-        <p style="font-size:24px; max-width:700px; text-align:center; opacity:0.95;">¡Nivel Secreto: El Mapa del Tesoro!</p>
-    </div>
-</div>
-
-<!-- ====== SLIDE 15: OBRACRAFT ====== -->
-<div class="sl">
-    <div class="head-title" style="background:linear-gradient(135deg, #9333EA, #db2777);">⛏️ El Cofre Escondido</div>
-    <div class="pnl" style="border-color:#9333EA;">
-        <p style="font-size:20px; text-align:center;">Estás explorando ObraCraft y tienes un mapa con coordenadas exactas.</p>
-        <div style="background:linear-gradient(135deg,#9333EA22,#db277722); padding:14px; border-radius:14px; margin:12px 0; text-align:center; font-size:19px; font-weight:800; color:#9333EA;">
-            🌳 Empiezas en tu casa, en el origen (0, 0).<br>
-            💎 El cofre de diamantes está en el punto (7, 5).
         </div>
-        <p style="font-size:20px; text-align:center; font-weight:700;">1. ¿Cuántos bloques a la DERECHA debes caminar?<br>2. ¿Cuántos bloques hacia ARRIBA debes subir?</p>
-        <div class="stp" style="margin-top:14px; background:#f3e5f5; padding:14px; border-radius:10px; font-size:18px;">
-            <p style="font-weight:800; color:var(--purple);">✅ 1. Debes caminar <b>7 bloques a la derecha</b> (Eje X).</p>
-            <p style="font-weight:800; color:var(--pink);">✅ 2. Y luego subir <b>5 bloques</b> (Eje Y). ¡Tesoro encontrado!</p>
+
+        <!-- SLIDE 4: ESCALERA DE CONVERSIÓN -->
+        <div class="sl">
+        <div class="head-title">La Escalera Mágica de Conversión 🪜</div>
+        <p class="sub-text">Para transformar una unidad en otra, <b class="hl">subimos o bajamos</b> la escalera:</p>
+        <div class="pnl" style="text-align:center; padding:20px;">
+            <svg width="620" height="300" viewBox="0 0 620 300" style="max-width:100%;">
+                <!-- Escalones -->
+                <rect x="20" y="220" width="140" height="60" rx="10" fill="#f3e8ff" stroke="#9333EA" stroke-width="3"/>
+                <text x="90" y="258" font-family="Nunito" font-size="24" font-weight="900" text-anchor="middle" fill="#9333EA">mm</text>
+
+                <rect x="170" y="160" width="140" height="60" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="3"/>
+                <text x="240" y="198" font-family="Nunito" font-size="24" font-weight="900" text-anchor="middle" fill="#059669">cm</text>
+
+                <rect x="320" y="100" width="140" height="60" rx="10" fill="#fff7ed" stroke="#EA580C" stroke-width="3"/>
+                <text x="390" y="138" font-family="Nunito" font-size="24" font-weight="900" text-anchor="middle" fill="#EA580C">m</text>
+
+                <rect x="470" y="40" width="140" height="60" rx="10" fill="#eff6ff" stroke="#2563EB" stroke-width="3"/>
+                <text x="540" y="78" font-family="Nunito" font-size="24" font-weight="900" text-anchor="middle" fill="#2563EB">km</text>
+
+                <!-- Flechas con factores -->
+                <text class="stp" x="155" y="210" font-family="Nunito" font-size="20" font-weight="900" text-anchor="middle" fill="#DC2626">×10</text>
+                <text class="stp" x="305" y="150" font-family="Nunito" font-size="20" font-weight="900" text-anchor="middle" fill="#DC2626">×100</text>
+                <text class="stp" x="455" y="90" font-family="Nunito" font-size="20" font-weight="900" text-anchor="middle" fill="#DC2626">×1000</text>
+            </svg>
         </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 16: RESUMEN ====== -->
-<div class="sl">
-    <div class="head-title">📝 Resumen de la Clase</div>
-    <div class="pnl" style="max-width:680px; margin:0 auto;">
-        <div style="font-size:20px; line-height:2.2;">
-            <p class="stp">✅ <b>Unidades:</b> Milímetro (mm), Centímetro (cm), Metro (m), Kilómetro (km).</p>
-            <p class="stp">✅ <b>Conversión:</b> 1 m = 100 cm | 1 cm = 10 mm.</p>
-            <p class="stp">✅ <b>Plano Cartesiano:</b> Sirve para ubicar posiciones exactas.</p>
-            <p class="stp">✅ <b>Coordenadas (X, Y):</b> Primero avanzas horizontal (Eje X) y luego vertical (Eje Y).</p>
+        <div class="stp warn-card" style="margin-top:14px; border-color:#2563EB; background:#eff6ff;">
+            📌 <b>Regla clave:</b> 1 cm = 10 mm &nbsp;|&nbsp; 1 m = 100 cm &nbsp;|&nbsp; 1 km = 1.000 m
         </div>
-    </div>
-</div>
+        </div>
 
-<!-- ====== SLIDE 17: CIERRE ====== -->
-<div class="sl">
-    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <div style="font-size:120px; margin-bottom:20px; animation: bounce 2s infinite;">🌟</div>
-        <h1 style="font-size:46px; color:var(--base); text-align:center;">¡Excelente Trabajo!</h1>
-        <p style="font-size:24px; font-weight:700; text-align:center; max-width:600px; margin-top:16px;">¡Ahora eres un maestro de las mediciones y las ubicaciones en mapas! En la próxima clase dominaremos los Ángulos y el movimiento.</p>
-        <div style="font-size:54px; margin-top:18px;">📏🗺️🧭✨</div>
-    </div>
-</div>
+        <!-- SLIDE 5: EJEMPLO RESUELTO CONVERSIÓN -->
+        <div class="sl">
+        <div class="head-title">Ejemplo Resuelto: Convirtiendo Medidas 🔄</div>
+        <p class="sub-text">Valentina saltó <b class="hl">2 metros con 35 centímetros</b> en el salto largo. ¿Cuántos centímetros saltó en total?</p>
+        <div class="pnl" style="max-width:780px; margin:0 auto;">
+            <div class="step-list">
+                <div class="stp step-box">
+                    <b>Paso 1:</b> Convertimos los metros a centímetros → 2 m = 2 × 100 = <b style="color:#EA580C;">200 cm</b>
+                </div>
+                <div class="stp step-box">
+                    <b>Paso 2:</b> Sumamos los centímetros que ya teníamos → 200 cm + 35 cm = <b style="color:#059669;">235 cm</b>
+                </div>
+                <div class="stp step-box" style="background:#e8f5e9; border-color:#059669;">
+                    ✅ <b>Respuesta:</b> Valentina saltó un total de <b style="color:#059669; font-size:28px;">235 centímetros</b>.
+                </div>
+            </div>
+        </div>
+        </div>
 
-</div>
-<div class="nv">
-    <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
-    <input type="range" id="slide-slider" min="1" value="1" style="width:200px; accent-color:var(--base);" oninput="goToSlide(this.value)">
-    <span class="sc" id="sc">1 / 17</span>
-    <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
-</div>
-<script>
-    const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
-    function ui() {
-        S.forEach((s,i)=>{
-            s.classList.remove('on','pv','nx');
-            if(i===c) s.classList.add('on');
-            else if(i<c) s.classList.add('pv');
-            else s.classList.add('nx');
-        });
-        document.getElementById('pb').style.width=((c+1)/T*100)+'%';
-        document.getElementById('sc').textContent=`${c+1} / ${T}`;
-        document.getElementById('pv').disabled=c===0;
-        document.getElementById('nx').disabled=c===T-1;
-        let sl = document.getElementById('slide-slider');
-        if(sl) { sl.max = T; sl.value = c + 1; }
-    }
-    function goToSlide(n) {
-        let val = parseInt(n) - 1;
-        if (val >= 0 && val < T) { c = val; ui(); }
-    }
-    function go(d) {
-        if(d>0) {
-            const hid = S[c].querySelectorAll('.stp:not(.shwn)');
-            if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
-        } else {
-            const shw = S[c].querySelectorAll('.stp.shwn');
-            if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
-        }
-        const n=c+d; if(n>=0 && n<T) { c=n; ui(); }
-    }
-    document.addEventListener('keydown', e => {
-        if(e.key==='ArrowRight' || e.key===' ') go(1);
-        if(e.key==='ArrowLeft') go(-1);
+        <!-- SLIDE 6: QUIZ 1 -->
+        <div class="sl">
+        <div class="head-title">¡Quiz Relámpago! ⚡</div>
+        <p class="sub-text">¿Qué unidad usarías para medir la distancia de Santiago a Viña del Mar?</p>
+        <div class="card-row" style="max-width:700px;">
+            <button class="btn" onclick="chkAns(this,false,'')">Centímetros (cm)</button>
+            <button class="btn" onclick="chkAns(this,false,'')">Metros (m)</button>
+            <button class="btn" onclick="chkAns(this,true,'Santiago a Viña del Mar son unos 120 km 🛣️')">Kilómetros (km)</button>
+        </div>
+        <div class="msg-area"></div>
+        </div>
+
+        <!-- SLIDE 7: INTRO AL PLANO CARTESIANO -->
+        <div class="sl">
+        <div class="head-title" style="background:#2E7D32;">¿Cómo encontramos un punto exacto? 🗺️</div>
+        <div class="story-card" style="border:5px solid #2E7D32; background:#e8f5e9;">
+            <div class="story-emoji">📍</div>
+            <div>
+                <h2 style="color:#2E7D32;">El problema del pirata</h2>
+                <p>Un pirata enterró un tesoro y escribió: "Está en la isla, cerca de una palmera". ¡Pero hay 50 palmeras! Para que su amigo lo encuentre, necesita una forma más precisa: <b>"Camina 3 pasos a la derecha y sube 5 pasos"</b>. Eso es exactamente lo que hace el Plano Cartesiano: dar direcciones precisas usando números.</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 8: ANATOMÍA DEL PLANO CARTESIANO -->
+        <div class="sl">
+        <div class="head-title">El Plano Cartesiano 📐</div>
+        <p class="sub-text">Está formado por dos ejes perpendiculares que se cruzan en el <b class="hl">Origen (0, 0)</b>.</p>
+        <div class="pnl" style="text-align:center; padding:14px;">
+            <svg width="500" height="400" viewBox="-55 -35 555 435" style="max-width:100%;">
+                <defs>
+                    <pattern id="grid1" width="60" height="60" patternUnits="userSpaceOnUse">
+                        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#e5e7eb" stroke-width="2"/>
+                    </pattern>
+                    <marker id="arrowR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#DC2626"/></marker>
+                    <marker id="arrowB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2563EB"/></marker>
+                </defs>
+                <rect x="0" y="0" width="420" height="360" fill="url(#grid1)" />
+                <!-- Ejes -->
+                <line x1="0" y1="360" x2="460" y2="360" stroke="#DC2626" stroke-width="4" marker-end="url(#arrowR)"/>
+                <text x="475" y="365" font-family="Nunito" font-size="26" font-weight="900" fill="#DC2626">X</text>
+                <line x1="0" y1="360" x2="0" y2="-20" stroke="#2563EB" stroke-width="4" marker-end="url(#arrowB)"/>
+                <text x="-20" y="-25" font-family="Nunito" font-size="26" font-weight="900" fill="#2563EB">Y</text>
+                <!-- Números X -->
+                <g font-family="Nunito" font-size="20" font-weight="800" text-anchor="middle" fill="#DC2626">
+                    <text x="0" y="390">0</text><text x="60" y="390">1</text><text x="120" y="390">2</text>
+                    <text x="180" y="390">3</text><text x="240" y="390">4</text><text x="300" y="390">5</text>
+                    <text x="360" y="390">6</text><text x="420" y="390">7</text>
+                </g>
+                <!-- Números Y -->
+                <g font-family="Nunito" font-size="20" font-weight="800" text-anchor="end" fill="#2563EB">
+                    <text x="-12" y="305">1</text><text x="-12" y="245">2</text><text x="-12" y="185">3</text>
+                    <text x="-12" y="125">4</text><text x="-12" y="65">5</text><text x="-12" y="5">6</text>
+                </g>
+                <!-- Punto ejemplo -->
+                <g class="stp shwn">
+                    <line x1="180" y1="360" x2="180" y2="240" stroke="#10B981" stroke-width="3" stroke-dasharray="8,5"/>
+                    <line x1="0" y1="240" x2="180" y2="240" stroke="#10B981" stroke-width="3" stroke-dasharray="8,5"/>
+                    <circle cx="180" cy="240" r="10" fill="#059669"/>
+                    <text x="200" y="230" font-family="Nunito" font-size="24" font-weight="900" fill="#065f46">(3, 2)</text>
+                </g>
+            </svg>
+        </div>
+        </div>
+
+        <!-- SLIDE 9: REGLA DE ORO -->
+        <div class="sl">
+        <div class="head-title">Regla de Oro: (X, Y) 🧭</div>
+        <p class="sub-text">Para ubicar un punto, <b class="hl">siempre seguimos el mismo orden</b>:</p>
+        <div class="two-col" style="max-width:850px; margin:0 auto;">
+            <div class="idea-card stp" style="border-color:#DC2626; text-align:center;">
+                <h3 style="color:#DC2626;">1️⃣ Primero → Eje X</h3>
+                <p style="font-size:22px; margin-top:10px;">Caminas por el <b>piso</b> (horizontal) a la <b>derecha</b>. Es como avanzar por una calle.</p>
+                <div style="font-size:60px; margin-top:10px;">➡️</div>
+            </div>
+            <div class="idea-card stp" style="border-color:#2563EB; text-align:center;">
+                <h3 style="color:#2563EB;">2️⃣ Segundo → Eje Y</h3>
+                <p style="font-size:22px; margin-top:10px;">Luego <b>subes</b> (vertical) como si usaras un ascensor o una escalera.</p>
+                <div style="font-size:60px; margin-top:10px;">⬆️</div>
+            </div>
+        </div>
+        <div class="stp warn-card" style="margin-top:20px; border-color:#059669; background:#ecfdf5;">
+            💡 <b>Truco para recordar:</b> El punto <b>(3, 2)</b> significa: "Camino <b>3</b> pasos a la derecha y subo <b>2</b> pisos". ¡Primero el piso, luego el ascensor!
+        </div>
+        </div>
+
+        <!-- SLIDE 10: EJEMPLO RESUELTO PLANO -->
+        <div class="sl">
+        <div class="head-title">Ejemplo: Ubicando Puntos Paso a Paso 📍</div>
+        <p class="sub-text">Ubica el punto <b class="hl">(5, 4)</b> en el plano cartesiano:</p>
+        <div class="pnl" style="max-width:780px; margin:0 auto;">
+            <div class="step-list">
+                <div class="stp step-box">
+                    <b>Paso 1:</b> Parto desde el Origen (0, 0).
+                </div>
+                <div class="stp step-box">
+                    <b>Paso 2:</b> Avanzo <b style="color:#DC2626;">5 unidades</b> hacia la derecha por el Eje X.
+                </div>
+                <div class="stp step-box">
+                    <b>Paso 3:</b> Subo <b style="color:#2563EB;">4 unidades</b> hacia arriba por el Eje Y.
+                </div>
+                <div class="stp step-box" style="background:#e8f5e9; border-color:#059669;">
+                    ✅ ¡Ahí está el punto <b style="color:#059669; font-size:28px;">(5, 4)</b>! Marqué con un círculo.
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 11: UNIR PUNTOS PARA FORMAR FIGURAS -->
+        <div class="sl">
+        <div class="head-title">Figuras en el Plano ✨</div>
+        <p class="sub-text">Si unimos varios puntos con líneas, ¡formamos figuras geométricas!</p>
+        <div class="pnl" style="text-align:center; padding:14px;">
+            <svg width="400" height="340" viewBox="-50 -30 450 370" style="max-width:100%;">
+                <defs>
+                    <pattern id="grid1b" width="50" height="50" patternUnits="userSpaceOnUse">
+                        <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
+                    </pattern>
+                </defs>
+                <rect x="0" y="0" width="350" height="300" fill="url(#grid1b)"/>
+                <line x1="0" y1="300" x2="370" y2="300" stroke="#999" stroke-width="2"/>
+                <line x1="0" y1="300" x2="0" y2="-15" stroke="#999" stroke-width="2"/>
+                <g font-family="Nunito" font-size="16" font-weight="800" text-anchor="middle" fill="#999">
+                    <text x="0" y="320">0</text><text x="50" y="320">1</text><text x="100" y="320">2</text>
+                    <text x="150" y="320">3</text><text x="200" y="320">4</text><text x="250" y="320">5</text>
+                    <text x="300" y="320">6</text><text x="350" y="320">7</text>
+                </g>
+                <g font-family="Nunito" font-size="16" font-weight="800" text-anchor="end" fill="#999">
+                    <text x="-8" y="255">1</text><text x="-8" y="205">2</text><text x="-8" y="155">3</text>
+                    <text x="-8" y="105">4</text><text x="-8" y="55">5</text><text x="-8" y="5">6</text>
+                </g>
+                <!-- Cuadrado formado por 4 puntos -->
+                <polygon class="stp shwn" points="50,200 250,200 250,50 50,50" fill="#93c5fd55" stroke="#2563EB" stroke-width="4"/>
+                <g class="stp shwn">
+                    <circle cx="50" cy="200" r="8" fill="#2563EB"/>
+                    <text x="30" y="230" font-family="Nunito" font-size="16" font-weight="900" fill="#1e40af">(1,2)</text>
+                    <circle cx="250" cy="200" r="8" fill="#2563EB"/>
+                    <text x="260" y="230" font-family="Nunito" font-size="16" font-weight="900" fill="#1e40af">(5,2)</text>
+                    <circle cx="250" cy="50" r="8" fill="#2563EB"/>
+                    <text x="260" y="40" font-family="Nunito" font-size="16" font-weight="900" fill="#1e40af">(5,5)</text>
+                    <circle cx="50" cy="50" r="8" fill="#2563EB"/>
+                    <text x="15" y="40" font-family="Nunito" font-size="16" font-weight="900" fill="#1e40af">(1,5)</text>
+                </g>
+            </svg>
+        </div>
+        <div class="stp warn-card" style="margin-top:10px; border-color:#2563EB; background:#eff6ff;">
+            📌 Al unir (1,2), (5,2), (5,5) y (1,5) se forma un <b>Rectángulo</b> perfecto en el plano.
+        </div>
+        </div>
+
+        <!-- SLIDE 12: QUIZ 2 -->
+        <div class="sl">
+        <div class="head-title">¡Quiz 2! ⚡</div>
+        <p class="sub-text">En el punto <b class="hl">(6, 3)</b>, ¿cuántos pasos caminas a la derecha?</p>
+        <div class="card-row" style="max-width:600px;">
+            <button class="btn" onclick="chkAns(this,false,'')">3 pasos</button>
+            <button class="btn" onclick="chkAns(this,true,'El primer número (6) siempre es el Eje X → a la derecha 🧭')">6 pasos</button>
+        </div>
+        <div class="msg-area"></div>
+        </div>
+
+        <!-- SLIDE 13: ABRE TU CUADERNO (6 ejercicios) -->
+        <div class="sl">
+        <div class="head-title">✏️ Abre tu Cuaderno</div>
+        <p class="sub-text">Resuelve estos 6 ejercicios en tu cuaderno:</p>
+        <div class="cuad-grid">
+            <div class="cuad-item">1️⃣ ¿Cuántos cm hay en 3 metros?</div>
+            <div class="cuad-item">2️⃣ Convierte 50 mm a centímetros.</div>
+            <div class="cuad-item">3️⃣ Un lápiz mide 18 cm. ¿Cuántos mm son?</div>
+            <div class="cuad-item">4️⃣ ¿Dónde está el Origen del plano cartesiano?</div>
+            <div class="cuad-item">5️⃣ En (7, 2), ¿cuánto subes en el Eje Y?</div>
+            <div class="cuad-item">6️⃣ Dibuja un plano y marca los puntos (2, 5) y (4, 1).</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 14: RESPUESTAS -->
+        <div class="sl">
+        <div class="head-title">✅ Respuestas</div>
+        <div class="resp-grid">
+            <div class="stp resp-item">1️⃣ 3 × 100 = <b>300 cm</b></div>
+            <div class="stp resp-item">2️⃣ 50 ÷ 10 = <b>5 cm</b></div>
+            <div class="stp resp-item">3️⃣ 18 × 10 = <b>180 mm</b></div>
+            <div class="stp resp-item">4️⃣ En el punto <b>(0, 0)</b></div>
+            <div class="stp resp-item">5️⃣ Subes <b>2</b> en el Eje Y</div>
+            <div class="stp resp-item">6️⃣ ¡Revisa tu dibujo con la slide 8!</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 15: PROBLEMA SITUACIONAL 1 -->
+        <div class="sl">
+        <div class="head-title">Problema 1: El Salto Largo de Martín 🏃</div>
+        <div class="story-card" style="border:5px solid #059669; background:#ecfdf5;">
+            <div class="story-emoji">🏅</div>
+            <div>
+                <h2 style="color:#047857;">Competencia atlética</h2>
+                <p>Martín saltó <b>2 metros con 45 centímetros</b> en la competencia. Sofía saltó <b>280 centímetros</b>. ¿Quién saltó más lejos y por cuánto?</p>
+                <div class="stp" style="margin-top:14px; background:#d1fae5; padding:16px; border-radius:14px;">
+                    <p style="font-weight:800; color:#047857;">✅ Martín: 2 m 45 cm = 245 cm. Sofía: 280 cm. <b>Sofía gana por 35 cm</b> (280 − 245 = 35).</p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 16: PROBLEMA SITUACIONAL 2 -->
+        <div class="sl">
+        <div class="head-title">Problema 2: El Juego de Ajedrez ♟️</div>
+        <div class="story-card" style="border:5px solid #2563EB; background:#eff6ff;">
+            <div class="story-emoji">♟️</div>
+            <div>
+                <h2 style="color:#1d4ed8;">Movimiento estratégico</h2>
+                <p>Un peón está en el punto <b>(2, 3)</b>. Avanza <b>1 casilla hacia arriba</b> (vertical). Luego el jugador mueve una torre que estaba en <b>(6, 1)</b> y la lleva <b>4 casillas hacia arriba</b>. ¿En qué coordenadas quedó cada pieza?</p>
+                <div class="stp" style="margin-top:14px; background:#dbeafe; padding:16px; border-radius:14px;">
+                    <p style="font-weight:800; color:#1e40af;">✅ El peón subió 1 en el Eje Y → <b>(2, 4)</b>.<br>La torre subió 4 en el Eje Y → <b>(6, 5)</b>.</p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 17: PROBLEMA SITUACIONAL 3 -->
+        <div class="sl">
+        <div class="head-title">Problema 3: El Arquitecto Lucas 🏗️</div>
+        <div class="story-card" style="border:5px solid #EA580C; background:#fff7ed;">
+            <div class="story-emoji">🏗️</div>
+            <div>
+                <h2 style="color:#c2410c;">Diseñando una habitación</h2>
+                <p>Lucas necesita un cable que recorra todo el largo de su cuarto: <b>4 metros</b>. En la ferretería solo venden cables en centímetros. ¿Cuántos centímetros de cable debe pedir?</p>
+                <div class="stp" style="margin-top:14px; background:#ffedd5; padding:16px; border-radius:14px;">
+                    <p style="font-weight:800; color:#c2410c;">✅ 4 m × 100 = <b>400 cm</b> de cable. ¡Listo para la instalación!</p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 18: DESAFÍO SUPREMO PORTADA -->
+        <div class="sl" style="background: linear-gradient(135deg, #9333EA, #db2777); color:white;">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <h1 style="font-size:58px; margin-bottom:18px;">⛏️ Desafío Supremo</h1>
+            <p style="font-size:28px; max-width:700px; opacity:0.95;">¡Nivel Secreto ObraCraft: El Mapa del Tesoro!</p>
+            <div style="font-size:100px; margin-top:24px; animation: bounce 2s infinite;">💎</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 19: OBRACRAFT -->
+        <div class="sl">
+        <div class="head-title" style="background:linear-gradient(135deg, #9333EA, #db2777);">⛏️ ObraCraft: El Cofre de Diamantes</div>
+        <div class="pnl" style="border-color:#9333EA;">
+            <p style="font-size:24px; text-align:center;">Estás explorando un mundo de ObraCraft. Tu casa está en el <b>Origen (0, 0)</b> del mapa.</p>
+            <div style="background:linear-gradient(135deg,#9333EA22,#db277722); padding:18px; border-radius:16px; margin:16px 0; font-size:22px; font-weight:800; color:#9333EA; text-align:center; line-height:1.6;">
+                🌳 Un aldeano te dice: "El cofre de diamantes está en el punto <b>(7, 5)</b>".<br>
+                ⛏️ La cueva de oro está a <b>3 unidades más a la derecha</b> del cofre de diamantes.
+            </div>
+            <p style="font-size:24px; font-weight:700; text-align:center;">1. ¿Cuántos bloques caminas a la derecha y cuántos subes para llegar al cofre?<br>2. ¿Cuáles son las coordenadas de la cueva de oro?</p>
+            <div class="stp" style="margin-top:16px; background:#f3e8ff; padding:16px; border-radius:14px; font-size:22px;">
+                <p style="font-weight:800; color:#9333EA;">✅ 1. Caminas <b>7 bloques a la derecha</b> (X) y subes <b>5 bloques</b> (Y).</p>
+                <p style="font-weight:800; color:#db2777;">✅ 2. Cueva de oro: 7 + 3 = <b>(10, 5)</b> → 3 bloques más a la derecha, misma altura.</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 20: RESUMEN -->
+        <div class="sl">
+        <div class="head-title" style="background:#047857;">📝 Resumen de la Clase</div>
+        <div class="summary-list" style="max-width:780px; margin:0 auto;">
+            <div class="stp summary-item"><b>📏 Unidades de Longitud:</b> Milímetro (mm), Centímetro (cm), Metro (m), Kilómetro (km). Cada una sirve según el tamaño de lo medido.</div>
+            <div class="stp summary-item"><b>🔄 Conversión:</b> 1 cm = 10 mm | 1 m = 100 cm | 1 km = 1.000 m. Para convertir, multiplicamos o dividimos.</div>
+            <div class="stp summary-item"><b>📐 Plano Cartesiano:</b> Tiene Eje X (horizontal) y Eje Y (vertical) cruzándose en el Origen (0, 0).</div>
+            <div class="stp summary-item"><b>🧭 Coordenadas (X, Y):</b> Primero caminas a la derecha (X), luego subes (Y). ¡Nunca al revés!</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 21: CIERRE -->
+        <div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:38px; font-weight:800; line-height:1.45; max-width:780px;">¡Excelente trabajo! Ahora eres un maestro de las mediciones y las ubicaciones en mapas. En la próxima clase dominaremos los <b>Ángulos y las Transformaciones</b>.</p>
+            <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">📐</div>
+        </div>
+        </div>
+
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <span class="sc" id="sc">1 / 21</span>
+            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="21" value="1" oninput="goToSlide(this.value)">
+        </div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>
+const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+function ui() {
+    S.forEach((s,i)=>{
+        s.classList.remove('on','pv','nx');
+        if(i===c) s.classList.add('on');
+        else if(i<c) s.classList.add('pv');
+        else s.classList.add('nx');
     });
-    ui();
-    function chkAns(btn, correct, exp) {
-        let wrap = btn.closest('.sl');
-        let btnGroup = btn.parentElement;
-        let msg = btnGroup.nextElementSibling;
-        while(msg && !msg.classList.contains('msg-area')) msg = msg.nextElementSibling;
-        if(!msg) { let msgs = wrap.querySelectorAll('.msg-area'); if(msgs.length) msg = msgs[0]; }
-        let buttons = btnGroup.querySelectorAll('.btn');
-        buttons.forEach(b => { b.style.transform = 'scale(1)'; b.style.background = 'var(--base)'; });
-        if (correct) {
-            btn.style.background = '#047857';
-            btn.style.transform = 'scale(1.06)';
-            if(msg) { msg.innerHTML = `¡Excelente! ✅ ${exp}`; msg.style.color = '#047857'; }
-        } else {
-            btn.style.background = '#b91c1c';
-            if(msg) { msg.innerHTML = '¡Inténtalo de nuevo!'; msg.style.color = '#b91c1c'; }
-        }
+    document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+    document.getElementById('sc').textContent=`${c+1} / ${T}`;
+    document.getElementById('pv').disabled=c===0;
+    document.getElementById('nx').disabled=c===T-1;
+    let sl = document.getElementById('slide-slider');
+    if(sl) { sl.max = T; sl.value = c + 1; }
+}
+function goToSlide(n) {
+    let val = parseInt(n) - 1;
+    if (val >= 0 && val < T) { c = val; ui(); }
+}
+function go(d) {
+    if(d>0) {
+        const hid = S[c].querySelectorAll('.stp:not(.shwn)');
+        if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+    } else {
+        const shw = S[c].querySelectorAll('.stp.shwn');
+        if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
     }
-</script></body></html>
+    const n=c+d;
+    if(n>=0 && n<T) { c=n; ui(); }
+}
+document.addEventListener('keydown', e => {
+    if(e.key==='ArrowRight' || e.key===' ') go(1);
+    if(e.key==='ArrowLeft') go(-1);
+});
+function chkAns(btn, correct, exp) {
+    const wrap = btn.closest('.sl');
+    const buttons = btn.parentElement.querySelectorAll('.btn');
+    const msg = wrap.querySelector('.msg-area');
+    buttons.forEach(b => {
+        b.disabled = false;
+        b.style.background = 'var(--base)';
+        b.style.transform = 'scale(1)';
+    });
+    if (correct) {
+        btn.style.background = '#047857';
+        btn.style.transform = 'scale(1.06)';
+        msg.textContent = `¡Muy bien! ${exp}`;
+        msg.style.color = '#047857';
+    } else {
+        btn.style.background = '#b91c1c';
+        msg.textContent = '¡Inténtalo de nuevo!';
+        msg.style.color = '#b91c1c';
+    }
+}
+ui();
+</script>
+</body>
+</html>

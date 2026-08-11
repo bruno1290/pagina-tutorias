@@ -1,527 +1,489 @@
 <!DOCTYPE html>
-<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Geometría II - Ángulos y Transformaciones</title><style>
-    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
-    :root {
-        --base: #1C4A82;
-        --bg: #f5f6f8;
-        --tx: #333;
-        --accent: #FFB74D;
-        --purple: #9333EA;
-        --pink: #db2777;
-        --green: #059669;
-        --blue: #2563EB;
-        --orange: #EA580C;
-    }
-    * {margin:0; padding:0; box-sizing:border-box;}
-    body {font-family: 'Nunito', sans-serif; background: var(--bg); overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; color: var(--tx);}
-    .dk {position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex;}
-    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 36px 40px 82px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1; overflow-y: auto;}
-    .sl.on {opacity: 1; transform: scale(0.9); pointer-events: auto; z-index: 10;}
-    .sl.pv {opacity: 0; transform: translateX(-50px) scale(.95);}
-    .sl.nx {opacity: 0; transform: translateX(50px) scale(.95);}
-    .head-title {background: var(--base); color: white; padding: 10px 40px; font-size: 30px; font-weight: 900; margin-bottom: 22px; display: inline-block; border-radius: 12px; text-align: center;}
-    .sub-text {font-size: 24px; font-weight: 600; margin-bottom: 18px; text-align: center; line-height: 1.4;}
-    .pb {position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100;}
-    .nv {position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: white; border-top: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; z-index: 100;}
-    .nb {background: #eee; color: var(--base); border: none; padding: 10px 20px; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer; transition: all .2s;}
-    .nb:hover {background: #ddd;}
-    .nb:disabled {opacity: 0.3; cursor: not-allowed;}
-    .sc {color: #888; font-size: 16px; font-weight: 900;}
-    .stp {opacity: 0; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;}
-    .stp.shwn {opacity: 1; transform: translateY(0); pointer-events: auto;}
-    .pnl {background: #fff; padding: 24px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 3px solid #eaeaea; width: 100%; margin-bottom: 16px;}
-    .hl {color: var(--base); font-weight: 900;}
-    .btn {background: var(--base); color: white; border: none; padding: 14px 28px; border-radius: 12px; font-size: 20px; font-weight: 900; cursor: pointer; transition: transform .2s; font-family: 'Nunito', sans-serif;}
-    .btn:hover {transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3);}
-    .card-row {display: flex; justify-content: center; gap: 18px; width: 100%; flex-wrap: wrap;}
-    .idea-card {flex: 1 1 200px; background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%); border-radius: 18px; padding: 18px; border: 3px solid #d7e7f7; text-align: center; display: flex; flex-direction: column; align-items: center;}
-    .story-card {width: 100%; border-radius: 28px; padding: 24px; display: grid; grid-template-columns: 90px 1fr; gap: 20px; align-items: center; background: #fff;}
-    .story-emoji {font-size: 72px; text-align: center;}
-    .mini-chip {background: #eef5ff; border: 2px solid #b6d4f3; border-radius: 999px; padding: 8px 16px; font-size: 17px; font-weight: 800; display: inline-block; margin: 10px 0 6px;}
-    .msg-area {font-size: 22px; font-weight: 800; margin-top: 12px; min-height: 30px;}
-    .cuad-grid {display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; width: 100%;}
-    .cuad-item {background: #fff; border: 3px solid #d8e7f6; border-radius: 14px; padding: 14px; text-align: center; font-size: 20px; font-weight: 800; min-height: 70px; display: flex; flex-direction: column; align-items: center; justify-content: center;}
-    .resp-grid {display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; width: 100%;}
-    .resp-item {background: #f0fdf4; border: 3px solid #86efac; border-radius: 14px; padding: 12px; text-align: center; font-size: 19px; font-weight: 800; display: flex; align-items: center; justify-content: center;}
-</style></head><body><div class="pb" id="pb"></div><div class="dk">
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Geometría 2: Ángulos, Rectas y Transformaciones</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root { --base: #1C4A82; --bg: #f5f6f8; --tx: #333; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family:'Nunito',sans-serif; background:var(--bg); overflow:hidden; height:100vh; width:100vw; display:flex; flex-direction:column; align-items:center; color:var(--tx); }
+.dk { position:relative; width:100%; height:100%; max-width:1000px; display:flex; }
+.sl { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:36px 40px 82px; opacity:0; transform:scale(.96); transition:opacity .4s, transform .4s; pointer-events:none; z-index:1; overflow-y:auto; }
+.sl.on { opacity:1; transform:scale(1); pointer-events:auto; z-index:10; }
+.sl.pv { opacity:0; transform:translateX(-50px) scale(.95); }
+.sl.nx { opacity:0; transform:translateX(50px) scale(.95); }
+.head-title { background:var(--base); color:white; padding:10px 40px; font-size:32px; font-weight:900; margin-bottom:24px; display:inline-block; border-radius:12px; text-align:center; }
+.sub-text { font-size:24px; font-weight:600; margin-bottom:22px; text-align:center; line-height:1.4; }
+.pb { position:fixed; top:0; left:0; height:6px; background:var(--base); transition:width .4s; z-index:100; }
+.nv { position:fixed; bottom:0; left:0; right:0; height:60px; background:white; border-top:1px solid #ddd; display:flex; align-items:center; justify-content:space-between; padding:0 40px; z-index:100; }
+.nb { background:#eee; color:var(--base); border:none; padding:10px 20px; border-radius:8px; font-family:'Nunito',sans-serif; font-size:16px; font-weight:900; cursor:pointer; transition:all .2s; }
+.nb:hover { background:#ddd; } .nb:disabled { opacity:0.3; cursor:not-allowed; }
+.sc { color:#888; font-size:16px; font-weight:900; }
+.stp { opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.4,0,0.2,1); pointer-events:none; }
+.stp.shwn { opacity:1; transform:translateY(0); pointer-events:auto; }
+.pnl { background:#fff; padding:24px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.05); border:3px solid #eaeaea; width:100%; }
+.hl { color:var(--base); font-weight:900; }
+.btn { background:var(--base); color:white; border:none; padding:14px 24px; border-radius:12px; font-size:24px; font-weight:900; cursor:pointer; transition:transform .2s; font-family:'Nunito',sans-serif; }
+.btn:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(28,74,130,0.3); }
+.card-row { display:flex; justify-content:center; gap:18px; width:100%; flex-wrap:wrap; }
+.idea-card { flex:1 1 220px; background:linear-gradient(180deg,#fff 0%,#f7fbff 100%); border-radius:18px; padding:18px; border:3px solid #d7e7f7; min-height:140px; }
+.idea-card h3 { font-size:28px; color:var(--base); margin-bottom:10px; }
+.idea-card p { font-size:24px; line-height:1.45; }
+.story-card { width:100%; border-radius:28px; padding:28px; display:grid; grid-template-columns:120px 1fr; gap:24px; align-items:center; }
+.story-emoji { font-size:114px; text-align:center; animation:bob 2.8s infinite; }
+.story-card h2 { font-size:30px; margin-bottom:12px; }
+.story-card p { font-size:24px; line-height:1.45; }
+.summary-list { display:flex; flex-direction:column; gap:16px; width:100%; }
+.summary-item { background:#fff; border-radius:16px; padding:16px 18px; border:3px solid #dbe7f4; font-size:23px; line-height:1.45; }
+.fact-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:16px; width:100%; }
+.fact-box { background:linear-gradient(180deg,#fff 0%,#f8fbff 100%); border-radius:18px; padding:16px; border:3px solid #d8e7f6; min-height:140px; }
+.fact-box h4 { font-size:24px; color:var(--base); margin-bottom:10px; text-align:center; }
+.fact-box p { font-size:24px; line-height:1.45; text-align:center; }
+.warn-card { background:#fff8e5; border:4px solid #f0ca59; border-radius:20px; padding:20px; font-size:24px; line-height:1.45; width:100%; }
+.msg-area { font-size:24px; font-weight:900; height:40px; text-align:center; margin-top:20px; }
+.hero-title { font-size:62px; color:var(--base); margin-bottom:18px; text-align:center; line-height:1.1; }
+.hero-sub { font-size:28px; font-weight:700; text-align:center; max-width:720px; }
+.hero-emoji { font-size:108px; margin-top:28px; animation:bounce 2s infinite; }
+.step-list { display:flex; flex-direction:column; gap:14px; }
+.step-box { background:#f7fbff; border-left:8px solid var(--base); padding:14px 16px; border-radius:14px; font-size:24px; line-height:1.4; font-weight:700; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:18px; width:100%; align-items:stretch; }
+.cuad-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; width:100%; }
+.cuad-item { background:#fff; border:3px solid #d8e7f6; border-radius:14px; padding:14px; text-align:center; font-size:22px; font-weight:800; min-height:80px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.resp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; width:100%; }
+.resp-item { background:#f0fdf4; border:3px solid #86efac; border-radius:14px; padding:12px; text-align:center; font-size:22px; font-weight:800; display:flex; align-items:center; justify-content:center; }
+@keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-16px);} }
+@keyframes bob { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+</style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
 
-<!-- ====== SLIDE 1: PORTADA ====== -->
-<div class="sl">
-    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <h1 style="font-size:54px; color:var(--base); margin-bottom:18px; text-align:center; line-height:1.1;">Geometría II 📐</h1>
-        <p style="font-size:24px; font-weight:700; text-align:center; max-width:720px;">Ángulos, Rectas y Transformaciones Isométricas.</p>
-        <div style="font-size:108px; margin-top:24px;">📐🔄</div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 2: ROMPEHIELOS ====== -->
-<div class="sl">
-    <div class="head-title">¿Qué tienen en común las tijeras y las vías? ✂️</div>
-    <div class="story-card" style="border:5px solid #9333EA; background:#faf5ff;">
-        <div class="story-emoji">✂️</div>
-        <div>
-            <h2 style="color:var(--purple); font-size:26px;">La forma del movimiento</h2>
-            <p style="font-size:21px;">Al abrir una tijera formas un <b>ángulo</b>, las vías del tren nunca se cruzan (son <b>paralelas</b>), y cuando te miras al espejo ves una <b>reflexión</b>. ¡La geometría está en todas partes!</p>
+        <!-- SLIDE 1: PORTADA -->
+        <div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 class="hero-title">Geometría II: Ángulos, Rectas y Transformaciones</h1>
+            <p class="hero-sub">Descubriremos cómo se miden las aberturas, cómo se clasifican las rectas y cómo mover figuras sin cambiarlas.</p>
+            <div class="hero-emoji">📐</div>
         </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 3: ¿QUÉ ES UN ÁNGULO? ====== -->
-<div class="sl">
-    <div class="head-title">Anatomía de un Ángulo 📐</div>
-    <p class="sub-text">Un ángulo es la abertura entre dos rayos que se unen en un <b class="hl">Vértice</b>.</p>
-    <div class="pnl" style="text-align:center; padding:16px;">
-        <svg width="450" height="240" viewBox="0 0 450 240" style="max-width:100%;">
-            <line x1="120" y1="180" x2="380" y2="180" stroke="var(--base)" stroke-width="4"/>
-            <polygon points="376,173 390,180 376,187" fill="var(--base)"/>
-            <line x1="120" y1="180" x2="300" y2="40" stroke="var(--base)" stroke-width="4"/>
-            <polygon points="292,35 308,32 304,48" fill="var(--base)"/>
-            <path d="M 200,180 A 80,80 0 0,0 178,135" fill="none" stroke="#EA580C" stroke-width="4"/>
-            <text x="210" y="145" font-family="Nunito" font-size="22" font-weight="900" fill="#EA580C">Ángulo</text>
-            <circle cx="120" cy="180" r="8" fill="#DC2626"/>
-            <text x="70" y="210" font-family="Nunito" font-size="20" font-weight="900" fill="#DC2626">Vértice</text>
-            <text x="260" y="210" font-family="Nunito" font-size="18" font-weight="800" fill="var(--base)">Lado 1</text>
-            <text x="180" y="90" font-family="Nunito" font-size="18" font-weight="800" fill="var(--base)">Lado 2</text>
-        </svg>
-    </div>
-</div>
-
-<!-- ====== SLIDE 4: TIPOS DE ÁNGULOS ====== -->
-<div class="sl">
-    <div class="head-title">Los 4 Tipos de Ángulos 📏</div>
-    <div class="card-row" style="max-width:960px;">
-        <!-- Agudo -->
-        <div class="idea-card stp" style="border-color:#10B981;">
-            <h3 style="color:#059669; font-size:22px; margin-bottom:6px;">Agudo</h3>
-            <p style="font-size:24px; font-weight:900; color:#059669;">&lt; 90°</p>
-            <svg width="140" height="90" viewBox="0 0 140 90" style="margin:8px 0;">
-                <line x1="20" y1="75" x2="120" y2="75" stroke="#059669" stroke-width="3.5"/>
-                <line x1="20" y1="75" x2="80" y2="20" stroke="#059669" stroke-width="3.5"/>
-                <path d="M 60,75 A 40,40 0 0,0 52,46" fill="none" stroke="#EA580C" stroke-width="3"/>
-                <circle cx="20" cy="75" r="4" fill="#DC2626"/>
-            </svg>
-            <p style="font-size:14px; color:#555;">Menor que un ángulo recto (tijera casi cerrada)</p>
-        </div>
-        <!-- Recto -->
-        <div class="idea-card stp" style="border-color:#2563EB;">
-            <h3 style="color:#2563EB; font-size:22px; margin-bottom:6px;">Recto</h3>
-            <p style="font-size:24px; font-weight:900; color:#2563EB;">= 90°</p>
-            <svg width="140" height="90" viewBox="0 0 140 90" style="margin:8px 0;">
-                <line x1="20" y1="75" x2="120" y2="75" stroke="#2563EB" stroke-width="3.5"/>
-                <line x1="20" y1="75" x2="20" y2="15" stroke="#2563EB" stroke-width="3.5"/>
-                <rect x="20" y="55" width="20" height="20" fill="none" stroke="#059669" stroke-width="2.5"/>
-                <circle cx="20" cy="75" r="4" fill="#DC2626"/>
-            </svg>
-            <p style="font-size:14px; color:#555;">Forma una "L" perfecta (esquina de hoja)</p>
-        </div>
-        <!-- Obtuso -->
-        <div class="idea-card stp" style="border-color:#EA580C;">
-            <h3 style="color:#EA580C; font-size:22px; margin-bottom:6px;">Obtuso</h3>
-            <p style="font-size:24px; font-weight:900; color:#EA580C;">&gt; 90°</p>
-            <svg width="140" height="90" viewBox="0 0 140 90" style="margin:8px 0;">
-                <line x1="60" y1="75" x2="130" y2="75" stroke="#EA580C" stroke-width="3.5"/>
-                <line x1="60" y1="75" x2="10" y2="25" stroke="#EA580C" stroke-width="3.5"/>
-                <path d="M 95,75 A 35,35 0 0,0 35,50" fill="none" stroke="#059669" stroke-width="3"/>
-                <circle cx="60" cy="75" r="4" fill="#DC2626"/>
-            </svg>
-            <p style="font-size:14px; color:#555;">Mayor que 90° y menor que 180°</p>
-        </div>
-        <!-- Llano -->
-        <div class="idea-card stp" style="border-color:#9333EA;">
-            <h3 style="color:#9333EA; font-size:22px; margin-bottom:6px;">Llano</h3>
-            <p style="font-size:24px; font-weight:900; color:#9333EA;">= 180°</p>
-            <svg width="140" height="90" viewBox="0 0 140 90" style="margin:8px 0;">
-                <line x1="10" y1="65" x2="130" y2="65" stroke="#9333EA" stroke-width="3.5"/>
-                <path d="M 35,65 A 35,35 0 0,1 105,65" fill="none" stroke="#059669" stroke-width="3"/>
-                <circle cx="70" cy="65" r="4" fill="#DC2626"/>
-            </svg>
-            <p style="font-size:14px; color:#555;">Una línea recta completa (brazos)</p>
-        </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 5: ¿DÓNDE VEMOS ÁNGULOS? (CORREGIDO FOTO 1 y 2) ====== -->
-<div class="sl">
-    <div class="head-title">¿Dónde vemos Ángulos? 🏠</div>
-    <div class="card-row" style="max-width:920px;">
-        <div class="idea-card stp">
-            <h3 style="color:#2563EB; font-size:20px; margin-bottom:8px;">📓 Tu Cuaderno</h3>
-            <svg width="160" height="110" viewBox="0 0 160 110" style="background:#fff; border-radius:10px; border:2px solid #ddd;">
-                <rect x="20" y="15" width="120" height="80" fill="#f8fafc" stroke="#64748b" stroke-width="2" rx="4"/>
-                <line x1="20" y1="95" x2="20" y2="45" stroke="#2563EB" stroke-width="3"/>
-                <line x1="20" y1="95" x2="70" y2="95" stroke="#2563EB" stroke-width="3"/>
-                <rect x="20" y="80" width="15" height="15" fill="none" stroke="#059669" stroke-width="2"/>
-                <circle cx="20" cy="95" r="4" fill="#DC2626"/>
-            </svg>
-            <div class="mini-chip" style="color:#059669; border-color:#86efac;">Recto (90°)</div>
-            <p style="font-size:15px; color:#555;">Esquinas de la hoja.</p>
         </div>
 
-        <div class="idea-card stp">
-            <h3 style="color:#e65100; font-size:20px; margin-bottom:8px;">🏠 Techo de Casa</h3>
-            <svg width="160" height="110" viewBox="0 0 160 110" style="background:#fff; border-radius:10px; border:2px solid #ddd;">
-                <polygon points="80,20 20,85 140,85" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
-                <!-- ARCO CORREGIDO: M 65,36 A 22,22 0 0,0 95,36 (Cóncavo hacia abajo envolviendo la cumbre) -->
-                <path d="M 65,36 A 22,22 0 0,0 95,36" fill="none" stroke="#059669" stroke-width="3"/>
-                <circle cx="80" cy="20" r="4" fill="#DC2626"/>
-            </svg>
-            <div class="mini-chip" style="color:#e65100; border-color:#fdba74;">Agudo (~45°)</div>
-            <p style="font-size:15px; color:#555;">La cumbre del techo.</p>
-        </div>
-
-        <div class="idea-card stp">
-            <h3 style="color:#9333EA; font-size:20px; margin-bottom:8px;">🪮 Abanico Abierto</h3>
-            <svg width="160" height="110" viewBox="0 0 160 110" style="background:#fff; border-radius:10px; border:2px solid #ddd;">
-                <line x1="80" y1="90" x2="30" y2="35" stroke="#9333EA" stroke-width="3"/>
-                <line x1="80" y1="90" x2="140" y2="45" stroke="#9333EA" stroke-width="3"/>
-                <path d="M 50,55 A 40,40 0 0,1 120,62" fill="none" stroke="#059669" stroke-width="3"/>
-                <circle cx="80" cy="90" r="4" fill="#DC2626"/>
-            </svg>
-            <div class="mini-chip" style="color:#9333EA; border-color:#c084fc;">Obtuso (~120°)</div>
-            <p style="font-size:15px; color:#555;">El abanico desplegado.</p>
-        </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 6: ÁNGULOS EN ACCIÓN / BÁSQUETBOL ====== -->
-<div class="sl">
-    <div class="head-title">Ángulos en Acción 🏀</div>
-    <div class="pnl" style="background:linear-gradient(135deg, #FFF7ED 0%, #FEF3C7 100%); border:3px solid #FBBF24; padding:20px;">
-        <div style="display:flex; align-items:center; gap:16px; margin-bottom:12px;">
-            <span style="font-size:48px;">🏀</span>
+        <!-- SLIDE 2: ROMPEHIELO -->
+        <div class="sl">
+        <div class="head-title" style="background:#2E7D32;">¿Qué tienen en común las tijeras y un reloj? ✂️</div>
+        <div class="story-card" style="border:5px solid #2E7D32; background:#e8f5e9;">
+            <div class="story-emoji">✂️</div>
             <div>
-                <h2 style="color:#D97706; font-size:24px;">Miguel lanza una pelota de básquetbol</h2>
-                <p style="font-size:20px;">Lanza con un ángulo de <b>40°</b> respecto al piso. ¿De qué tipo es este ángulo?</p>
+                <h2 style="color:#2E7D32;">La geometría oculta</h2>
+                <p>Al abrir una tijera, formas un <b>ángulo</b>. Las manecillas de un reloj también forman ángulos que cambian cada segundo. Las líneas de una cancha de fútbol son <b>paralelas</b> y <b>perpendiculares</b>. Y cuando te miras al espejo, ves una <b>reflexión</b>. ¡La geometría controla el mundo que nos rodea!</p>
             </div>
         </div>
-        <!-- Gráfica de trayectoria unificada (Evita bugs de elementos flotantes) -->
-        <div style="background:#fff; border-radius:16px; padding:12px; border:2px solid #fde68a; text-align:center;">
-            <svg width="480" height="150" viewBox="0 0 480 150" style="max-width:100%;">
-                <line x1="20" y1="120" x2="460" y2="120" stroke="#8B7355" stroke-width="4"/>
-                <path d="M 60 120 Q 240 20, 420 120" fill="none" stroke="#EA580C" stroke-width="4" stroke-dasharray="6,4"/>
-                <path d="M 110 120 A 50 50 0 0 0 100 80" fill="none" stroke="#059669" stroke-width="4"/>
-                <text x="125" y="95" font-family="Nunito" font-size="20" font-weight="900" fill="#059669">40°</text>
-                <circle cx="60" cy="120" r="10" fill="#FF6B35"/>
+        </div>
+
+        <!-- SLIDE 3: ¿QUÉ ES UN ÁNGULO? -->
+        <div class="sl">
+        <div class="head-title">¿Qué es un Ángulo? 📐</div>
+        <p class="sub-text">Es la <b class="hl">abertura</b> que se forma cuando dos líneas (rayos) se juntan en un punto llamado <b class="hl">Vértice</b>.</p>
+        <div class="pnl" style="text-align:center; padding:20px;">
+            <svg width="480" height="250" viewBox="0 0 480 250" style="max-width:100%;">
+                <line x1="130" y1="190" x2="400" y2="190" stroke="var(--base)" stroke-width="5"/>
+                <polygon points="396,183 410,190 396,197" fill="var(--base)"/>
+                <line x1="130" y1="190" x2="310" y2="40" stroke="var(--base)" stroke-width="5"/>
+                <polygon points="302,35 318,32 314,48" fill="var(--base)"/>
+                <path d="M 210,190 A 80,80 0 0,0 190,140" fill="none" stroke="#EA580C" stroke-width="5"/>
+                <text x="225" y="155" font-family="Nunito" font-size="26" font-weight="900" fill="#EA580C">Ángulo</text>
+                <circle cx="130" cy="190" r="10" fill="#DC2626"/>
+                <text x="76" y="225" font-family="Nunito" font-size="22" font-weight="900" fill="#DC2626">Vértice</text>
+                <text x="280" y="225" font-family="Nunito" font-size="20" font-weight="800" fill="var(--base)">Lado 1</text>
+                <text x="195" y="95" font-family="Nunito" font-size="20" font-weight="800" fill="var(--base)">Lado 2</text>
             </svg>
         </div>
-        <div class="stp" style="margin-top:14px; background:#d1fae5; border:2px solid #34d399; padding:12px; border-radius:12px; text-align:center;">
-            <p style="font-size:22px; font-weight:900; color:#047857;">¡Es un ángulo AGUDO! Porque mide menos de 90°.</p>
         </div>
-    </div>
-</div>
 
-<!-- ====== SLIDE 7: RECTAS PARALELAS Y PERPENDICULARES ====== -->
-<div class="sl">
-    <div class="head-title">Paralelas y Perpendicular 🛤️</div>
-    <div class="card-row" style="max-width:850px;">
-        <div class="idea-card stp" style="border-color:#2563EB; flex:1 1 360px; padding:20px;">
-            <h3 style="color:#2563EB; font-size:24px;">Rectas Paralelas ( // )</h3>
-            <p style="font-size:18px; margin-bottom:10px;"><b>¡Nunca se cruzan!</b></p>
-            <svg width="280" height="110" viewBox="0 0 280 110">
-                <line x1="20" y1="35" x2="260" y2="35" stroke="#2563EB" stroke-width="4"/>
-                <line x1="20" y1="75" x2="260" y2="75" stroke="#2563EB" stroke-width="4"/>
+        <!-- SLIDE 4: 4 TIPOS DE ÁNGULOS -->
+        <div class="sl">
+        <div class="head-title">Los 4 Tipos de Ángulos 📏</div>
+        <p class="sub-text">Se clasifican según su <b class="hl">medida en grados (°)</b>:</p>
+        <div class="fact-grid" style="grid-template-columns: repeat(4, 1fr);">
+            <div class="stp fact-box" style="border-color:#059669;">
+                <h4 style="color:#059669;">Agudo</h4>
+                <svg width="120" height="80" viewBox="0 0 120 80" style="display:block; margin:6px auto;">
+                    <line x1="15" y1="65" x2="105" y2="65" stroke="#059669" stroke-width="3.5"/>
+                    <line x1="15" y1="65" x2="70" y2="15" stroke="#059669" stroke-width="3.5"/>
+                    <path d="M 52,65 A 37,37 0 0,0 44,40" fill="none" stroke="#EA580C" stroke-width="3"/>
+                    <circle cx="15" cy="65" r="4" fill="#DC2626"/>
+                </svg>
+                <p style="font-size:20px; font-weight:900; color:#059669;">Menor que 90°</p>
+                <p style="font-size:16px;">Tijera casi cerrada</p>
+            </div>
+            <div class="stp fact-box" style="border-color:#2563EB;">
+                <h4 style="color:#2563EB;">Recto</h4>
+                <svg width="120" height="80" viewBox="0 0 120 80" style="display:block; margin:6px auto;">
+                    <line x1="15" y1="65" x2="105" y2="65" stroke="#2563EB" stroke-width="3.5"/>
+                    <line x1="15" y1="65" x2="15" y2="10" stroke="#2563EB" stroke-width="3.5"/>
+                    <rect x="15" y="45" width="20" height="20" fill="none" stroke="#059669" stroke-width="2.5"/>
+                    <circle cx="15" cy="65" r="4" fill="#DC2626"/>
+                </svg>
+                <p style="font-size:20px; font-weight:900; color:#2563EB;">Exactamente 90°</p>
+                <p style="font-size:16px;">Esquina de una hoja</p>
+            </div>
+            <div class="stp fact-box" style="border-color:#EA580C;">
+                <h4 style="color:#EA580C;">Obtuso</h4>
+                <svg width="120" height="80" viewBox="0 0 120 80" style="display:block; margin:6px auto;">
+                    <line x1="55" y1="65" x2="110" y2="65" stroke="#EA580C" stroke-width="3.5"/>
+                    <line x1="55" y1="65" x2="10" y2="20" stroke="#EA580C" stroke-width="3.5"/>
+                    <path d="M 87,65 A 32,32 0 0,0 32,42" fill="none" stroke="#059669" stroke-width="3"/>
+                    <circle cx="55" cy="65" r="4" fill="#DC2626"/>
+                </svg>
+                <p style="font-size:20px; font-weight:900; color:#EA580C;">Mayor que 90°</p>
+                <p style="font-size:16px;">Abanico abierto</p>
+            </div>
+            <div class="stp fact-box" style="border-color:#9333EA;">
+                <h4 style="color:#9333EA;">Llano</h4>
+                <svg width="120" height="80" viewBox="0 0 120 80" style="display:block; margin:6px auto;">
+                    <line x1="10" y1="55" x2="110" y2="55" stroke="#9333EA" stroke-width="3.5"/>
+                    <path d="M 30,55 A 30,30 0 0,1 90,55" fill="none" stroke="#059669" stroke-width="3"/>
+                    <circle cx="60" cy="55" r="4" fill="#DC2626"/>
+                </svg>
+                <p style="font-size:20px; font-weight:900; color:#9333EA;">Exactamente 180°</p>
+                <p style="font-size:16px;">Línea recta</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 5: ÁNGULOS EN LA VIDA REAL -->
+        <div class="sl">
+        <div class="head-title">¿Dónde vemos ángulos? 🏠</div>
+        <p class="sub-text">Están en <b class="hl">todo lo que nos rodea</b>:</p>
+        <div class="card-row" style="max-width:900px;">
+            <div class="stp idea-card" style="text-align:center; border-color:#2563EB;">
+                <h3 style="color:#2563EB; font-size:24px;">📓 Tu Cuaderno</h3>
+                <svg width="140" height="90" viewBox="0 0 140 90" style="display:block; margin:8px auto;">
+                    <rect x="15" y="10" width="110" height="70" fill="#f8fafc" stroke="#64748b" stroke-width="2" rx="4"/>
+                    <line x1="15" y1="80" x2="15" y2="40" stroke="#2563EB" stroke-width="3"/>
+                    <line x1="15" y1="80" x2="55" y2="80" stroke="#2563EB" stroke-width="3"/>
+                    <rect x="15" y="65" width="15" height="15" fill="none" stroke="#059669" stroke-width="2"/>
+                </svg>
+                <p style="font-size:20px; font-weight:800; color:#059669;">Recto (90°)</p>
+            </div>
+            <div class="stp idea-card" style="text-align:center; border-color:#EA580C;">
+                <h3 style="color:#EA580C; font-size:24px;">🏠 Techo de Casa</h3>
+                <svg width="140" height="90" viewBox="0 0 140 90" style="display:block; margin:8px auto;">
+                    <polygon points="70,15 15,75 125,75" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+                    <path d="M 55,30 A 18,18 0 0,0 85,30" fill="none" stroke="#059669" stroke-width="3"/>
+                    <circle cx="70" cy="15" r="4" fill="#DC2626"/>
+                </svg>
+                <p style="font-size:20px; font-weight:800; color:#EA580C;">Agudo (~45°)</p>
+            </div>
+            <div class="stp idea-card" style="text-align:center; border-color:#9333EA;">
+                <h3 style="color:#9333EA; font-size:24px;">🪮 Abanico</h3>
+                <svg width="140" height="90" viewBox="0 0 140 90" style="display:block; margin:8px auto;">
+                    <line x1="70" y1="75" x2="25" y2="25" stroke="#9333EA" stroke-width="3"/>
+                    <line x1="70" y1="75" x2="125" y2="35" stroke="#9333EA" stroke-width="3"/>
+                    <path d="M 42,42 A 38,38 0 0,1 108,48" fill="none" stroke="#059669" stroke-width="3"/>
+                    <circle cx="70" cy="75" r="4" fill="#DC2626"/>
+                </svg>
+                <p style="font-size:20px; font-weight:800; color:#9333EA;">Obtuso (~120°)</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 6: TRUCO PARA ESTIMAR ÁNGULOS -->
+        <div class="sl">
+        <div class="head-title">Truco: La Esquina de la Hoja 📄</div>
+        <p class="sub-text">¿Cómo saber si un ángulo es agudo u obtuso <b class="hl">sin usar transportador</b>?</p>
+        <div class="pnl" style="max-width:780px; margin:0 auto;">
+            <div class="step-list">
+                <div class="stp step-box">
+                    <b>Paso 1:</b> Toma la esquina de una hoja de tu cuaderno. ¡Esa esquina mide exactamente <b style="color:#2563EB;">90°</b>!
+                </div>
+                <div class="stp step-box">
+                    <b>Paso 2:</b> Coloca la esquina sobre el ángulo que quieres medir, haciendo coincidir el vértice.
+                </div>
+                <div class="stp step-box" style="background:#ecfdf5; border-color:#059669;">
+                    ✅ Si el ángulo <b>cabe dentro</b> de la esquina → es <b style="color:#059669;">Agudo</b> (menos de 90°).
+                </div>
+                <div class="stp step-box" style="background:#fff7ed; border-color:#EA580C;">
+                    ✅ Si el ángulo <b>se sale</b> de la esquina → es <b style="color:#EA580C;">Obtuso</b> (más de 90°).
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 7: QUIZ 1 -->
+        <div class="sl">
+        <div class="head-title">¡Quiz Relámpago! ⚡</div>
+        <p class="sub-text">Un reloj marca las 3 en punto. ¿Qué tipo de ángulo forman las manecillas?</p>
+        <div class="card-row" style="max-width:700px;">
+            <button class="btn" onclick="chkAns(this,false,'')">Agudo</button>
+            <button class="btn" onclick="chkAns(this,true,'A las 3 en punto, las manecillas forman un ángulo de exactamente 90° 🕒')">Recto</button>
+            <button class="btn" onclick="chkAns(this,false,'')">Obtuso</button>
+        </div>
+        <div class="msg-area"></div>
+        </div>
+
+        <!-- SLIDE 8: RECTAS PARALELAS Y PERPENDICULARES -->
+        <div class="sl">
+        <div class="head-title">Tipos de Rectas 🛤️</div>
+        <p class="sub-text">Las rectas pueden relacionarse de dos formas fundamentales:</p>
+        <div class="two-col" style="max-width:850px; margin:0 auto;">
+            <div class="stp idea-card" style="border-color:#2563EB; text-align:center;">
+                <h3 style="color:#2563EB;">Paralelas ( // )</h3>
+                <svg width="250" height="80" viewBox="0 0 250 80" style="display:block; margin:10px auto;">
+                    <line x1="15" y1="25" x2="235" y2="25" stroke="#2563EB" stroke-width="4"/>
+                    <line x1="15" y1="55" x2="235" y2="55" stroke="#2563EB" stroke-width="4"/>
+                </svg>
+                <p style="font-size:22px;"><b>Nunca se cruzan.</b> Siempre mantienen la misma distancia.</p>
+                <p style="font-size:20px; color:#666; margin-top:8px;">Ejemplo: Vías del tren 🚆</p>
+            </div>
+            <div class="stp idea-card" style="border-color:#DC2626; text-align:center;">
+                <h3 style="color:#DC2626;">Perpendiculares ( ⊥ )</h3>
+                <svg width="250" height="80" viewBox="0 0 250 80" style="display:block; margin:10px auto;">
+                    <line x1="15" y1="65" x2="235" y2="65" stroke="#DC2626" stroke-width="4"/>
+                    <line x1="125" y1="10" x2="125" y2="65" stroke="#DC2626" stroke-width="4"/>
+                    <rect x="125" y="45" width="20" height="20" fill="none" stroke="#059669" stroke-width="2"/>
+                </svg>
+                <p style="font-size:22px;">Se cruzan formando un <b>ángulo de 90°</b>.</p>
+                <p style="font-size:20px; color:#666; margin-top:8px;">Ejemplo: Cruz de calles 🚥</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 9: INTRO TRANSFORMACIONES ISOMÉTRICAS -->
+        <div class="sl">
+        <div class="head-title" style="background:#2E7D32;">¿Se puede mover sin cambiar? 🔄</div>
+        <div class="story-card" style="border:5px solid #2E7D32; background:#e8f5e9;">
+            <div class="story-emoji">💎</div>
+            <div>
+                <h2 style="color:#2E7D32;">Transformaciones Isométricas</h2>
+                <p><b>Iso</b> = igual, <b>Métrica</b> = medida. Son movimientos que cambian la <b>posición</b> de una figura, pero <b>nunca su tamaño ni su forma</b>. Es como mover una pieza de puzzle sin estirarla ni aplastarla.</p>
+                <div class="stp" style="margin-top:12px; background:#d1fae5; padding:14px; border-radius:14px; font-weight:800; color:#065f46; font-size:22px;">
+                    Hay 3 tipos: 1️⃣ Traslación &nbsp;|&nbsp; 2️⃣ Reflexión &nbsp;|&nbsp; 3️⃣ Rotación
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 10: TRASLACIÓN -->
+        <div class="sl">
+        <div class="head-title">Traslación — Deslizar 🚚</div>
+        <p class="sub-text">Mover la figura en <b class="hl">línea recta</b> sin girarla ni voltearla.</p>
+        <div class="pnl" style="text-align:center; padding:14px;">
+            <svg width="540" height="260" viewBox="0 0 540 260" style="max-width:100%; background:#fff; border-radius:16px; border:3px solid #d1d5db;">
+                <defs><pattern id="g2" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e5e7eb" stroke-width="1.5"/></pattern></defs>
+                <rect width="540" height="260" fill="url(#g2)"/>
+                <polygon points="60,160 120,40 180,160" fill="#93c5fd" stroke="#2563EB" stroke-width="3.5"/>
+                <text x="45" y="175" font-family="Nunito" font-size="20" font-weight="900" fill="#1e40af">A</text>
+                <text x="113" y="30" font-family="Nunito" font-size="20" font-weight="900" fill="#1e40af">B</text>
+                <text x="185" y="175" font-family="Nunito" font-size="20" font-weight="900" fill="#1e40af">C</text>
+                <g class="stp shwn">
+                    <path d="M 180,160 L 340,220" fill="none" stroke="#10B981" stroke-width="3" stroke-dasharray="6,4" marker-end="url(#arrG)"/>
+                    <path d="M 120,40 L 380,100" fill="none" stroke="#10B981" stroke-width="3" stroke-dasharray="6,4"/>
+                    <path d="M 60,160 L 320,220" fill="none" stroke="#10B981" stroke-width="3" stroke-dasharray="6,4"/>
+                </g>
+                <g class="stp shwn">
+                    <polygon points="320,220 380,100 440,220" fill="#6ee7b7" stroke="#059669" stroke-width="3.5"/>
+                    <text x="305" y="235" font-family="Nunito" font-size="20" font-weight="900" fill="#065f46">A'</text>
+                    <text x="373" y="90" font-family="Nunito" font-size="20" font-weight="900" fill="#065f46">B'</text>
+                    <text x="445" y="235" font-family="Nunito" font-size="20" font-weight="900" fill="#065f46">C'</text>
+                </g>
+                <defs><marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#10B981"/></marker></defs>
             </svg>
-            <p style="font-size:16px; color:#666;">Ejemplo: Vías del tren 🚆</p>
         </div>
-        <div class="idea-card stp" style="border-color:#DC2626; flex:1 1 360px; padding:20px;">
-            <h3 style="color:#DC2626; font-size:24px;">Perpendiculares ( ⊥ )</h3>
-            <p style="font-size:18px; margin-bottom:10px;">Forman un <b>ángulo recto (90°)</b>.</p>
-            <svg width="280" height="110" viewBox="0 0 280 110">
-                <line x1="20" y1="90" x2="260" y2="90" stroke="#DC2626" stroke-width="4"/>
-                <line x1="140" y1="15" x2="140" y2="90" stroke="#DC2626" stroke-width="4"/>
-                <rect x="140" y="70" width="20" height="20" fill="none" stroke="#DC2626" stroke-width="2"/>
+        <div class="stp warn-card" style="margin-top:10px; border-color:#059669; background:#ecfdf5;">
+            📌 <b>Clave:</b> La figura se desliza. Todos los puntos se mueven la misma distancia y dirección. ¡Tamaño y forma idénticos!
+        </div>
+        </div>
+
+        <!-- SLIDE 11: REFLEXIÓN -->
+        <div class="sl">
+        <div class="head-title">Reflexión — Efecto Espejo 🪞</div>
+        <p class="sub-text">La figura se voltea sobre un <b class="hl">Eje de Simetría</b> como un espejo.</p>
+        <div class="pnl" style="text-align:center; padding:14px;">
+            <svg width="520" height="240" viewBox="0 0 520 240" style="max-width:100%; background:#fff; border-radius:16px; border:3px solid #d1d5db;">
+                <rect width="520" height="240" fill="url(#g2)"/>
+                <line x1="260" y1="15" x2="260" y2="225" stroke="#DC2626" stroke-width="4" stroke-dasharray="8,5"/>
+                <text x="260" y="12" font-family="Nunito" font-size="16" font-weight="900" text-anchor="middle" fill="#DC2626">Eje</text>
+                <polygon points="90,40 190,80 110,190" fill="#c084fc" stroke="#9333EA" stroke-width="3"/>
+                <text x="75" y="40" font-family="Nunito" font-size="20" font-weight="900" fill="#9333EA">Original</text>
+                <polygon class="stp" points="430,40 330,80 410,190" fill="#f472b6" stroke="#db2777" stroke-width="3"/>
+                <text class="stp" x="415" y="40" font-family="Nunito" font-size="20" font-weight="900" fill="#db2777">Reflejo</text>
             </svg>
-            <p style="font-size:16px; color:#666;">Ejemplo: Cruz de calles 🚥</p>
         </div>
-    </div>
-</div>
+        </div>
 
-<!-- ====== SLIDE 8: TRANSFORMACIONES ISOMÉTRICAS ====== -->
-<div class="sl">
-    <div class="head-title">Transformaciones Isométricas 🔄</div>
-    <div class="story-card" style="border:4px solid #059669; background:#ecfdf5;">
-        <div class="story-emoji">💎</div>
-        <div>
-            <h2 style="color:#047857; font-size:26px;">¡Mismo tamaño, misma forma!</h2>
-            <p style="font-size:21px;"><b>Iso</b> = igual, <b>Métrica</b> = medida. Una transformación isométrica mueve una figura <b>sin cambiar su tamaño ni su forma</b>.</p>
-            <div class="stp" style="margin-top:10px; background:#d1fae5; padding:10px; border-radius:10px; font-weight:800; color:#065f46; font-size:19px;">
-                Hay 3 tipos: 1️⃣ Traslación &nbsp;|&nbsp; 2️⃣ Reflexión &nbsp;|&nbsp; 3️⃣ Rotación
+        <!-- SLIDE 12: ROTACIÓN -->
+        <div class="sl">
+        <div class="head-title">Rotación — Girar 🔄</div>
+        <p class="sub-text">La figura gira alrededor de un <b class="hl">Centro de Rotación</b>.</p>
+        <div class="pnl" style="text-align:center; padding:14px;">
+            <svg width="480" height="240" viewBox="0 0 480 240" style="max-width:100%; background:#fff; border-radius:16px; border:3px solid #d1d5db;">
+                <rect width="480" height="240" fill="url(#g2)"/>
+                <circle cx="240" cy="180" r="8" fill="#DC2626"/>
+                <text x="240" y="215" font-family="Nunito" font-size="18" font-weight="900" text-anchor="middle" fill="#DC2626">Centro (O)</text>
+                <polygon points="240,180 340,180 340,100" fill="#fde047" stroke="#ca8a04" stroke-width="3"/>
+                <text x="300" y="175" font-family="Nunito" font-size="16" font-weight="900" fill="#854d0e">Original</text>
+                <path class="stp" d="M 330,110 A 100,100 0 0,0 200,90" fill="none" stroke="#EA580C" stroke-width="4" stroke-dasharray="6,4"/>
+                <text class="stp" x="270" y="70" font-family="Nunito" font-size="18" font-weight="900" fill="#EA580C">90°</text>
+                <polygon class="stp" points="240,180 240,80 160,80" fill="#86efac" stroke="#16a34a" stroke-width="3"/>
+                <text class="stp" x="190" y="120" font-family="Nunito" font-size="16" font-weight="900" fill="#166534">Girado 90°</text>
+            </svg>
+        </div>
+        <div class="stp warn-card" style="margin-top:10px; border-color:#EA580C; background:#fff7ed;">
+            📌 <b>Giros comunes:</b> Un cuarto de vuelta = <b>90°</b> | Media vuelta = <b>180°</b> | Vuelta completa = <b>360°</b>
+        </div>
+        </div>
+
+        <!-- SLIDE 13: QUIZ 2 -->
+        <div class="sl">
+        <div class="head-title">¡Quiz 2! ⚡</div>
+        <p class="sub-text">¿Qué transformación parece la imagen en un espejo?</p>
+        <div class="card-row" style="max-width:700px;">
+            <button class="btn" onclick="chkAns(this,false,'')">Traslación</button>
+            <button class="btn" onclick="chkAns(this,true,'La reflexión voltea la figura como un espejo sobre un eje 🪞')">Reflexión</button>
+            <button class="btn" onclick="chkAns(this,false,'')">Rotación</button>
+        </div>
+        <div class="msg-area"></div>
+        </div>
+
+        <!-- SLIDE 14: ABRE TU CUADERNO -->
+        <div class="sl">
+        <div class="head-title">✏️ Abre tu Cuaderno</div>
+        <p class="sub-text">Resuelve estos 6 ejercicios:</p>
+        <div class="cuad-grid">
+            <div class="cuad-item">1️⃣ Un ángulo de 45° ¿es agudo u obtuso?</div>
+            <div class="cuad-item">2️⃣ ¿Cuánto mide un ángulo llano?</div>
+            <div class="cuad-item">3️⃣ Dibuja dos rectas perpendiculares y marca el ángulo de 90°.</div>
+            <div class="cuad-item">4️⃣ Si trasladas un triángulo 5 cm a la derecha, ¿cambia su tamaño?</div>
+            <div class="cuad-item">5️⃣ ¿Cuántos grados tiene media vuelta (rotación)?</div>
+            <div class="cuad-item">6️⃣ Nombra un objeto de tu casa que tenga ángulos rectos.</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 15: RESPUESTAS -->
+        <div class="sl">
+        <div class="head-title">✅ Respuestas</div>
+        <div class="resp-grid">
+            <div class="stp resp-item">1️⃣ <b>Agudo</b> (menor que 90°)</div>
+            <div class="stp resp-item">2️⃣ Exactamente <b>180°</b></div>
+            <div class="stp resp-item">3️⃣ Una cruz con cuadradito de 90°</div>
+            <div class="stp resp-item">4️⃣ <b>NO</b>, mantiene su tamaño</div>
+            <div class="stp resp-item">5️⃣ Media vuelta = <b>180°</b></div>
+            <div class="stp resp-item">6️⃣ Mesa, puerta, ventana, etc.</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 16: PROBLEMA 1 -->
+        <div class="sl">
+        <div class="head-title">Problema 1: Las Agujas del Reloj 🕐</div>
+        <div class="story-card" style="border:5px solid #059669; background:#ecfdf5;">
+            <div class="story-emoji">🕐</div>
+            <div>
+                <h2 style="color:#047857;">¿Qué hora marca?</h2>
+                <p>A las 6 en punto, las manecillas del reloj apuntan en direcciones opuestas (una arriba y otra abajo). ¿Qué tipo de ángulo forman? ¿Y a las 9 en punto?</p>
+                <div class="stp" style="margin-top:14px; background:#d1fae5; padding:16px; border-radius:14px;">
+                    <p style="font-weight:800; color:#047857;">✅ A las 6:00 forman un ángulo <b>Llano (180°)</b>.<br>A las 9:00 forman un ángulo <b>Recto (90°)</b>.</p>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 9: TRASLACIÓN PASO A PASO ====== -->
-<div class="sl">
-    <div class="head-title">Traslación — Paso a Paso 🚚</div>
-    <p class="sub-text">Mover una figura en línea recta.</p>
-    <div class="pnl" style="text-align:center; padding:16px;">
-        <div style="font-size:20px; font-weight:800; color:#2563EB; margin-bottom:10px;">
-            Movimiento: <b>4 unidades a la derecha</b> y <b>2 unidades hacia abajo</b>
         </div>
-        <svg width="540" height="260" viewBox="0 0 540 260" style="max-width:100%; background:#fff; border-radius:16px; border:3px solid #d1d5db;">
-            <defs>
-                <pattern id="gridPattern2" width="40" height="40" patternUnits="userSpaceOnUse">
-                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
-                </pattern>
-            </defs>
-            <rect width="540" height="260" fill="url(#gridPattern2)" />
 
-            <!-- Figura Original ABC -->
-            <polygon points="80,130 140,30 200,130" fill="#93c5fd" stroke="#2563EB" stroke-width="3.5"/>
-            <circle cx="80" cy="130" r="6" fill="#2563EB"/>
-            <text x="60" y="145" font-family="Nunito" font-size="20" font-weight="900" fill="#1e40af">A</text>
-            <circle cx="140" cy="30" r="6" fill="#2563EB"/>
-            <text x="140" y="20" font-family="Nunito" font-size="20" font-weight="900" text-anchor="middle" fill="#1e40af">B</text>
-            <circle cx="200" cy="130" r="6" fill="#2563EB"/>
-            <text x="215" y="145" font-family="Nunito" font-size="20" font-weight="900" fill="#1e40af">C</text>
-
-            <!-- Movimiento -->
-            <g class="stp shwn">
-                <path d="M 80,130 L 240,130 L 240,210" fill="none" stroke="#10B981" stroke-width="3" stroke-dasharray="6,4"/>
-                <path d="M 140,30 L 300,30 L 300,110" fill="none" stroke="#10B981" stroke-width="3" stroke-dasharray="6,4"/>
-                <path d="M 200,130 L 360,130 L 360,210" fill="none" stroke="#10B981" stroke-width="3" stroke-dasharray="6,4"/>
-            </g>
-
-            <!-- Figura Trasladada A'B'C' -->
-            <g class="stp shwn">
-                <polygon points="240,210 300,110 360,210" fill="#6ee7b7" stroke="#059669" stroke-width="3.5"/>
-                <circle cx="240" cy="210" r="6" fill="#059669"/>
-                <text x="220" y="225" font-family="Nunito" font-size="20" font-weight="900" fill="#065f46">A'</text>
-                <circle cx="300" cy="110" r="6" fill="#059669"/>
-                <text x="300" y="98" font-family="Nunito" font-size="20" font-weight="900" text-anchor="middle" fill="#065f46">B'</text>
-                <circle cx="360" cy="210" r="6" fill="#059669"/>
-                <text x="375" y="225" font-family="Nunito" font-size="20" font-weight="900" fill="#065f46">C'</text>
-            </g>
-        </svg>
-    </div>
-</div>
-
-<!-- ====== SLIDE 10: REFLEXIÓN (ESPEJO) ====== -->
-<div class="sl">
-    <div class="head-title">Reflexión — Efecto Espejo 🪞</div>
-    <p class="sub-text">La figura se refleja respecto a un <b class="hl">Eje de Simetría</b>.</p>
-    <div class="pnl" style="text-align:center; padding:16px;">
-        <svg width="520" height="240" viewBox="0 0 520 240" style="max-width:100%; background:#fff; border-radius:16px; border:3px solid #d1d5db;">
-            <rect width="520" height="240" fill="url(#gridPattern2)" />
-
-            <line x1="260" y1="20" x2="260" y2="220" stroke="#DC2626" stroke-width="4" stroke-dasharray="8,4"/>
-            <text x="260" y="16" font-family="Nunito" font-size="16" font-weight="900" text-anchor="middle" fill="#DC2626">Eje de Reflexión</text>
-
-            <polygon points="100,50 200,90 120,190" fill="#c084fc" stroke="#9333EA" stroke-width="3"/>
-            <text x="80" y="50" font-family="Nunito" font-size="20" font-weight="900" fill="#9333EA">A</text>
-
-            <polygon class="stp" points="420,50 320,90 400,190" fill="#f472b6" stroke="#db2777" stroke-width="3"/>
-            <text class="stp" x="435" y="50" font-family="Nunito" font-size="20" font-weight="900" fill="#db2777">A'</text>
-        </svg>
-    </div>
-</div>
-
-<!-- ====== SLIDE 11: ROTACIÓN ====== -->
-<div class="sl">
-    <div class="head-title">Rotación — Giro 🔄</div>
-    <p class="sub-text">La figura gira en torno a un <b class="hl">Centro de Rotación (O)</b>.</p>
-    <div class="pnl" style="text-align:center; padding:16px;">
-        <svg width="480" height="240" viewBox="0 0 480 240" style="max-width:100%; background:#fff; border-radius:16px; border:3px solid #d1d5db;">
-            <rect width="480" height="240" fill="url(#gridPattern2)" />
-
-            <circle cx="240" cy="180" r="7" fill="#DC2626"/>
-            <text x="240" y="210" font-family="Nunito" font-size="18" font-weight="900" text-anchor="middle" fill="#DC2626">Centro (O)</text>
-
-            <polygon points="240,180 340,180 340,100" fill="#fde047" stroke="#ca8a04" stroke-width="3"/>
-
-            <path class="stp" d="M 330,120 A 100,100 0 0,0 200,90" fill="none" stroke="#EA580C" stroke-width="4" stroke-dasharray="6,4"/>
-            <polygon class="stp" points="196,96 190,84 204,82" fill="#EA580C"/>
-
-            <polygon class="stp" points="240,180 240,80 160,80" fill="#86efac" stroke="#16a34a" stroke-width="3"/>
-        </svg>
-    </div>
-</div>
-
-<!-- ====== SLIDE 12: QUIZ 1 ====== -->
-<div class="sl">
-    <div class="head-title">¡Quiz Relámpago! ⚡</div>
-    <p class="sub-text">¿Qué ángulo mide exactamente <b>90°</b>?</p>
-    <div class="card-row" style="max-width:600px;">
-        <button class="btn" onclick="chkAns(this,false,'')">Agudo</button>
-        <button class="btn" onclick="chkAns(this,true,'¡El ángulo Recto mide exactamente 90°! 📐')">Recto</button>
-        <button class="btn" onclick="chkAns(this,false,'')">Obtuso</button>
-    </div>
-    <div class="msg-area"></div>
-</div>
-
-<!-- ====== SLIDE 13: QUIZ 2 ====== -->
-<div class="sl">
-    <div class="head-title">¡Quiz 2! ⚡</div>
-    <p class="sub-text">¿Cómo se llaman las rectas que nunca se cruzan?</p>
-    <div class="card-row" style="max-width:500px;">
-        <button class="btn" onclick="chkAns(this,true,'Las rectas paralelas mantienen siempre la misma distancia 🚆')">Paralelas</button>
-        <button class="btn" onclick="chkAns(this,false,'')">Perpendiculares</button>
-    </div>
-    <div class="msg-area"></div>
-</div>
-
-<!-- ====== SLIDE 14: ABRE TU CUADERNO ====== -->
-<div class="sl">
-    <div class="head-title">✏️ Abre tu Cuaderno</div>
-    <p class="sub-text">Resuelve estos ejercicios en tu cuaderno:</p>
-    <div class="cuad-grid">
-        <div class="cuad-item">1️⃣ ¿Un ángulo de 45° es agudo u obtuso?</div>
-        <div class="cuad-item">2️⃣ ¿Cuánto mide un ángulo llano?</div>
-        <div class="cuad-item">3️⃣ Dibuja 2 rectas perpendiculares</div>
-        <div class="cuad-item">4️⃣ Si trasladas un triángulo 5cm a la derecha, ¿cambia su tamaño?</div>
-        <div class="cuad-item">5️⃣ ¿Qué transformación parece la imagen en un espejo?</div>
-        <div class="cuad-item">6️⃣ Si giras una figura alrededor de un punto, ¿qué haces?</div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 15: RESPUESTAS ====== -->
-<div class="sl">
-    <div class="head-title">✅ Respuestas</div>
-    <div class="resp-grid">
-        <div class="resp-item stp">1️⃣ <b>Agudo</b> (&lt; 90°)</div>
-        <div class="resp-item stp">2️⃣ Exactamente <b>180°</b></div>
-        <div class="resp-item stp">3️⃣ Cruz formada con ángulo de 90°</div>
-        <div class="resp-item stp">4️⃣ <b>NO</b>, mantiene su forma</div>
-        <div class="resp-item stp">5️⃣ <b>Reflexión</b> (Simetría)</div>
-        <div class="resp-item stp">6️⃣ <b>Rotación</b></div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 16: PROBLEMA 1 ====== -->
-<div class="sl">
-    <div class="head-title">Problema 1: El Arquitecto 🏛️</div>
-    <div class="story-card" style="border:4px solid #9DE3BD; background:#f0fdf4;">
-        <div class="story-emoji">🏛️</div>
-        <div>
-            <p style="font-size:21px;">Don José está diseñando una ventana rectangular. Necesita que las 4 esquinas tengan el mismo tipo de ángulo. ¿Qué tipo de ángulo deben ser?</p>
-            <div class="stp" style="margin-top:12px; background:#d1fae5; padding:14px; border-radius:10px;">
-                <p style="font-size:20px; font-weight:800; color:#047857;">✅ Deben ser <b>Ángulos Rectos (90°)</b>.</p>
+        <!-- SLIDE 17: PROBLEMA 2 -->
+        <div class="sl">
+        <div class="head-title">Problema 2: El Engranaje de la Bici 🚲</div>
+        <div class="story-card" style="border:5px solid #2563EB; background:#eff6ff;">
+            <div class="story-emoji">🚲</div>
+            <div>
+                <h2 style="color:#1d4ed8;">Giro de rueda</h2>
+                <p>Isidora pedalea y la rueda de su bicicleta gira un cuarto de vuelta. Luego gira otro cuarto de vuelta más. ¿Cuántos grados giró la rueda en total? ¿Eso es media vuelta?</p>
+                <div class="stp" style="margin-top:14px; background:#dbeafe; padding:16px; border-radius:14px;">
+                    <p style="font-weight:800; color:#1e40af;">✅ Un cuarto de vuelta = 90°. Dos cuartos = 90° + 90° = <b>180°</b>. Sí, <b>180° es exactamente media vuelta</b>.</p>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+        </div>
 
-<!-- ====== SLIDE 17: PROBLEMA 2 ====== -->
-<div class="sl">
-    <div class="head-title">Problema 2: El Espejo del Salón 🪞</div>
-    <div class="story-card" style="border:4px solid #9DDEFF; background:#f0f8ff;">
-        <div class="story-emoji">🪞</div>
-        <div>
-            <p style="font-size:21px;">Si te paraste a 2 metros del espejo del salón, ¿a qué distancia dentro del espejo parece estar tu reflejo?</p>
-            <div class="stp" style="margin-top:12px; background:#e3f2fd; padding:14px; border-radius:10px;">
-                <p style="font-size:20px; font-weight:800; color:var(--base);">✅ A la misma distancia: <b>2 metros detrás del eje de reflexión</b>.</p>
+        <!-- SLIDE 18: PROBLEMA 3 -->
+        <div class="sl">
+        <div class="head-title">Problema 3: El Espejo del Salón 🪞</div>
+        <div class="story-card" style="border:5px solid #EA580C; background:#fff7ed;">
+            <div class="story-emoji">🪞</div>
+            <div>
+                <h2 style="color:#c2410c;">Reflexión exacta</h2>
+                <p>Tomás se para a <b>2 metros</b> de un espejo. ¿A qué distancia parece estar su reflejo detrás del espejo? Si levanta la mano <b>derecha</b>, ¿qué mano levanta el reflejo?</p>
+                <div class="stp" style="margin-top:14px; background:#ffedd5; padding:16px; border-radius:14px;">
+                    <p style="font-weight:800; color:#c2410c;">✅ El reflejo parece estar a <b>2 metros</b> detrás del eje (misma distancia). El reflejo levanta la mano <b>izquierda</b> (se invierte).</p>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 18: DESAFÍO SUPREMO PORTADA ====== -->
-<div class="sl" style="background: linear-gradient(135deg, #9333EA, #db2777); color: white;">
-    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <h1 style="font-size:56px; margin-bottom:18px;">⛏️ Desafío ObraCraft</h1>
-        <p style="font-size:24px; max-width:700px; text-align:center; opacity:0.95;">¡Nivel Secreto: El Espejo de Redstone!</p>
-    </div>
-</div>
-
-<!-- ====== SLIDE 19: OBRACRAFT ====== -->
-<div class="sl">
-    <div class="head-title" style="background:linear-gradient(135deg, #9333EA, #db2777);">⛏️ El Portal de Redstone</div>
-    <div class="pnl" style="border-color:#9333EA;">
-        <p style="font-size:20px; text-align:center;">Para activar el portal en ObraCraft necesitas construir el lado derecho exacto del portal usando <b>Reflexión</b>:</p>
-        <div style="background:linear-gradient(135deg,#9333EA22,#db277722); padding:14px; border-radius:14px; margin:12px 0; text-align:center; font-size:19px; font-weight:800; color:#9333EA;">
-            🧩 El lado izquierdo tiene un bloque en el punto A(2, 4) respecto al eje.<br>
-            🧩 El portal debe ser perfectamente simétrico.
         </div>
-        <p style="font-size:20px; text-align:center; font-weight:700;">1. Si reflejas el bloque A(2,4) al otro lado del eje, ¿a qué distancia del eje debe quedar?<br>2. Si trasladas todo el portal 5 bloques arriba, ¿cambia de tamaño?</p>
-        <div class="stp" style="margin-top:14px; background:#f3e5f5; padding:14px; border-radius:10px; font-size:18px;">
-            <p style="font-weight:800; color:var(--purple);">✅ 1. A la misma distancia: <b>2 bloques a la derecha del eje</b></p>
-            <p style="font-weight:800; color:var(--pink);">✅ 2. <b>NO cambia</b>, las traslaciones conservan tamaño y forma.</p>
+
+        <!-- SLIDE 19: DESAFÍO SUPREMO PORTADA -->
+        <div class="sl" style="background:linear-gradient(135deg, #9333EA, #db2777); color:white;">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <h1 style="font-size:58px; margin-bottom:18px;">⛏️ Desafío Supremo</h1>
+            <p style="font-size:28px; max-width:700px; opacity:0.95;">¡Nivel Secreto ObraCraft: El Portal de Obsidiana!</p>
+            <div style="font-size:100px; margin-top:24px; animation:bounce 2s infinite;">🌀</div>
         </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 20: RESUMEN ====== -->
-<div class="sl">
-    <div class="head-title">📝 Resumen de la Clase</div>
-    <div class="pnl" style="max-width:680px; margin:0 auto;">
-        <div style="font-size:20px; line-height:2.2;">
-            <p class="stp">✅ <b>Ángulos:</b> Agudo (&lt;90°), Recto (=90°), Obtuso (&gt;90°), Llano (=180°).</p>
-            <p class="stp">✅ <b>Rectas:</b> Paralelas (nunca se cruzan //), Perpendiculares (forman 90° ⊥).</p>
-            <p class="stp">✅ <b>Traslación:</b> Desplazamiento en línea recta.</p>
-            <p class="stp">✅ <b>Reflexión:</b> Efecto espejo sobre un eje.</p>
-            <p class="stp">✅ <b>Rotación:</b> Giro alrededor de un punto centro.</p>
         </div>
-    </div>
-</div>
 
-<!-- ====== SLIDE 21: CIERRE ====== -->
-<div class="sl">
-    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <div style="font-size:120px; margin-bottom:20px; animation: bounce 2s infinite;">🌟</div>
-        <h1 style="font-size:46px; color:var(--base); text-align:center;">¡Increíble Avance!</h1>
-        <p style="font-size:24px; font-weight:700; text-align:center; max-width:600px; margin-top:16px;">¡Ya eres un experto en ángulos y transformaciones! En la próxima clase calcularemos perímetros y áreas.</p>
-        <div style="font-size:54px; margin-top:18px;">📐🪞🔄✨</div>
-    </div>
-</div>
+        <!-- SLIDE 20: OBRACRAFT -->
+        <div class="sl">
+        <div class="head-title" style="background:linear-gradient(135deg, #9333EA, #db2777);">⛏️ ObraCraft: El Portal Simétrico</div>
+        <div class="pnl" style="border-color:#9333EA;">
+            <p style="font-size:24px; text-align:center;">Para activar el portal en ObraCraft debes construir el lado derecho <b>exactamente simétrico</b> al lado izquierdo.</p>
+            <div style="background:linear-gradient(135deg,#9333EA22,#db277722); padding:18px; border-radius:16px; margin:16px 0; font-size:22px; font-weight:800; color:#9333EA; text-align:center; line-height:1.6;">
+                🧩 El lado izquierdo tiene un bloque a 3 unidades del eje.<br>
+                🧩 Luego, debes trasladar todo el portal 5 bloques hacia arriba sin deformarlo.
+            </div>
+            <p style="font-size:24px; font-weight:700; text-align:center;">1. ¿A qué distancia del eje pones el bloque reflejado?<br>2. Al trasladar el portal 5 arriba, ¿cambia de tamaño o forma?</p>
+            <div class="stp" style="margin-top:16px; background:#f3e8ff; padding:16px; border-radius:14px; font-size:22px;">
+                <p style="font-weight:800; color:#9333EA;">✅ 1. A la <b>misma distancia: 3 unidades</b> al otro lado del eje (reflexión).</p>
+                <p style="font-weight:800; color:#db2777;">✅ 2. <b>NO cambia</b>. La traslación conserva tamaño y forma.</p>
+            </div>
+        </div>
+        </div>
 
-</div>
-<div class="nv">
-    <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
-    <input type="range" id="slide-slider" min="1" value="1" style="width:200px; accent-color:var(--base);" oninput="goToSlide(this.value)">
-    <span class="sc" id="sc">1 / 21</span>
-    <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
-</div>
-<script>
-    const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
-    function ui() {
-        S.forEach((s,i)=>{
-            s.classList.remove('on','pv','nx');
-            if(i===c) s.classList.add('on');
-            else if(i<c) s.classList.add('pv');
-            else s.classList.add('nx');
-        });
-        document.getElementById('pb').style.width=((c+1)/T*100)+'%';
-        document.getElementById('sc').textContent=`${c+1} / ${T}`;
-        document.getElementById('pv').disabled=c===0;
-        document.getElementById('nx').disabled=c===T-1;
-        let sl = document.getElementById('slide-slider');
-        if(sl) { sl.max = T; sl.value = c + 1; }
-    }
-    function goToSlide(n) {
-        let val = parseInt(n) - 1;
-        if (val >= 0 && val < T) { c = val; ui(); }
-    }
-    function go(d) {
-        if(d>0) {
-            const hid = S[c].querySelectorAll('.stp:not(.shwn)');
-            if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
-        } else {
-            const shw = S[c].querySelectorAll('.stp.shwn');
-            if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
-        }
-        const n=c+d; if(n>=0 && n<T) { c=n; ui(); }
-    }
-    document.addEventListener('keydown', e => {
-        if(e.key==='ArrowRight' || e.key===' ') go(1);
-        if(e.key==='ArrowLeft') go(-1);
-    });
-    ui();
-    function chkAns(btn, correct, exp) {
-        let wrap = btn.closest('.sl');
-        let btnGroup = btn.parentElement;
-        let msg = btnGroup.nextElementSibling;
-        while(msg && !msg.classList.contains('msg-area')) msg = msg.nextElementSibling;
-        if(!msg) { let msgs = wrap.querySelectorAll('.msg-area'); if(msgs.length) msg = msgs[0]; }
-        let buttons = btnGroup.querySelectorAll('.btn');
-        buttons.forEach(b => { b.style.transform = 'scale(1)'; b.style.background = 'var(--base)'; });
-        if (correct) {
-            btn.style.background = '#047857';
-            btn.style.transform = 'scale(1.06)';
-            if(msg) { msg.innerHTML = `¡Excelente! ✅ ${exp}`; msg.style.color = '#047857'; }
-        } else {
-            btn.style.background = '#b91c1c';
-            if(msg) { msg.innerHTML = '¡Inténtalo de nuevo!'; msg.style.color = '#b91c1c'; }
-        }
-    }
-</script></body></html>
+        <!-- SLIDE 21: RESUMEN -->
+        <div class="sl">
+        <div class="head-title" style="background:#047857;">📝 Resumen de la Clase</div>
+        <div class="summary-list" style="max-width:780px; margin:0 auto;">
+            <div class="stp summary-item"><b>📐 Ángulos:</b> Agudo (&lt;90°), Recto (=90°), Obtuso (&gt;90°), Llano (=180°). Se miden en grados.</div>
+            <div class="stp summary-item"><b>🛤️ Rectas:</b> Paralelas (nunca se cruzan //). Perpendiculares (forman 90° ⊥).</div>
+            <div class="stp summary-item"><b>🚚 Traslación:</b> Deslizar la figura en línea recta.</div>
+            <div class="stp summary-item"><b>🪞 Reflexión:</b> Voltear la figura sobre un eje (efecto espejo).</div>
+            <div class="stp summary-item"><b>🔄 Rotación:</b> Girar la figura alrededor de un centro (90°, 180°, 360°).</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 22: CIERRE -->
+        <div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:38px; font-weight:800; line-height:1.45; max-width:780px;">¡Increíble avance! Ahora dominas los ángulos, los tipos de rectas y las 3 transformaciones isométricas. En la próxima clase calcularemos <b>Perímetro y Área</b>.</p>
+            <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">📐</div>
+        </div>
+        </div>
+
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <span class="sc" id="sc">1 / 22</span>
+            <input type="range" id="slide-slider" style="width:100%; cursor:pointer;" min="1" max="22" value="1" oninput="goToSlide(this.value)">
+        </div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>
+const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+function ui(){S.forEach((s,i)=>{s.classList.remove('on','pv','nx');if(i===c)s.classList.add('on');else if(i<c)s.classList.add('pv');else s.classList.add('nx');});document.getElementById('pb').style.width=((c+1)/T*100)+'%';document.getElementById('sc').textContent=`${c+1} / ${T}`;document.getElementById('pv').disabled=c===0;document.getElementById('nx').disabled=c===T-1;let sl=document.getElementById('slide-slider');if(sl){sl.max=T;sl.value=c+1;}}
+function goToSlide(n){let val=parseInt(n)-1;if(val>=0&&val<T){c=val;ui();}}
+function go(d){if(d>0){const hid=S[c].querySelectorAll('.stp:not(.shwn)');if(hid.length>0){hid[0].classList.add('shwn');return;}}else{const shw=S[c].querySelectorAll('.stp.shwn');if(shw.length>0){shw[shw.length-1].classList.remove('shwn');return;}}const n=c+d;if(n>=0&&n<T){c=n;ui();}}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(1);if(e.key==='ArrowLeft')go(-1);});
+function chkAns(btn,correct,exp){const wrap=btn.closest('.sl');const buttons=btn.parentElement.querySelectorAll('.btn');const msg=wrap.querySelector('.msg-area');buttons.forEach(b=>{b.disabled=false;b.style.background='var(--base)';b.style.transform='scale(1)';});if(correct){btn.style.background='#047857';btn.style.transform='scale(1.06)';msg.textContent=`¡Muy bien! ${exp}`;msg.style.color='#047857';}else{btn.style.background='#b91c1c';msg.textContent='¡Inténtalo de nuevo!';msg.style.color='#b91c1c';}}
+ui();
+</script>
+</body>
+</html>

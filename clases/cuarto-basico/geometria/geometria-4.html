@@ -1,463 +1,454 @@
 <!DOCTYPE html>
-<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Geometría IV - 3D, Volumen y Simetría</title><style>
-    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
-    :root {
-        --base: #1C4A82;
-        --bg: #f5f6f8;
-        --tx: #333;
-        --accent: #FFB74D;
-        --purple: #9333EA;
-        --pink: #db2777;
-        --green: #059669;
-        --blue: #2563EB;
-        --orange: #EA580C;
-    }
-    * {margin:0; padding:0; box-sizing:border-box;}
-    body {font-family: 'Nunito', sans-serif; background: var(--bg); overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; color: var(--tx);}
-    .dk {position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex;}
-    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 36px 40px 82px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1; overflow-y: auto;}
-    .sl.on {opacity: 1; transform: scale(0.9); pointer-events: auto; z-index: 10;}
-    .sl.pv {opacity: 0; transform: translateX(-50px) scale(.95);}
-    .sl.nx {opacity: 0; transform: translateX(50px) scale(.95);}
-    .head-title {background: var(--base); color: white; padding: 10px 40px; font-size: 30px; font-weight: 900; margin-bottom: 22px; display: inline-block; border-radius: 12px; text-align: center;}
-    .sub-text {font-size: 24px; font-weight: 600; margin-bottom: 18px; text-align: center; line-height: 1.4;}
-    .pb {position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100;}
-    .nv {position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: white; border-top: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; z-index: 100;}
-    .nb {background: #eee; color: var(--base); border: none; padding: 10px 20px; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer; transition: all .2s;}
-    .nb:hover {background: #ddd;}
-    .nb:disabled {opacity: 0.3; cursor: not-allowed;}
-    .sc {color: #888; font-size: 16px; font-weight: 900;}
-    .stp {opacity: 0; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;}
-    .stp.shwn {opacity: 1; transform: translateY(0); pointer-events: auto;}
-    .pnl {background: #fff; padding: 26px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 3px solid #eaeaea; width: 100%; margin-bottom: 16px;}
-    .hl {color: var(--base); font-weight: 900;}
-    .btn {background: var(--base); color: white; border: none; padding: 14px 28px; border-radius: 12px; font-size: 20px; font-weight: 900; cursor: pointer; transition: transform .2s; font-family: 'Nunito', sans-serif;}
-    .btn:hover {transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3);}
-    .card-row {display: flex; justify-content: center; gap: 18px; width: 100%; flex-wrap: wrap;}
-    .idea-card {flex: 1 1 200px; background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%); border-radius: 18px; padding: 18px; border: 3px solid #d7e7f7; text-align: center;}
-    .story-card {width: 100%; border-radius: 28px; padding: 24px; display: grid; grid-template-columns: 90px 1fr; gap: 20px; align-items: center; background: #fff;}
-    .story-emoji {font-size: 72px; text-align: center;}
-    .mini-chip {background: #eef5ff; border: 2px solid #b6d4f3; border-radius: 999px; padding: 10px 18px; font-size: 18px; font-weight: 800; display: inline-block; margin: 4px;}
-    .msg-area {font-size: 22px; font-weight: 800; margin-top: 12px; min-height: 30px;}
-    .cuad-grid {display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; width: 100%;}
-    .cuad-item {background: #fff; border: 3px solid #d8e7f6; border-radius: 14px; padding: 14px; text-align: center; font-size: 20px; font-weight: 800; min-height: 70px; display: flex; flex-direction: column; align-items: center; justify-content: center;}
-    .resp-grid {display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; width: 100%;}
-    .resp-item {background: #f0fdf4; border: 3px solid #86efac; border-radius: 14px; padding: 12px; text-align: center; font-size: 19px; font-weight: 800; display: flex; align-items: center; justify-content: center;}
-</style></head><body><div class="pb" id="pb"></div><div class="dk">
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Geometría 4: Cuerpos 3D, Volumen y Simetría</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
+:root { --base: #1C4A82; --bg: #f5f6f8; --tx: #333; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family:'Nunito',sans-serif; background:var(--bg); overflow:hidden; height:100vh; width:100vw; display:flex; flex-direction:column; align-items:center; color:var(--tx); }
+.dk { position:relative; width:100%; height:100%; max-width:1000px; display:flex; }
+.sl { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:36px 40px 82px; opacity:0; transform:scale(.96); transition:opacity .4s, transform .4s; pointer-events:none; z-index:1; overflow-y:auto; }
+.sl.on { opacity:1; transform:scale(1); pointer-events:auto; z-index:10; }
+.sl.pv { opacity:0; transform:translateX(-50px) scale(.95); }
+.sl.nx { opacity:0; transform:translateX(50px) scale(.95); }
+.head-title { background:var(--base); color:white; padding:10px 40px; font-size:32px; font-weight:900; margin-bottom:24px; display:inline-block; border-radius:12px; text-align:center; }
+.sub-text { font-size:24px; font-weight:600; margin-bottom:22px; text-align:center; line-height:1.4; }
+.pb { position:fixed; top:0; left:0; height:6px; background:var(--base); transition:width .4s; z-index:100; }
+.nv { position:fixed; bottom:0; left:0; right:0; height:60px; background:white; border-top:1px solid #ddd; display:flex; align-items:center; justify-content:space-between; padding:0 40px; z-index:100; }
+.nb { background:#eee; color:var(--base); border:none; padding:10px 20px; border-radius:8px; font-family:'Nunito',sans-serif; font-size:16px; font-weight:900; cursor:pointer; transition:all .2s; }
+.nb:hover { background:#ddd; } .nb:disabled { opacity:0.3; cursor:not-allowed; }
+.sc { color:#888; font-size:16px; font-weight:900; }
+.stp { opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.4,0,0.2,1); pointer-events:none; }
+.stp.shwn { opacity:1; transform:translateY(0); pointer-events:auto; }
+.pnl { background:#fff; padding:24px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.05); border:3px solid #eaeaea; width:100%; }
+.hl { color:var(--base); font-weight:900; }
+.btn { background:var(--base); color:white; border:none; padding:14px 24px; border-radius:12px; font-size:24px; font-weight:900; cursor:pointer; transition:transform .2s; font-family:'Nunito',sans-serif; }
+.btn:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(28,74,130,0.3); }
+.card-row { display:flex; justify-content:center; gap:18px; width:100%; flex-wrap:wrap; }
+.idea-card { flex:1 1 220px; background:linear-gradient(180deg,#fff 0%,#f7fbff 100%); border-radius:18px; padding:18px; border:3px solid #d7e7f7; min-height:140px; }
+.idea-card h3 { font-size:28px; color:var(--base); margin-bottom:10px; }
+.idea-card p { font-size:24px; line-height:1.45; }
+.story-card { width:100%; border-radius:28px; padding:28px; display:grid; grid-template-columns:120px 1fr; gap:24px; align-items:center; }
+.story-emoji { font-size:114px; text-align:center; animation:bob 2.8s infinite; }
+.story-card h2 { font-size:30px; margin-bottom:12px; }
+.story-card p { font-size:24px; line-height:1.45; }
+.summary-list { display:flex; flex-direction:column; gap:16px; width:100%; }
+.summary-item { background:#fff; border-radius:16px; padding:16px 18px; border:3px solid #dbe7f4; font-size:23px; line-height:1.45; }
+.fact-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:16px; width:100%; }
+.fact-box { background:linear-gradient(180deg,#fff 0%,#f8fbff 100%); border-radius:18px; padding:16px; border:3px solid #d8e7f6; min-height:140px; }
+.fact-box h4 { font-size:24px; color:var(--base); margin-bottom:10px; text-align:center; }
+.fact-box p { font-size:22px; line-height:1.45; text-align:center; }
+.warn-card { background:#fff8e5; border:4px solid #f0ca59; border-radius:20px; padding:20px; font-size:24px; line-height:1.45; width:100%; }
+.msg-area { font-size:24px; font-weight:900; height:40px; text-align:center; margin-top:20px; }
+.hero-title { font-size:62px; color:var(--base); margin-bottom:18px; text-align:center; line-height:1.1; }
+.hero-sub { font-size:28px; font-weight:700; text-align:center; max-width:720px; }
+.hero-emoji { font-size:108px; margin-top:28px; animation:bounce 2s infinite; }
+.step-list { display:flex; flex-direction:column; gap:14px; }
+.step-box { background:#f7fbff; border-left:8px solid var(--base); padding:14px 16px; border-radius:14px; font-size:24px; line-height:1.4; font-weight:700; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:18px; width:100%; align-items:stretch; }
+.cuad-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; width:100%; }
+.cuad-item { background:#fff; border:3px solid #d8e7f6; border-radius:14px; padding:14px; text-align:center; font-size:22px; font-weight:800; min-height:80px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.resp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; width:100%; }
+.resp-item { background:#f0fdf4; border:3px solid #86efac; border-radius:14px; padding:12px; text-align:center; font-size:22px; font-weight:800; display:flex; align-items:center; justify-content:center; }
+@keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-16px);} }
+@keyframes bob { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+</style>
+</head>
+<body>
+    <div class="pb" id="pb"></div>
+    <div class="dk">
 
-<!-- ====== SLIDE 1: PORTADA ====== -->
-<div class="sl">
-    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <h1 style="font-size:54px; color:var(--base); margin-bottom:18px; text-align:center; line-height:1.1;">Geometría IV 🧊</h1>
-        <p style="font-size:24px; font-weight:700; text-align:center; max-width:720px;">Cuerpos 3D, Volumen y Simetría.</p>
-        <div style="font-size:108px; margin-top:24px;">🧊📦🦋</div>
-    </div>
-</div>
+        <!-- SLIDE 1: PORTADA -->
+        <div class="sl">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h1 class="hero-title">Geometría IV: Cuerpos 3D, Volumen y Simetría</h1>
+            <p class="hero-sub">Exploraremos el mundo tridimensional: cubos, cilindros, esferas, conteo de cubos y ejes de simetría.</p>
+            <div class="hero-emoji">🧊</div>
+        </div>
+        </div>
 
-<!-- ====== SLIDE 2: ROMPEHIELOS ====== -->
-<div class="sl">
-    <div class="head-title">De 2D a 3D 🧊</div>
-    <div class="story-card" style="border:5px solid #3B82F6; background:#eff6ff;">
-        <div class="story-emoji">📦</div>
-        <div>
-            <h2 style="color:#1d4ed8; font-size:26px;">El mundo tiene volumen</h2>
-            <p style="font-size:21px;">Una hoja de papel es plana (2D). Una caja de jugo o un dado ocupan un lugar en el espacio (3D). ¡Tienen <b>largo, ancho y profundidad</b>!</p>
-            <div class="stp" style="margin-top:10px; background:#dbeafe; padding:10px; border-radius:10px; font-weight:800; color:#1e40af; font-size:19px;">
-                🧊 A los objetos 3D los llamamos <b>Cuerpos Geométricos</b>.
+        <!-- SLIDE 2: ROMPEHIELO -->
+        <div class="sl">
+        <div class="head-title" style="background:#2E7D32;">De 2D a 3D: ¡El mundo tiene profundidad! 📦</div>
+        <div class="story-card" style="border:5px solid #2E7D32; background:#e8f5e9;">
+            <div class="story-emoji">📦</div>
+            <div>
+                <h2 style="color:#2E7D32;">Plano vs Cuerpo</h2>
+                <p>Una hoja de papel es <b>plana</b> (2D): tiene largo y ancho. Pero un dado, una caja de jugo o una pelota de fútbol son <b>cuerpos</b> (3D): tienen largo, ancho y <b>profundidad</b>. ¡Ocupan un lugar en el espacio!</p>
             </div>
         </div>
-    </div>
-</div>
+        <div class="stp warn-card" style="margin-top:20px; border-color:#2E7D32; background:#e8f5e9;">
+            💡 <b>Clave:</b> A los objetos 3D los llamamos <b>Cuerpos Geométricos</b>. Se dividen en <b>Poliedros</b> (caras planas) y <b>Cuerpos Redondos</b> (superficies curvas).
+        </div>
+        </div>
 
-<!-- ====== SLIDE 3: CARAS, ARISTAS Y VÉRTICES ====== -->
-<div class="sl">
-    <div class="head-title">Anatomía de un Cuerpo 3D 📦</div>
-    <p class="sub-text">Analicemos los 3 elementos fundamentales:</p>
-    <div class="pnl" style="text-align:center; padding:16px;">
-        <div style="display:flex; justify-content:center; align-items:center; gap:40px; flex-wrap:wrap;">
-            <!-- Paralelepípedo 3D Vectorial -->
-            <svg width="240" height="220" viewBox="0 0 240 220">
-                <!-- Caras traseras invisibles (punteadas) -->
-                <polygon points="90,30 190,30 190,130 90,130" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6,4"/>
-                <line x1="40" y1="80" x2="90" y2="30" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6,4"/>
-                <line x1="40" y1="180" x2="90" y2="130" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6,4"/>
-                
-                <!-- Caras Visibles Sombreadas -->
-                <polygon points="140,80 190,30 190,130 140,180" fill="#3b82f6" stroke="#1e3a8a" stroke-width="3"/>
-                <polygon points="40,80 140,80 190,30 90,30" fill="#93c5fd" stroke="#1e3a8a" stroke-width="3"/>
-                <polygon points="40,80 140,80 140,180 40,180" fill="#60a5fa" stroke="#1e3a8a" stroke-width="3"/>
-
-                <circle cx="140" cy="80" r="8" fill="#DC2626"/>
-            </svg>
-            <div style="text-align:left; font-size:20px; line-height:2;">
-                <div class="stp" style="color:#1d4ed8;">🟦 <b>Caras:</b> Las paredes planas.</div>
-                <div class="stp" style="color:#059669;">📏 <b>Aristas:</b> Las líneas donde se unen caras.</div>
-                <div class="stp" style="color:#DC2626;">🔴 <b>Vértices:</b> Las esquinas (puntas).</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 4: POLIEDROS ====== -->
-<div class="sl">
-    <div class="head-title">Los Poliedros Principales 🧊</div>
-    <p class="sub-text">Cuerpos con <b class="hl">TODAS</b> sus caras planas:</p>
-    <div class="card-row" style="max-width:880px;">
-        <div class="idea-card stp" style="border-color:#2563EB; padding:20px;">
-            <h3 style="color:#2563EB; font-size:24px;">Cubo 🧊</h3>
-            <svg width="120" height="120" viewBox="0 0 120 120" style="margin:10px 0;">
-                <polygon points="40,20 100,20 100,80 40,80" fill="none" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="4,2"/>
-                <line x1="20" y1="40" x2="40" y2="20" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="4,2"/>
-                <line x1="20" y1="100" x2="40" y2="80" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="4,2"/>
-                
-                <polygon points="80,40 100,20 100,80 80,100" fill="#2563EB" stroke="#1e40af" stroke-width="2.5"/>
-                <polygon points="20,40 80,40 100,20 40,20" fill="#bfdbfe" stroke="#1e40af" stroke-width="2.5"/>
-                <polygon points="20,40 80,40 80,100 20,100" fill="#60a5fa" stroke="#1e40af" stroke-width="2.5"/>
-            </svg>
-            <p style="font-size:17px; margin-bottom:8px;">6 caras <b>cuadradas iguales</b></p>
-            <div style="font-size:16px; font-weight:800; color:#1e40af; background:#dbeafe; padding:8px; border-radius:8px;">
-                C: 6 | A: 12 | V: 8
-            </div>
-        </div>
-        <div class="idea-card stp" style="border-color:#EA580C; padding:20px;">
-            <h3 style="color:#EA580C; font-size:24px;">Paralelepípedo 📦</h3>
-            <svg width="160" height="120" viewBox="0 0 160 120" style="margin:10px 0;">
-                <polygon points="60,20 140,20 140,80 60,80" fill="none" stroke="#fdba74" stroke-width="1.5" stroke-dasharray="4,2"/>
-                <line x1="20" y1="40" x2="60" y2="20" stroke="#fdba74" stroke-width="1.5" stroke-dasharray="4,2"/>
-                <line x1="20" y1="100" x2="60" y2="80" stroke="#fdba74" stroke-width="1.5" stroke-dasharray="4,2"/>
-                
-                <polygon points="100,40 140,20 140,80 100,100" fill="#ea580c" stroke="#9a3412" stroke-width="2.5"/>
-                <polygon points="20,40 100,40 140,20 60,20" fill="#fed7aa" stroke="#9a3412" stroke-width="2.5"/>
-                <polygon points="20,40 100,40 100,100 20,100" fill="#fb923c" stroke="#9a3412" stroke-width="2.5"/>
-            </svg>
-            <p style="font-size:17px; margin-bottom:8px;">6 caras <b>rectangulares</b></p>
-            <div style="font-size:16px; font-weight:800; color:#9a3412; background:#ffedd5; padding:8px; border-radius:8px;">
-                C: 6 | A: 12 | V: 8
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 5: CUERPOS REDONDOS ====== -->
-<div class="sl">
-    <div class="head-title">Cuerpos Redondos ⚽</div>
-    <p class="sub-text">Tienen al menos una <b class="hl">superficie curva</b> y pueden rodar:</p>
-    <div class="card-row" style="max-width:960px;">
-        <!-- Cilindro -->
-        <div class="idea-card stp" style="border-color:#059669;">
-            <h3 style="color:#059669; font-size:22px;">Cilindro 🥫</h3>
-            <svg width="120" height="120" viewBox="0 0 120 120" style="margin:8px 0;">
-                <defs>
-                    <linearGradient id="cylGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#34d399"/>
-                        <stop offset="50%" stop-color="#6ee7b7"/>
-                        <stop offset="100%" stop-color="#059669"/>
-                    </linearGradient>
-                </defs>
-                <path d="M 20 30 L 20 90 A 40 15 0 0 0 100 90 L 100 30" fill="url(#cylGrad)" stroke="#047857" stroke-width="2.5"/>
-                <path d="M 20 90 A 40 15 0 0 1 100 90" fill="none" stroke="#047857" stroke-width="2" stroke-dasharray="4,3"/>
-                <ellipse cx="60" cy="30" rx="40" ry="15" fill="#a7f3d0" stroke="#047857" stroke-width="2.5"/>
-            </svg>
-            <p style="font-size:14px; color:#555;">2 bases circulares planas + 1 superficie curva.</p>
-        </div>
-        <!-- Cono -->
-        <div class="idea-card stp" style="border-color:#9333EA;">
-            <h3 style="color:#9333EA; font-size:22px;">Cono 🍦</h3>
-            <svg width="120" height="120" viewBox="0 0 120 120" style="margin:8px 0;">
-                <defs>
-                    <linearGradient id="coneGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#c084fc"/>
-                        <stop offset="100%" stop-color="#7e22ce"/>
-                    </linearGradient>
-                </defs>
-                <path d="M 60 15 L 20 90 A 40 15 0 0 0 100 90 Z" fill="url(#coneGrad)" stroke="#6b21a8" stroke-width="2.5"/>
-                <path d="M 20 90 A 40 15 0 0 1 100 90" fill="none" stroke="#6b21a8" stroke-width="2" stroke-dasharray="4,3"/>
-            </svg>
-            <p style="font-size:14px; color:#555;">1 base circular + 1 cúspide + 1 superficie curva.</p>
-        </div>
-        <!-- Esfera -->
-        <div class="idea-card stp" style="border-color:#DB2777;">
-            <h3 style="color:#DB2777; font-size:22px;">Esfera ⚽</h3>
-            <svg width="120" height="120" viewBox="0 0 120 120" style="margin:8px 0;">
-                <defs>
-                    <radialGradient id="sphereGrad" cx="30%" cy="30%" r="70%">
-                        <stop offset="0%" stop-color="#fbcfe8"/>
-                        <stop offset="50%" stop-color="#db2777"/>
-                        <stop offset="100%" stop-color="#9d174d"/>
-                    </radialGradient>
-                </defs>
-                <circle cx="60" cy="60" r="45" fill="url(#sphereGrad)" stroke="#831843" stroke-width="2.5"/>
-                <ellipse cx="60" cy="60" rx="45" ry="12" fill="none" stroke="#831843" stroke-width="1.5" stroke-dasharray="4,3"/>
-            </svg>
-            <p style="font-size:14px; color:#555;">Totalmente curva, sin caras planas ni aristas.</p>
-        </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 6: VOLUMEN ($u^3$) ====== -->
-<div class="sl">
-    <div class="head-title">¿Qué es el Volumen? 📦</div>
-    <div class="story-card" style="border:4px solid #DB2777; background:#fdf2f8;">
-        <div class="story-emoji">💦</div>
-        <div>
-            <h2 style="color:#be185d; font-size:26px;">El espacio que ocupa un cuerpo</h2>
-            <p style="font-size:21px;">El volumen es la cantidad de espacio tridimensional que ocupa un objeto. Se mide en <b>unidades cúbicas ($u^3$)</b>, que son pequeños cubitos que rellenan la figura.</p>
-        </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 7: VOLUMEN POR CONTEO ====== -->
-<div class="sl">
-    <div class="head-title">Volumen por Conteo de Cubos 🧱</div>
-    <p class="sub-text">¿Cuál es el volumen de esta figura 3D?</p>
-    <div class="pnl" style="text-align:center; padding:16px;">
-        <div style="display:flex; justify-content:center; align-items:center; gap:40px;">
-            <svg width="200" height="200" viewBox="0 0 200 200">
-                <!-- Bloque 1 (Base izq) -->
-                <polygon points="60,110 100,90 100,130 60,150" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
-                <polygon points="20,130 60,110 60,150 20,170" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
-                <polygon points="20,130 60,110 100,130 60,150" fill="#7dd3fc" stroke="#0284c7" stroke-width="2"/>
-                <!-- Bloque 2 (Base der) -->
-                <polygon points="100,130 140,110 140,150 100,170" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
-                <polygon points="140,110 180,90 180,130 140,150" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
-                <polygon points="100,130 140,110 180,130 140,150" fill="#7dd3fc" stroke="#0284c7" stroke-width="2"/>
-                <!-- Bloque 3 (Arriba der) -->
-                <polygon points="100,90 140,70 140,110 100,130" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
-                <polygon points="140,70 180,50 180,90 140,110" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
-                <polygon points="100,90 140,70 180,90 140,110" fill="#7dd3fc" stroke="#0284c7" stroke-width="2"/>
-            </svg>
-            <div style="text-align:left; font-size:22px; color:#0284c7; font-weight:800;">
-                <p>1 cubo = 1 unidad cúbica ($1u^3$)</p>
-                <div class="stp" style="margin-top:14px; background:#e0f2fe; padding:12px; border-radius:10px;">
-                    Contamos los cubos visibles:<br>
-                    Hay 2 cubos abajo y 1 cubo arriba.<br>
-                    Total = <b>3 $u^3$</b>
+        <!-- SLIDE 3: CARAS, ARISTAS Y VÉRTICES -->
+        <div class="sl">
+        <div class="head-title">Caras, Aristas y Vértices 📦</div>
+        <p class="sub-text">Los 3 elementos fundamentales de un cuerpo 3D:</p>
+        <div class="pnl" style="max-width:800px; margin:0 auto;">
+            <div style="display:flex; justify-content:center; align-items:center; gap:40px; flex-wrap:wrap;">
+                <svg width="200" height="200" viewBox="0 0 200 200" style="flex-shrink:0;">
+                    <polygon points="80,30 160,30 160,110 80,110" fill="none" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="4,3"/>
+                    <line x1="40" y1="70" x2="80" y2="30" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="4,3"/>
+                    <line x1="40" y1="150" x2="80" y2="110" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="4,3"/>
+                    <polygon points="120,70 160,30 160,110 120,150" fill="#3b82f6" stroke="#1e3a8a" stroke-width="3"/>
+                    <polygon points="40,70 120,70 160,30 80,30" fill="#93c5fd" stroke="#1e3a8a" stroke-width="3"/>
+                    <polygon points="40,70 120,70 120,150 40,150" fill="#60a5fa" stroke="#1e3a8a" stroke-width="3"/>
+                    <circle cx="120" cy="70" r="8" fill="#DC2626"/>
+                </svg>
+                <div style="font-size:24px; line-height:2.2;">
+                    <div class="stp"><span style="color:#1d4ed8; font-weight:900;">🟦 Caras:</span> Las paredes planas del cuerpo.</div>
+                    <div class="stp"><span style="color:#059669; font-weight:900;">📏 Aristas:</span> Las líneas donde se unen dos caras.</div>
+                    <div class="stp"><span style="color:#DC2626; font-weight:900;">🔴 Vértices:</span> Los puntos donde se juntan las aristas (esquinas).</div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 8: INTRO SIMETRÍA ====== -->
-<div class="sl">
-    <div class="head-title">Eje de Simetría 🦋</div>
-    <div class="story-card" style="border:4px solid #DB2777; background:#fdf2f8;">
-        <div class="story-emoji">🦋</div>
-        <div>
-            <h2 style="color:#be185d; font-size:26px;">Dos mitades idénticas</h2>
-            <p style="font-size:21px;">Una figura es <b>simétrica</b> si existe una línea recta (Eje de Simetría) que la divide en dos mitades exactamente iguales que coinciden como un espejo al doblarse.</p>
         </div>
-    </div>
-</div>
 
-<!-- ====== SLIDE 9: EJES DE SIMETRÍA EN FIGURAS ====== -->
-<div class="sl">
-    <div class="head-title">Ejes en Figuras Planas 📐</div>
-    <p class="sub-text">Algunas figuras tienen más de 1 eje de simetría:</p>
-    <div class="pnl" style="text-align:center; padding:16px;">
-        <div style="display:flex; justify-content:center; gap:40px; flex-wrap:wrap;">
-            <div class="stp" style="text-align:center;">
-                <svg width="160" height="160" viewBox="0 0 160 160">
-                    <rect x="30" y="30" width="100" height="100" fill="#eff6ff" stroke="#2563EB" stroke-width="3"/>
-                    <line x1="80" y1="15" x2="80" y2="145" stroke="#DC2626" stroke-width="4" stroke-dasharray="6,4"/>
-                    <line x1="15" y1="80" x2="145" y2="80" stroke="#DC2626" stroke-width="4" stroke-dasharray="6,4"/>
+        <!-- SLIDE 4: POLIEDROS -->
+        <div class="sl">
+        <div class="head-title">Poliedros: Caras Planas 🧊</div>
+        <p class="sub-text">Cuerpos con <b class="hl">todas</b> sus caras planas (polígonos):</p>
+        <div class="two-col" style="max-width:850px; margin:0 auto;">
+            <div class="stp idea-card" style="text-align:center; border-color:#2563EB;">
+                <h3 style="color:#2563EB;">Cubo 🧊</h3>
+                <svg width="110" height="110" viewBox="0 0 120 120" style="display:block; margin:8px auto;">
+                    <polygon points="40,20 100,20 100,80 40,80" fill="none" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="4,2"/>
+                    <line x1="20" y1="40" x2="40" y2="20" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="4,2"/>
+                    <line x1="20" y1="100" x2="40" y2="80" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="4,2"/>
+                    <polygon points="80,40 100,20 100,80 80,100" fill="#2563EB" stroke="#1e40af" stroke-width="2.5"/>
+                    <polygon points="20,40 80,40 100,20 40,20" fill="#bfdbfe" stroke="#1e40af" stroke-width="2.5"/>
+                    <polygon points="20,40 80,40 80,100 20,100" fill="#60a5fa" stroke="#1e40af" stroke-width="2.5"/>
                 </svg>
-                <p style="font-size:20px; font-weight:800; color:#2563EB;">Cuadrado: 4 Ejes<br><span style="font-size:14px; color:#555;">(Vertical, Horizontal, 2 Diagonales)</span></p>
+                <p style="font-size:20px;">6 caras <b>cuadradas</b> iguales.</p>
+                <p style="font-size:22px; font-weight:900; color:#1e40af; background:#dbeafe; padding:8px; border-radius:8px; margin-top:8px;">C: 6 | A: 12 | V: 8</p>
             </div>
-            <div class="stp" style="text-align:center;">
-                <svg width="160" height="160" viewBox="0 0 160 160">
-                    <polygon points="80,20 140,140 20,140" fill="#fef2f2" stroke="#DC2626" stroke-width="3"/>
-                    <line x1="80" y1="5" x2="80" y2="155" stroke="#9333EA" stroke-width="4" stroke-dasharray="6,4"/>
+            <div class="stp idea-card" style="text-align:center; border-color:#EA580C;">
+                <h3 style="color:#EA580C;">Paralelepípedo 📦</h3>
+                <svg width="150" height="110" viewBox="0 0 160 120" style="display:block; margin:8px auto;">
+                    <polygon points="60,20 140,20 140,80 60,80" fill="none" stroke="#fdba74" stroke-width="1.5" stroke-dasharray="4,2"/>
+                    <line x1="20" y1="40" x2="60" y2="20" stroke="#fdba74" stroke-width="1.5" stroke-dasharray="4,2"/>
+                    <line x1="20" y1="100" x2="60" y2="80" stroke="#fdba74" stroke-width="1.5" stroke-dasharray="4,2"/>
+                    <polygon points="100,40 140,20 140,80 100,100" fill="#ea580c" stroke="#9a3412" stroke-width="2.5"/>
+                    <polygon points="20,40 100,40 140,20 60,20" fill="#fed7aa" stroke="#9a3412" stroke-width="2.5"/>
+                    <polygon points="20,40 100,40 100,100 20,100" fill="#fb923c" stroke="#9a3412" stroke-width="2.5"/>
                 </svg>
-                <p style="font-size:20px; font-weight:800; color:#DC2626;">Triángulo Isósceles: 1 Eje</p>
+                <p style="font-size:20px;">6 caras <b>rectangulares</b>.</p>
+                <p style="font-size:22px; font-weight:900; color:#9a3412; background:#ffedd5; padding:8px; border-radius:8px; margin-top:8px;">C: 6 | A: 12 | V: 8</p>
             </div>
         </div>
-    </div>
-</div>
+        </div>
 
-<!-- ====== SLIDE 10: QUIZ 1 ====== -->
-<div class="sl">
-    <div class="head-title">¡Quiz Relámpago! ⚡</div>
-    <p class="sub-text">¿Cuántas aristas tiene un <b>cubo</b>?</p>
-    <div class="card-row" style="max-width:600px;">
-        <button class="btn" onclick="chkAns(this,false,'')">6 aristas</button>
-        <button class="btn" onclick="chkAns(this,true,'Un cubo tiene 12 aristas rectas ✨')">12 aristas</button>
-        <button class="btn" onclick="chkAns(this,false,'')">8 aristas</button>
-    </div>
-    <div class="msg-area"></div>
-</div>
-
-<!-- ====== SLIDE 11: QUIZ 2 ====== -->
-<div class="sl">
-    <div class="head-title">¡Quiz 2! ⚡</div>
-    <p class="sub-text">¿Cuál de estos cuerpos NO tiene ninguna cara plana?</p>
-    <div class="card-row" style="max-width:500px;">
-        <button class="btn" onclick="chkAns(this,false,'')">Cilindro</button>
-        <button class="btn" onclick="chkAns(this,true,'La Esfera es totalmente curva y no tiene caras planas ⚽')">Esfera</button>
-    </div>
-    <div class="msg-area"></div>
-</div>
-
-<!-- ====== SLIDE 12: ABRE TU CUADERNO ====== -->
-<div class="sl">
-    <div class="head-title">✏️ Abre tu Cuaderno</div>
-    <p class="sub-text">Resuelve estos ejercicios en tu cuaderno:</p>
-    <div class="cuad-grid">
-        <div class="cuad-item">1️⃣ ¿Cuántos vértices tiene un paralelepípedo?</div>
-        <div class="cuad-item">2️⃣ ¿De qué figura plana son las 6 caras del cubo?</div>
-        <div class="cuad-item">3️⃣ En qué unidad se mide el volumen: ¿$cm^2$ o $cm^3$?</div>
-        <div class="cuad-item">4️⃣ Si una figura 3D está formada por 8 cubitos, ¿cuál es su volumen?</div>
-        <div class="cuad-item">5️⃣ ¿Cuántos ejes de simetría tiene un rectángulo?</div>
-        <div class="cuad-item">6️⃣ La letra "A", ¿tiene eje de simetría vertical u horizontal?</div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 13: RESPUESTAS ====== -->
-<div class="sl">
-    <div class="head-title">✅ Respuestas</div>
-    <div class="resp-grid">
-        <div class="resp-item stp">1️⃣ <b>8 vértices</b></div>
-        <div class="resp-item stp">2️⃣ <b>Cuadrados</b></div>
-        <div class="resp-item stp">3️⃣ <b>$cm^3$</b> (Cúbicos)</div>
-        <div class="resp-item stp">4️⃣ Volumen = <b>8 $u^3$</b></div>
-        <div class="resp-item stp">5️⃣ <b>2 ejes</b> (vertical/horizontal)</div>
-        <div class="resp-item stp">6️⃣ Eje <b>Vertical</b> 🅰️</div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 14: PROBLEMA 1 ====== -->
-<div class="sl">
-    <div class="head-title">Problema 1: El Regalo de Cumpleaños 🎁</div>
-    <div class="story-card" style="border:4px solid #9DE3BD; background:#f0fdf4;">
-        <div class="story-emoji">🎁</div>
-        <div>
-            <p style="font-size:21px;">Sofía quiere forrar una caja cúbica para un regalo. Cada cara del cubo mide <b>$400 \text{ cm}^2$ de área</b>. ¿Cuánto papel necesita para forrar <b>todo</b> el regalo?</p>
-            <div class="stp" style="margin-top:12px; background:#d1fae5; padding:14px; border-radius:10px;">
-                <p style="font-size:20px; font-weight:800; color:#047857;">✅ El cubo tiene 6 caras iguales. 6 × 400 = <b>2.400 $\text{cm}^2$ de papel</b>.</p>
+        <!-- SLIDE 5: CUERPOS REDONDOS -->
+        <div class="sl">
+        <div class="head-title">Cuerpos Redondos ⚽</div>
+        <p class="sub-text">Tienen al menos una <b class="hl">superficie curva</b> y pueden rodar:</p>
+        <div class="fact-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="stp fact-box" style="border-color:#059669;">
+                <h4 style="color:#059669;">Cilindro 🥫</h4>
+                <svg width="100" height="100" viewBox="0 0 120 120" style="display:block; margin:6px auto;">
+                    <defs><linearGradient id="cG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#34d399"/><stop offset="50%" stop-color="#6ee7b7"/><stop offset="100%" stop-color="#059669"/></linearGradient></defs>
+                    <path d="M 20 30 L 20 90 A 40 15 0 0 0 100 90 L 100 30" fill="url(#cG)" stroke="#047857" stroke-width="2.5"/>
+                    <path d="M 20 90 A 40 15 0 0 1 100 90" fill="none" stroke="#047857" stroke-width="2" stroke-dasharray="4,3"/>
+                    <ellipse cx="60" cy="30" rx="40" ry="15" fill="#a7f3d0" stroke="#047857" stroke-width="2.5"/>
+                </svg>
+                <p>2 bases circulares + 1 cara curva.</p>
+            </div>
+            <div class="stp fact-box" style="border-color:#9333EA;">
+                <h4 style="color:#9333EA;">Cono 🍦</h4>
+                <svg width="100" height="100" viewBox="0 0 120 120" style="display:block; margin:6px auto;">
+                    <defs><linearGradient id="cnG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#c084fc"/><stop offset="100%" stop-color="#7e22ce"/></linearGradient></defs>
+                    <path d="M 60 15 L 20 90 A 40 15 0 0 0 100 90 Z" fill="url(#cnG)" stroke="#6b21a8" stroke-width="2.5"/>
+                    <path d="M 20 90 A 40 15 0 0 1 100 90" fill="none" stroke="#6b21a8" stroke-width="2" stroke-dasharray="4,3"/>
+                </svg>
+                <p>1 base circular + 1 vértice + cara curva.</p>
+            </div>
+            <div class="stp fact-box" style="border-color:#DB2777;">
+                <h4 style="color:#DB2777;">Esfera ⚽</h4>
+                <svg width="100" height="100" viewBox="0 0 120 120" style="display:block; margin:6px auto;">
+                    <defs><radialGradient id="sG" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#fbcfe8"/><stop offset="50%" stop-color="#db2777"/><stop offset="100%" stop-color="#9d174d"/></radialGradient></defs>
+                    <circle cx="60" cy="60" r="45" fill="url(#sG)" stroke="#831843" stroke-width="2.5"/>
+                    <ellipse cx="60" cy="60" rx="45" ry="12" fill="none" stroke="#831843" stroke-width="1.5" stroke-dasharray="4,3"/>
+                </svg>
+                <p>100% curva. Sin caras planas.</p>
             </div>
         </div>
-    </div>
-</div>
+        </div>
 
-<!-- ====== SLIDE 15: PROBLEMA 2 ====== -->
-<div class="sl">
-    <div class="head-title">Problema 2: El Vaso de Agua 💧</div>
-    <div class="story-card" style="border:4px solid #9DDEFF; background:#f0f8ff;">
-        <div class="story-emoji">💧</div>
-        <div>
-            <p style="font-size:21px;">Un jarro graduado tiene 50 $u^3$ de agua. Al hundir una pelota en el jarro, el agua sube hasta marcar 60 $u^3$. ¿Cuál es el volumen de la pelota?</p>
-            <div class="stp" style="margin-top:12px; background:#e3f2fd; padding:14px; border-radius:10px;">
-                <p style="font-size:20px; font-weight:800; color:var(--base);">✅ El volumen de la pelota es la diferencia: 60 - 50 = <b>10 $u^3$</b>.</p>
+        <!-- SLIDE 6: RED GEOMÉTRICA DEL CUBO -->
+        <div class="sl">
+        <div class="head-title">Redes Geométricas (Plantillas) 📋</div>
+        <p class="sub-text">Si "desplegamos" un cuerpo 3D sobre la mesa, obtenemos su <b class="hl">red geométrica</b>:</p>
+        <div class="pnl" style="text-align:center; padding:16px;">
+            <p style="font-size:22px; font-weight:800; color:var(--base); margin-bottom:12px;">🧊 Red del Cubo (forma de cruz):</p>
+            <svg width="340" height="280" viewBox="0 0 340 280" style="max-width:100%;">
+                <rect x="90" y="10" width="80" height="80" fill="#bfdbfe" stroke="#1e40af" stroke-width="3" rx="4"/>
+                <rect x="10" y="100" width="80" height="80" fill="#93c5fd" stroke="#1e40af" stroke-width="3" rx="4"/>
+                <rect x="90" y="100" width="80" height="80" fill="#60a5fa" stroke="#1e40af" stroke-width="3" rx="4"/>
+                <rect x="170" y="100" width="80" height="80" fill="#93c5fd" stroke="#1e40af" stroke-width="3" rx="4"/>
+                <rect x="250" y="100" width="80" height="80" fill="#bfdbfe" stroke="#1e40af" stroke-width="3" rx="4"/>
+                <rect x="90" y="190" width="80" height="80" fill="#93c5fd" stroke="#1e40af" stroke-width="3" rx="4"/>
+            </svg>
+        </div>
+        <div class="stp warn-card" style="margin-top:10px; border-color:#2563EB; background:#eff6ff;">
+            📌 <b>Dato:</b> Al recortar y doblar esta plantilla por las líneas, se arma un cubo perfecto. ¡La red muestra las 6 caras desplegadas!
+        </div>
+        </div>
+
+        <!-- SLIDE 7: VOLUMEN -->
+        <div class="sl">
+        <div class="head-title" style="background:#2E7D32;">¿Qué es el Volumen? 📦</div>
+        <div class="story-card" style="border:5px solid #2E7D32; background:#e8f5e9;">
+            <div class="story-emoji">💧</div>
+            <div>
+                <h2 style="color:#2E7D32;">El espacio que ocupa un cuerpo</h2>
+                <p>El <b>volumen</b> es la cantidad de espacio tridimensional que ocupa un objeto. Se mide en <b>unidades cúbicas (u³)</b>: pequeños cubitos que rellenan la figura por dentro. Es como preguntar: "¿Cuántos cubitos caben dentro de esta caja?"</p>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 16: DESAFÍO SUPREMO PORTADA ====== -->
-<div class="sl" style="background: linear-gradient(135deg, #9333EA, #db2777); color: white;">
-    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <h1 style="font-size:56px; margin-bottom:18px;">⛏️ Desafío ObraCraft</h1>
-        <p style="font-size:24px; max-width:700px; text-align:center; opacity:0.95;">¡Nivel Secreto: La Maqueta de la Ciudadela!</p>
-    </div>
-</div>
-
-<!-- ====== SLIDE 17: OBRACRAFT ====== -->
-<div class="sl">
-    <div class="head-title" style="background:linear-gradient(135deg, #9333EA, #db2777);">⛏️ Los Edificios de ObraCraft</div>
-    <div class="pnl" style="border-color:#9333EA;">
-        <p style="font-size:20px; text-align:center;">Estás construyendo un edificio en tu maqueta de ObraCraft usando cubos idénticos de $1u^3$.</p>
-        <div style="background:linear-gradient(135deg,#9333EA22,#db277722); padding:14px; border-radius:14px; margin:12px 0; text-align:center; font-size:19px; font-weight:800; color:#9333EA;">
-            🏢 El edificio tiene 2 pisos de altura.<br>
-            🏢 Cada piso está formado por 4 cubos dispuestos en forma de cuadrado (2x2).
         </div>
-        <p style="font-size:20px; text-align:center; font-weight:700;">1. ¿Cuál es el volumen de 1 piso del edificio?<br>2. ¿Cuál es el volumen TOTAL del edificio?</p>
-        <div class="stp" style="margin-top:14px; background:#f3e5f5; padding:14px; border-radius:10px; font-size:18px;">
-            <p style="font-weight:800; color:var(--purple);">✅ 1. 1 piso tiene 4 cubos = <b>4 $u^3$</b></p>
-            <p style="font-weight:800; color:var(--pink);">✅ 2. Dos pisos (2 × 4) = <b>8 $u^3$ en total</b></p>
+
+        <!-- SLIDE 8: VOLUMEN POR CONTEO DE CUBOS -->
+        <div class="sl">
+        <div class="head-title">Volumen: Conteo de Cubos 🧱</div>
+        <p class="sub-text">Contamos cuántos cubos de 1 u³ caben dentro:</p>
+        <div class="pnl" style="max-width:780px; margin:0 auto;">
+            <div style="display:flex; justify-content:center; align-items:center; gap:40px; flex-wrap:wrap;">
+                <svg width="180" height="180" viewBox="0 0 180 180">
+                    <!-- Piso 1: 4 cubos (2x2) -->
+                    <polygon points="30,120 60,105 60,135 30,150" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
+                    <polygon points="60,105 90,90 90,120 60,135" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
+                    <polygon points="30,120 60,105 90,120 60,135" fill="#7dd3fc" stroke="#0284c7" stroke-width="2"/>
+
+                    <polygon points="90,120 120,105 120,135 90,150" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
+                    <polygon points="120,105 150,90 150,120 120,135" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
+                    <polygon points="90,120 120,105 150,120 120,135" fill="#7dd3fc" stroke="#0284c7" stroke-width="2"/>
+
+                    <polygon points="30,150 60,135 60,165 30,180" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
+                    <polygon points="60,135 90,120 90,150 60,165" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
+                    <polygon points="30,150 60,135 90,150 60,165" fill="#7dd3fc" stroke="#0284c7" stroke-width="2"/>
+
+                    <polygon points="90,150 120,135 120,165 90,180" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
+                    <polygon points="120,135 150,120 150,150 120,165" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
+                    <polygon points="90,150 120,135 150,150 120,165" fill="#7dd3fc" stroke="#0284c7" stroke-width="2"/>
+
+                    <!-- Piso 2: 4 cubos encima -->
+                    <polygon points="30,90 60,75 60,105 30,120" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
+                    <polygon points="60,75 90,60 90,90 60,105" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
+                    <polygon points="30,90 60,75 90,90 60,105" fill="#7dd3fc" stroke="#0284c7" stroke-width="2"/>
+
+                    <polygon points="90,90 120,75 120,105 90,120" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
+                    <polygon points="120,75 150,60 150,90 120,105" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
+                    <polygon points="90,90 120,75 150,90 120,105" fill="#7dd3fc" stroke="#0284c7" stroke-width="2"/>
+
+                    <polygon points="30,120 60,105 60,135 30,150" fill="none" stroke="#0284c7" stroke-width="1" stroke-dasharray="3,2"/>
+                    <polygon points="90,120 120,105 120,135 90,150" fill="none" stroke="#0284c7" stroke-width="1" stroke-dasharray="3,2"/>
+                </svg>
+                <div class="step-list" style="max-width:350px;">
+                    <div class="stp step-box"><b>Piso 1:</b> 2 × 2 = <b style="color:#0284c7;">4 cubos</b></div>
+                    <div class="stp step-box"><b>Piso 2:</b> 2 × 2 = <b style="color:#0284c7;">4 cubos</b></div>
+                    <div class="stp step-box" style="background:#ecfdf5; border-color:#059669;">✅ Total = 4 + 4 = <b style="color:#059669; font-size:28px;">8 u³</b></div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-
-<!-- ====== SLIDE 18: RESUMEN ====== -->
-<div class="sl">
-    <div class="head-title">📝 Resumen del Módulo</div>
-    <div class="pnl" style="max-width:680px; margin:0 auto;">
-        <div style="font-size:20px; line-height:2.2;">
-            <p class="stp">✅ <b>Poliedros:</b> Cubo y Paralelepípedo (caras planas).</p>
-            <p class="stp">✅ <b>Cuerpos Redondos:</b> Cilindro, Cono, Esfera (superficies curvas).</p>
-            <p class="stp">✅ <b>Volumen ($u^3$):</b> Espacio ocupado, se mide contando cubos.</p>
-            <p class="stp">✅ <b>Simetría:</b> Eje que divide en dos mitades idénticas por reflejo.</p>
         </div>
-    </div>
-</div>
 
-<!-- ====== SLIDE 19: CIERRE ====== -->
-<div class="sl">
-    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <div style="font-size:120px; margin-bottom:20px; animation: bounce 2s infinite;">🎊</div>
-        <h1 style="font-size:46px; color:var(--base); text-align:center;">¡Módulo de Geometría Completado!</h1>
-        <p style="font-size:24px; font-weight:700; text-align:center; max-width:600px; margin-top:16px;">¡Felicitaciones! Has completado todas las clases de Geometría de 4° Básico con éxito total. ¡Eres un maestro de las formas, áreas y volúmenes! 🎓</p>
-        <div style="font-size:54px; margin-top:18px;">📏📐🟩🧊🏆✨</div>
-    </div>
-</div>
+        <!-- SLIDE 9: SIMETRÍA -->
+        <div class="sl">
+        <div class="head-title">Eje de Simetría 🦋</div>
+        <p class="sub-text">Una figura es <b class="hl">simétrica</b> si una línea la divide en dos mitades exactamente iguales que coinciden al doblarse.</p>
+        <div class="pnl" style="text-align:center; padding:16px;">
+            <div style="display:flex; justify-content:center; gap:50px; flex-wrap:wrap;">
+                <div class="stp" style="text-align:center;">
+                    <svg width="140" height="140" viewBox="0 0 140 140">
+                        <rect x="20" y="20" width="100" height="100" fill="#eff6ff" stroke="#2563EB" stroke-width="3"/>
+                        <line x1="70" y1="10" x2="70" y2="130" stroke="#DC2626" stroke-width="4" stroke-dasharray="6,4"/>
+                        <line x1="10" y1="70" x2="130" y2="70" stroke="#DC2626" stroke-width="4" stroke-dasharray="6,4"/>
+                    </svg>
+                    <p style="font-size:22px; font-weight:800; color:#2563EB;">Cuadrado: <b>4 Ejes</b></p>
+                </div>
+                <div class="stp" style="text-align:center;">
+                    <svg width="140" height="140" viewBox="0 0 140 140">
+                        <circle cx="70" cy="70" r="55" fill="#fdf2f8" stroke="#DB2777" stroke-width="3"/>
+                        <line x1="70" y1="5" x2="70" y2="135" stroke="#DC2626" stroke-width="4" stroke-dasharray="6,4"/>
+                        <line x1="5" y1="70" x2="135" y2="70" stroke="#DC2626" stroke-width="4" stroke-dasharray="6,4"/>
+                    </svg>
+                    <p style="font-size:22px; font-weight:800; color:#DB2777;">Círculo: <b>Infinitos</b></p>
+                </div>
+                <div class="stp" style="text-align:center;">
+                    <svg width="140" height="140" viewBox="0 0 140 140">
+                        <polygon points="70,15 130,125 10,125" fill="#fef2f2" stroke="#DC2626" stroke-width="3"/>
+                        <line x1="70" y1="5" x2="70" y2="135" stroke="#9333EA" stroke-width="4" stroke-dasharray="6,4"/>
+                    </svg>
+                    <p style="font-size:22px; font-weight:800; color:#DC2626;">Triáng. Isósceles: <b>1 Eje</b></p>
+                </div>
+            </div>
+        </div>
+        </div>
 
-</div>
-<div class="nv">
-    <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
-    <input type="range" id="slide-slider" min="1" value="1" style="width:200px; accent-color:var(--base);" oninput="goToSlide(this.value)">
-    <span class="sc" id="sc">1 / 19</span>
-    <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
-</div>
-<script>
-    const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
-    function ui() {
-        S.forEach((s,i)=>{
-            s.classList.remove('on','pv','nx');
-            if(i===c) s.classList.add('on');
-            else if(i<c) s.classList.add('pv');
-            else s.classList.add('nx');
-        });
-        document.getElementById('pb').style.width=((c+1)/T*100)+'%';
-        document.getElementById('sc').textContent=`${c+1} / ${T}`;
-        document.getElementById('pv').disabled=c===0;
-        document.getElementById('nx').disabled=c===T-1;
-        let sl = document.getElementById('slide-slider');
-        if(sl) { sl.max = T; sl.value = c + 1; }
-    }
-    function goToSlide(n) {
-        let val = parseInt(n) - 1;
-        if (val >= 0 && val < T) { c = val; ui(); }
-    }
-    function go(d) {
-        if(d>0) {
-            const hid = S[c].querySelectorAll('.stp:not(.shwn)');
-            if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
-        } else {
-            const shw = S[c].querySelectorAll('.stp.shwn');
-            if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
-        }
-        const n=c+d; if(n>=0 && n<T) { c=n; ui(); }
-    }
-    document.addEventListener('keydown', e => {
-        if(e.key==='ArrowRight' || e.key===' ') go(1);
-        if(e.key==='ArrowLeft') go(-1);
-    });
-    ui();
-    function chkAns(btn, correct, exp) {
-        let wrap = btn.closest('.sl');
-        let btnGroup = btn.parentElement;
-        let msg = btnGroup.nextElementSibling;
-        while(msg && !msg.classList.contains('msg-area')) msg = msg.nextElementSibling;
-        if(!msg) { let msgs = wrap.querySelectorAll('.msg-area'); if(msgs.length) msg = msgs[0]; }
-        let buttons = btnGroup.querySelectorAll('.btn');
-        buttons.forEach(b => { b.style.transform = 'scale(1)'; b.style.background = 'var(--base)'; });
-        if (correct) {
-            btn.style.background = '#047857';
-            btn.style.transform = 'scale(1.06)';
-            if(msg) { msg.innerHTML = `¡Excelente! ✅ ${exp}`; msg.style.color = '#047857'; }
-        } else {
-            btn.style.background = '#b91c1c';
-            if(msg) { msg.innerHTML = '¡Inténtalo de nuevo!'; msg.style.color = '#b91c1c'; }
-        }
-    }
-</script></body></html>
+        <!-- SLIDE 10: QUIZ 1 -->
+        <div class="sl">
+        <div class="head-title">¡Quiz Relámpago! ⚡</div>
+        <p class="sub-text">¿Cuántas aristas tiene un <b class="hl">cubo</b>?</p>
+        <div class="card-row" style="max-width:700px;">
+            <button class="btn" onclick="chkAns(this,false,'')">6 aristas</button>
+            <button class="btn" onclick="chkAns(this,true,'El cubo tiene 12 aristas (3 por cada vértice, 8 vértices, compartidas) 🧊')">12 aristas</button>
+            <button class="btn" onclick="chkAns(this,false,'')">8 aristas</button>
+        </div>
+        <div class="msg-area"></div>
+        </div>
+
+        <!-- SLIDE 11: QUIZ 2 -->
+        <div class="sl">
+        <div class="head-title">¡Quiz 2! ⚡</div>
+        <p class="sub-text">¿Cuál de estos cuerpos <b>NO</b> tiene ninguna cara plana?</p>
+        <div class="card-row" style="max-width:700px;">
+            <button class="btn" onclick="chkAns(this,false,'')">Cilindro (tiene 2 bases)</button>
+            <button class="btn" onclick="chkAns(this,true,'La Esfera es completamente curva: no tiene caras, aristas ni vértices ⚽')">Esfera</button>
+            <button class="btn" onclick="chkAns(this,false,'')">Cono (tiene 1 base)</button>
+        </div>
+        <div class="msg-area"></div>
+        </div>
+
+        <!-- SLIDE 12: ABRE TU CUADERNO -->
+        <div class="sl">
+        <div class="head-title">✏️ Abre tu Cuaderno</div>
+        <p class="sub-text">Resuelve estos 6 ejercicios:</p>
+        <div class="cuad-grid">
+            <div class="cuad-item">1️⃣ ¿Cuántos vértices tiene un paralelepípedo?</div>
+            <div class="cuad-item">2️⃣ ¿De qué forma son las 6 caras de un cubo?</div>
+            <div class="cuad-item">3️⃣ El volumen se mide en ¿cm² o cm³?</div>
+            <div class="cuad-item">4️⃣ Una figura 3D tiene 10 cubitos. ¿Cuál es su volumen?</div>
+            <div class="cuad-item">5️⃣ ¿Cuántos ejes de simetría tiene un rectángulo?</div>
+            <div class="cuad-item">6️⃣ Dibuja la red geométrica de un cubo (forma de cruz).</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 13: RESPUESTAS -->
+        <div class="sl">
+        <div class="head-title">✅ Respuestas</div>
+        <div class="resp-grid">
+            <div class="stp resp-item">1️⃣ <b>8 vértices</b></div>
+            <div class="stp resp-item">2️⃣ <b>Cuadradas</b></div>
+            <div class="stp resp-item">3️⃣ <b>cm³</b> (cúbicos)</div>
+            <div class="stp resp-item">4️⃣ <b>10 u³</b></div>
+            <div class="stp resp-item">5️⃣ <b>2 ejes</b> (vertical y horizontal)</div>
+            <div class="stp resp-item">6️⃣ Revisa la slide 6 para comparar</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 14: PROBLEMA 1 -->
+        <div class="sl">
+        <div class="head-title">Problema 1: El Regalo de Cumpleaños 🎁</div>
+        <div class="story-card" style="border:5px solid #059669; background:#ecfdf5;">
+            <div class="story-emoji">🎁</div>
+            <div>
+                <h2 style="color:#047857;">Forrando la caja</h2>
+                <p>Sofía quiere forrar una caja cúbica con papel de regalo. Cada cara mide <b>400 cm²</b>. ¿Cuánto papel necesita en total para forrar todas las caras?</p>
+                <div class="stp" style="margin-top:14px; background:#d1fae5; padding:16px; border-radius:14px;">
+                    <p style="font-weight:800; color:#047857;">✅ Un cubo tiene 6 caras → 6 × 400 = <b>2.400 cm²</b> de papel de regalo.</p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 15: PROBLEMA 2 -->
+        <div class="sl">
+        <div class="head-title">Problema 2: El Jarro Graduado 💧</div>
+        <div class="story-card" style="border:5px solid #2563EB; background:#eff6ff;">
+            <div class="story-emoji">💧</div>
+            <div>
+                <h2 style="color:#1d4ed8;">Midiendo con agua</h2>
+                <p>Un jarro con agua marca <b>50 u³</b>. Al hundir una pelota, el agua sube hasta <b>60 u³</b>. ¿Cuál es el volumen de la pelota?</p>
+                <div class="stp" style="margin-top:14px; background:#dbeafe; padding:16px; border-radius:14px;">
+                    <p style="font-weight:800; color:#1e40af;">✅ Volumen de la pelota = 60 − 50 = <b>10 u³</b>. ¡El agua nos dice cuánto espacio ocupa!</p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 16: PROBLEMA 3 -->
+        <div class="sl">
+        <div class="head-title">Problema 3: La Caja de Cajas 📦</div>
+        <div class="story-card" style="border:5px solid #EA580C; background:#fff7ed;">
+            <div class="story-emoji">📦</div>
+            <div>
+                <h2 style="color:#c2410c;">Empaque de cajas</h2>
+                <p>Don Raúl tiene una caja grande que mide <b>3 bloques de largo, 2 de ancho y 2 de alto</b>. ¿Cuántas cajas pequeñas de 1 u³ caben dentro?</p>
+                <div class="stp" style="margin-top:14px; background:#ffedd5; padding:16px; border-radius:14px;">
+                    <p style="font-weight:800; color:#c2410c;">✅ Volumen = 3 × 2 × 2 = <b>12 cajas pequeñas (12 u³)</b>.</p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 17: DESAFÍO SUPREMO PORTADA -->
+        <div class="sl" style="background:linear-gradient(135deg, #9333EA, #db2777); color:white;">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <h1 style="font-size:58px; margin-bottom:18px;">⛏️ Desafío Supremo</h1>
+            <p style="font-size:28px; max-width:700px; opacity:0.95;">¡Nivel Secreto ObraCraft: La Maqueta de la Ciudadela!</p>
+            <div style="font-size:100px; margin-top:24px; animation:bounce 2s infinite;">🏰</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 18: OBRACRAFT -->
+        <div class="sl">
+        <div class="head-title" style="background:linear-gradient(135deg, #9333EA, #db2777);">⛏️ ObraCraft: Los Edificios de la Ciudadela</div>
+        <div class="pnl" style="border-color:#9333EA;">
+            <p style="font-size:24px; text-align:center;">Estás construyendo una maqueta de ciudad en ObraCraft usando cubos de <b>1 u³</b>.</p>
+            <div style="background:linear-gradient(135deg,#9333EA22,#db277722); padding:18px; border-radius:16px; margin:16px 0; font-size:22px; font-weight:800; color:#9333EA; text-align:center; line-height:1.6;">
+                🏢 Edificio A: Base de 3×2 bloques y 2 pisos de alto.<br>
+                🏠 Edificio B: Base de 2×2 bloques y 3 pisos de alto.
+            </div>
+            <p style="font-size:24px; font-weight:700; text-align:center;">1. ¿Cuál es el volumen de cada edificio?<br>2. ¿Cuál ocupa más espacio?</p>
+            <div class="stp" style="margin-top:16px; background:#f3e8ff; padding:16px; border-radius:14px; font-size:22px;">
+                <p style="font-weight:800; color:#9333EA;">✅ 1. Edificio A = 3 × 2 × 2 = <b>12 u³</b>. Edificio B = 2 × 2 × 3 = <b>12 u³</b>.</p>
+                <p style="font-weight:800; color:#db2777;">✅ 2. ¡<b>Ocupan el mismo espacio!</b> Aunque tienen formas distintas, ambos tienen 12 u³.</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- SLIDE 19: RESUMEN -->
+        <div class="sl">
+        <div class="head-title" style="background:#047857;">📝 Resumen del Módulo Completo</div>
+        <div class="summary-list" style="max-width:780px; margin:0 auto;">
+            <div class="stp summary-item"><b>🧊 Poliedros:</b> Cuerpos con caras planas (Cubo, Paralelepípedo). Tienen Caras, Aristas y Vértices.</div>
+            <div class="stp summary-item"><b>⚽ Cuerpos Redondos:</b> Tienen superficies curvas (Cilindro, Cono, Esfera).</div>
+            <div class="stp summary-item"><b>📋 Red Geométrica:</b> Es el "plano desplegado" de un cuerpo 3D sobre una mesa.</div>
+            <div class="stp summary-item"><b>📦 Volumen (u³):</b> Espacio interior que ocupa un cuerpo. Se calcula contando cubos o multiplicando largo × ancho × alto.</div>
+            <div class="stp summary-item"><b>🦋 Simetría:</b> Una línea (eje) divide una figura en dos mitades idénticas que coinciden al doblarse.</div>
+        </div>
+        </div>
+
+        <!-- SLIDE 20: CIERRE -->
+        <div class="sl">
+        <div class="head-title" style="background:#047857;">Cierre</div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <p style="font-size:38px; font-weight:800; line-height:1.45; max-width:780px;">🎊 ¡Felicitaciones! Has completado todo el <b>Módulo de Geometría</b> de 4° Básico. Ahora dominas medidas, ángulos, perímetro, área, cuerpos 3D, volumen y simetría. ¡Eres un verdadero maestro de las formas!</p>
+            <div style="font-size:120px; margin-top:30px; animation:bounce 2s infinite;">🏆</div>
+        </div>
+        </div>
+
+    </div>
+    <div class="nv">
+        <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
+            <span class="sc" id="sc">1 / 20</span>
+            <input type="range" id="slide-slider" style="width:100%; cursor:pointer;" min="1" max="20" value="1" oninput="goToSlide(this.value)">
+        </div>
+        <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
+    </div>
+    <script>
+const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
+function ui(){S.forEach((s,i)=>{s.classList.remove('on','pv','nx');if(i===c)s.classList.add('on');else if(i<c)s.classList.add('pv');else s.classList.add('nx');});document.getElementById('pb').style.width=((c+1)/T*100)+'%';document.getElementById('sc').textContent=`${c+1} / ${T}`;document.getElementById('pv').disabled=c===0;document.getElementById('nx').disabled=c===T-1;let sl=document.getElementById('slide-slider');if(sl){sl.max=T;sl.value=c+1;}}
+function goToSlide(n){let val=parseInt(n)-1;if(val>=0&&val<T){c=val;ui();}}
+function go(d){if(d>0){const hid=S[c].querySelectorAll('.stp:not(.shwn)');if(hid.length>0){hid[0].classList.add('shwn');return;}}else{const shw=S[c].querySelectorAll('.stp.shwn');if(shw.length>0){shw[shw.length-1].classList.remove('shwn');return;}}const n=c+d;if(n>=0&&n<T){c=n;ui();}}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(1);if(e.key==='ArrowLeft')go(-1);});
+function chkAns(btn,correct,exp){const wrap=btn.closest('.sl');const buttons=btn.parentElement.querySelectorAll('.btn');const msg=wrap.querySelector('.msg-area');buttons.forEach(b=>{b.disabled=false;b.style.background='var(--base)';b.style.transform='scale(1)';});if(correct){btn.style.background='#047857';btn.style.transform='scale(1.06)';msg.textContent=`¡Muy bien! ${exp}`;msg.style.color='#047857';}else{btn.style.background='#b91c1c';msg.textContent='¡Inténtalo de nuevo!';msg.style.color='#b91c1c';}}
+ui();
+</script>
+</body>
+</html>
