@@ -1,1046 +1,657 @@
 <!DOCTYPE html>
-<html lang="es">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Fracciones I - Anatomia Básica</title>
-  <style>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Fracciones I - Anatomía y Representación</title><style>
     @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap');
-
     :root {
-      --base: #1C4A82;
-      --bg: #f5f6f8;
-      --tx: #333;
+        --base: #1C4A82;
+        --bg: #f5f6f8;
+        --tx: #333;
+        --accent: #FFB74D;
+        --purple: #9333EA;
+        --pink: #db2777;
     }
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family: 'Nunito', sans-serif; background: var(--bg); overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; color: var(--tx);}
+    .dk {position: relative; width: 100%; height: 100%; max-width: 1000px; display: flex;}
+    .sl {position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 36px 40px 82px; opacity: 0; transform: scale(.96); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1; overflow-y: auto;}
+    .sl.on {opacity: 1; transform: scale(0.9); pointer-events: auto; z-index: 10;}
+    .sl.pv {opacity: 0; transform: translateX(-50px) scale(.95);}
+    .sl.nx {opacity: 0; transform: translateX(50px) scale(.95);}
+    .head-title {background: var(--base); color: white; padding: 10px 40px; font-size: 32px; font-weight: 900; margin-bottom: 24px; display: inline-block; border-radius: 12px; text-align: center;}
+    .sub-text {font-size: 24px; font-weight: 600; margin-bottom: 20px; text-align: center; line-height: 1.4;}
+    .pb {position: fixed; top: 0; left: 0; height: 6px; background: var(--base); transition: width .4s; z-index: 100;}
+    .nv {position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: white; border-top: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; z-index: 100;}
+    .nb {background: #eee; color: var(--base); border: none; padding: 10px 20px; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer; transition: all .2s;}
+    .nb:hover {background: #ddd;}
+    .nb:disabled {opacity: 0.3; cursor: not-allowed;}
+    .sc {color: #888; font-size: 16px; font-weight: 900;}
+    .stp {opacity: 0; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;}
+    .stp.shwn {opacity: 1; transform: translateY(0); pointer-events: auto;}
+    .pnl {background: #fff; padding: 28px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 3px solid #eaeaea; width: 100%; margin-bottom: 18px;}
+    .pnl-border {background: #fff; border: 4px solid var(--base); border-radius: 20px; padding: 28px; display: flex; flex-direction: column; align-items: center; width: 100%;}
+    .hl {color: var(--base); font-weight: 900;}
+    .btn {background: var(--base); color: white; border: none; padding: 14px 28px; border-radius: 12px; font-size: 20px; font-weight: 900; cursor: pointer; transition: transform .2s; font-family: 'Nunito', sans-serif;}
+    .btn:hover {transform: translateY(-2px); box-shadow: 0 4px 12px rgba(28,74,130,0.3);}
+    .card-row {display: flex; justify-content: center; gap: 18px; width: 100%; flex-wrap: wrap;}
+    .idea-card {flex: 1 1 200px; background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%); border-radius: 18px; padding: 18px; border: 3px solid #d7e7f7; text-align: center;}
+    .idea-card h3 {font-size: 26px; color: var(--base); margin-bottom: 8px;}
+    .fact-grid {display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; width: 100%;}
+    .fact-box {background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%); border-radius: 18px; padding: 16px; border: 3px solid #d8e7f6; text-align: center;}
+    .fact-box h4 {font-size: 22px; margin-bottom: 8px;}
+    .story-card {width: 100%; border-radius: 28px; padding: 28px; display: grid; grid-template-columns: 100px 1fr; gap: 24px; align-items: center; background: #fff;}
+    .story-emoji {font-size: 90px; text-align: center;}
+    .frac-sm {display: inline-flex; flex-direction: column; align-items: center; font-weight: 900; margin: 0 4px; vertical-align: middle; line-height: 1;}
+    .frac-sm .fn {border-bottom: 3px solid currentColor; padding: 0 6px 2px; min-width: 22px; text-align: center;}
+    .frac-sm .fd {padding: 2px 6px 0; min-width: 22px; text-align: center;}
+    .bar-rect {display: flex; border-radius: 10px; overflow: hidden; border: 3px solid var(--base); height: 56px; width: 100%; max-width: 440px; margin: 8px auto;}
+    .bar-rect div {display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 18px; border-right: 2px solid rgba(28,74,130,0.3);}
+    .bar-rect div:last-child {border-right: none;}
+    .mini-chip {background: #eef5ff; border: 2px solid #b6d4f3; border-radius: 999px; padding: 10px 18px; font-size: 20px; font-weight: 800; display: inline-block; margin: 4px;}
+    .count-board {display: flex; justify-content: center; gap: 20px; width: 100%; flex-wrap: wrap;}
+    .count-card {flex: 1 1 260px; background: linear-gradient(180deg, #fff 0%, #f6fbff 100%); border-radius: 22px; padding: 20px; border: 4px solid #d6e8f8; text-align: center;}
+    .count-card h3 {font-size: 26px; margin-bottom: 12px; color: var(--base);}
+    .emoji-pack {display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; min-height: 60px; margin-bottom: 12px;}
+    .msg-area {font-size: 22px; font-weight: 800; margin-top: 12px; min-height: 30px;}
+    .cuad-grid {display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; width: 100%;}
+    .cuad-item {background: #fff; border: 3px solid #d8e7f6; border-radius: 14px; padding: 14px; text-align: center; font-size: 26px; font-weight: 800; min-height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center;}
+    .resp-grid {display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; width: 100%;}
+    .resp-item {background: #f0fdf4; border: 3px solid #86efac; border-radius: 14px; padding: 12px; text-align: center; font-size: 22px; font-weight: 800; display: flex; align-items: center; justify-content: center;}
+</style></head><body><div class="pb" id="pb"></div><div class="dk">
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Nunito', sans-serif;
-      background: var(--bg);
-      overflow: hidden;
-      height: 100vh;
-      width: 100vw;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .dk {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      max-width: 1000px;
-      display: flex;
-    }
-
-    .sl {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 40px;
-      opacity: 0;
-      transform: scale(.96);
-      transition: opacity .4s, transform .4s;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .sl.on {
-      opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
-      z-index: 10;
-    }
-
-    .sl.pv {
-      opacity: 0;
-      transform: translateX(-50px) scale(.95);
-    }
-
-    .sl.nx {
-      opacity: 0;
-      transform: translateX(50px) scale(.95);
-    }
-
-    .head-title {
-      background: var(--base);
-      color: white;
-      padding: 10px 40px;
-      font-size: 32px;
-      font-weight: 900;
-      margin-bottom: 40px;
-      display: inline-block;
-      border-radius: 12px;
-    }
-
-    .sub-text {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 30px;
-      text-align: center;
-      color: var(--tx);
-    }
-
-    .frac-box {
-      border: 3px dashed var(--base);
-      border-radius: 20px;
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 15px 30px;
-      font-size: 60px;
-      font-weight: 900;
-      line-height: 1;
-      margin: 0 20px;
-      background: white;
-    }
-
-    .frac-box div.line {
-      height: 4px;
-      width: 100%;
-      background: #333;
-      margin: 5px 0;
-      border-radius: 2px;
-    }
-
-    .read-as {
-      font-size: 24px;
-      font-weight: 800;
-    }
-
-    /* Navigation */
-    .pb {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 6px;
-      background: var(--base);
-      transition: width .4s;
-      z-index: 100;
-    }
-
-    .nv {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background: white;
-      border-top: 1px solid #ddd;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 40px;
-      z-index: 100;
-    }
-
-    .nb {
-      background: #eee;
-      color: var(--base);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-family: 'Nunito', sans-serif;
-      font-size: 16px;
-      font-weight: 900;
-      cursor: pointer;
-      transition: all .2s;
-    }
-
-    .nb:hover {
-      background: #ddd;
-    }
-
-    .nb:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
-
-    .sc {
-      color: #888;
-      font-size: 16px;
-      font-weight: 900;
-    }
-
-    /* Steps Engine */
-    .stp {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      pointer-events: none;
-      position: relative;
-    }
-
-    .stp.shwn {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-
-    /* Components */
-    .pnl {
-      background: #fff;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-      border: 2px solid #eaeaea;
-      width: 100%;
-      margin-bottom: 20px;
-    }
-
-    .pnl-border {
-      background: #fff;
-      padding: 30px;
-      border-radius: 20px;
-      border: 4px solid var(--base);
-      width: 100%;
-      margin-bottom: 20px;
-    }
-
-    .hl {
-      color: var(--base);
-      font-weight: 900;
-    }
-
-    .btn {
-      background: var(--base);
-      color: white;
-      border: none;
-      padding: 14px 28px;
-      border-radius: 12px;
-      font-size: 20px;
-      font-weight: 900;
-      cursor: pointer;
-      transition: transform .2s;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(28, 74, 130, 0.3);
-    }
-
-    .svg-pt {
-      cursor: pointer;
-      transition: opacity .2s;
-    }
-
-    .svg-pt:hover {
-      opacity: 0.8;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="pb" id="pb"></div>
-  <div class="dk">
-    <div class="sl">
-      <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <h1 style="font-size: 70px; color: var(--base); margin-bottom: 20px; text-align:center;">¡Fracciones 1!</h1>
-        <p class="sub-text">El Mundo en Partes Iguales 🌍</p>
-        <p style="font-size:100px; margin-top:30px; animation: bounce 2s infinite;">🍕</p>
-        <style>@keyframes bounce { 0%, 100%{transform:translateY(0);} 50%{transform:translateY(-20px);} }</style>
-      </div>
+<!-- ====== SLIDE 1: PORTADA ====== -->
+<div class="sl">
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+        <h1 style="font-size:64px; color:var(--base); margin-bottom:18px; text-align:center; line-height:1;">¡Fracciones I! 🍕</h1>
+        <p style="font-size:26px; font-weight:700; text-align:center; max-width:720px;">Anatomía de la fracción, 4 formas de representarlas y la recta numérica.</p>
+        <div style="font-size:108px; margin-top:28px;">🔢</div>
     </div>
-    <div class="sl">
-      <div class="head-title">Qué es una fracción</div>
-      <div class="pnl-border" style="display:flex; flex-direction:column; align-items:center;">
-        <p class="sub-text" style="margin-bottom:10px;">Es una forma de representar partes de algo entero.</p>
-        <div
-          style="display:flex; align-items: center; justify-content: center; gap: 40px; margin-top: 20px; width:100%;">
-          <svg width="300" height="200" viewBox="0 0 300 200"
-            style="border:3px solid var(--base); background: #fff; border-radius:15px;">
-            <rect x="0" y="0" width="100" height="100" fill="#9DDEFF" stroke="var(--base)" stroke-width="3" />
-            <rect x="100" y="0" width="100" height="100" fill="#9DDEFF" stroke="var(--base)" stroke-width="3" />
-            <rect x="200" y="0" width="100" height="100" fill="#fff" stroke="var(--base)" stroke-width="3" />
-            <rect x="0" y="100" width="100" height="100" fill="#9DDEFF" stroke="var(--base)" stroke-width="3" />
-            <rect x="100" y="100" width="100" height="100" fill="#fff" stroke="var(--base)" stroke-width="3" />
-            <rect x="200" y="100" width="100" height="100" fill="#fff" stroke="var(--base)" stroke-width="3" />
-          </svg>
-          <div class="frac-box" style="position:relative;">
-            <div>3</div>
-            <div class="line"></div>
-            <div>6</div>
-            <div class="stp"
-              style="position:absolute; top:25px; left:100%; width:220px; font-size:18px; margin-left:30px; border-left: 4px solid #9DDEFF; padding-left: 15px;">
-              <b style="color:#0288D1; font-weight:900;">NUMERADOR:</b><br>Cantidad de partes pintadas o tomadas.
+</div>
+
+<!-- ====== SLIDE 2: ROMPEHIELOS ====== -->
+<div class="sl">
+    <div class="head-title">¿Qué tienen en común? 🤔</div>
+    <div class="story-card" style="border:5px solid #FFB74D; background:#fffbf4;">
+        <div class="story-emoji">🍕</div>
+        <div>
+            <h2 style="color:#e65100; font-size:30px;">El problema de la pizza</h2>
+            <p style="font-size:22px;">Imagina que pides una pizza con tus 3 amigos (4 personas en total). La pizza viene entera. ¿Cómo la repartimos en partes <b>iguales</b>?</p>
+            <div class="stp" style="margin-top:14px;">
+                <p style="font-size:22px; font-weight:800; color:#e65100;">Si cortas en 4 partes iguales, cada persona come <b>1 de las 4 partes</b>. ¡Esa "parte del total" se escribe con un número especial!</p>
             </div>
-            <div class="stp"
-              style="position:absolute; bottom:15px; left:100%; width:220px; font-size:18px; margin-left:30px; border-left: 4px solid var(--base); padding-left: 15px;">
-              <b class="hl">DENOMINADOR:</b><br>Cantidad de partes totales en las que se dividió.
+            <div class="stp" style="margin-top:14px; background:#FFE082; padding:14px; border-radius:10px;">
+                <p style="font-size:22px; font-weight:700;">Ese número se llama <span class="hl" style="font-size:26px;">FRACCIÓN</span> y sirve para representar <b>partes de un entero</b>. 🎯</p>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-    <div class="sl">
-      <div class="head-title">¡Deben ser partes IGUALES!</div>
-      <p class="sub-text">Para que sea una fracción real, cada pedacito debe ser <b>exactamente del mismo tamaño</b>.
-      </p>
-      <div style="display:flex; width:100%; justify-content:center; gap: 40px; margin-top:20px;">
-        <div class="pnl stp" style="display:flex; flex-direction:column; align-items:center; width: 45%;">
-          <div style="font-size:24px; font-weight:800; margin-bottom: 20px;">¿Esto es 1/4?</div>
-          <svg width="150" height="150" viewBox="0 0 150 150">
-            <circle cx="75" cy="75" r="70" fill="#fff" stroke="var(--base)" stroke-width="3" />
-            <path d="M75 75 L75 5 A70 70 0 0 1 145 75 Z" fill="#FF9D9D" stroke="var(--base)" stroke-width="3" />
-            <path d="M75 75 L145 75 A70 70 0 0 1 75 145 Z" fill="#fff" stroke="var(--base)" stroke-width="3" />
-            <path d="M75 75 L75 145 A70 70 0 0 1 5 75 Z" fill="#fff" stroke="var(--base)" stroke-width="3" />
-            <path d="M75 75 L5 75 A70 70 0 0 1 75 5 Z" fill="#fff" stroke="var(--base)" stroke-width="3" />
-          </svg>
-          <div class="stp" style="margin-top:20px; font-size:20px; font-weight:800; color:#047857;">✅ ¡Sí! Están todos
-            iguales.</div>
-        </div>
+</div>
 
-        <div class="pnl stp" style="display:flex; flex-direction:column; align-items:center; width: 45%;">
-          <div style="font-size:24px; font-weight:800; margin-bottom: 20px;">¿Y esto es 1/4?</div>
-          <svg width="150" height="150" viewBox="0 0 150 150">
-            <rect x="5" y="5" width="140" height="140" fill="#fff" stroke="var(--base)" stroke-width="3" />
-            <rect x="5" y="5" width="40" height="140" fill="#FFE082" stroke="var(--base)" stroke-width="3" />
-            <line x1="100" y1="5" x2="100" y2="145" stroke="var(--base)" stroke-width="3" />
-            <line x1="120" y1="5" x2="120" y2="145" stroke="var(--base)" stroke-width="3" />
-          </svg>
-          <div class="stp" style="margin-top:20px; font-size:20px; font-weight:800; color:#b91c1c;">❌ ¡No! Tienen
-            distinto tamaño.</div>
+<!-- ====== SLIDE 3: ¿QUÉ ES UNA FRACCIÓN? ====== -->
+<div class="sl">
+    <div class="head-title">¿Qué es una Fracción?</div>
+    <p class="sub-text">Una fracción representa <b class="hl">partes iguales de un entero</b>.</p>
+    <div class="card-row">
+        <div class="idea-card stp" style="border-color:#9DE3BD;">
+            <h3 style="color:#047857;">Un Entero</h3>
+            <svg width="160" height="100" viewBox="0 0 160 100">
+                <rect x="10" y="10" width="140" height="80" rx="10" fill="#9DE3BD" stroke="#047857" stroke-width="3"/>
+                <text x="80" y="58" text-anchor="middle" font-family="Nunito" font-size="24" font-weight="900" fill="#047857">COMPLETO</text>
+            </svg>
+            <p style="font-size:18px;">Es lo que está <b>completo</b>, sin dividir.</p>
         </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">Más Práctica: ¿Son partes iguales?</div>
-      <p class="sub-text">Analicemos con cuidado las siguientes imágenes.</p>
-      <div style="display:flex; width:100%; justify-content:center; gap: 40px; margin-top:20px;">
-        <div class="pnl stp" style="display:flex; flex-direction:column; align-items:center; width: 45%;">
-          <div style="font-size:24px; font-weight:800; margin-bottom: 20px;">¿Esto es 1/3?</div>
-          <svg width="150" height="150" viewBox="0 0 150 150">
-            <polygon points="75,5 5,145 145,145" fill="#fff" stroke="var(--base)" stroke-width="3" />
-            <polygon points="75,5 5,145 75,145" fill="#E1BEE7" stroke="var(--base)" stroke-width="3" />
-            <line x1="40" y1="75" x2="110" y2="75" stroke="var(--base)" stroke-width="3" />
-          </svg>
-          <div class="stp" style="margin-top:20px; font-size:20px; font-weight:800; color:#b91c1c;">❌ ¡No! Algunas
-            piezas son diferentes.</div>
+        <div class="idea-card stp" style="border-color:#FFB74D;">
+            <h3 style="color:#e65100;">Dividimos</h3>
+            <svg width="160" height="100" viewBox="0 0 160 100">
+                <rect x="10" y="10" width="35" height="80" rx="4" fill="#FFE082" stroke="#e65100" stroke-width="2"/>
+                <rect x="47" y="10" width="35" height="80" rx="4" fill="#fff" stroke="#e65100" stroke-width="2"/>
+                <rect x="84" y="10" width="35" height="80" rx="4" fill="#fff" stroke="#e65100" stroke-width="2"/>
+                <rect x="121" y="10" width="35" height="80" rx="4" fill="#fff" stroke="#e65100" stroke-width="2"/>
+            </svg>
+            <p style="font-size:18px;">En partes <b>iguales</b>.</p>
         </div>
-
-        <div class="pnl stp" style="display:flex; flex-direction:column; align-items:center; width: 45%;">
-          <div style="font-size:24px; font-weight:800; margin-bottom: 20px;">¿Y esto es 1/3?</div>
-          <svg width="150" height="150" viewBox="0 0 150 150">
-            <rect x="5" y="5" width="140" height="140" fill="#fff" stroke="var(--base)" stroke-width="3" />
-            <rect x="5" y="5" width="46" height="140" fill="#9DE3BD" stroke="var(--base)" stroke-width="3" />
-            <line x1="51" y1="5" x2="51" y2="145" stroke="var(--base)" stroke-width="3" />
-            <line x1="98" y1="5" x2="98" y2="145" stroke="var(--base)" stroke-width="3" />
-          </svg>
-          <div class="stp" style="margin-top:20px; font-size:20px; font-weight:800; color:#047857;">✅ ¡Sí! Tienen la
-            misma forma y tamaño.</div>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">Abre Tu Cuaderno ✍️</div>
-      <p class="sub-text">Anota: ¿Qué fracción representa el dibujo?</p>
-      <div style="display:flex; flex-direction:column; align-items:center; width:100%; gap: 30px; margin-top:20px;">
-        <div class="pnl"
-          style="display:flex; justify-content:center; align-items:center; width:auto; border-color:var(--base);">
-          <svg width="300" height="80" viewBox="0 0 300 80" style="border: 2px solid var(--base);">
-            <rect x="0.0" y="0" width="60.0" height="80" fill="#FF9D9D" stroke="var(--base)" stroke-width="2" />
-            <rect x="60.0" y="0" width="60.0" height="80" fill="#FF9D9D" stroke="var(--base)" stroke-width="2" />
-            <rect x="120.0" y="0" width="60.0" height="80" fill="#FF9D9D" stroke="var(--base)" stroke-width="2" />
-            <rect x="180.0" y="0" width="60.0" height="80" fill="#fff" stroke="var(--base)" stroke-width="2" />
-            <rect x="240.0" y="0" width="60.0" height="80" fill="#fff" stroke="var(--base)" stroke-width="2" />
-          </svg>
-        </div>
-        <div class="stp">
-          <div class="frac-box" style="padding:10px 20px; font-size:50px; margin:0;">
-            <div>3</div>
-            <div class="line"></div>
-            <div>5</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">Abre Tu Cuaderno ✍️</div>
-      <p class="sub-text">Anota: ¿Qué fracción representa el dibujo?</p>
-      <div style="display:flex; flex-direction:column; align-items:center; width:100%; gap: 30px; margin-top:20px;">
-        <div class="pnl"
-          style="display:flex; justify-content:center; align-items:center; width:auto; border-color:var(--base);">
-          <svg width="240" height="240" viewBox="0 0 240 240">
-            <circle cx="120" cy="120" r="115" fill="none" stroke="var(--base)" stroke-width="3" />
-            <path d="M120 120 L120 5 A115 115 0 0 1 235 120 Z" fill="#9DE3BD" stroke="var(--base)" stroke-width="3" />
-            <path d="M120 120 L235 120 A115 115 0 0 1 120 235 Z" fill="#fff" stroke="var(--base)" stroke-width="3" />
-            <path d="M120 120 L120 235 A115 115 0 0 1 5 120 Z" fill="#fff" stroke="var(--base)" stroke-width="3" />
-            <path d="M120 120 L5 120 A115 115 0 0 1 120 5 Z" fill="#fff" stroke="var(--base)" stroke-width="3" />
-          </svg>
-        </div>
-        <div class="stp">
-          <div class="frac-box" style="padding:10px 20px; font-size:50px; margin:0;">
-            <div>1</div>
-            <div class="line"></div>
-            <div>4</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">Abre Tu Cuaderno ✍️</div>
-      <p class="sub-text">Anota: ¿Qué fracción representa el dibujo?</p>
-      <div style="display:flex; flex-direction:column; align-items:center; width:100%; gap: 30px; margin-top:20px;">
-        <div class="pnl"
-          style="display:flex; justify-content:center; align-items:center; width:auto; border-color:var(--base);">
-          <svg width="120" height="240" viewBox="0 0 120 240" style="border: 2px solid var(--base);">
-            <rect x="0" y="0.0" width="120" height="40.0" fill="#9DDEFF" stroke="var(--base)" stroke-width="2" />
-            <rect x="0" y="40.0" width="120" height="40.0" fill="#9DDEFF" stroke="var(--base)" stroke-width="2" />
-            <rect x="0" y="80.0" width="120" height="40.0" fill="#fff" stroke="var(--base)" stroke-width="2" />
-            <rect x="0" y="120.0" width="120" height="40.0" fill="#fff" stroke="var(--base)" stroke-width="2" />
-            <rect x="0" y="160.0" width="120" height="40.0" fill="#fff" stroke="var(--base)" stroke-width="2" />
-            <rect x="0" y="200.0" width="120" height="40.0" fill="#fff" stroke="var(--base)" stroke-width="2" />
-          </svg>
-        </div>
-        <div class="stp">
-          <div class="frac-box" style="padding:10px 20px; font-size:50px; margin:0;">
-            <div>2</div>
-            <div class="line"></div>
-            <div>6</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">Abre Tu Cuaderno ✍️</div>
-      <p class="sub-text">Anota: ¿Qué fracción representa el dibujo?</p>
-      <div style="display:flex; flex-direction:column; align-items:center; width:100%; gap: 30px; margin-top:20px;">
-        <div class="pnl"
-          style="display:flex; justify-content:center; align-items:center; width:auto; border-color:var(--base);">
-          <svg width="240" height="240" viewBox="0 0 240 240">
-            <circle cx="120" cy="120" r="115" fill="none" stroke="var(--base)" stroke-width="3" />
-            <path d="M120 120 L120 5 A115 115 0 0 1 201 39 Z" fill="#FFE082" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L201 39 A115 115 0 0 1 235 120 Z" fill="#FFE082" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L235 120 A115 115 0 0 1 201 201 Z" fill="#FFE082" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L201 201 A115 115 0 0 1 120 235 Z" fill="#FFE082" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L120 235 A115 115 0 0 1 39 201 Z" fill="#FFE082" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L39 201 A115 115 0 0 1 5 120 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L5 120 A115 115 0 0 1 39 39 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L39 39 A115 115 0 0 1 120 5 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-          </svg>
-        </div>
-        <div class="stp">
-          <div class="frac-box" style="padding:10px 20px; font-size:50px; margin:0;">
-            <div>5</div>
-            <div class="line"></div>
-            <div>8</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">Abre Tu Cuaderno ✍️</div>
-      <p class="sub-text">Anota: ¿Qué fracción representa el dibujo?</p>
-      <div style="display:flex; flex-direction:column; align-items:center; width:100%; gap: 30px; margin-top:20px;">
-        <div class="pnl"
-          style="display:flex; justify-content:center; align-items:center; width:auto; border-color:var(--base);">
-          <svg width="300" height="120" viewBox="0 0 300 120">
-            <rect x="0" y="0" width="60" height="60" fill="#FFB74D" stroke="var(--base)" stroke-width="2" />
-            <rect x="60" y="0" width="60" height="60" fill="#FFB74D" stroke="var(--base)" stroke-width="2" />
-            <rect x="120" y="0" width="60" height="60" fill="#FFB74D" stroke="var(--base)" stroke-width="2" />
-            <rect x="180" y="0" width="60" height="60" fill="#FFB74D" stroke="var(--base)" stroke-width="2" />
-            <rect x="240" y="0" width="60" height="60" fill="#FFB74D" stroke="var(--base)" stroke-width="2" />
-            <rect x="0" y="60" width="60" height="60" fill="#FFB74D" stroke="var(--base)" stroke-width="2" />
-            <rect x="60" y="60" width="60" height="60" fill="#FFB74D" stroke="var(--base)" stroke-width="2" />
-            <rect x="120" y="60" width="60" height="60" fill="#fff" stroke="var(--base)" stroke-width="2" />
-            <rect x="180" y="60" width="60" height="60" fill="#fff" stroke="var(--base)" stroke-width="2" />
-            <rect x="240" y="60" width="60" height="60" fill="#fff" stroke="var(--base)" stroke-width="2" />
-          </svg>
-        </div>
-        <div class="stp">
-          <div class="frac-box" style="padding:10px 20px; font-size:50px; margin:0;">
-            <div>7</div>
-            <div class="line"></div>
-            <div>10</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">Múltiples Formas 🎨</div>
-      <p class="sub-text">La fracción <b>1/2</b> puede dividirse en distintas figuras pero mantiene su proporción.</p>
-      <div style="display:flex; width:100%; justify-content:center; gap: 60px; margin-top:40px;">
-        <div class="pnl" style="display:flex; align-items:center; gap:20px; border-color:var(--base); width:auto;">
-          <div class="frac-box">
-            <div>1</div>
-            <div class="line"></div>
-            <div>2</div>
-          </div>
-          <div class="read-as" style="font-size:28px;">Un<br>medio</div>
-        </div>
-        <div class="stp" style="display:flex; flex-direction:column; align-items:center;">
-          <div style="font-size:24px; font-weight:800; margin-bottom:30px;">Representaciones:</div>
-          <div style="display:flex; flex-direction:column; gap:20px; align-items:center;">
-
-            <div style="display:flex; gap:20px; align-items:flex-end;">
-              <svg width="100" height="100" viewBox="0 0 100 100">
-                <rect x="0" y="0" width="50" height="100" fill="#FF9D9D" stroke="var(--base)" stroke-width="3" />
-                <rect x="50" y="0" width="50" height="100" fill="#fff" stroke="var(--base)" stroke-width="3" />
-              </svg>
-              <svg width="120" height="100" viewBox="0 0 140 120">
-                <polygon points="70,0 0,120 70,120" fill="#fff" stroke="var(--base)" stroke-width="3" />
-                <polygon points="70,0 140,120 70,120" fill="#9DDEFF" stroke="var(--base)" stroke-width="3" />
-              </svg>
-              <svg width="140" height="60" viewBox="0 0 160 60">
-                <polygon points="0,15 120,15 120,0 160,30 120,60 120,45 0,45" fill="#f5f6f8" stroke="var(--base)"
-                  stroke-width="3" />
-                <polygon points="0,15 120,15 120,0 160,30 110,30 0,30" fill="#FFE082" stroke-width="0" />
-                <polygon points="0,15 120,15 120,0 160,30 120,60 120,45 0,45" fill="none" stroke="var(--base)"
-                  stroke-width="3" />
-              </svg>
+        <div class="idea-card stp" style="border-color:#9DDEFF;">
+            <h3 style="color:#1C4A82;">Fracción</h3>
+            <div style="font-size:48px; color:var(--base);">
+                <span class="frac-sm" style="font-size:48px;"><span class="fn">1</span><span class="fd">4</span></span>
             </div>
-
-          </div>
+            <p style="font-size:18px;">Tomé <b>1</b> de las <b>4</b> partes.</p>
         </div>
-      </div>
     </div>
-    <div class="sl">
-      <div class="head-title">Múltiples Formas 🎨</div>
-      <p class="sub-text">La fracción <b>1/4</b> puede dividirse en distintas figuras pero mantiene su proporción.</p>
-      <div style="display:flex; width:100%; justify-content:center; gap: 60px; margin-top:40px;">
-        <div class="pnl" style="display:flex; align-items:center; gap:20px; border-color:var(--base); width:auto;">
-          <div class="frac-box">
-            <div>1</div>
-            <div class="line"></div>
-            <div>4</div>
-          </div>
-          <div class="read-as" style="font-size:28px;">Un<br>cuarto</div>
-        </div>
-        <div class="stp" style="display:flex; flex-direction:column; align-items:center;">
-          <div style="font-size:24px; font-weight:800; margin-bottom:30px;">Representaciones:</div>
-          <div style="display:flex; flex-direction:column; gap:20px; align-items:center;">
+</div>
 
-            <div style="display:flex; gap:20px; align-items:flex-end;">
-              <svg width="100" height="100" viewBox="0 0 120 120">
-                <circle cx="60" cy="60" r="58" fill="#fff" stroke="var(--base)" stroke-width="3" />
-                <path d="M60 60 L60 2 A58 58 0 0 1 118 60 Z" fill="#E1BEE7" stroke="var(--base)" stroke-width="3" />
-                <path d="M60 60 L118 60 A58 58 0 0 1 60 118 Z" fill="#fff" stroke="var(--base)" stroke-width="3" />
-                <path d="M60 60 L60 118 A58 58 0 0 1 2 60 Z" fill="#fff" stroke="var(--base)" stroke-width="3" />
-                <path d="M60 60 L2 60 A58 58 0 0 1 60 2 Z" fill="#fff" stroke="var(--base)" stroke-width="3" />
-              </svg>
-              <svg width="180" height="40" viewBox="0 0 180 40">
-                <rect x="0" y="0" width="45" height="40" fill="#fff" stroke="var(--base)" stroke-width="2" />
-                <rect x="45" y="0" width="45" height="40" fill="#9DE3BD" stroke="var(--base)" stroke-width="2" />
-                <rect x="90" y="0" width="45" height="40" fill="#fff" stroke="var(--base)" stroke-width="2" />
-                <rect x="135" y="0" width="45" height="40" fill="#fff" stroke="var(--base)" stroke-width="2" />
-              </svg>
+<!-- ====== SLIDE 4: ANATOMÍA ====== -->
+<div class="sl">
+    <div class="head-title">Anatomía de la Fracción</div>
+    <p class="sub-text">Cada fracción tiene <b class="hl">2 partes con nombre propio</b>:</p>
+    <div class="pnl" style="text-align:center; max-width:600px; margin:0 auto;">
+        <div style="font-size:80px; color:var(--base); margin-bottom:10px;">
+            <span class="frac-sm" style="font-size:80px;">
+                <span class="fn" style="border-bottom-width:5px;">3</span>
+                <span class="fd">5</span>
+            </span>
+        </div>
+        <div style="display:flex; justify-content:center; gap:60px; margin-top:15px;">
+            <div class="stp">
+                <div style="background:#FFB74D; color:white; padding:10px 24px; border-radius:12px; font-size:26px; font-weight:900;">⬆ NUMERADOR</div>
+                <p style="font-size:18px; margin-top:8px;">Partes que <b>tomamos</b></p>
             </div>
+            <div class="stp">
+                <div style="background:var(--base); color:white; padding:10px 24px; border-radius:12px; font-size:26px; font-weight:900;">⬇ DENOMINADOR</div>
+                <p style="font-size:18px; margin-top:8px;">Partes <b>totales iguales</b></p>
+            </div>
+        </div>
+    </div>
+    <div class="stp" style="margin-top:18px;">
+        <div class="mini-chip" style="background:#fff3e0; border-color:#FFB74D; font-size:20px;">💡 El <b>denominador</b> NUNCA puede ser 0 (no puedes dividir en 0 partes)</div>
+    </div>
+</div>
 
-          </div>
+<!-- ====== SLIDE 5: REPRESENTACIÓN EN BARRA ====== -->
+<div class="sl">
+    <div class="head-title">Representar con Barras</div>
+    <p class="sub-text">La forma más sencilla: un rectángulo dividido en partes iguales.</p>
+    <div class="pnl" style="text-align:center;">
+        <p style="font-size:24px; margin-bottom:12px;">Representemos <span class="frac-sm" style="font-size:28px; color:var(--base);"><span class="fn">2</span><span class="fd">5</span></span> → dividimos en <b>5 partes</b>, pintamos <b>2</b></p>
+        <div class="bar-rect" style="max-width:500px;">
+            <div style="flex:1; background:#4FC3F7;">✔</div>
+            <div style="flex:1; background:#4FC3F7;">✔</div>
+            <div style="flex:1; background:#fff;"></div>
+            <div style="flex:1; background:#fff;"></div>
+            <div style="flex:1; background:#fff;"></div>
         </div>
-      </div>
+        <div class="stp" style="margin-top:18px;">
+            <p style="font-size:24px; margin-bottom:12px;">Representemos <span class="frac-sm" style="font-size:28px; color:var(--base);"><span class="fn">3</span><span class="fd">4</span></span> → dividimos en <b>4 partes</b>, pintamos <b>3</b></p>
+            <div class="bar-rect" style="max-width:500px;">
+                <div style="flex:1; background:#FFB74D;">✔</div>
+                <div style="flex:1; background:#FFB74D;">✔</div>
+                <div style="flex:1; background:#FFB74D;">✔</div>
+                <div style="flex:1; background:#fff;"></div>
+            </div>
+        </div>
     </div>
-    <div class="sl">
-      <div class="head-title">¡A Pintar! 🖍️</div>
-      <div style="font-size:28px; font-weight:800; margin-bottom:10px;">¡Pinta 2/3 en el rectángulo!</div>
-      <div style="display:flex; justify-content:center; align-items:center; gap:50px; margin-top:20px;">
-        <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
-          <div class="frac-box">
-            <div>2</div>
-            <div class="line"></div>
-            <div>3</div>
-          </div>
-          <svg width="240" height="240" viewBox="0 0 240 240">
-            <rect x="0" y="20" width="80" height="200" fill="#fff" stroke="var(--base)" stroke-width="3" class="svg-pt"
-              data-on="0" onclick="ptSVG(this,'#E1BEE7','#fff')" />
-            <rect x="80" y="20" width="80" height="200" fill="#fff" stroke="var(--base)" stroke-width="3" class="svg-pt"
-              data-on="0" onclick="ptSVG(this,'#E1BEE7','#fff')" />
-            <rect x="160" y="20" width="80" height="200" fill="#fff" stroke="var(--base)" stroke-width="3"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#E1BEE7','#fff')" />
-          </svg>
-        </div>
-        <div class="stp"
-          style="display:flex; flex-direction:column; align-items:center; border: 4px solid var(--base); padding:30px; border-radius:30px; background:#fff;">
-          <div style="font-size:24px; font-weight:900; color:#555; margin-bottom:20px;">✅ Así debía quedar:</div>
-          <svg width="240" height="240" viewBox="0 0 240 240">
-            <rect x="0" y="20" width="80" height="200" fill="#E1BEE7" stroke="var(--base)" stroke-width="3" />
-            <rect x="80" y="20" width="80" height="200" fill="#E1BEE7" stroke="var(--base)" stroke-width="3" />
-            <rect x="160" y="20" width="80" height="200" fill="#fff" stroke="var(--base)" stroke-width="3" />
-          </svg>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">¡A Pintar! 🖍️</div>
-      <div style="font-size:28px; font-weight:800; margin-bottom:10px;">¡Pinta 3/4 en el círculo!</div>
-      <div style="display:flex; justify-content:center; align-items:center; gap:50px; margin-top:20px;">
-        <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
-          <div class="frac-box">
-            <div>3</div>
-            <div class="line"></div>
-            <div>4</div>
-          </div>
-          <svg width="240" height="240" viewBox="0 0 240 240">
-            <circle cx="120" cy="120" r="115" fill="none" stroke="var(--base)" stroke-width="3" />
-            <path d="M120 120 L120 5 A115 115 0 0 1 235 120 Z" fill="#fff" stroke="var(--base)" stroke-width="2"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#FF9D9D','#fff')" />
-            <path d="M120 120 L235 120 A115 115 0 0 1 120 235 Z" fill="#fff" stroke="var(--base)" stroke-width="2"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#FF9D9D','#fff')" />
-            <path d="M120 120 L120 235 A115 115 0 0 1 5 120 Z" fill="#fff" stroke="var(--base)" stroke-width="2"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#FF9D9D','#fff')" />
-            <path d="M120 120 L5 120 A115 115 0 0 1 120 5 Z" fill="#fff" stroke="var(--base)" stroke-width="2"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#FF9D9D','#fff')" />
-          </svg>
-        </div>
-        <div class="stp"
-          style="display:flex; flex-direction:column; align-items:center; border: 4px solid var(--base); padding:30px; border-radius:30px; background:#fff;">
-          <div style="font-size:24px; font-weight:900; color:#555; margin-bottom:20px;">✅ Así debía quedar:</div>
-          <svg width="240" height="240" viewBox="0 0 240 240">
-            <path d="M120 120 L120 5 A115 115 0 0 1 235 120 Z" fill="#FF9D9D" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L235 120 A115 115 0 0 1 120 235 Z" fill="#FF9D9D" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L120 235 A115 115 0 0 1 5 120 Z" fill="#FF9D9D" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L5 120 A115 115 0 0 1 120 5 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-          </svg>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">¡A Pintar! 🖍️</div>
-      <div style="font-size:28px; font-weight:800; margin-bottom:10px;">¡Pinta 2/5 en el círculo!</div>
-      <div style="display:flex; justify-content:center; align-items:center; gap:50px; margin-top:20px;">
-        <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
-          <div class="frac-box">
-            <div>2</div>
-            <div class="line"></div>
-            <div>5</div>
-          </div>
-          <svg width="240" height="240" viewBox="0 0 240 240">
-            <circle cx="120" cy="120" r="115" fill="none" stroke="var(--base)" stroke-width="3" />
-            <path d="M120 120 L120 5 A115 115 0 0 0 10 84 Z" fill="#fff" stroke="var(--base)" stroke-width="2"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#9DE3BD','#fff')" />
-            <path d="M120 120 L10 84 A115 115 0 0 0 52 213 Z" fill="#fff" stroke="var(--base)" stroke-width="2"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#9DE3BD','#fff')" />
-            <path d="M120 120 L52 213 A115 115 0 0 0 188 213 Z" fill="#fff" stroke="var(--base)" stroke-width="2"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#9DE3BD','#fff')" />
-            <path d="M120 120 L188 213 A115 115 0 0 0 230 84 Z" fill="#fff" stroke="var(--base)" stroke-width="2"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#9DE3BD','#fff')" />
-            <path d="M120 120 L230 84 A115 115 0 0 0 120 5 Z" fill="#fff" stroke="var(--base)" stroke-width="2"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#9DE3BD','#fff')" />
-          </svg>
-        </div>
-        <div class="stp"
-          style="display:flex; flex-direction:column; align-items:center; border: 4px solid var(--base); padding:30px; border-radius:30px; background:#fff;">
-          <div style="font-size:24px; font-weight:900; color:#555; margin-bottom:20px;">✅ Así debía quedar:</div>
-          <svg width="240" height="240" viewBox="0 0 240 240">
-            <path d="M120 120 L120 5 A115 115 0 0 0 10 84 Z" fill="#9DE3BD" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L10 84 A115 115 0 0 0 52 213 Z" fill="#9DE3BD" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L52 213 A115 115 0 0 0 188 213 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L188 213 A115 115 0 0 0 230 84 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L230 84 A115 115 0 0 0 120 5 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-          </svg>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">¡A Pintar! 🖍️</div>
-      <div style="font-size:28px; font-weight:800; margin-bottom:10px;">¡Pinta 4/6 en el cuadro!</div>
-      <div style="display:flex; justify-content:center; align-items:center; gap:50px; margin-top:20px;">
-        <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
-          <div class="frac-box">
-            <div>4</div>
-            <div class="line"></div>
-            <div>6</div>
-          </div>
-          <svg width="240" height="240" viewBox="0 0 240 240">
-            <rect x="0" y="0" width="80" height="120" fill="#fff" stroke="var(--base)" stroke-width="3" class="svg-pt"
-              data-on="0" onclick="ptSVG(this,'#9DDEFF','#fff')" />
-            <rect x="80" y="0" width="80" height="120" fill="#fff" stroke="var(--base)" stroke-width="3" class="svg-pt"
-              data-on="0" onclick="ptSVG(this,'#9DDEFF','#fff')" />
-            <rect x="160" y="0" width="80" height="120" fill="#fff" stroke="var(--base)" stroke-width="3" class="svg-pt"
-              data-on="0" onclick="ptSVG(this,'#9DDEFF','#fff')" />
-            <rect x="0" y="120" width="80" height="120" fill="#fff" stroke="var(--base)" stroke-width="3" class="svg-pt"
-              data-on="0" onclick="ptSVG(this,'#9DDEFF','#fff')" />
-            <rect x="80" y="120" width="80" height="120" fill="#fff" stroke="var(--base)" stroke-width="3"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#9DDEFF','#fff')" />
-            <rect x="160" y="120" width="80" height="120" fill="#fff" stroke="var(--base)" stroke-width="3"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#9DDEFF','#fff')" />
-          </svg>
-        </div>
-        <div class="stp"
-          style="display:flex; flex-direction:column; align-items:center; border: 4px solid var(--base); padding:30px; border-radius:30px; background:#fff;">
-          <div style="font-size:24px; font-weight:900; color:#555; margin-bottom:20px;">✅ Así debía quedar:</div>
-          <svg width="240" height="240" viewBox="0 0 240 240">
-            <rect x="0" y="0" width="80" height="120" fill="#9DDEFF" stroke="var(--base)" stroke-width="3" />
-            <rect x="80" y="0" width="80" height="120" fill="#9DDEFF" stroke="var(--base)" stroke-width="3" />
-            <rect x="160" y="0" width="80" height="120" fill="#9DDEFF" stroke="var(--base)" stroke-width="3" />
-            <rect x="0" y="120" width="80" height="120" fill="#9DDEFF" stroke="var(--base)" stroke-width="3" />
-            <rect x="80" y="120" width="80" height="120" fill="#fff" stroke="var(--base)" stroke-width="3" />
-            <rect x="160" y="120" width="80" height="120" fill="#fff" stroke="var(--base)" stroke-width="3" />
-          </svg>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">¡A Pintar! 🖍️</div>
-      <div style="font-size:28px; font-weight:800; margin-bottom:10px;">¡Pinta 1/4 en este pastel!</div>
-      <div style="display:flex; justify-content:center; align-items:center; gap:50px; margin-top:20px;">
-        <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
-          <div class="frac-box">
-            <div>1</div>
-            <div class="line"></div>
-            <div>4</div>
-          </div>
-          <svg width="240" height="240" viewBox="0 0 240 240">
-            <circle cx="120" cy="120" r="115" fill="none" stroke="var(--base)" stroke-width="3" />
-            <path d="M120 120 L120 5 A115 115 0 0 1 235 120 Z" fill="#fff" stroke="var(--base)" stroke-width="2"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#FFB74D','#fff')" />
-            <path d="M120 120 L235 120 A115 115 0 0 1 120 235 Z" fill="#fff" stroke="var(--base)" stroke-width="2"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#FFB74D','#fff')" />
-            <path d="M120 120 L120 235 A115 115 0 0 1 5 120 Z" fill="#fff" stroke="var(--base)" stroke-width="2"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#FFB74D','#fff')" />
-            <path d="M120 120 L5 120 A115 115 0 0 1 120 5 Z" fill="#fff" stroke="var(--base)" stroke-width="2"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#FFB74D','#fff')" />
-          </svg>
-        </div>
-        <div class="stp"
-          style="display:flex; flex-direction:column; align-items:center; border: 4px solid var(--base); padding:30px; border-radius:30px; background:#fff;">
-          <div style="font-size:24px; font-weight:900; color:#555; margin-bottom:20px;">✅ Así debía quedar:</div>
-          <svg width="240" height="240" viewBox="0 0 240 240">
-            <path d="M120 120 L120 5 A115 115 0 0 1 235 120 Z" fill="#FFB74D" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L235 120 A115 115 0 0 1 120 235 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L120 235 A115 115 0 0 1 5 120 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-            <path d="M120 120 L5 120 A115 115 0 0 1 120 5 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-          </svg>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">¡A Pintar! 🖍️</div>
-      <div style="font-size:28px; font-weight:800; margin-bottom:10px;">¡Pinta 4/5 en estas barras!</div>
-      <div style="display:flex; justify-content:center; align-items:center; gap:50px; margin-top:20px;">
-        <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
-          <div class="frac-box">
-            <div>4</div>
-            <div class="line"></div>
-            <div>5</div>
-          </div>
-          <svg width="240" height="240" viewBox="0 0 240 240">
-            <rect x="0" y="30" width="48" height="180" fill="#fff" stroke="var(--base)" stroke-width="3" class="svg-pt"
-              data-on="0" onclick="ptSVG(this,'#9DE3BD','#fff')" />
-            <rect x="48" y="30" width="48" height="180" fill="#fff" stroke="var(--base)" stroke-width="3" class="svg-pt"
-              data-on="0" onclick="ptSVG(this,'#9DE3BD','#fff')" />
-            <rect x="96" y="30" width="48" height="180" fill="#fff" stroke="var(--base)" stroke-width="3" class="svg-pt"
-              data-on="0" onclick="ptSVG(this,'#9DE3BD','#fff')" />
-            <rect x="144" y="30" width="48" height="180" fill="#fff" stroke="var(--base)" stroke-width="3"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#9DE3BD','#fff')" />
-            <rect x="192" y="30" width="48" height="180" fill="#fff" stroke="var(--base)" stroke-width="3"
-              class="svg-pt" data-on="0" onclick="ptSVG(this,'#9DE3BD','#fff')" />
-          </svg>
-        </div>
-        <div class="stp"
-          style="display:flex; flex-direction:column; align-items:center; border: 4px solid var(--base); padding:30px; border-radius:30px; background:#fff;">
-          <div style="font-size:24px; font-weight:900; color:#555; margin-bottom:20px;">✅ Así debía quedar:</div>
-          <svg width="240" height="240" viewBox="0 0 240 240">
-            <rect x="0" y="30" width="48" height="180" fill="#9DE3BD" stroke="var(--base)" stroke-width="3" />
-            <rect x="48" y="30" width="48" height="180" fill="#9DE3BD" stroke="var(--base)" stroke-width="3" />
-            <rect x="96" y="30" width="48" height="180" fill="#9DE3BD" stroke="var(--base)" stroke-width="3" />
-            <rect x="144" y="30" width="48" height="180" fill="#9DE3BD" stroke="var(--base)" stroke-width="3" />
-            <rect x="192" y="30" width="48" height="180" fill="#fff" stroke="var(--base)" stroke-width="3" />
-          </svg>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">Adivina la Fracción 🤔</div>
-      <p class="sub-text">¿Qué fracción está pintada?</p>
-      <div style="display:flex; align-items:center; justify-content:center; gap:60px;">
-        <svg width="240" height="240" viewBox="0 0 240 240">
-          <rect x="0" y="0" width="80" height="120" fill="#9DDEFF" stroke="var(--base)" stroke-width="3" />
-          <rect x="80" y="0" width="80" height="120" fill="#9DDEFF" stroke="var(--base)" stroke-width="3" />
-          <rect x="160" y="0" width="80" height="120" fill="#9DDEFF" stroke="var(--base)" stroke-width="3" />
-          <rect x="0" y="120" width="80" height="120" fill="#fff" stroke="var(--base)" stroke-width="3" />
-          <rect x="80" y="120" width="80" height="120" fill="#fff" stroke="var(--base)" stroke-width="3" />
-          <rect x="160" y="120" width="80" height="120" fill="#fff" stroke="var(--base)" stroke-width="3" />
-        </svg>
-        <div style="display:flex; flex-direction:column; gap:15px; text-align:center;">
-          <p style="font-size:24px; font-weight: 800;">Opciones:</p>
-          <div style="display:flex; flex-direction:column;">
-            <button class='btn' style='min-width:120px; font-size:24px; margin:5px;'
-              onclick='chkAns(this, true)'>3/6</button><button class='btn'
-              style='min-width:120px; font-size:24px; margin:5px;' onclick='chkAns(this, false)'>4/6</button><button
-              class='btn' style='min-width:120px; font-size:24px; margin:5px;'
-              onclick='chkAns(this, false)'>6/3</button>
-          </div>
-          <div class="msg-area" style="font-size:22px; font-weight:800; height:30px; margin-top:20px;"></div>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">Adivina la Fracción 🤔</div>
-      <p class="sub-text">Elige la fracción correcta</p>
-      <div style="display:flex; align-items:center; justify-content:center; gap:60px;">
-        <svg width="240" height="240" viewBox="0 0 240 240">
-          <path d="M120 120 L120 5 A115 115 0 0 1 235 120 Z" fill="#FF9D9D" stroke="var(--base)" stroke-width="2" />
-          <path d="M120 120 L235 120 A115 115 0 0 1 120 235 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-          <path d="M120 120 L120 235 A115 115 0 0 1 5 120 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-          <path d="M120 120 L5 120 A115 115 0 0 1 120 5 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-        </svg>
-        <div style="display:flex; flex-direction:column; gap:15px; text-align:center;">
-          <p style="font-size:24px; font-weight: 800;">Opciones:</p>
-          <div style="display:flex; flex-direction:column;">
-            <button class='btn' style='min-width:120px; font-size:24px; margin:5px;'
-              onclick='chkAns(this, true)'>1/4</button><button class='btn'
-              style='min-width:120px; font-size:24px; margin:5px;' onclick='chkAns(this, false)'>3/4</button><button
-              class='btn' style='min-width:120px; font-size:24px; margin:5px;'
-              onclick='chkAns(this, false)'>1/3</button>
-          </div>
-          <div class="msg-area" style="font-size:22px; font-weight:800; height:30px; margin-top:20px;"></div>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">Adivina la Fracción 🤔</div>
-      <p class="sub-text">¿Cuál es esta fracción?</p>
-      <div style="display:flex; align-items:center; justify-content:center; gap:60px;">
-        <svg width="240" height="240" viewBox="0 0 240 240">
-          <path d="M120 120 L120 5 A115 115 0 0 0 10 84 Z" fill="#9DE3BD" stroke="var(--base)" stroke-width="2" />
-          <path d="M120 120 L10 84 A115 115 0 0 0 52 213 Z" fill="#9DE3BD" stroke="var(--base)" stroke-width="2" />
-          <path d="M120 120 L52 213 A115 115 0 0 0 188 213 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-          <path d="M120 120 L188 213 A115 115 0 0 0 230 84 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-          <path d="M120 120 L230 84 A115 115 0 0 0 120 5 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-        </svg>
-        <div style="display:flex; flex-direction:column; gap:15px; text-align:center;">
-          <p style="font-size:24px; font-weight: 800;">Opciones:</p>
-          <div style="display:flex; flex-direction:column;">
-            <button class='btn' style='min-width:120px; font-size:24px; margin:5px;'
-              onclick='chkAns(this, true)'>2/5</button><button class='btn'
-              style='min-width:120px; font-size:24px; margin:5px;' onclick='chkAns(this, false)'>3/5</button><button
-              class='btn' style='min-width:120px; font-size:24px; margin:5px;'
-              onclick='chkAns(this, false)'>5/2</button>
-          </div>
-          <div class="msg-area" style="font-size:22px; font-weight:800; height:30px; margin-top:20px;"></div>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">Adivina la Fracción 🤔</div>
-      <p class="sub-text">Identifica esta fracción</p>
-      <div style="display:flex; align-items:center; justify-content:center; gap:60px;">
-        <svg width="240" height="240" viewBox="0 0 240 240">
-          <rect x="0" y="30" width="48" height="180" fill="#FFE082" stroke="var(--base)" stroke-width="3" />
-          <rect x="48" y="30" width="48" height="180" fill="#FFE082" stroke="var(--base)" stroke-width="3" />
-          <rect x="96" y="30" width="48" height="180" fill="#FFE082" stroke="var(--base)" stroke-width="3" />
-          <rect x="144" y="30" width="48" height="180" fill="#FFE082" stroke="var(--base)" stroke-width="3" />
-          <rect x="192" y="30" width="48" height="180" fill="#fff" stroke="var(--base)" stroke-width="3" />
-        </svg>
-        <div style="display:flex; flex-direction:column; gap:15px; text-align:center;">
-          <p style="font-size:24px; font-weight: 800;">Opciones:</p>
-          <div style="display:flex; flex-direction:column;">
-            <button class='btn' style='min-width:120px; font-size:24px; margin:5px;'
-              onclick='chkAns(this, true)'>4/5</button><button class='btn'
-              style='min-width:120px; font-size:24px; margin:5px;' onclick='chkAns(this, false)'>1/5</button><button
-              class='btn' style='min-width:120px; font-size:24px; margin:5px;'
-              onclick='chkAns(this, false)'>5/4</button>
-          </div>
-          <div class="msg-area" style="font-size:22px; font-weight:800; height:30px; margin-top:20px;"></div>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">Adivina la Fracción 🤔</div>
-      <p class="sub-text">Cuenta cuidadosamente</p>
-      <div style="display:flex; align-items:center; justify-content:center; gap:60px;">
-        <svg width="240" height="240" viewBox="0 0 240 240">
-          <path d="M120 120 L120 5 A115 115 0 0 1 220 62 Z" fill="#E1BEE7" stroke="var(--base)" stroke-width="2" />
-          <path d="M120 120 L220 62 A115 115 0 0 1 220 178 Z" fill="#E1BEE7" stroke="var(--base)" stroke-width="2" />
-          <path d="M120 120 L220 178 A115 115 0 0 1 120 235 Z" fill="#E1BEE7" stroke="var(--base)" stroke-width="2" />
-          <path d="M120 120 L120 235 A115 115 0 0 1 20 178 Z" fill="#E1BEE7" stroke="var(--base)" stroke-width="2" />
-          <path d="M120 120 L20 178 A115 115 0 0 1 20 62 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-          <path d="M120 120 L20 62 A115 115 0 0 1 120 5 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-        </svg>
-        <div style="display:flex; flex-direction:column; gap:15px; text-align:center;">
-          <p style="font-size:24px; font-weight: 800;">Opciones:</p>
-          <div style="display:flex; flex-direction:column;">
-            <button class='btn' style='min-width:120px; font-size:24px; margin:5px;'
-              onclick='chkAns(this, true)'>4/6</button><button class='btn'
-              style='min-width:120px; font-size:24px; margin:5px;' onclick='chkAns(this, false)'>2/6</button><button
-              class='btn' style='min-width:120px; font-size:24px; margin:5px;'
-              onclick='chkAns(this, false)'>6/4</button>
-          </div>
-          <div class="msg-area" style="font-size:22px; font-weight:800; height:30px; margin-top:20px;"></div>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">Adivina la Fracción 🤔</div>
-      <p class="sub-text">Cuenta rápido</p>
-      <div style="display:flex; align-items:center; justify-content:center; gap:60px;">
-        <svg width="240" height="240" viewBox="0 0 240 240">
-          <path d="M120 120 L120 5 A115 115 0 0 1 235 120 Z" fill="#FFB74D" stroke="var(--base)" stroke-width="2" />
-          <path d="M120 120 L235 120 A115 115 0 0 1 120 235 Z" fill="#FFB74D" stroke="var(--base)" stroke-width="2" />
-          <path d="M120 120 L120 235 A115 115 0 0 1 5 120 Z" fill="#FFB74D" stroke="var(--base)" stroke-width="2" />
-          <path d="M120 120 L5 120 A115 115 0 0 1 120 5 Z" fill="#fff" stroke="var(--base)" stroke-width="2" />
-        </svg>
-        <div style="display:flex; flex-direction:column; gap:15px; text-align:center;">
-          <p style="font-size:24px; font-weight: 800;">Opciones:</p>
-          <div style="display:flex; flex-direction:column;">
-            <button class='btn' style='min-width:120px; font-size:24px; margin:5px;'
-              onclick='chkAns(this, true)'>3/4</button><button class='btn'
-              style='min-width:120px; font-size:24px; margin:5px;' onclick='chkAns(this, false)'>1/4</button><button
-              class='btn' style='min-width:120px; font-size:24px; margin:5px;'
-              onclick='chkAns(this, false)'>4/3</button>
-          </div>
-          <div class="msg-area" style="font-size:22px; font-weight:800; height:30px; margin-top:20px;"></div>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">Resolución de Problemas 💡</div>
-      <div class="pnl-border" style="text-align:center; padding:50px;">
-        <p style="font-size:36px; font-weight:800; margin-bottom:20px; color:var(--base);">La caja de lápices 🖍️</p>
-        <p style="font-size:26px; line-height:1.6; margin-bottom:20px;">En una caja hay <b>8</b> lápices. <b>3</b> son
-          rojos y el resto son azules. ¿Qué fracción de la caja son lápices rojos?</p>
+</div>
 
-        <div class="stp" style="margin-top:30px; border-top: 2px dashed #ccc; padding-top:20px;">
-          <p style="font-size:22px; color:#555; font-weight:800; margin-bottom:10px;">Respuesta:</p>
-          <div style="font-size:24px;">Los rojos son 3.<br>El total de la caja es 8.<br><span
-              style='color:var(--base); font-size:36px; font-weight:900;'>3/8</span></div>
+<!-- ====== SLIDE 6: VARIEDAD DE FIGURAS ====== -->
+<div class="sl">
+    <div class="head-title">¡No solo barras! 🔷🔺⭕</div>
+    <p class="sub-text">Podemos representar fracciones con <b class="hl">cualquier figura</b>, ¡siempre que las partes sean <b>iguales en tamaño</b>!</p>
+    <div class="card-row" style="max-width:900px;">
+        <!-- Hexágono 1/6 -->
+        <div class="idea-card stp" style="border-color:#9DE3BD; flex:1 1 240px; padding:22px 14px;">
+            <h3 style="font-size:24px; color:#047857;">Hexágono</h3>
+            <svg width="170" height="150" viewBox="0 0 170 150">
+                <!-- Hexágono regular (R=55, Centro 85,75) -->
+                <polygon points="140,75 112.5,122.6 57.5,122.6 30,75 57.5,27.4 112.5,27.4" fill="none" stroke="#047857" stroke-width="3"/>
+                <!-- Líneas internas a vértices opuestos -->
+                <line x1="140" y1="75" x2="30" y2="75" stroke="#047857" stroke-width="2"/>
+                <line x1="112.5" y1="122.6" x2="57.5" y2="27.4" stroke="#047857" stroke-width="2"/>
+                <line x1="57.5" y1="122.6" x2="112.5" y2="27.4" stroke="#047857" stroke-width="2"/>
+                <!-- Sector 1/6 pintado verde (arriba a la derecha) -->
+                <polygon points="85,75 112.5,27.4 140,75" fill="#81C784" stroke="#047857" stroke-width="2"/>
+            </svg>
+            <div style="font-size:32px; color:#047857; margin-top:6px;">
+                <span class="frac-sm" style="font-size:32px;"><span class="fn">1</span><span class="fd">6</span></span>
+            </div>
+            <p style="font-size:18px; font-weight:700;">Un sexto</p>
         </div>
-      </div>
+        <!-- Triángulo 1/4 (Geometría exacta: puntos medios = 4 triángulos congruentes) -->
+        <div class="idea-card stp" style="border-color:#FFB74D; flex:1 1 240px; padding:22px 14px;">
+            <h3 style="font-size:24px; color:#e65100;">Triángulo</h3>
+            <svg width="170" height="150" viewBox="0 0 170 150">
+                <!-- Triángulo principal A(85,15), B(15,135), C(155,135) -->
+                <polygon points="85,15 155,135 15,135" fill="none" stroke="#e65100" stroke-width="3"/>
+                <!-- Puntos medios: M1(50,75), M2(85,135), M3(120,75) -->
+                <!-- Líneas conectando puntos medios para crear 4 triángulos congruentes de IGUAL ÁREA -->
+                <line x1="50" y1="75" x2="120" y2="75" stroke="#e65100" stroke-width="2"/>
+                <line x1="50" y1="75" x2="85" y2="135" stroke="#e65100" stroke-width="2"/>
+                <line x1="120" y1="75" x2="85" y2="135" stroke="#e65100" stroke-width="2"/>
+                <!-- Triángulo superior (1/4 del área total) pintado naranjo -->
+                <polygon points="85,15 50,75 120,75" fill="#FFB74D" stroke="#e65100" stroke-width="2"/>
+            </svg>
+            <div style="font-size:32px; color:#e65100; margin-top:6px;">
+                <span class="frac-sm" style="font-size:32px;"><span class="fn">1</span><span class="fd">4</span></span>
+            </div>
+            <p style="font-size:18px; font-weight:700;">Un cuarto</p>
+        </div>
+        <!-- Círculo 2/8 -->
+        <div class="idea-card stp" style="border-color:#9DDEFF; flex:1 1 240px; padding:22px 14px;">
+            <h3 style="font-size:24px; color:var(--base);">Círculo</h3>
+            <svg width="170" height="150" viewBox="0 0 170 150">
+                <circle cx="85" cy="75" r="55" fill="none" stroke="var(--base)" stroke-width="3"/>
+                <line x1="85" y1="20" x2="85" y2="130" stroke="var(--base)" stroke-width="2"/>
+                <line x1="30" y1="75" x2="140" y2="75" stroke="var(--base)" stroke-width="2"/>
+                <line x1="46" y1="36" x2="124" y2="114" stroke="var(--base)" stroke-width="2"/>
+                <line x1="124" y1="36" x2="46" y2="114" stroke="var(--base)" stroke-width="2"/>
+                <!-- Sector 2/8 (cuadrante superior derecho) pintado azul -->
+                <path d="M85,75 L85,20 A55,55 0 0,1 140,75 Z" fill="#4FC3F7" stroke="var(--base)" stroke-width="2"/>
+            </svg>
+            <div style="font-size:32px; color:var(--base); margin-top:6px;">
+                <span class="frac-sm" style="font-size:32px;"><span class="fn">2</span><span class="fd">8</span></span>
+            </div>
+            <p style="font-size:18px; font-weight:700;">Dos octavos</p>
+        </div>
     </div>
-    <div class="sl">
-      <div class="head-title">Resolución de Problemas 💡</div>
-      <div class="pnl-border" style="text-align:center; padding:50px;">
-        <p style="font-size:36px; font-weight:800; margin-bottom:20px; color:var(--base);">Juego de cartas 🃏</p>
-        <p style="font-size:26px; line-height:1.6; margin-bottom:20px;">Juan repartió <b>5</b> cartas. Tú obtuviste
-          <b>2</b>. ¿Qué fracción de las cartas repartidas tienes tú?
-        </p>
+</div>
 
-        <div class="stp" style="margin-top:30px; border-top: 2px dashed #ccc; padding-top:20px;">
-          <p style="font-size:22px; color:#555; font-weight:800; margin-bottom:10px;">Respuesta:</p>
-          <div style="font-size:24px;">Tienes 2 cartas.<br>El total repartido fue 5.<br><span
-              style='color:var(--base); font-size:36px; font-weight:900;'>2/5</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title">Resolución de Problemas 💡</div>
-      <div class="pnl-border" style="text-align:center; padding:50px;">
-        <p style="font-size:36px; font-weight:800; margin-bottom:20px; color:var(--base);">La caminata al colegio 🏫</p>
-        <p style="font-size:26px; line-height:1.6; margin-bottom:20px;">El camino a la escuela se divide en <b>4</b>
-          cuadras largas. Si ya caminaste <b>1</b> cuadra, ¿qué fracción del camino falta?</p>
+<!-- ====== SLIDE 7: TABLA 4 FORMAS (MINEDUC) ====== -->
+<div class="sl">
+    <div class="head-title">4 Formas de Representar 📊</div>
+    <p class="sub-text">Según el libro, toda fracción se puede mostrar de <b class="hl">4 maneras</b>:</p>
+    <table style="width:100%; border-collapse:collapse; background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,0.06);">
+        <thead>
+            <tr>
+                <th colspan="2" style="background:var(--base); color:white; padding:12px; font-size:20px;">Gráficamente</th>
+                <th colspan="2" style="background:#047857; color:white; padding:12px; font-size:20px;">Simbólicamente</th>
+            </tr>
+            <tr style="background:#e8f0fe;">
+                <th style="padding:10px; font-size:18px; border:2px solid #d0d7e3;">Regiones</th>
+                <th style="padding:10px; font-size:18px; border:2px solid #d0d7e3;">Colección</th>
+                <th style="padding:10px; font-size:18px; border:2px solid #d0d7e3;">Con números</th>
+                <th style="padding:10px; font-size:18px; border:2px solid #d0d7e3;">Con palabras</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="stp">
+                <td style="padding:14px; border:2px solid #e0e0e0; text-align:center;">
+                    <svg width="100" height="60" viewBox="0 0 100 60">
+                        <rect x="2" y="2" width="24" height="56" rx="4" fill="#EF5350" stroke="#b91c1c" stroke-width="2"/>
+                        <rect x="26" y="2" width="24" height="56" rx="4" fill="#fff" stroke="#b91c1c" stroke-width="2"/>
+                        <rect x="50" y="2" width="24" height="56" rx="4" fill="#fff" stroke="#b91c1c" stroke-width="2"/>
+                        <rect x="74" y="2" width="24" height="56" rx="4" fill="#fff" stroke="#b91c1c" stroke-width="2"/>
+                    </svg>
+                </td>
+                <td style="padding:14px; border:2px solid #e0e0e0; text-align:center; font-size:28px;">
+                    <span style="background:#FFE082; padding:4px 8px; border-radius:8px;">🌸</span>
+                    <span style="opacity:0.35;">🌸 🌸 🌸</span>
+                </td>
+                <td style="padding:14px; border:2px solid #e0e0e0; text-align:center;">
+                    <span class="frac-sm" style="font-size:36px; color:var(--base);"><span class="fn">1</span><span class="fd">4</span></span>
+                </td>
+                <td style="padding:14px; border:2px solid #e0e0e0; text-align:center; font-size:22px; font-weight:800; color:#047857;">Un cuarto</td>
+            </tr>
+            <tr class="stp">
+                <td style="padding:14px; border:2px solid #e0e0e0; text-align:center;">
+                    <svg width="100" height="80" viewBox="0 0 100 80">
+                        <circle cx="50" cy="40" r="35" fill="none" stroke="var(--base)" stroke-width="3"/>
+                        <line x1="50" y1="5" x2="50" y2="75" stroke="var(--base)" stroke-width="2"/>
+                        <line x1="15" y1="40" x2="85" y2="40" stroke="var(--base)" stroke-width="2"/>
+                        <line x1="25" y1="15" x2="75" y2="65" stroke="var(--base)" stroke-width="2"/>
+                        <line x1="75" y1="15" x2="25" y2="65" stroke="var(--base)" stroke-width="2"/>
+                        <path d="M50,40 L50,5 A35,35 0 0,1 75,15 Z" fill="#4FC3F7" stroke="var(--base)" stroke-width="2"/>
+                    </svg>
+                </td>
+                <td style="padding:14px; border:2px solid #e0e0e0; text-align:center; font-size:28px;">
+                    <span style="background:#C8E6C9; padding:4px 8px; border-radius:8px;">🔺</span>
+                    <span style="opacity:0.35;">🔺 🔺 🔺 🔺 🔺 🔺 🔺</span>
+                </td>
+                <td style="padding:14px; border:2px solid #e0e0e0; text-align:center;">
+                    <span class="frac-sm" style="font-size:36px; color:var(--base);"><span class="fn">1</span><span class="fd">8</span></span>
+                </td>
+                <td style="padding:14px; border:2px solid #e0e0e0; text-align:center; font-size:22px; font-weight:800; color:#047857;">Un octavo</td>
+            </tr>
+            <tr class="stp">
+                <td style="padding:14px; border:2px solid #e0e0e0; text-align:center;">
+                    <svg width="100" height="60" viewBox="0 0 100 60">
+                        <rect x="2" y="2" width="19" height="56" rx="3" fill="#FFB74D" stroke="#e65100" stroke-width="2"/>
+                        <rect x="21" y="2" width="19" height="56" rx="3" fill="#FFB74D" stroke="#e65100" stroke-width="2"/>
+                        <rect x="40" y="2" width="19" height="56" rx="3" fill="#fff" stroke="#e65100" stroke-width="2"/>
+                        <rect x="59" y="2" width="19" height="56" rx="3" fill="#fff" stroke="#e65100" stroke-width="2"/>
+                        <rect x="78" y="2" width="19" height="56" rx="3" fill="#fff" stroke="#e65100" stroke-width="2"/>
+                    </svg>
+                </td>
+                <td style="padding:14px; border:2px solid #e0e0e0; text-align:center; font-size:28px;">
+                    <span style="background:#E1BEE7; padding:4px 8px; border-radius:8px;">🍐</span>
+                    <span style="background:#E1BEE7; padding:4px 8px; border-radius:8px;">🍐</span>
+                    <span style="opacity:0.35;">🍐 🍐 🍐</span>
+                </td>
+                <td style="padding:14px; border:2px solid #e0e0e0; text-align:center;">
+                    <span class="frac-sm" style="font-size:36px; color:var(--base);"><span class="fn">2</span><span class="fd">5</span></span>
+                </td>
+                <td style="padding:14px; border:2px solid #e0e0e0; text-align:center; font-size:22px; font-weight:800; color:#047857;">Dos quintos</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-        <div class="stp" style="margin-top:30px; border-top: 2px dashed #ccc; padding-top:20px;">
-          <p style="font-size:22px; color:#555; font-weight:800; margin-bottom:10px;">Respuesta:</p>
-          <div style="font-size:24px;">La escuela son 4 cuadras (4/4).<br>Caminaste 1 cuadra (1/4).<br>Quedan <span
-              style='color:var(--base); font-size:36px; font-weight:900;'>3/4</span> del camino.</div>
-        </div>
-      </div>
+<!-- ====== SLIDE 8: LECTURA DE FRACCIONES ====== -->
+<div class="sl">
+    <div class="head-title">¿Cómo se LEEN? 🗣️</div>
+    <p class="sub-text">El denominador tiene un nombre especial según cuántas partes son:</p>
+    <div class="fact-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="fact-box stp"><h4 style="color:var(--base);">÷ 2</h4><p style="font-size:22px;"><b>Medios</b></p><p style="font-size:16px;"><span class="frac-sm" style="font-size:22px;"><span class="fn">1</span><span class="fd">2</span></span> = un <b>medio</b></p></div>
+        <div class="fact-box stp"><h4 style="color:var(--base);">÷ 3</h4><p style="font-size:22px;"><b>Tercios</b></p><p style="font-size:16px;"><span class="frac-sm" style="font-size:22px;"><span class="fn">2</span><span class="fd">3</span></span> = dos <b>tercios</b></p></div>
+        <div class="fact-box stp"><h4 style="color:var(--base);">÷ 4</h4><p style="font-size:22px;"><b>Cuartos</b></p><p style="font-size:16px;"><span class="frac-sm" style="font-size:22px;"><span class="fn">3</span><span class="fd">4</span></span> = tres <b>cuartos</b></p></div>
+        <div class="fact-box stp"><h4 style="color:var(--base);">÷ 5</h4><p style="font-size:22px;"><b>Quintos</b></p><p style="font-size:16px;"><span class="frac-sm" style="font-size:22px;"><span class="fn">1</span><span class="fd">5</span></span> = un <b>quinto</b></p></div>
+        <div class="fact-box stp"><h4 style="color:var(--base);">÷ 6</h4><p style="font-size:22px;"><b>Sextos</b></p><p style="font-size:16px;"><span class="frac-sm" style="font-size:22px;"><span class="fn">5</span><span class="fd">6</span></span> = cinco <b>sextos</b></p></div>
+        <div class="fact-box stp"><h4 style="color:var(--base);">÷ 10+</h4><p style="font-size:22px;"><b>-avos</b></p><p style="font-size:16px;"><span class="frac-sm" style="font-size:22px;"><span class="fn">3</span><span class="fd">12</span></span> = tres <b>doce-avos</b></p></div>
     </div>
-    <div class="sl">
-      <div class="head-title">📋 Resumen de Anatomía</div>
-      <div style="display:flex; flex-direction:column; gap:20px; width:100%;">
-        <div class="stp pnl" style="padding:20px; font-size:24px; border-left: 8px solid var(--base);">
-          📏 <b>Partes iguales:</b> Toda fracción requiere que la figura se corte en pedazos exactamente iguales.
-        </div>
-        <div class="stp pnl" style="padding:20px; font-size:24px; border-left: 8px solid var(--base);">
-          🎨 <b>Numerador (Arriba):</b> La cantidad de partes que pintamos o seleccionamos del total.
-        </div>
-        <div class="stp pnl" style="padding:20px; font-size:24px; border-left: 8px solid var(--base);">
-          🍕 <b>Denominador (Abajo):</b> El TOTAL de partes en las que se dividió toda la figura.
-        </div>
-      </div>
-    </div>
-    <div class="sl">
-      <div class="head-title" style="background: #047857;">🏆 ¡Misión Cumplida!</div>
-      <div style="font-size:32px; font-weight:800; text-align:center; margin-top:20px;">
-        ¡Has entendido las bases perfectas de las fracciones!<br>Estás listo para avanzar.
-      </div>
-      <div style="font-size:80px; margin-top:40px; animation: bounce 2s infinite;">🌟</div>
-      <style>
-        @keyframes bounce {
+</div>
 
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-
-          50% {
-            transform: translateY(-20px);
-          }
-        }
-      </style>
+<!-- ====== SLIDE 9: RECTA NUMÉRICA ====== -->
+<div class="sl">
+    <div class="head-title">Fracciones en la Recta Numérica 📏</div>
+    <p class="sub-text">Una fracción marca un <b class="hl">punto exacto</b> entre 0 y 1.</p>
+    <div class="pnl" style="text-align:center;">
+        <p style="font-size:22px; margin-bottom:14px;">Ubiquemos <span class="frac-sm" style="font-size:26px; color:var(--base);"><span class="fn">3</span><span class="fd">5</span></span> en la recta</p>
+        <svg width="700" height="140" viewBox="0 0 700 140" style="max-width:100%;">
+            <!-- Recta principal -->
+            <line x1="40" y1="70" x2="660" y2="70" stroke="var(--base)" stroke-width="4"/>
+            <polygon points="656,62 670,70 656,78" fill="var(--base)"/>
+            <!-- Marcas: 0 a 5/5 -->
+            <line x1="60" y1="55" x2="60" y2="85" stroke="var(--base)" stroke-width="3"/>
+            <text x="60" y="108" text-anchor="middle" font-family="Nunito" font-size="20" font-weight="900" fill="var(--tx)">0</text>
+            <line x1="180" y1="58" x2="180" y2="82" stroke="#999" stroke-width="2"/>
+            <text x="180" y="108" text-anchor="middle" font-family="Nunito" font-size="16" font-weight="700" fill="#999">1/5</text>
+            <line x1="300" y1="58" x2="300" y2="82" stroke="#999" stroke-width="2"/>
+            <text x="300" y="108" text-anchor="middle" font-family="Nunito" font-size="16" font-weight="700" fill="#999">2/5</text>
+            <!-- 3/5 marcado especial -->
+            <line x1="420" y1="50" x2="420" y2="90" stroke="#EF5350" stroke-width="4"/>
+            <circle cx="420" cy="70" r="10" fill="#EF5350"/>
+            <text x="420" y="38" text-anchor="middle" font-family="Nunito" font-size="22" font-weight="900" fill="#EF5350">3/5</text>
+            <line x1="540" y1="58" x2="540" y2="82" stroke="#999" stroke-width="2"/>
+            <text x="540" y="108" text-anchor="middle" font-family="Nunito" font-size="16" font-weight="700" fill="#999">4/5</text>
+            <line x1="640" y1="55" x2="640" y2="85" stroke="var(--base)" stroke-width="3"/>
+            <text x="640" y="108" text-anchor="middle" font-family="Nunito" font-size="20" font-weight="900" fill="var(--tx)">1</text>
+        </svg>
+        <div class="stp" style="margin-top:10px;">
+            <div class="mini-chip" style="font-size:18px;">💡 Dividimos el tramo 0→1 en <b>5 partes iguales</b> y caminamos <b>3</b> pasos desde el 0</div>
+        </div>
     </div>
-  </div>
-  <div class="nv">
+    <div class="pnl stp" style="text-align:center; margin-top:10px;">
+        <p style="font-size:22px; margin-bottom:14px;">Ubiquemos <span class="frac-sm" style="font-size:26px; color:var(--base);"><span class="fn">1</span><span class="fd">4</span></span> en la recta</p>
+        <svg width="700" height="120" viewBox="0 0 700 120" style="max-width:100%;">
+            <line x1="40" y1="60" x2="660" y2="60" stroke="var(--base)" stroke-width="4"/>
+            <polygon points="656,52 670,60 656,68" fill="var(--base)"/>
+            <line x1="60" y1="45" x2="60" y2="75" stroke="var(--base)" stroke-width="3"/>
+            <text x="60" y="98" text-anchor="middle" font-family="Nunito" font-size="20" font-weight="900" fill="var(--tx)">0</text>
+            <!-- 1/4 marcado -->
+            <line x1="205" y1="40" x2="205" y2="80" stroke="#FF9800" stroke-width="4"/>
+            <circle cx="205" cy="60" r="10" fill="#FF9800"/>
+            <text x="205" y="28" text-anchor="middle" font-family="Nunito" font-size="22" font-weight="900" fill="#FF9800">1/4</text>
+            <line x1="350" y1="48" x2="350" y2="72" stroke="#999" stroke-width="2"/>
+            <text x="350" y="98" text-anchor="middle" font-family="Nunito" font-size="16" font-weight="700" fill="#999">2/4</text>
+            <line x1="495" y1="48" x2="495" y2="72" stroke="#999" stroke-width="2"/>
+            <text x="495" y="98" text-anchor="middle" font-family="Nunito" font-size="16" font-weight="700" fill="#999">3/4</text>
+            <line x1="640" y1="45" x2="640" y2="75" stroke="var(--base)" stroke-width="3"/>
+            <text x="640" y="98" text-anchor="middle" font-family="Nunito" font-size="20" font-weight="900" fill="var(--tx)">1</text>
+        </svg>
+    </div>
+</div>
+
+<!-- ====== SLIDE 10: FRACCIÓN DE UNA COLECCIÓN ====== -->
+<div class="sl">
+    <div class="head-title">Fracción de una Colección 🎒</div>
+    <p class="sub-text">¡No solo figuras! También podemos tomar una fracción de un <b class="hl">grupo de objetos</b>.</p>
+    <div class="count-board">
+        <div class="count-card stp">
+            <h3>🍎 12 manzanas</h3>
+            <div class="emoji-pack">
+                <span style="font-size:30px; background:#FFE082; padding:4px; border-radius:8px;">🍎</span>
+                <span style="font-size:30px; background:#FFE082; padding:4px; border-radius:8px;">🍎</span>
+                <span style="font-size:30px; background:#FFE082; padding:4px; border-radius:8px;">🍎</span>
+                <span style="font-size:30px;">🍎</span><span style="font-size:30px;">🍎</span><span style="font-size:30px;">🍎</span>
+                <span style="font-size:30px;">🍎</span><span style="font-size:30px;">🍎</span><span style="font-size:30px;">🍎</span>
+                <span style="font-size:30px;">🍎</span><span style="font-size:30px;">🍎</span><span style="font-size:30px;">🍎</span>
+            </div>
+            <p style="font-size:20px;"><span class="frac-sm" style="font-size:22px;"><span class="fn">1</span><span class="fd">4</span></span> de 12 = <b>3 manzanas</b></p>
+            <p style="font-size:16px; color:#888;">12 ÷ 4 = 3</p>
+        </div>
+        <div class="count-card stp">
+            <h3>⚽ 10 pelotas</h3>
+            <div class="emoji-pack">
+                <span style="font-size:30px; background:#C8E6C9; padding:4px; border-radius:8px;">⚽</span>
+                <span style="font-size:30px; background:#C8E6C9; padding:4px; border-radius:8px;">⚽</span>
+                <span style="font-size:30px;">⚽</span><span style="font-size:30px;">⚽</span><span style="font-size:30px;">⚽</span>
+                <span style="font-size:30px;">⚽</span><span style="font-size:30px;">⚽</span><span style="font-size:30px;">⚽</span>
+                <span style="font-size:30px;">⚽</span><span style="font-size:30px;">⚽</span>
+            </div>
+            <p style="font-size:20px;"><span class="frac-sm" style="font-size:22px;"><span class="fn">1</span><span class="fd">5</span></span> de 10 = <b>2 pelotas</b></p>
+            <p style="font-size:16px; color:#888;">10 ÷ 5 = 2</p>
+        </div>
+    </div>
+    <div class="stp" style="margin-top:12px;">
+        <div class="mini-chip" style="background:#e8f5e9; border-color:#4caf50; font-size:18px;">🧠 <b>Truco:</b> Para calcular la fracción de un grupo → divides el total por el denominador, luego multiplicas por el numerador.</div>
+    </div>
+</div>
+
+<!-- ====== SLIDE 11: QUIZ INTERACTIVO ====== -->
+<div class="sl">
+    <div class="head-title">¡Quiz Relámpago! ⚡</div>
+    <p class="sub-text">¿Qué fracción representa esta barra?</p>
+    <div class="bar-rect" style="max-width:500px; margin-bottom:20px;">
+        <div style="flex:1; background:#9C27B0;"></div>
+        <div style="flex:1; background:#9C27B0;"></div>
+        <div style="flex:1; background:#9C27B0;"></div>
+        <div style="flex:1; background:#fff;"></div>
+        <div style="flex:1; background:#fff;"></div>
+        <div style="flex:1; background:#fff;"></div>
+    </div>
+    <div class="card-row" style="max-width:600px;">
+        <button class="btn" onclick="chkAns(this,false,'')">
+            <span class="frac-sm" style="font-size:24px; color:white;"><span class="fn">3</span><span class="fd">3</span></span>
+        </button>
+        <button class="btn" onclick="chkAns(this,true,'3 partes pintadas de 6 totales = 3/6')">
+            <span class="frac-sm" style="font-size:24px; color:white;"><span class="fn">3</span><span class="fd">6</span></span>
+        </button>
+        <button class="btn" onclick="chkAns(this,false,'')">
+            <span class="frac-sm" style="font-size:24px; color:white;"><span class="fn">6</span><span class="fd">3</span></span>
+        </button>
+    </div>
+    <div class="msg-area" id="msg1"></div>
+</div>
+
+<!-- ====== SLIDE 12: QUIZ 2 (COLECCIÓN) ====== -->
+<div class="sl">
+    <div class="head-title">¡Quiz 2! ⚡</div>
+    <p class="sub-text">Hay 15 estrellas. ¿Cuánto es <span class="frac-sm" style="font-size:26px;"><span class="fn">1</span><span class="fd">3</span></span> de 15?</p>
+    <div class="emoji-pack" style="margin-bottom:20px; font-size:34px;">
+        ⭐⭐⭐⭐⭐ ⭐⭐⭐⭐⭐ ⭐⭐⭐⭐⭐
+    </div>
+    <div class="card-row" style="max-width:500px;">
+        <button class="btn" onclick="chkAns(this,true,'15 ÷ 3 = 5 estrellas ✨')">5 estrellas</button>
+        <button class="btn" onclick="chkAns(this,false,'')">3 estrellas</button>
+        <button class="btn" onclick="chkAns(this,false,'')">6 estrellas</button>
+    </div>
+    <div class="msg-area" id="msg2"></div>
+</div>
+
+<!-- ====== SLIDE 13: ABRE TU CUADERNO ====== -->
+<div class="sl">
+    <div class="head-title">✏️ Abre tu Cuaderno</div>
+    <p class="sub-text">Resuelve estos ejercicios. ¡Luego revisa las respuestas!</p>
+    <div class="cuad-grid">
+        <div class="cuad-item">1️⃣ Escribe la fracción de la parte pintada:<br>
+            <svg width="120" height="50" viewBox="0 0 120 50" style="margin-top:6px;">
+                <rect x="2" y="2" width="28" height="46" fill="#FF7043" stroke="#bf360c" stroke-width="2" rx="4"/>
+                <rect x="32" y="2" width="28" height="46" fill="#FF7043" stroke="#bf360c" stroke-width="2" rx="4"/>
+                <rect x="62" y="2" width="28" height="46" fill="#fff" stroke="#bf360c" stroke-width="2" rx="4"/>
+                <rect x="92" y="2" width="28" height="46" fill="#fff" stroke="#bf360c" stroke-width="2" rx="4"/>
+            </svg>
+        </div>
+        <div class="cuad-item">2️⃣ ¿Cómo se lee <span class="frac-sm"><span class="fn">5</span><span class="fd">8</span></span>?</div>
+        <div class="cuad-item">3️⃣ Ubica <span class="frac-sm"><span class="fn">2</span><span class="fd">6</span></span> en la recta (dibújala de 0 a 1)</div>
+        <div class="cuad-item">4️⃣ ¿Cuánto es <span class="frac-sm"><span class="fn">1</span><span class="fd">3</span></span> de 18 lápices? 🖍️</div>
+        <div class="cuad-item">5️⃣ Escribe la fracción:<br>
+            <svg width="110" height="80" viewBox="0 0 110 80" style="margin-top:6px;">
+                <circle cx="55" cy="40" r="35" fill="none" stroke="#1C4A82" stroke-width="3"/>
+                <line x1="55" y1="5" x2="55" y2="75" stroke="#1C4A82" stroke-width="2"/>
+                <line x1="20" y1="40" x2="90" y2="40" stroke="#1C4A82" stroke-width="2"/>
+                <path d="M55,40 L55,5 A35,35 0 0,1 90,40 Z" fill="#4FC3F7" stroke="#1C4A82" stroke-width="2"/>
+            </svg>
+        </div>
+        <div class="cuad-item">6️⃣ ¿Cuánto es <span class="frac-sm"><span class="fn">2</span><span class="fd">5</span></span> de 20 globos? 🎈</div>
+    </div>
+</div>
+
+<!-- ====== SLIDE 14: RESPUESTAS ====== -->
+<div class="sl">
+    <div class="head-title">✅ Respuestas</div>
+    <div class="resp-grid">
+        <div class="resp-item stp">1️⃣ <span class="frac-sm" style="font-size:26px;"><span class="fn">2</span><span class="fd">4</span></span></div>
+        <div class="resp-item stp">2️⃣ "Cinco octavos"</div>
+        <div class="resp-item stp">3️⃣ 2/6 → 2do salto de 6</div>
+        <div class="resp-item stp">4️⃣ 18 ÷ 3 = <b>6 lápices</b></div>
+        <div class="resp-item stp">5️⃣ <span class="frac-sm" style="font-size:26px;"><span class="fn">1</span><span class="fd">4</span></span></div>
+        <div class="resp-item stp">6️⃣ 20 ÷ 5 = 4, × 2 = <b>8 globos</b></div>
+    </div>
+</div>
+
+<!-- ====== SLIDE 15: PROBLEMA 1 ====== -->
+<div class="sl">
+    <div class="head-title">Problema Situacional 1 🍰</div>
+    <div class="story-card" style="border:4px solid #9DE3BD; background:#f0fdf4;">
+        <div class="story-emoji">🎂</div>
+        <div>
+            <p style="font-size:22px;">Valentina compró un queque y lo cortó en <b>8 partes iguales</b>. Se comió <b>3 partes</b> con sus amigas. ¿Qué fracción del queque se comieron?</p>
+            <div class="stp" style="margin-top:14px; background:#d1fae5; padding:14px; border-radius:10px;">
+                <p style="font-size:22px; font-weight:800; color:#047857;">✅ Respuesta: Se comieron <span class="frac-sm" style="font-size:24px;"><span class="fn">3</span><span class="fd">8</span></span> del queque (tres octavos).</p>
+                <div class="bar-rect" style="max-width:400px; height:40px; margin-top:10px;">
+                    <div style="flex:1; background:#81C784;">🍴</div>
+                    <div style="flex:1; background:#81C784;">🍴</div>
+                    <div style="flex:1; background:#81C784;">🍴</div>
+                    <div style="flex:1; background:#fff;"></div>
+                    <div style="flex:1; background:#fff;"></div>
+                    <div style="flex:1; background:#fff;"></div>
+                    <div style="flex:1; background:#fff;"></div>
+                    <div style="flex:1; background:#fff;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ====== SLIDE 16: PROBLEMA 2 ====== -->
+<div class="sl">
+    <div class="head-title">Problema Situacional 2 🏊</div>
+    <div class="story-card" style="border:4px solid #9DDEFF; background:#f0f8ff;">
+        <div class="story-emoji">🏊</div>
+        <div>
+            <p style="font-size:22px;">En el equipo de natación hay <b>24 niños</b>. Un cuarto del equipo (<span class="frac-sm" style="font-size:20px;"><span class="fn">1</span><span class="fd">4</span></span>) entrena estilo espalda. ¿Cuántos niños entrenan espalda?</p>
+            <div class="stp" style="margin-top:14px; background:#e3f2fd; padding:14px; border-radius:10px;">
+                <p style="font-size:22px; font-weight:800; color:var(--base);">✅ Respuesta: 24 ÷ 4 = <b>6 niños</b> entrenan estilo espalda.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ====== SLIDE 17: PROBLEMA 3 ====== -->
+<div class="sl">
+    <div class="head-title">Problema Situacional 3 🖍️</div>
+    <div class="story-card" style="border:4px solid #E1BEE7; background:#faf5ff;">
+        <div class="story-emoji">🖍️</div>
+        <div>
+            <p style="font-size:22px;">Matías tiene una caja con <b>30 lápices de colores</b>. Usa <span class="frac-sm" style="font-size:20px;"><span class="fn">2</span><span class="fd">5</span></span> de sus lápices para dibujar. ¿Cuántos lápices usó?</p>
+            <div class="stp" style="margin-top:14px; background:#f3e5f5; padding:14px; border-radius:10px;">
+                <p style="font-size:22px; font-weight:800; color:var(--purple);">✅ Paso 1: 30 ÷ 5 = 6 (cada quinto)<br>Paso 2: 6 × 2 = <b>12 lápices</b></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ====== SLIDE 18: DESAFÍO SUPREMO ====== -->
+<div class="sl" style="background: linear-gradient(135deg, #9333EA, #db2777); color: white;">
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+        <h1 style="font-size:56px; margin-bottom:18px;">⛏️ Desafío ObraCraft</h1>
+        <p style="font-size:24px; max-width:700px; text-align:center; opacity:0.95;">¡Has llegado al nivel secreto! Resuelve para desbloquear el cofre de diamantes.</p>
+    </div>
+</div>
+
+<!-- ====== SLIDE 19: OBRACRAFT DESAFÍO ====== -->
+<div class="sl">
+    <div class="head-title" style="background:linear-gradient(135deg, #9333EA, #db2777);">⛏️ El Cofre del Dragón</div>
+    <div class="pnl" style="border-color:#9333EA;">
+        <p style="font-size:22px; text-align:center;">En el mundo ObraCraft, un dragón custodia un cofre con <b>36 diamantes</b> 💎. El dragón te dice:</p>
+        <div style="background:linear-gradient(135deg,#9333EA22,#db277722); padding:16px; border-radius:14px; margin:14px 0; text-align:center; font-size:22px; font-weight:800; color:#9333EA;">
+            🐉 "Solo puedes llevarte <span class="frac-sm" style="font-size:24px;"><span class="fn">1</span><span class="fd">6</span></span> de los diamantes en el primer viaje. En el segundo viaje, puedes llevarte <span class="frac-sm" style="font-size:24px;"><span class="fn">1</span><span class="fd">4</span></span> de los que quedaron."
+        </div>
+        <p style="font-size:22px; text-align:center; font-weight:700;">¿Cuántos diamantes llevas en CADA viaje? ¿Cuántos quedan en el cofre?</p>
+        <div class="stp" style="margin-top:14px; background:#f3e5f5; padding:14px; border-radius:10px;">
+            <p style="font-size:20px; font-weight:800; color:var(--purple);">✅ Viaje 1: 36 ÷ 6 = <b>6 diamantes</b> 💎</p>
+            <p style="font-size:20px; font-weight:800; color:var(--purple);">Quedan: 36 − 6 = <b>30 diamantes</b></p>
+            <p style="font-size:20px; font-weight:800; color:var(--pink);">✅ Viaje 2: 30 ÷ 4 = <b>7 diamantes</b> (y sobran 2)</p>
+            <p style="font-size:20px; font-weight:800; color:var(--pink);">Quedan en el cofre: 30 − 7 = <b>23 diamantes</b></p>
+        </div>
+    </div>
+</div>
+
+<!-- ====== SLIDE 20: RESUMEN ====== -->
+<div class="sl">
+    <div class="head-title">📝 Resumen de la Clase</div>
+    <div class="pnl" style="max-width:680px; margin:0 auto;">
+        <div style="font-size:22px; line-height:2.2;">
+            <p class="stp">✅ Una <b>fracción</b> = partes iguales que tomamos de un entero.</p>
+            <p class="stp">✅ <b>Numerador</b> (arriba) = partes que tomamos. <b>Denominador</b> (abajo) = total de partes.</p>
+            <p class="stp">✅ Se pueden representar con <b>barras, círculos, hexágonos, colecciones</b> y más.</p>
+            <p class="stp">✅ En la <b>recta numérica</b>, dividimos el tramo 0→1 según el denominador.</p>
+            <p class="stp">✅ <b>Fracción de un grupo</b>: divides el total por el denominador, luego multiplicas por el numerador.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ====== SLIDE 21: CIERRE ====== -->
+<div class="sl">
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+        <div style="font-size:120px; margin-bottom:20px; animation: bounce 2s infinite;">🎉</div>
+        <h1 style="font-size:48px; color:var(--base); text-align:center;">¡Excelente trabajo!</h1>
+        <p style="font-size:26px; font-weight:700; text-align:center; max-width:600px; margin-top:16px;">Ya dominas la anatomía de las fracciones y sus 4 formas de representación. ¡En la próxima clase descubriremos fracciones equivalentes!</p>
+        <div style="font-size:54px; margin-top:18px;">🍕➡️🔢✨</div>
+    </div>
+</div>
+
+</div>
+<div class="nv">
     <button class="nb" id="pv" onclick="go(-1)">⬅ Anterior</button>
-    <div style="display:flex; flex-direction:column; align-items:center; gap:2px; max-width:200px; width:100%;">
-            <div class="sc" id="sc"></div>
-            <input type="range" id="slide-slider" style="width: 100%; cursor: pointer;" min="1" max="10" value="1" oninput="goToSlide(this.value)">
-        </div>
+    <input type="range" id="slide-slider" min="1" value="1" style="width:200px; accent-color:var(--base);" oninput="goToSlide(this.value)">
+    <span class="sc" id="sc">1 / 21</span>
     <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
-  </div>
-  <script>
-    const S = document.querySelectorAll('.sl'); let c = 0; const T = S.length;
+</div>
+<script>
+    const S=document.querySelectorAll('.sl'); let c=0; const T=S.length;
     function ui() {
-      S.forEach((s, i) => {
-        s.classList.remove('on', 'pv', 'nx');
-        if (i === c) s.classList.add('on');
-        else if (i < c) s.classList.add('pv');
-        else s.classList.add('nx');
-      });
-      document.getElementById('pb').style.width = ((c + 1) / T * 100) + '%';
-      document.getElementById('sc').textContent = `${c + 1} / ${T}`;
-      document.getElementById('pv').disabled = c === 0;
-      document.getElementById('nx').disabled = c === T - 1;
-            let sl = document.getElementById('slide-slider');
-            if(sl) { sl.max = T; sl.value = c + 1; }
+        S.forEach((s,i)=>{
+            s.classList.remove('on','pv','nx');
+            if(i===c) s.classList.add('on');
+            else if(i<c) s.classList.add('pv');
+            else s.classList.add('nx');
+        });
+        document.getElementById('pb').style.width=((c+1)/T*100)+'%';
+        document.getElementById('sc').textContent=`${c+1} / ${T}`;
+        document.getElementById('pv').disabled=c===0;
+        document.getElementById('nx').disabled=c===T-1;
+        let sl = document.getElementById('slide-slider');
+        if(sl) { sl.max = T; sl.value = c + 1; }
     }
-
-        function goToSlide(n) {
-            let index = parseInt(n) - 1;
-            if (index >= 0 && index < T) {
-                c = index;
-                ui();
-            }
-        }
+    function goToSlide(n) {
+        let val = parseInt(n) - 1;
+        if (val >= 0 && val < T) { c = val; ui(); }
+    }
     function go(d) {
-      if (d > 0) {
-        const hid = S[c].querySelectorAll('.stp:not(.shwn)');
-        if (hid.length > 0) { hid[0].classList.add('shwn'); return; }
-      } else {
-        const shw = S[c].querySelectorAll('.stp.shwn');
-        if (shw.length > 0) { shw[shw.length - 1].classList.remove('shwn'); return; }
-      }
-      const n = c + d; if (n >= 0 && n < T) { c = n; ui(); }
+        if(d>0) {
+            const hid = S[c].querySelectorAll('.stp:not(.shwn)');
+            if(hid.length > 0) { hid[0].classList.add('shwn'); return; }
+        } else {
+            const shw = S[c].querySelectorAll('.stp.shwn');
+            if(shw.length > 0) { shw[shw.length-1].classList.remove('shwn'); return; }
+        }
+        const n=c+d; if(n>=0 && n<T) { c=n; ui(); }
     }
     document.addEventListener('keydown', e => {
-      if (e.key === 'ArrowRight' || e.key === ' ') go(1);
-      if (e.key === 'ArrowLeft') go(-1);
+        if(e.key==='ArrowRight' || e.key===' ') go(1);
+        if(e.key==='ArrowLeft') go(-1);
     });
     ui();
-    function ptSVG(el, colon, coloff) {
-      let isOn = el.getAttribute('data-on') === '1';
-      el.setAttribute('fill', isOn ? coloff : colon);
-      el.setAttribute('data-on', isOn ? '0' : '1');
+    function chkAns(btn, correct, exp) {
+        let wrap = btn.closest('.sl');
+        let msg = wrap.querySelector('.msg-area');
+        let buttons = wrap.querySelectorAll('.btn');
+        buttons.forEach(b => { b.disabled = false; b.style.transform = 'scale(1)'; b.style.background = 'var(--base)'; });
+        if (correct) {
+            btn.style.background = '#047857';
+            btn.style.transform = 'scale(1.06)';
+            if(msg) msg.innerHTML = `¡Excelente! ✅ ${exp}`;
+            if(msg) msg.style.color = '#047857';
+        } else {
+            btn.style.background = '#b91c1c';
+            if(msg) msg.innerHTML = '¡Inténtalo de nuevo! Revisa bien.';
+            if(msg) msg.style.color = '#b91c1c';
+        }
     }
-    function chkAns(btn, correct) {
-      let p = btn.parentElement;
-      let msg = p.nextElementSibling;
-      for (let b of p.children) b.style.transform = 'scale(1)';
-      if (correct) {
-        btn.style.background = '#047857';
-        btn.style.transform = 'scale(1.1)';
-        msg.innerHTML = '¡Excelente! ✅ ¡Lo lograste!';
-        msg.style.color = '#047857';
-      } else {
-        btn.style.background = '#b91c1c';
-        let frases = ["¡Vuelve a intentarlo! 💪", "Verifica bien 🧐", "Con calma, tú puedes 🚀"];
-        msg.innerHTML = frases[Math.floor(Math.random() * frases.length)];
-        msg.style.color = '#b91c1c';
-      }
-    }
-  </script>
-</body>
-
-</html>
+</script></body></html>
