@@ -56,7 +56,28 @@
     .tira {display: flex; border-radius: 8px; overflow: hidden; border: 3px solid #555; height: 40px; width: 100%;}
     .tira div {display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; border-right: 2px solid rgba(0,0,0,0.2);}
     .tira div:last-child {border-right: none;}
-</style></head><body><div class="pb" id="pb"></div><div class="dk">
+</style>
+<style>
+@media print {
+    body { overflow: visible !important; height: auto !important; display: block !important; background: white !important; }
+    .dk { display: block !important; height: auto !important; max-width: none !important; margin: 0 !important; }
+    .sl {
+        position: relative !important;
+        opacity: 1 !important;
+        transform: none !important;
+        page-break-after: always;
+        page-break-inside: avoid;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        overflow: hidden !important;
+        padding: 20px !important;
+    }
+    .sl.pv, .sl.nx, .sl.on { transform: none !important; opacity: 1 !important; }
+    .pb, .nv, .print-btn { display: none !important; }
+    * { animation: none !important; transition: none !important; }
+}
+</style>
+</head><body><div class="pb" id="pb"></div><div class="dk">
 
 <!-- ====== SLIDE 1: PORTADA ====== -->
 <div class="sl">
@@ -691,4 +712,6 @@
             if(msg) { msg.innerHTML = '¡Inténtalo de nuevo!'; msg.style.color = '#b91c1c'; }
         }
     }
-</script></body></html>
+</script>
+<button onclick="window.print()" class="print-btn" style="position:fixed; top:20px; right:20px; background:#1C4A82; color:white; border:none; padding:10px 15px; border-radius:8px; font-family:'Nunito',sans-serif; font-weight:bold; cursor:pointer; z-index:1000; box-shadow:0 4px 6px rgba(0,0,0,0.1);">📄 Descargar PDF</button>
+</body></html>

@@ -910,6 +910,27 @@ def html_doc(title: str, slides: list[str]) -> str:
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>{esc(title)}</title>
     <style>{CSS}</style>
+
+<style>
+@media print {
+    body { overflow: visible !important; height: auto !important; display: block !important; background: white !important; }
+    .dk { display: block !important; height: auto !important; max-width: none !important; margin: 0 !important; }
+    .sl {
+        position: relative !important;
+        opacity: 1 !important;
+        transform: none !important;
+        page-break-after: always;
+        page-break-inside: avoid;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        overflow: hidden !important;
+        padding: 20px !important;
+    }
+    .sl.pv, .sl.nx, .sl.on { transform: none !important; opacity: 1 !important; }
+    .pb, .nv, .print-btn { display: none !important; }
+    * { animation: none !important; transition: none !important; }
+}
+</style>
 </head>
 <body>
     <div class="pb" id="pb"></div>
@@ -925,6 +946,8 @@ def html_doc(title: str, slides: list[str]) -> str:
         <button class="nb" id="nx" onclick="go(1)">Siguiente ➡</button>
     </div>
     <script>{JS}</script>
+
+<button onclick="window.print()" class="print-btn" style="position:fixed; top:20px; right:20px; background:#1C4A82; color:white; border:none; padding:10px 15px; border-radius:8px; font-family:'Nunito',sans-serif; font-weight:bold; cursor:pointer; z-index:1000; box-shadow:0 4px 6px rgba(0,0,0,0.1);">📄 Descargar PDF</button>
 </body>
 </html>
 """

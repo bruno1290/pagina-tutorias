@@ -35,7 +35,28 @@
     .grid-algo div { display: flex; align-items: center; justify-content: center; }
     .line-algo { grid-column: 1 / -1; grid-row: 4; height: 6px; background: #333; margin: auto 0 10px 0; border-radius: 3px; align-self: end; }
     .res-carry { font-size: 28px; color: #c2185b; font-weight: 900; border: 3px dashed #c2185b; border-radius: 50%; width: 45px; height: 45px; display:flex; justify-content:center; align-items:center; margin: 0 auto; background: #fff0f5;}
-    </style></head>
+    </style>
+<style>
+@media print {
+    body { overflow: visible !important; height: auto !important; display: block !important; background: white !important; }
+    .dk { display: block !important; height: auto !important; max-width: none !important; margin: 0 !important; }
+    .sl {
+        position: relative !important;
+        opacity: 1 !important;
+        transform: none !important;
+        page-break-after: always;
+        page-break-inside: avoid;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        overflow: hidden !important;
+        padding: 20px !important;
+    }
+    .sl.pv, .sl.nx, .sl.on { transform: none !important; opacity: 1 !important; }
+    .pb, .nv, .print-btn { display: none !important; }
+    * { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
 <body><div class="pb" id="pb"></div><div class="dk"><div class="sl">
         <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
             <h1 style="font-size: 70px; color: var(--base); margin-bottom: 20px; text-align:center;">¡Multiplicaciones 3!</h1>
@@ -493,4 +514,6 @@
         if (correct) { btn.style.background = '#047857'; btn.style.transform = 'scale(1.1)'; msg.innerHTML = '¡Excelente! ✅ ¡Lo lograste!'; msg.style.color = '#047857'; }
         else { btn.style.background = '#b91c1c'; let frases = ["¡Revisa el orden multiplicando de derecha a izquierda! 💪", "Observa las reservas 🧐", "¡Casi! Intentemos de nuevo 🚀"]; msg.innerHTML = frases[Math.floor(Math.random()*frases.length)]; msg.style.color = '#b91c1c'; }
     }
-    </script></body></html>
+    </script>
+<button onclick="window.print()" class="print-btn" style="position:fixed; top:20px; right:20px; background:#1C4A82; color:white; border:none; padding:10px 15px; border-radius:8px; font-family:'Nunito',sans-serif; font-weight:bold; cursor:pointer; z-index:1000; box-shadow:0 4px 6px rgba(0,0,0,0.1);">📄 Descargar PDF</button>
+</body></html>

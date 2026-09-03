@@ -2518,17 +2518,19 @@
             // 3. Escuchar cambios FUTUROS (logout / login desde otra pestaña)
             supabaseClient.auth.onAuthStateChange(async (event, session) => {
                 if (event === 'SIGNED_IN' && session) {
+                    const isNewLogin = (!currentUser || currentUser.id !== session.user.id);
                     currentUser = session.user;
                     const { data: profile } = await supabaseClient
                         .from('perfiles').select('*').eq('id', currentUser.id).single();
                     userData = profile;
                     if (profile) applyLoggedInUI(profile);
-                    if (currentSection === 'classes') showClasses(false);
+                    if (isNewLogin && currentSection === 'classes') showClasses(false);
                 } else if (event === 'SIGNED_OUT') {
+                    const wasLoggedIn = !!currentUser;
                     currentUser = null;
                     userData = null;
                     applyLoggedOutUI();
-                    if (currentSection === 'classes') showClasses(false);
+                    if (wasLoggedIn && currentSection === 'classes') showClasses(false);
                 }
             });
             // 4. Actualizar si usuario vuelve usando el botón de "Atrás" del navegador (bfcache)
@@ -2536,17 +2538,19 @@
                 if (e.persisted) {
                     const { data: { session } } = await supabaseClient.auth.getSession();
                     if (session) {
+                        const isNewLogin = (!currentUser || currentUser.id !== session.user.id);
                         currentUser = session.user;
                         const { data: profile } = await supabaseClient
                             .from('perfiles').select('*').eq('id', currentUser.id).single();
                         userData = profile;
                         if (profile) applyLoggedInUI(profile);
-                        if (currentSection === 'classes') showClasses(false);
+                        if (isNewLogin && currentSection === 'classes') showClasses(false);
                     } else {
+                        const wasLoggedIn = !!currentUser;
                         currentUser = null;
                         userData = null;
                         applyLoggedOutUI();
-                        if (currentSection === 'classes') showClasses(false);
+                        if (wasLoggedIn && currentSection === 'classes') showClasses(false);
                     }
                 }
             });
