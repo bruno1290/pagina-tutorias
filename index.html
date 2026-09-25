@@ -349,6 +349,44 @@
             box-shadow: 0 4px 14px rgba(10, 22, 48, .18);
         }
 
+        /* ─── RECORDATORIO BANNER ────────────────────────────── */
+        .reminder-banner {
+            position: fixed;
+            top: var(--header-h);
+            right: 22px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--navy);
+            padding: 12px 20px;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(10, 22, 48, 0.1);
+            z-index: 150;
+            border: 1px solid rgba(19, 60, 96, 0.1);
+            border-top: none;
+            /* Despliegue hacia abajo */
+            transform-origin: top right;
+            animation: slideDownBanner 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        @keyframes slideDownBanner {
+            0% { transform: translateY(-15px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .reminder-banner .emoji {
+            font-size: 18px;
+            line-height: 1;
+        }
+
         /* ─── LAYOUT ──────────────────────────────────────────── */
         .layout {
             padding-top: var(--header-h);
@@ -2240,6 +2278,10 @@
 
     <!-- ══════════════════ LAYOUT ══════════════════ -->
     <div class="layout">
+        <div class="reminder-banner">
+            <span class="emoji">📝💙</span>
+            <span>¡Recuerden hacer la sesión de bitácora de formación en sus casas!</span>
+        </div>
         <main class="main" id="main">
 
             <section id="about-view" class="about-view">
@@ -2326,15 +2368,6 @@
 
             <!-- Welcome -->
             <div id="home" class="welcome" style="display:none">
-                <div id="temp-update-banner" style="display:none; width: 100%; background: linear-gradient(135deg, #06D6A0, #047857); color: white; padding: 16px 40px; text-align: center; font-weight: 500; font-size: 16px; position: relative; line-height: 1.5; margin-bottom: 0;">
-                    🎉 <strong>¡Hola tutores! Actualizamos unas cositas:</strong> ahora al cambiar de pestaña no tiene que abrir la presentación de nuevo y se guarda donde estaban. Además, ¡pueden descargar las clases en PDF!
-                    <button onclick="this.parentElement.style.display='none'" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; transition: background 0.2s;">✕</button>
-                </div>
-                <script>
-                    if (new Date() < new Date('2026-09-10T00:00:00')) {
-                        document.getElementById('temp-update-banner').style.display = 'block';
-                    }
-                </script>
                 <div class="welcome-hero">
                     <div class="welcome-intro">
                         <div class="welcome-intro-text">
@@ -3093,7 +3126,7 @@
                     questions: [
                         { emoji: '🍊', q: '¿Cuánto es 12 ÷ 3?', opts: ['3', '4', '6', '9'], ok: 1, exp: '12 dividido en 3 grupos iguales da 4 ✓' },
                         { emoji: '✖️', q: 'Si 4 × 5 = 20, entonces 20 ÷ 5 es...', opts: ['4', '5', '10', '20'], ok: 0, exp: '20 ÷ 5 = 4 ✓' },
-                        { emoji: '🧠', q: 'En 17 ÷ 5 = 3 y sobra 2, el 17 es el...', opts: ['divisor', 'cociente', 'dividendo', 'resto'], ok: 2, exp: '17 es el dividendo ✓' },
+                        { emoji: '🎒', q: 'Si tengo 15 libros y los reparto en 3 mochilas iguales, ¿cuántos libros van en cada una?', opts: ['3', '4', '5', '15'], ok: 2, exp: '15 ÷ 3 = 5 libros por mochila ✓' },
                         { emoji: '1️⃣', q: '¿Cuánto es 9 ÷ 1?', opts: ['1', '8', '9', '10'], ok: 2, exp: 'Todo número dividido en 1 queda igual ✓' },
                     ]
                 }
@@ -3159,8 +3192,8 @@
                     questions: [
                         { emoji: '🟰', q: '¿Cuál es igual a 2/4?', opts: ['1/2', '1/3', '3/4', '2/3'], ok: 0, exp: '2/4 es equivalente a 1/2 ✓' },
                         { emoji: '🟰', q: '¿Cuál es equivalente a 1/2?', opts: ['2/6', '2/4', '3/8', '1/4'], ok: 1, exp: '1/2 = 2/4 (se multiplica numerador y denominador por 2) ✓' },
-                        { emoji: '➕', q: '¿Cuánto es 2/7 + 3/7?', opts: ['5/14', '5/7', '6/7', '1/7'], ok: 1, exp: '2/7 + 3/7 = 5/7 ✓' },
-                        { emoji: '🍫', q: 'Comes 1/4 de chocolate y luego 2/4 más. ¿Cuánto comiste?', opts: ['3/8', '2/4', '3/4', '1/2'], ok: 2, exp: '1/4 + 2/4 = 3/4 ✓' },
+                        { emoji: '📏', q: '¿Dónde se ubica 1/2 en la recta numérica?', opts: ['Cerca del 0', 'Exactamente en el medio entre 0 y 1', 'Cerca del 1', 'En el 2'], ok: 1, exp: '1/2 representa exactamente la mitad del entero ✓' },
+                        { emoji: '🍕', q: 'Si amplifico 1/3 multiplicando por 2, obtengo...', opts: ['2/6', '2/3', '1/6', '3/6'], ok: 0, exp: '1×2=2 y 3×2=6, por lo que es 2/6 ✓' },
                     ]
                 }
             },
