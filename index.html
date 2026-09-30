@@ -3199,17 +3199,17 @@
             },
             {
                 id: 6, cat: 'frac', topic: 'fracciones', title: 'Fracciones III', dur: '45 min',
-                objectives: ['Sumar y restar con distinto denominador', 'Dominar el MCM mágicamente', 'Problemas de la vida real'],
+                objectives: ['Sumar y restar fracciones de igual denominador', 'Convertir fracciones (décimos y centésimos) a decimales', 'Resolver problemas y desafíos'],
                 htmlSlide: 'clases/cuarto-basico/fracciones/11-ejercicios-fracciones.html',
                 mentoreo: { pdf: 'https://drive.google.com/file/d/1gV52LQVhRDUZXJ3eGJwyP3eTpr2iK_RG/preview', title: 'Mentoreo' },
                 activities: [],
                 ticket: {
                     title: 'Ticket de salida – Fracciones 3',
                     questions: [
-                        { emoji: '🔢', q: '¿Cuál es el MCM de 2 y 3?', opts: ['4', '5', '6', '8'], ok: 2, exp: 'Tabla del 2: 2,4,6... Tabla del 3: 3,6... El primero es 6 ✓' },
-                        { emoji: '➕', q: '¿Cuánto es 1/2 + 1/4?', opts: ['2/6', '3/4', '2/4', '1/4'], ok: 1, exp: '1/2 es 2/4, más 1/4 = 3/4 ✓' },
-                        { emoji: '➖', q: '¿Cuánto es 3/4 - 1/2?', opts: ['1/4', '2/4', '2/8', '1/2'], ok: 0, exp: '3/4 - 2/4 = 1/4 ✓' },
-                        { emoji: '🎯', q: '¿Cual es el MCM de 4 y 5?', opts: ['9', '20', '15', '10'], ok: 1, exp: '4 × 5 = 20 es su MCM ✓' },
+                        { emoji: '➕', q: '¿Cuánto es 3/8 + 2/8?', opts: ['5/8', '5/16', '1/8', '6/8'], ok: 0, exp: 'Con igual denominador, sumas los numeradores y mantienes el denominador ✓' },
+                        { emoji: '➖', q: '¿Cuánto es 7/10 - 4/10?', opts: ['3/10', '11/10', '3/0', '2/10'], ok: 0, exp: 'Al restar con igual denominador, sólo restas los números de arriba ✓' },
+                        { emoji: '🔟', q: '¿Cómo se escribe 3/10 en decimal?', opts: ['0,3', '0,03', '3,0', '0,13'], ok: 0, exp: 'Tres décimos equivale exactamente a 0,3 ✓' },
+                        { emoji: '💯', q: '¿Cómo se escribe 25/100 en decimal?', opts: ['0,25', '2,5', '0,025', '25,0'], ok: 0, exp: 'Veinticinco centésimos se escribe 0,25 ✓' },
                     ]
                 }
             },
@@ -3219,21 +3219,45 @@
                 objectives: ['Comparar y convertir unidades de longitud (mm, cm, m, km)', 'Ubicar puntos en el plano cartesiano con precisión', 'Leer coordenadas y resolver desafíos de orientación'],
                 htmlSlide: 'clases/cuarto-basico/geometria/geometria-1.html',
                 activities: [],
-                ticket: { title: 'Ticket de salida – Geometría 1', questions: [] }
+                ticket: {
+                    title: 'Ticket de salida – Geometría 1',
+                    questions: [
+                        { emoji: '📏', q: '¿Cuántos centímetros hay en 1 metro?', opts: ['10', '100', '1000', '1'], ok: 1, exp: '1 metro equivale exactamente a 100 centímetros ✓' },
+                        { emoji: '🗺️', q: 'Si estás en la coordenada (2,3) y avanzas 2 pasos a la derecha, llegas a...', opts: ['(4,3)', '(2,5)', '(0,3)', '(4,5)'], ok: 0, exp: 'Avanzar a la derecha suma en el primer número (eje X): 2+2=4 ✓' },
+                        { emoji: '📍', q: '¿Para qué sirve el plano cartesiano?', opts: ['Para medir el tiempo', 'Para pesar objetos', 'Para ubicar puntos exactos', 'Para multiplicar'], ok: 2, exp: 'Se usa para ubicar puntos usando coordenadas X e Y ✓' },
+                        { emoji: '🔍', q: '¿Cuántos milímetros hay en 1 centímetro?', opts: ['10', '100', '1000', '1'], ok: 0, exp: 'La regla tiene 10 rayitas pequeñitas (milímetros) en 1 cm ✓' },
+                    ]
+                }
             },
             {
                 id: 14, serial: 2, cat: 'geo', topic: 'geometria', title: 'Geometría II', dur: '55 min',
                 objectives: ['Clasificar ángulos y rectas según sus propiedades', 'Reconocer rectas paralelas, perpendiculares y secantes', 'Explorar traslación, reflexión y rotación con animaciones'],
                 htmlSlide: 'clases/cuarto-basico/geometria/geometria-2.html',
                 activities: [],
-                ticket: { title: 'Ticket de salida – Geometría 2', questions: [] }
+                ticket: {
+                    title: 'Ticket de salida – Geometría 2',
+                    questions: [
+                        { emoji: '📐', q: '¿Cómo se llama el ángulo que mide exactamente 90 grados?', opts: ['Agudo', 'Obtuso', 'Recto', 'Extendido'], ok: 2, exp: 'El ángulo recto forma una esquina perfecta de 90° ✓' },
+                        { emoji: '🛤️', q: '¿Cómo son las líneas paralelas?', opts: ['Se cruzan', 'Nunca se tocan', 'Forman un ángulo recto', 'Son curvas'], ok: 1, exp: 'Las rectas paralelas nunca se tocan, por más que se alarguen ✓' },
+                        { emoji: '🪞', q: '¿Qué transformación geométrica es como mirarse en un espejo?', opts: ['Traslación', 'Rotación', 'Reflexión', 'Ampliación'], ok: 2, exp: 'La reflexión crea una imagen espejada ✓' },
+                        { emoji: '🔽', q: 'Un ángulo agudo es aquel que mide...', opts: ['Más de 90°', 'Menos de 90°', 'Exactamente 90°', '180°'], ok: 1, exp: 'Los ángulos agudos son cerrados, miden menos de 90° ✓' },
+                    ]
+                }
             },
             {
                 id: 15, serial: 3, cat: 'geo', topic: 'geometria', title: 'Geometría III', dur: '55 min',
                 objectives: ['Calcular el perímetro de cuadrados, rectángulos y triángulos', 'Comprender y calcular el área con fórmulas visuales', 'Resolver problemas reales de medición con ejercicios interactivos'],
                 htmlSlide: 'clases/cuarto-basico/geometria/geometria-3.html',
                 activities: [],
-                ticket: { title: 'Ticket de salida – Geometría 3', questions: [] }
+                ticket: {
+                    title: 'Ticket de salida – Geometría 3',
+                    questions: [
+                        { emoji: '📏', q: '¿Qué es el perímetro de una figura?', opts: ['El espacio de adentro', 'La suma del largo de sus lados (el contorno)', 'La altura', 'Los vértices'], ok: 1, exp: 'El perímetro es la medida de todo el borde exterior ✓' },
+                        { emoji: '🟪', q: '¿Cuál es el área de un cuadrado de lado 4 cm?', opts: ['8 cm²', '12 cm²', '16 cm²', '4 cm²'], ok: 2, exp: 'El área de un cuadrado es lado × lado (4 × 4 = 16) ✓' },
+                        { emoji: '📐', q: 'Si un rectángulo tiene lados de 5 cm y 2 cm, su perímetro es...', opts: ['14 cm', '10 cm', '7 cm', '20 cm'], ok: 0, exp: 'Suma todos los lados: 5 + 5 + 2 + 2 = 14 cm ✓' },
+                        { emoji: '🟩', q: '¿Qué se usa normalmente para medir el área?', opts: ['Cuadraditos (cm² o m²)', 'Regla normal', 'Balanza', 'Líneas rectas'], ok: 0, exp: 'El área se mide en unidades cuadradas ✓' },
+                    ]
+                }
             },
             {
                 id: 16, serial: 4, cat: 'geo', topic: 'geometria', title: 'Geometría IV', dur: '50 min',
